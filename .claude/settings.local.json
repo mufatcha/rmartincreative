@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(bun x tsc --noEmit -p tsconfig.json; Write-Output \"TSC_EXIT:$LASTEXITCODE\")",
+      "PowerShell(bun run lint)"
+    ]
+  }
+}
