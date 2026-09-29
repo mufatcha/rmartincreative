@@ -71,8 +71,8 @@ The site runs on Cloudflare Workers through the [OpenNext adapter](https://openn
 1. **Create the page-cache bucket.** This is separate from `client-uploads`: `bunx wrangler r2 bucket create rmartincreative-cache`, or create it in the R2 dashboard.
 2. **Connect GitHub.** In [Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages), go to **Create** → **Import a repository** and pick `mufatcha/rmartincreative`.
    - Project name: `rmartincreative` (must match `name` in `wrangler.jsonc`)
-   - Build command: `bunx opennextjs-cloudflare build`
-   - Deploy command: `bunx opennextjs-cloudflare deploy`
+   - Build command: `bun run cf:build`
+   - Deploy command: `bun run cf:deploy`
    - Under **Build variables**, add `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. It gets baked into the page at build time.
 3. **Add runtime secrets.** In the Worker, go to **Settings** → **Variables and Secrets** and add each one as type *Secret*: `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`. Optionally also add `QUOTE_TO_EMAIL` and `QUOTE_FROM_EMAIL`.
 4. **Attach your domain.** In the Worker, go to **Settings** → **Domains & Routes** → **Add** → **Custom domain**, and add both `yourdomain.com` and `www.yourdomain.com`. Cloudflare creates the DNS records and the HTTPS certificate.
