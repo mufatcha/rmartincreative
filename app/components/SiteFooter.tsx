@@ -5,6 +5,7 @@ import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 const COMPANY_LINKS = [
   { href: "/", label: "Home" },
   { href: "/services", label: "All services" },
+  { href: "/new-business", label: "New business launch guide" },
   { href: "/#portfolio", label: "Work" },
   { href: "/#process", label: "How it works" },
   { href: "/#service-area", label: "Service area" },

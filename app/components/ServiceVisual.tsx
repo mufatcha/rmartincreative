@@ -32,6 +32,14 @@ export default function ServiceVisual({
     );
   }
 
+  if (image?.fit === "contain") {
+    return (
+      <div className="relative aspect-[4/3] w-full">
+        <Image src={image.src} alt={image.alt} fill sizes={sizes} className="object-contain drop-shadow-[0_28px_40px_rgba(32,26,46,0.28)]" />
+      </div>
+    );
+  }
+
   if (image) {
     return (
       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-xl ring-1 ring-ink/5">

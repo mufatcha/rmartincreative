@@ -4,6 +4,7 @@ import {
   IconGlobe,
   IconLayers,
   IconPhoto,
+  IconRocket,
   IconShirt,
   IconSparkle,
 } from "../components/icons";
@@ -31,6 +32,38 @@ export type ServiceOption = {
 };
 
 export const SERVICES: ServiceOption[] = [
+  {
+    id: "launch",
+    fileHint: "Anything you already have: a logo, sketches, a business plan, or examples you like.",
+    label: "New Business Launch",
+    icon: IconRocket,
+    questions: [
+      { id: "business", label: "Business name (or working name)", type: "text" },
+      { id: "type", label: "What kind of business is it?", type: "text", placeholder: "e.g. bakery, landscaping, consulting" },
+      { id: "launchDate", label: "Target launch date", type: "text" },
+      {
+        id: "have",
+        label: "What do you already have?",
+        type: "checkboxes",
+        options: ["Business name", "Logo", "Domain name", "Website", "Business cards", "Signage", "Nothing yet"],
+      },
+      {
+        id: "need",
+        label: "What would you like help with?",
+        type: "checkboxes",
+        options: [
+          "Logo & brand identity",
+          "Website or online store",
+          "Search + AI visibility",
+          "Business cards & print",
+          "Signs & posters",
+          "Apparel",
+          "Launch marketing",
+          "All of it",
+        ],
+      },
+    ],
+  },
   {
     id: "partner",
     fileHint: "Logo, brand files, or anything that shows how your business looks today.",

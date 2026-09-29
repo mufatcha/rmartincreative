@@ -8,6 +8,7 @@ import type { SeasonalNavLink } from "../lib/season";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
 const PAGE_LINKS = [
+  { href: "/new-business", label: "New Business" },
   { href: "/cards-and-photos", label: "Cards & Photos" },
   { href: "/#portfolio", label: "Work" },
 ];
