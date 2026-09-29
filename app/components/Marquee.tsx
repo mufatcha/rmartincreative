@@ -1,14 +1,16 @@
 const ITEMS = [
-  "Christmas & Holiday Cards",
-  "Greeting Cards",
+  "Website Design",
+  "Online Stores",
+  "Search + AI Discovery",
   "Business Cards",
   "Brochures",
   "Pitch Decks",
-  "Business Plans",
   "Proposal Decks",
-  "QBR Decks",
-  "Photo-to-Digital",
-];
+  "Yard Signs",
+  "Posters",
+  "T-Shirt Printing",
+  "Corporate Holiday Cards",
+]
 
 export default function Marquee() {
   const loop = [...ITEMS, ...ITEMS];

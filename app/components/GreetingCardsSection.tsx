@@ -1,8 +1,6 @@
-import type { CSSProperties } from "react";
+import Image from "next/image";
 import Reveal from "./Reveal";
 import { IconArrowRight, IconCard } from "./icons";
-
-type FloatStyle = CSSProperties & { "--rot"?: string };
 
 const OCCASIONS = [
   "Birthdays",
@@ -63,31 +61,18 @@ export default function GreetingCardsSection() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="relative mx-auto h-64 w-full max-w-xs sm:h-72">
-            <div
-              className="animate-card-float absolute left-2 top-2 w-40 rounded-2xl bg-gradient-to-br from-fuchsia-500 via-pink-500 to-rose-400 p-4 text-white shadow-xl"
-              style={{ "--rot": "-7deg", transform: "rotate(-7deg)" } as FloatStyle}
-            >
-              <p className="mt-4 font-serif text-base italic">Happy Birthday!</p>
-              <p className="mt-1 text-[11px] text-white/80">to someone wonderful</p>
-            </div>
-            <div
-              className="animate-card-float absolute right-0 top-16 w-36 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 p-4 text-white shadow-xl [animation-delay:1s]"
-              style={{ "--rot": "6deg", transform: "rotate(6deg)" } as FloatStyle}
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-wide">
-                Thank You
-              </p>
-              <p className="mt-3 text-[11px] text-white/80">for everything</p>
-            </div>
-            <div
-              className="animate-card-float absolute bottom-0 left-8 w-40 rounded-2xl bg-white p-4 shadow-xl ring-1 ring-ink/5 [animation-delay:2s]"
-              style={{ "--rot": "-3deg", transform: "rotate(-3deg)" } as FloatStyle}
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-fuchsia-600">
-                You&rsquo;re Invited
-              </p>
-              <p className="mt-3 text-[11px] text-ink-soft">Saturday, 6pm</p>
+          <div className="relative mx-auto flex w-full max-w-md items-center justify-center py-6">
+            <div className="animate-sparkle absolute h-72 w-72 rounded-full bg-gradient-to-br from-fuchsia-300/50 to-amber-200/50 blur-2xl" />
+            <div className="relative w-full rotate-[2deg] rounded-2xl bg-gradient-to-br from-fuchsia-300 via-pink-400 to-amber-300 p-[3px] shadow-[0_30px_60px_-15px_rgba(112,26,117,0.45)] transition-transform duration-500 hover:rotate-0">
+              <div className="relative aspect-square overflow-hidden rounded-[13px]">
+                <Image
+                  src="/jpg-assets/birthday-card.jpg"
+                  alt="Custom floral birthday card reading “Happy Birthday, Sweetest Chloe!” held on a fridge by a bird magnet"
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 448px"
+                  className="object-cover object-[85%_50%]"
+                />
+              </div>
             </div>
           </div>
         </Reveal>

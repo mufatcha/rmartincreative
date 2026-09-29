@@ -57,7 +57,7 @@ export default function Image() {
             color: "#5a5270",
           }}
         >
-          Freelance Design &amp; Print · Gurnee &amp; Northern Illinois
+          Freelance Design &amp; Print · Northern Illinois &amp; Southern Wisconsin
         </div>
       </div>
     ),

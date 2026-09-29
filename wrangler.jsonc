@@ -1,0 +1,50 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rmartincreative",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      // Self-reference used for cache revalidation; must match "name" above.
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "rmartincreative"
+    }
+  ],
+  "r2_buckets": [
+    {
+      // Next.js page cache (not customer uploads — those live in client-uploads).
+      // Create it once: bunx wrangler r2 bucket create rmartincreative-cache
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "rmartincreative-cache"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        // Queue that regenerates pages when their `revalidate` time is up.
+        "name": "NEXT_CACHE_DO_QUEUE",
+        "class_name": "DOQueueHandler"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      // SQLite-backed Durable Objects are available on the free Workers plan.
+      "new_sqlite_classes": ["DOQueueHandler"]
+    }
+  ],
+  "images": {
+    // next/image optimization through Cloudflare Images.
+    "binding": "IMAGES"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // Custom domain: attach it in the dashboard (Worker → Settings → Domains & Routes).
+}

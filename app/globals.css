@@ -20,6 +20,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Tailwind v4 resets buttons to the default arrow cursor; restore the pointer
+   so dropdowns, quote triggers, and form options read as clickable. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 body {
   background: var(--paper);
   color: var(--ink);

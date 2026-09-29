@@ -4,8 +4,8 @@ import {
   BUSINESS_PHONE_TEL,
   SERVICE_AREA_CITIES,
   SERVICE_HUB_CITY,
-  SERVICE_STATE,
   SERVICE_STATE_ABBR,
+  STATE_NAMES,
   SITE_URL,
 } from "../lib/business";
 
@@ -16,7 +16,7 @@ function buildSchema() {
     name: BUSINESS_NAME,
     founder: { "@type": "Person", name: "Ryan Martin" },
     description:
-      "Freelance design and print services covering Christmas & holiday cards, greeting cards, business cards, brochures, business documents, and photo-to-digital conversion across Northern Illinois.",
+      "Freelance design, print, and web services covering Christmas & holiday cards, greeting cards, business cards, brochures, business documents, custom apparel (FeedTheFlames), website design & development, and photo scanning, restoration, and color correction across Northern Illinois and southern Wisconsin.",
     url: SITE_URL,
     telephone: BUSINESS_PHONE_TEL,
     email: BUSINESS_EMAIL,
@@ -28,8 +28,11 @@ function buildSchema() {
     },
     areaServed: SERVICE_AREA_CITIES.map((city) => ({
       "@type": "City",
-      name: city,
-      containedInPlace: { "@type": "State", name: SERVICE_STATE },
+      name: city.name,
+      containedInPlace: {
+        "@type": "State",
+        name: STATE_NAMES[city.state],
+      },
     })),
   };
 }

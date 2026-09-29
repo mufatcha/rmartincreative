@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import Reveal from "./Reveal";
 import { IconArrowRight, IconSnowflake } from "./icons";
@@ -52,7 +53,7 @@ export default function HolidaySpotlight() {
               My favorite season
             </span>
             <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              Christmas &amp; holiday cards are where I started designing —
+              Christmas &amp; holiday cards are my favorite to design —
               and where I still go all out.
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
@@ -85,19 +86,17 @@ export default function HolidaySpotlight() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="relative mx-auto flex h-72 w-full max-w-sm items-center justify-center sm:h-80">
-            <div className="animate-sparkle absolute h-56 w-56 rounded-full bg-gradient-to-br from-rose-500/40 to-emerald-400/30 blur-2xl" />
-            <div className="relative w-56 rotate-[-6deg] rounded-2xl bg-gradient-to-br from-rose-600 via-red-500 to-emerald-700 p-6 text-white shadow-2xl ring-1 ring-white/10">
-              <IconSnowflake className="h-7 w-7" />
-              <p className="mt-10 font-serif text-xl italic">Merry &amp; Bright</p>
-              <p className="mt-1 text-xs text-white/75">
-                Happy Holidays, from our family to yours
-              </p>
-              <div className="mt-6 flex gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-300" />
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-300/70" />
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-300/40" />
-              </div>
+          <div className="relative mx-auto flex w-full max-w-lg items-center justify-center py-6">
+            <div className="animate-sparkle absolute h-72 w-72 rounded-full bg-gradient-to-br from-rose-500/40 to-emerald-400/30 blur-2xl" />
+            <div className="relative w-full rotate-[-2deg] rounded-2xl bg-gradient-to-br from-amber-200 via-amber-500 to-amber-700 p-[3px] shadow-[0_30px_60px_-12px_rgba(0,0,0,0.8),0_0_45px_-5px_rgba(251,191,36,0.4)] transition-transform duration-500 hover:rotate-0">
+              <Image
+                src="/jpg-assets/christmas-card.jpg"
+                alt="Custom photo Christmas card reading “Merry Christmas from the Miller Family,” with a family and their golden retriever framed by pine, berries and gold stars"
+                width={1997}
+                height={1331}
+                sizes="(max-width: 1024px) 90vw, 512px"
+                className="h-auto w-full rounded-[13px]"
+              />
             </div>
           </div>
         </Reveal>

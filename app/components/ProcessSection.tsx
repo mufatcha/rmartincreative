@@ -3,23 +3,23 @@ import Reveal from "./Reveal";
 const STEPS = [
   {
     n: "01",
-    title: "Tell me what you need",
-    body: "A quick message with your idea, quantity, and deadline — holiday cards booked early get first pick of finishes.",
+    title: "Get to know your business",
+    body: "A quick conversation about who your customers are, what's working, and what isn't — whether you need one project or ongoing help.",
   },
   {
     n: "02",
-    title: "Design & review",
-    body: "I send a proof within a few days. We revise together until the colors, copy, and layout feel exactly right.",
+    title: "Plan what matters most",
+    body: "Together we decide where to start — the website, search visibility, print, or all three — so budget goes where it will make the biggest difference.",
   },
   {
     n: "03",
-    title: "Approve & print",
-    body: "Once you sign off, files go straight to press on the stock and finish you chose — matte, glossy, or foil.",
+    title: "Design, build & print",
+    body: "You get proofs to review at every step, and nothing launches, prints, or ships until you've signed off.",
   },
   {
     n: "04",
-    title: "Delivered",
-    body: "Printed pieces shipped or ready for pickup, plus high-res digital files so you always have a backup copy.",
+    title: "Keep it consistent",
+    body: "The same eye on every piece, month after month, so your site, cards, signs, and shirts always look like one brand.",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function ProcessSection() {
               How it works
             </span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              Four steps from idea to inbox — or mailbox.
+              From first project to long-term partner.
             </h2>
           </div>
         </Reveal>
