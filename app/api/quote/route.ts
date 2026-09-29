@@ -20,14 +20,20 @@ const escapeHtml = (value: string) =>
 const str = (value: unknown, max = 5000) => (typeof value === "string" ? value.trim().slice(0, max) : "");
 
 async function verifyTurnstile(token: string, ip: string | null): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const secret = process.env.TURNSTILE_SECRET_KEY?.trim();
   if (!secret) return true; // Not configured yet — the honeypot still applies.
   const form = new FormData();
   form.append("secret", secret);
   form.append("response", token);
   if (ip) form.append("remoteip", ip);
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: form });
-  const data = (await res.json()) as { success?: boolean };
+  const data = (await res.json()) as { success?: boolean; hostname?: string; "error-codes"?: string[] };
+  if (data.success !== true) {
+    // Shows up in the Worker's logs. Common codes: invalid-input-secret (wrong
+    // secret key), timeout-or-duplicate (token already used or expired),
+    // invalid-input-response (missing or malformed token).
+    console.error("Turnstile verification failed", data["error-codes"], "hostname:", data.hostname);
+  }
   return data.success === true;
 }
 

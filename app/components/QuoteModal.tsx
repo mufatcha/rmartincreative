@@ -38,6 +38,9 @@ export default function QuoteModal({
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState("");
+  // Bumped after each send attempt: a Turnstile token only works once, so a
+  // retry needs a fresh widget (and a fresh token).
+  const [turnstileKey, setTurnstileKey] = useState(0);
   const [honeypot, setHoneypot] = useState("");
   const uploads = useFileUploads();
   const headingId = useId();
@@ -116,6 +119,8 @@ export default function QuoteModal({
       setSubmitted(true);
     } catch (err) {
       setSendError(err instanceof Error ? err.message : "Your request couldn't be sent.");
+      setTurnstileToken("");
+      setTurnstileKey((k) => k + 1);
     } finally {
       setSending(false);
     }
@@ -279,7 +284,7 @@ export default function QuoteModal({
                         onChange={(e) => setHoneypot(e.target.value)}
                         className="absolute -left-[9999px] h-0 w-0 opacity-0"
                       />
-                      <Turnstile onToken={setTurnstileToken} />
+                      <Turnstile key={turnstileKey} onToken={setTurnstileToken} />
                       {uploads.uploading && (
                         <p className="text-sm text-ink-soft">Your files are still uploading — you can send once they finish.</p>
                       )}
