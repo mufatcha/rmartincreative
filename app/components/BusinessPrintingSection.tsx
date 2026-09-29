@@ -88,8 +88,8 @@ export default function BusinessPrintingSection() {
         <Reveal delay={220}>
           <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-white/60">
-              Mix and match — a matching card, brochure, and deck for one
-              launch is common.
+              Need more than one piece? Designed together, they look like
+              one brand instead of a collection.
             </p>
             <a
               href="#contact"
