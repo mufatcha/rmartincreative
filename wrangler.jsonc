@@ -4,6 +4,16 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Keep variables added in the dashboard when a new version deploys
+  // (by default, each deploy deletes any not listed in this file).
+  "keep_vars": true,
+  // Non-secret settings live here so every deploy has them. Keys and passwords
+  // (R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, RESEND_API_KEY, TURNSTILE_SECRET_KEY)
+  // are added in the dashboard as type "Secret" — never in this file.
+  "vars": {
+    "R2_ACCOUNT_ID": "bdffe4c7ddc5a63d99464caacdf67688",
+    "R2_BUCKET": "client-uploads"
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

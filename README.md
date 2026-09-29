@@ -74,7 +74,7 @@ The site runs on Cloudflare Workers through the [OpenNext adapter](https://openn
    - Build command: `bun run cf:build`
    - Deploy command: `bun run cf:deploy`
    - Under **Build variables**, add `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. It gets baked into the page at build time.
-3. **Add runtime secrets.** In the Worker, go to **Settings** → **Variables and Secrets** and add each one as type *Secret*: `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`. Optionally also add `QUOTE_TO_EMAIL` and `QUOTE_FROM_EMAIL`.
+3. **Add runtime secrets.** In the Worker, go to **Settings** → **Variables and Secrets** and add each one as type **Secret**, not Text: `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`. `R2_ACCOUNT_ID` and `R2_BUCKET` are already set in `wrangler.jsonc` under `vars`. `keep_vars` is on, so values added in the dashboard survive deploys.
 4. **Attach your domain.** In the Worker, go to **Settings** → **Domains & Routes** → **Add** → **Custom domain**, and add both `yourdomain.com` and `www.yourdomain.com`. Cloudflare creates the DNS records and the HTTPS certificate.
 5. **Allow the live domain** in the two places that currently only allow `localhost`:
    - **R2 `client-uploads` → Settings → CORS policy:** add `https://yourdomain.com` and `https://www.yourdomain.com` to `AllowedOrigins`.
