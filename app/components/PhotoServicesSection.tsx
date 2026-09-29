@@ -42,8 +42,8 @@ export default function PhotoServicesSection() {
           <div className="relative mx-auto flex w-full max-w-lg items-center justify-center">
             <div className="relative w-full overflow-hidden rounded-2xl bg-white p-4 shadow-2xl shadow-black/40 ring-1 ring-white/10">
               <BeforeAfterSlider
-                beforeSrc="/jpg-assets/chris-curry-original.jpg"
-                afterSrc="/jpg-assets/chris-curry-colorized.jpg"
+                beforeSrc="/webp-assets/chris-curry-original.webp"
+                afterSrc="/webp-assets/chris-curry-colorized.webp"
                 beforeAlt="Original black-and-white family group photo"
                 afterAlt="The same family group photo, restored and colorized"
               />
