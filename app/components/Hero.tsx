@@ -1,11 +1,46 @@
 import type { CSSProperties } from "react";
-import { IconArrowRight, IconSnowflake } from "./icons";
+import Link from "next/link";
+import { getSeasonalBadge, type SeasonIcon } from "../lib/season";
+import {
+  IconArrowRight,
+  IconCard,
+  IconGlobe,
+  IconPresentation,
+  IconShirt,
+  IconSignpost,
+  IconSnowflake,
+} from "./icons";
+
+const SEASON_ICONS: Record<SeasonIcon, typeof IconSnowflake> = {
+  globe: IconGlobe,
+  shirt: IconShirt,
+  presentation: IconPresentation,
+  card: IconCard,
+  snowflake: IconSnowflake,
+  sign: IconSignpost,
+};
 
 type FloatStyle = CSSProperties & { "--rot"?: string };
 
-const TAGS = ["Christmas Cards", "Business Cards", "Brochures", "Pitch Decks", "Photo Restoration"];
+// `wide` tags only show from tablet up; mobile keeps the original five.
+const TAGS: { label: string; href: string; wide?: boolean }[] = [
+  { label: "Websites", href: "/services/website-design-development" },
+  { label: "Search + AI Discovery", href: "/services/search-ai-discovery" },
+  { label: "Business Cards", href: "/services/business-printing/business-cards" },
+  { label: "Brochures", href: "/services/business-printing/brochures-collateral" },
+  { label: "Pitch Decks", href: "/services/business-printing/business-documents" },
+  { label: "Online Stores", href: "/services/website-design-development/e-commerce-websites", wide: true },
+  { label: "WordPress & CMS", href: "/services/website-design-development/wordpress-headless-cms", wide: true },
+  { label: "Yard Signs", href: "/services/signs-posters/yard-signs", wide: true },
+  { label: "Posters", href: "/services/signs-posters/posters", wide: true },
+  { label: "T-Shirts & Apparel", href: "/services/apparel", wide: true },
+  { label: "Corporate Holiday Cards", href: "/services/greeting-cards/christmas-cards", wide: true },
+]
 
 export default function Hero() {
+  const badge = getSeasonalBadge();
+  const BadgeIcon = SEASON_ICONS[badge.icon];
+
   return (
     <section
       id="top"
@@ -27,27 +62,27 @@ export default function Hero() {
       <div className="relative mx-auto grid max-w-6xl gap-16 px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink-soft shadow-sm backdrop-blur">
-            <IconSnowflake className="h-3.5 w-3.5 text-rose-500" />
-            Now booking Christmas card season
+            <BadgeIcon className="h-3.5 w-3.5 text-rose-500" />
+            {badge.text}
           </span>
 
           <h1 className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-            Design that gets{" "}
+            Your{" "}
             <span className="animate-hue bg-gradient-to-r from-violet-600 via-fuchsia-500 to-amber-500 bg-clip-text text-transparent">
-              opened
+              marketing team
             </span>
-            . Print that gets{" "}
+            , without the{" "}
             <span className="animate-hue bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 bg-clip-text text-transparent">
-              noticed.
+              payroll.
             </span>
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
-            I&rsquo;m Ryan Martin, a freelance designer based in Richmond, IL,
-            serving Gurnee and Northern Illinois. Holiday and greeting
-            cards, business cards, brochures, pitch decks and business
-            documents, plus turning old photos into crisp digital files.
-            Bold color, careful craft, on time for the holidays.
+            Small businesses need a website, search visibility, print, and
+            a brand that holds together &mdash; but not a full-time marketing
+            department. I&rsquo;m Ryan Martin, one experienced partner based in
+            Richmond, IL, who handles all of it for businesses across Gurnee
+            and Northern Illinois.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -68,12 +103,13 @@ export default function Hero() {
 
           <div className="mt-10 flex flex-wrap gap-2">
             {TAGS.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-white/70 px-3.5 py-1.5 text-xs font-medium text-ink-soft ring-1 ring-ink/10"
+              <Link
+                key={tag.href}
+                href={tag.href}
+                className={`${tag.wide ? "hidden sm:inline-block" : "inline-block"} rounded-full bg-white/70 px-3.5 py-1.5 text-xs font-medium text-ink-soft ring-1 ring-ink/10 transition-colors hover:bg-white hover:text-ink hover:ring-ink/20`}
               >
-                {tag}
-              </span>
+                {tag.label}
+              </Link>
             ))}
           </div>
         </div>

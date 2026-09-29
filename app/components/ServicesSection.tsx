@@ -1,67 +1,100 @@
+import Link from "next/link";
 import Reveal from "./Reveal";
 import {
-  IconSnowflake,
-  IconCard,
+  IconArrowRight,
   IconBriefcase,
+  IconCard,
+  IconGlobe,
   IconLayers,
   IconPresentation,
-  IconPhoto,
+  IconSearch,
+  IconShirt,
+  IconSignpost,
+  IconSnowflake,
 } from "./icons";
 
-const SERVICES = [
+// Grouped by what a small business is trying to do, not by product, so the
+// full scope reads as one marketing team rather than a list of vendors.
+const GROUPS = [
   {
-    icon: IconSnowflake,
-    title: "Christmas & Holiday Cards",
-    description:
-      "My favorite project of the year. Custom family photo cards, corporate holiday mailers, and everything in between — designed early enough to beat the December rush.",
-    accent: "from-rose-500 via-red-500 to-emerald-600",
-    badge: "bg-rose-50 text-rose-600",
-    href: "#christmas",
+    title: "Get found",
+    blurb: "Be easy to find, whether customers search Google or ask AI.",
+    accent: "from-sky-500 via-blue-500 to-indigo-600",
+    badge: "bg-sky-50 text-sky-600",
+    services: [
+      {
+        icon: IconGlobe,
+        title: "Websites & Online Stores",
+        description:
+          "Custom sites, WordPress, and Shopify, BigCommerce, or Wix stores, ready for search and AI from launch.",
+        href: "#web-design",
+      },
+      {
+        icon: IconSearch,
+        title: "Search + AI Discovery",
+        description:
+          "Show up on Google and in AI answers, starting with a free health check.",
+        href: "#search-ai",
+      },
+    ],
   },
   {
-    icon: IconCard,
-    title: "Greeting Cards",
-    description:
-      "Birthdays, thank-yous, invitations, announcements — one-off designs or full sets, ready for print or digital sharing.",
-    accent: "from-fuchsia-500 via-pink-500 to-amber-400",
-    badge: "bg-fuchsia-50 text-fuchsia-600",
-    href: "#greeting-cards",
-  },
-  {
-    icon: IconBriefcase,
-    title: "Business Cards",
-    description:
-      "Clean, memorable layouts that hold up in a stack of a hundred. Foil, matte, textured stock — I'll help you pick what fits your brand.",
+    title: "Look professional",
+    blurb: "Materials that make a strong first impression, in person and on paper.",
     accent: "from-zinc-800 via-zinc-600 to-amber-500",
     badge: "bg-zinc-100 text-zinc-700",
-    href: "#business-printing",
+    services: [
+      {
+        icon: IconBriefcase,
+        title: "Business Cards",
+        description: "Clean, memorable layouts on the stock and finish that fit your brand.",
+        href: "#business-printing",
+      },
+      {
+        icon: IconLayers,
+        title: "Brochures & Collateral",
+        description: "Tri-folds, one-pagers, menus, and flyers built to be read.",
+        href: "#business-printing",
+      },
+      {
+        icon: IconPresentation,
+        title: "Pitch Decks & Documents",
+        description: "Sales, proposal, and business plan decks that make the point on slide one.",
+        href: "#business-printing",
+      },
+      {
+        icon: IconSignpost,
+        title: "Yard Signs & Posters",
+        description: "Signage for events, open houses, and storefronts.",
+        href: "/services/signs-posters",
+      },
+    ],
   },
   {
-    icon: IconLayers,
-    title: "Brochures & Collateral",
-    description:
-      "Tri-folds, one-pagers, menus and flyers built to be read, not just skimmed. Print-ready files, sized correctly the first time.",
-    accent: "from-teal-500 via-cyan-500 to-blue-500",
-    badge: "bg-teal-50 text-teal-600",
-    href: "#business-printing",
-  },
-  {
-    icon: IconPresentation,
-    title: "Business Documents",
-    description:
-      "Pitch decks, business plan presentations, sales & proposal decks, and internal update / QBR decks — structured to make the point on slide one.",
-    accent: "from-violet-600 via-indigo-500 to-sky-500",
-    badge: "bg-violet-50 text-violet-600",
-    href: "#business-printing",
-  },
-  {
-    icon: IconPhoto,
-    title: "Photo-to-Digital",
-    description:
-      "Old prints, slides, and negatives scanned, cleaned up, and color-corrected into high-resolution digital files you'll actually keep.",
-    accent: "from-amber-500 via-orange-500 to-rose-500",
-    badge: "bg-amber-50 text-amber-600",
-    href: "#photo-to-digital",
+    title: "Stay in touch",
+    blurb: "Keep customers, clients, and your team thinking of you all year.",
+    accent: "from-rose-500 via-red-500 to-emerald-600",
+    badge: "bg-rose-50 text-rose-600",
+    services: [
+      {
+        icon: IconSnowflake,
+        title: "Corporate Holiday Cards",
+        description: "Corporate holiday mailers and client cards, designed early to beat the rush.",
+        href: "/services/greeting-cards/christmas-cards",
+      },
+      {
+        icon: IconCard,
+        title: "Greeting Cards",
+        description: "Thank-yous, announcements, and invitations, in print or digital.",
+        href: "/services/greeting-cards/everyday-cards",
+      },
+      {
+        icon: IconShirt,
+        title: "T-Shirts & Apparel",
+        description: "Staff shirts, event tees, and branded apparel under my FeedTheFlames brand.",
+        href: "#tshirts",
+      },
+    ],
   },
 ];
 
@@ -72,46 +105,73 @@ export default function ServicesSection() {
         <Reveal>
           <div className="max-w-2xl">
             <span className="text-xs font-semibold uppercase tracking-widest text-violet-600">
-              What I make
+              What I do
             </span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              One freelancer, every piece of paper your brand needs.
+              One partner, everything your brand needs to show up.
             </h2>
             <p className="mt-4 text-lg text-ink-soft">
-              From a stack of holiday cards to the deck for your board
-              meeting — designed, printed, and delivered.
+              From the site your customers find you on to the card that
+              thanks them afterward &mdash; designed, built, and delivered by
+              the same person.
             </p>
           </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service, i) => {
-            const Icon = service.icon;
-            return (
-              <Reveal key={service.title} delay={i * 80}>
-                <a
-                  href={service.href ?? "#services"}
-                  className="group relative block h-full overflow-hidden rounded-2xl bg-white p-7 shadow-sm ring-1 ring-ink/5 transition-all duration-300 hover:-translate-y-1.5 hover:rotate-[-0.5deg] hover:shadow-xl"
-                >
-                  <span
-                    className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${service.accent}`}
-                  />
-                  <span
-                    className={`flex h-12 w-12 items-center justify-center rounded-xl ${service.badge}`}
-                  >
-                    <Icon className="h-6 w-6" />
-                  </span>
-                  <h3 className="mt-5 text-lg font-semibold">
-                    {service.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                    {service.description}
-                  </p>
-                </a>
-              </Reveal>
-            );
-          })}
+        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          {GROUPS.map((group, gi) => (
+            <Reveal key={group.title} delay={gi * 100}>
+              <div className="relative h-full overflow-hidden rounded-2xl bg-white p-7 shadow-sm ring-1 ring-ink/5">
+                <span className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${group.accent}`} />
+                <h3 className="text-xl font-bold tracking-tight">{group.title}</h3>
+                <p className="mt-1.5 text-sm text-ink-soft">{group.blurb}</p>
+
+                <ul className="mt-6 space-y-2">
+                  {group.services.map((service) => {
+                    const Icon = service.icon;
+                    return (
+                      <li key={service.title}>
+                        <Link
+                          href={service.href}
+                          className="group -mx-3 flex gap-4 rounded-xl p-3 transition-colors hover:bg-paper-tint"
+                        >
+                          <span
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${group.badge}`}
+                          >
+                            <Icon className="h-5 w-5" />
+                          </span>
+                          <span>
+                            <span className="flex items-center gap-1.5 text-sm font-semibold">
+                              {service.title}
+                              <IconArrowRight className="h-3.5 w-3.5 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100" />
+                            </span>
+                            <span className="mt-0.5 block text-sm leading-relaxed text-ink-soft">
+                              {service.description}
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
         </div>
+
+        <Reveal delay={200}>
+          <p className="mt-8 text-center text-sm text-ink-soft">
+            Looking for something personal? Family holiday cards, invitations, and
+            photo restoration live on the{" "}
+            <Link
+              href="/cards-and-photos"
+              className="font-semibold text-violet-600 underline decoration-violet-300 underline-offset-2 hover:text-violet-700"
+            >
+              Cards &amp; Photos
+            </Link>{" "}
+            page.
+          </p>
+        </Reveal>
       </div>
     </section>
   );

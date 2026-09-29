@@ -1,35 +1,38 @@
-import SiteHeader from "./components/SiteHeader";
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
+import ComparisonSection from "./components/ComparisonSection";
 import ServicesSection from "./components/ServicesSection";
-import HolidaySpotlight from "./components/HolidaySpotlight";
-import GreetingCardsSection from "./components/GreetingCardsSection";
+import PartnerPlanSection from "./components/PartnerPlanSection";
 import BusinessPrintingSection from "./components/BusinessPrintingSection";
-import PhotoToDigitalSection from "./components/PhotoToDigitalSection";
+import TShirtSection from "./components/TShirtSection";
+import WebDesignSection from "./components/WebDesignSection";
+import SearchAiSection from "./components/SearchAiSection";
 import ProcessSection from "./components/ProcessSection";
 import PortfolioSection from "./components/PortfolioSection";
 import ServiceAreaSection from "./components/ServiceAreaSection";
+import TrustedBySection from "./components/TrustedBySection";
 import CtaSection from "./components/CtaSection";
-import SiteFooter from "./components/SiteFooter";
+
+// Rebuild the page hourly so the seasonal hero badge (app/lib/season.ts) stays current.
+export const revalidate = 3600;
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col">
-      <SiteHeader />
-      <main className="flex-1">
-        <Hero />
-        <Marquee />
-        <ServicesSection />
-        <HolidaySpotlight />
-        <GreetingCardsSection />
-        <BusinessPrintingSection />
-        <PhotoToDigitalSection />
-        <ProcessSection />
-        <PortfolioSection />
-        <ServiceAreaSection />
-        <CtaSection />
-      </main>
-      <SiteFooter />
-    </div>
+    <>
+      <Hero />
+      <Marquee />
+      <ComparisonSection />
+      <ServicesSection />
+      <PartnerPlanSection />
+      <BusinessPrintingSection />
+      <WebDesignSection />
+      <SearchAiSection />
+      <TShirtSection />
+      <ProcessSection />
+      <PortfolioSection />
+      <ServiceAreaSection />
+      <TrustedBySection />
+      <CtaSection />
+    </>
   );
 }

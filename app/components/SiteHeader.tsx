@@ -1,19 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import QuoteModal from "./QuoteModal";
+import { IconArrowRight } from "./icons";
+import type { SeasonalNavLink } from "../lib/season";
+import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
-const NAV_LINKS = [
-  { href: "#services", label: "Services" },
-  { href: "#christmas", label: "Christmas Cards" },
-  { href: "#process", label: "Process" },
-  { href: "#portfolio", label: "Work" },
-  { href: "#service-area", label: "Service Area" },
-  { href: "#contact", label: "Contact" },
+const PAGE_LINKS = [
+  { href: "/cards-and-photos", label: "Cards & Photos" },
+  { href: "/#portfolio", label: "Work" },
 ];
 
-export default function SiteHeader() {
+export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLink }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -22,16 +25,38 @@ export default function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the Services dropdown on outside click or Escape.
+  useEffect(() => {
+    if (!servicesOpen) return;
+    function onPointerDown(e: MouseEvent) {
+      if (!servicesRef.current?.contains(e.target as Node)) setServicesOpen(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setServicesOpen(false);
+    }
+    document.addEventListener("mousedown", onPointerDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [servicesOpen]);
+
+  const closeAll = () => {
+    setServicesOpen(false);
+    setMenuOpen(false);
+  };
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled
+        scrolled || menuOpen
           ? "bg-paper/80 backdrop-blur-md shadow-[0_1px_0_rgba(32,26,46,0.08)]"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#top" className="flex items-center gap-3">
+        <Link href="/" onClick={closeAll} className="flex items-center gap-3">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-fuchsia-500 to-amber-400 text-sm font-bold text-white shadow-md shadow-fuchsia-500/30">
             RM
           </span>
@@ -41,27 +66,94 @@ export default function SiteHeader() {
               Design &amp; Print
             </span>
           </span>
-        </a>
+        </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <a
+        <nav className="hidden items-center gap-7 lg:flex">
+          <div ref={servicesRef} className="relative">
+            <button
+              type="button"
+              aria-expanded={servicesOpen}
+              aria-haspopup="true"
+              onClick={() => setServicesOpen((v) => !v)}
+              className="flex items-center gap-1 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
+            >
+              Services
+              <svg
+                viewBox="0 0 20 20"
+                aria-hidden
+                className={`h-4 w-4 transition-transform ${servicesOpen ? "rotate-180" : ""}`}
+              >
+                <path d="m5 8 5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
+            </button>
+
+            {servicesOpen && (
+              <div className="absolute left-1/2 top-full mt-4 w-[34rem] -translate-x-1/2 rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-ink/10">
+                <div className="grid grid-cols-2 gap-8">
+                  {SERVICE_AUDIENCES.map((audience) => (
+                    <div key={audience.id}>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
+                        {audience.label}
+                      </p>
+                      <ul className="mt-3 space-y-1">
+                        {getCategoriesFor(audience.id).map((category) => {
+                          const Icon = category.icon;
+                          return (
+                            <li key={category.slug}>
+                              <Link
+                                href={`/services/${category.slug}`}
+                                onClick={closeAll}
+                                className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper-tint"
+                              >
+                                <span
+                                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br text-white ${category.accent}`}
+                                >
+                                  <Icon className="h-4 w-4" />
+                                </span>
+                                {category.title}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/services"
+                  onClick={closeAll}
+                  className="group mt-5 flex items-center justify-between border-t border-ink/10 pt-4 text-sm font-semibold text-violet-600 hover:text-violet-700"
+                >
+                  View all services
+                  <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {PAGE_LINKS.map((link) => (
+            <Link
               key={link.href}
               href={link.href}
               className="text-sm font-medium text-ink-soft transition-colors hover:text-ink"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
+
+          <Link
+            href={seasonalNav.href}
+            className="flex items-center gap-1.5 rounded-full bg-amber-100/70 px-3 py-1 text-sm font-medium text-amber-800 transition-colors hover:bg-amber-100"
+          >
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+            {seasonalNav.label}
+          </Link>
         </nav>
 
         <div className="hidden lg:block">
-          <a
-            href="#contact"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper transition-transform hover:scale-105"
-          >
+          <QuoteModal triggerClassName="rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper transition-transform hover:scale-105">
             Get a Quote
-          </a>
+          </QuoteModal>
         </div>
 
         <button
@@ -92,24 +184,59 @@ export default function SiteHeader() {
       </div>
 
       {menuOpen && (
-        <nav className="flex flex-col gap-1 border-t border-ink/10 bg-paper px-6 py-4 lg:hidden">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
+        <nav className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-ink/10 bg-paper px-6 py-4 lg:hidden">
+          <Link
+            href={seasonalNav.href}
+            onClick={closeAll}
+            className="mb-3 flex items-center gap-2 rounded-lg bg-amber-100/70 px-3 py-2.5 text-sm font-semibold text-amber-800"
+          >
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+            Featured: {seasonalNav.label}
+          </Link>
+
+          {SERVICE_AUDIENCES.map((audience) => (
+            <div key={audience.id} className="mt-3">
+              <p className="px-2 text-xs font-semibold uppercase tracking-widest text-ink-soft">
+                {audience.label}
+              </p>
+              <div className="mt-1 flex flex-col">
+                {getCategoriesFor(audience.id).map((category) => (
+                  <Link
+                    key={category.slug}
+                    href={`/services/${category.slug}`}
+                    onClick={closeAll}
+                    className="rounded-lg px-2 py-2 text-sm font-medium text-ink hover:bg-paper-tint"
+                  >
+                    {category.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div className="mt-3 flex flex-col border-t border-ink/10 pt-3">
+            <Link
+              href="/services"
+              onClick={closeAll}
               className="rounded-lg px-2 py-2.5 text-sm font-medium text-ink-soft hover:bg-paper-tint hover:text-ink"
             >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
-            className="mt-2 rounded-full bg-ink px-5 py-2.5 text-center text-sm font-semibold text-paper"
-          >
+              All services
+            </Link>
+            {PAGE_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={closeAll}
+                className="rounded-lg px-2 py-2.5 text-sm font-medium text-ink-soft hover:bg-paper-tint hover:text-ink"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <QuoteModal triggerClassName="mt-3 w-full rounded-full bg-ink px-5 py-2.5 text-center text-sm font-semibold text-paper">
             Get a Quote
-          </a>
+          </QuoteModal>
         </nav>
       )}
     </header>
