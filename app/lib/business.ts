@@ -3,7 +3,7 @@ export const BUSINESS_PHONE_DISPLAY = "(312) 866-2762";
 export const BUSINESS_PHONE_TEL = "tel:+13128662762";
 export const BUSINESS_EMAIL = "rmartincreative@gmail.com";
 
-const PRODUCTION_URL = "https://rmartincreative.com";
+export const PRODUCTION_URL = "https://rmartincreative.com";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??

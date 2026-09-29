@@ -20,7 +20,12 @@ import { SERVICE_HOME_CITY, SERVICE_HUB_CITY } from "./business";
 export type IconComponent = ComponentType<{ className?: string }>;
 
 export type ServiceFaq = { question: string; answer: string };
-export type ServiceImage = { src: string; alt: string };
+export type ServiceImage = {
+  src: string;
+  alt: string;
+  /** "contain" shows the whole image unframed — for mockups with transparent or floating edges. */
+  fit?: "cover" | "contain";
+};
 export type ServiceBeforeAfter = {
   beforeSrc: string;
   afterSrc: string;
@@ -125,6 +130,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     icon: IconGlobe,
     accent: "from-sky-500 via-blue-500 to-indigo-600",
+    image: {
+      src: "/webp-assets/liqwid-messaging.webp",
+      alt: "Example web app design: a messaging inbox with conversations, chat bubbles, and a voice message",
+      fit: "contain",
+    },
     children: [
       {
         slug: "website-overhaul",

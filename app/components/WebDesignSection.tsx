@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Reveal from "./Reveal";
 import { IconArrowRight, IconGlobe } from "./icons";
 
@@ -27,22 +28,22 @@ export default function WebDesignSection() {
 
       <div className="relative mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-[0.85fr_1fr] lg:items-center">
         <Reveal>
-          <div className="relative mx-auto w-full max-w-sm rotate-[-2deg] overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-ink/5">
+          <div className="group relative mx-auto w-full max-w-md rotate-[-2deg] overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-ink/5 transition-transform duration-500 hover:rotate-0">
             <div className="flex items-center gap-1.5 border-b border-ink/5 bg-paper-tint px-4 py-2.5">
               <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
               <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
               <span className="ml-3 h-4 w-32 rounded-full bg-ink/10" />
             </div>
-            <div className="space-y-3 p-5">
-              <div className="h-16 rounded-lg bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-600" />
-              <div className="h-2 w-3/4 rounded-full bg-ink/10" />
-              <div className="h-2 w-1/2 rounded-full bg-ink/10" />
-              <div className="mt-3 grid grid-cols-3 gap-2">
-                <div className="h-10 rounded-lg bg-sky-100" />
-                <div className="h-10 rounded-lg bg-blue-100" />
-                <div className="h-10 rounded-lg bg-indigo-100" />
-              </div>
+            {/* Full-page screenshot: shows the top, then scrolls to the bottom on hover. */}
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#0f1020]">
+              <Image
+                src="/webp-assets/website-design.webp"
+                alt="Example website design: a dark, modern product landing page with a hero, feature highlights, and a call to action"
+                fill
+                sizes="(max-width: 1024px) 90vw, 448px"
+                className="object-cover object-top transition-[object-position] duration-[4000ms] ease-in-out group-hover:object-bottom"
+              />
             </div>
           </div>
         </Reveal>

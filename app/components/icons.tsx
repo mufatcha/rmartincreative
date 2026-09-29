@@ -267,6 +267,20 @@ export function IconCode({ className = "" }: { className?: string }) {
   );
 }
 
+export function IconRocket({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14.5 4.5c2.5-1.2 4.6-1.4 5.6-1.1.3 1 .1 3.1-1.1 5.6-1.2 2.4-3.4 4.8-6.3 6.6l-3.3-3.3c1.8-2.9 4.2-5.1 6.6-6.3ZM9.4 12.3 6 12l-2 2.2 3.6.9M11.7 14.6l.3 3.4-2.2 2-.9-3.6M15.5 9.5a1.2 1.2 0 1 0 0-.01M5.5 18.5c-.9.9-1.1 2.3-1 2.5.2.1 1.6-.1 2.5-1"
+      />
+    </svg>
+  );
+}
+
 export function IconSparkle({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className}>
