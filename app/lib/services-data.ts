@@ -803,9 +803,9 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       "Business printing services — business cards, brochures and collateral, and business documents like pitch decks, designed to look like one brand.",
     tagline: "Everything that carries your name into the room.",
     description:
-      "Cards for the handshake, collateral for the counter, and documents for the boardroom — designed to look like one consistent brand. Mix and match: a matching card, brochure, and deck for one launch is common.",
+      "Cards for the handshake, collateral for the counter, and documents for the boardroom — designed to look like one consistent brand.",
     details:
-      "Most businesses need more than one printed piece, and the difference between things that look consistent and things that look thrown together is whether the same person designed all of it with the same brand in mind. Mixing and matching a business card, brochure, and deck for one launch is common, and it's easier to keep them consistent when they're all designed together.",
+      "Most businesses need more than one printed piece, and the difference between things that look consistent and things that look thrown together is whether the same person designed all of it with the same brand in mind. When your cards, brochures, and presentations come from one designer, the colors, type, and tone carry through every piece, so customers recognize you no matter which one they pick up first.",
     features: [],
     faqs: [
       {
