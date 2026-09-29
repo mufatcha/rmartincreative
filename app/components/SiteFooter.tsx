@@ -5,7 +5,6 @@ import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 const COMPANY_LINKS = [
   { href: "/", label: "Home" },
   { href: "/services", label: "All services" },
-  { href: "/new-business", label: "New business launch guide" },
   { href: "/#portfolio", label: "Work" },
   { href: "/#process", label: "How it works" },
   { href: "/#service-area", label: "Service area" },
@@ -39,6 +38,13 @@ export default function SiteFooter() {
           <div key={audience.id}>
             <p className="text-xs font-semibold uppercase tracking-widest text-ink">{audience.label}</p>
             <ul className="mt-3 space-y-2">
+              {audience.id === "business" && (
+                <li>
+                  <Link href="/new-business" className="hover:text-ink">
+                    New business launch guide
+                  </Link>
+                </li>
+              )}
               {getCategoriesFor(audience.id).map((category) => (
                 <li key={category.slug}>
                   <Link href={`/services/${category.slug}`} className="hover:text-ink">
