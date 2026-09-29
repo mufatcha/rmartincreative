@@ -40,7 +40,7 @@ export default function SiteFooter() {
             <ul className="mt-3 space-y-2">
               {audience.id === "business" && (
                 <li>
-                  <Link href="/new-business" className="font-medium text-violet-600 hover:text-violet-700">
+                  <Link href="/new-business" className="hover:text-ink">
                     New business launch guide
                   </Link>
                 </li>
