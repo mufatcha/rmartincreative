@@ -90,7 +90,7 @@ export default function HolidaySpotlight() {
             <div className="animate-sparkle absolute h-72 w-72 rounded-full bg-gradient-to-br from-rose-500/40 to-emerald-400/30 blur-2xl" />
             <div className="relative w-full rotate-[-2deg] rounded-2xl bg-gradient-to-br from-amber-200 via-amber-500 to-amber-700 p-[3px] shadow-[0_30px_60px_-12px_rgba(0,0,0,0.8),0_0_45px_-5px_rgba(251,191,36,0.4)] transition-transform duration-500 hover:rotate-0">
               <Image
-                src="/jpg-assets/christmas-card.jpg"
+                src="/webp-assets/christmas-card.webp"
                 alt="Custom photo Christmas card reading “Merry Christmas from the Miller Family,” with a family and their golden retriever framed by pine, berries and gold stars"
                 width={1997}
                 height={1331}

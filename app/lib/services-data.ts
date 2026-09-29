@@ -1223,7 +1223,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     icon: IconPhoto,
     accent: "from-amber-500 via-orange-500 to-rose-500",
     image: {
-      src: "/jpg-assets/photo-restoration.jpg",
+      src: "/webp-assets/photo-restoration.webp",
       alt: "A cracked, faded wedding portrait in an old family album beside the same portrait restored, colorized, and framed",
     },
     children: [
@@ -1325,8 +1325,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         ],
         icon: IconPhoto,
         beforeAfter: {
-          beforeSrc: "/jpg-assets/chris-curry-original.jpg",
-          afterSrc: "/jpg-assets/chris-curry-colorized.jpg",
+          beforeSrc: "/webp-assets/chris-curry-original.webp",
+          afterSrc: "/webp-assets/chris-curry-colorized.webp",
           beforeAlt: "Original black-and-white family group photo",
           afterAlt: "The same family group photo, restored and colorized",
           caption: "Drag to compare — scanned, cleaned up, restored",

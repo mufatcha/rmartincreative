@@ -18,7 +18,7 @@ const TILES: Tile[] = [
     className: "bg-gradient-to-br from-rose-500 via-red-500 to-emerald-600 sm:row-span-2",
     pattern: "flakes",
     image: {
-      src: "/jpg-assets/christmas-card-portrait.jpg",
+      src: "/webp-assets/christmas-card-portrait.webp",
       alt: "Illustrated Christmas card with a gold “Merry Christmas and a Happy New Year” headline above a cozy fireplace, tree and presents",
     },
     tall: true,
@@ -28,7 +28,7 @@ const TILES: Tile[] = [
     className: "bg-gradient-to-br from-zinc-900 to-zinc-600",
     pattern: "lines",
     image: {
-      src: "/jpg-assets/business-card.jpg",
+      src: "/webp-assets/business-card.webp",
       alt: "Stack of charcoal business cards with a silver-foil cube logo reading “Substratum Protocol — Business Systems & Architecture” beside a fountain pen",
     },
   },
@@ -37,7 +37,7 @@ const TILES: Tile[] = [
     className: "bg-gradient-to-br from-violet-600 via-indigo-500 to-sky-500",
     pattern: "bars",
     image: {
-      src: "/jpg-assets/pitch-deck.jpg",
+      src: "/webp-assets/pitch-deck.webp",
       alt: "Bound investor pitch deck titled “Quantum Technologies — Disrupting the Future, Innovation & Growth Pitch, Series A 2024” standing on a boardroom table",
     },
   },
@@ -46,7 +46,7 @@ const TILES: Tile[] = [
     className: "bg-gradient-to-br from-teal-500 to-cyan-600",
     pattern: "fold",
     image: {
-      src: "/jpg-assets/brochure.jpg",
+      src: "/webp-assets/brochure.webp",
       alt: "Tri-fold “Elevate Your Reach” marketing brochure open on a desk, showing digital marketing and branding services alongside a teal, orange and navy “Grow Your Business” cover",
     },
   },
@@ -55,7 +55,7 @@ const TILES: Tile[] = [
     className: "bg-gradient-to-br from-fuchsia-500 via-pink-500 to-amber-400",
     pattern: "dots",
     image: {
-      src: "/jpg-assets/birthday-card-2.jpg",
+      src: "/webp-assets/birthday-card-2.webp",
       alt: "Photo birthday card reading “Happy 7th Birthday, Leo!” with a family portrait and “from your family” caption, standing on a kitchen counter",
     },
   },
@@ -64,7 +64,7 @@ const TILES: Tile[] = [
     className: "bg-gradient-to-br from-amber-500 via-orange-500 to-rose-500 sm:col-span-2",
     pattern: "photo",
     image: {
-      src: "/jpg-assets/photo-restoration.jpg",
+      src: "/webp-assets/photo-restoration.webp",
       alt: "Side-by-side comparison of a torn, sepia-toned 1948 photo of Sarah and Henry in a family album next to the same portrait restored and colorized in a wood frame",
     },
     wide: true,

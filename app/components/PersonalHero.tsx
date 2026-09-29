@@ -106,7 +106,7 @@ export default function PersonalHero() {
             style={{ "--rot": "-7deg", transform: "rotate(-7deg)" } as FloatStyle}
           >
             <Image
-              src="/jpg-assets/christmas-card-portrait.jpg"
+              src="/webp-assets/christmas-card-portrait.webp"
               alt=""
               width={800}
               height={1200}
@@ -120,7 +120,7 @@ export default function PersonalHero() {
             style={{ "--rot": "6deg", transform: "rotate(6deg)" } as FloatStyle}
           >
             <Image
-              src="/jpg-assets/birthday-card-2.jpg"
+              src="/webp-assets/birthday-card-2.webp"
               alt=""
               width={1710}
               height={1140}
@@ -134,7 +134,7 @@ export default function PersonalHero() {
             style={{ "--rot": "-3deg", transform: "rotate(-3deg)" } as FloatStyle}
           >
             <Image
-              src="/jpg-assets/photo-restoration.jpg"
+              src="/webp-assets/photo-restoration.webp"
               alt=""
               width={2816}
               height={1536}

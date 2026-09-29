@@ -66,7 +66,7 @@ export default function GreetingCardsSection() {
             <div className="relative w-full rotate-[2deg] rounded-2xl bg-gradient-to-br from-fuchsia-300 via-pink-400 to-amber-300 p-[3px] shadow-[0_30px_60px_-15px_rgba(112,26,117,0.45)] transition-transform duration-500 hover:rotate-0">
               <div className="relative aspect-square overflow-hidden rounded-[13px]">
                 <Image
-                  src="/jpg-assets/birthday-card.jpg"
+                  src="/webp-assets/birthday-card.webp"
                   alt="Custom floral birthday card reading “Happy Birthday, Sweetest Chloe!” held on a fridge by a bird magnet"
                   fill
                   sizes="(max-width: 1024px) 90vw, 448px"
