@@ -9,6 +9,7 @@ const OCCASIONS = [
   "Announcements",
   "Get well & sympathy",
   "Just because",
+  "Folded or flat 5×7",
 ];
 
 export default function GreetingCardsSection() {
