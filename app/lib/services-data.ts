@@ -619,7 +619,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       "Custom greeting card design — Christmas and holiday cards, plus everyday cards for birthdays, thank-yous, and every occasion in between.",
     tagline: "A card for every moment worth marking.",
     description:
-      "From the biggest holiday mailer of the year to a single birthday card, every card gets the same care with layout, type, and color — sized right for print or ready to share digitally.",
+      "From the biggest holiday mailer of the year to a single birthday card, every card gets the same care with layout, type, and color. Printed cards come in two 5×7 formats: folded (10×7 paper folded in half) or flat and printed on both sides.",
     details:
       "Whether it's the one mailer everyone in your family looks forward to each December or a single birthday card for someone specific, both get the same design process: real layout and color decisions, not a template with a photo dropped in.",
     features: [],
@@ -633,6 +633,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         question: "How long does it take to design and print cards?",
         answer:
           "Simple designs can turn around in about a week; larger holiday runs need more lead time, especially in the fall.",
+      },
+      {
+        question: "What card formats do you offer?",
+        answer:
+          "Two 5×7 formats for every kind of card. A folded card is printed on 10×7 paper and folded in half into a 5×7 card, with room inside for a message or more photos. A flat card is a single 5×7 card printed on both sides, with the option of rounded corners.",
       },
       {
         question: "What's the difference between Christmas Cards and Greeting Cards here?",
@@ -664,11 +669,13 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Custom Christmas and holiday cards — family photo cards and corporate mailers, designed early to beat the December rush.",
         tagline: "My favorite project of the year.",
         description:
-          "Custom family photo cards, corporate holiday mailers, and everything in between — designed early enough to beat the December rush and printed on the finish you want: matte, glossy, or foil.",
+          "Custom family photo cards, corporate holiday mailers, and everything in between — designed early enough to beat the December rush. Choose a folded 5×7 card or a flat 5×7 card printed on both sides, in the finish you want: matte, glossy, or foil.",
         details:
           "Christmas cards are the single busiest thing I do every year, and the reason clients keep coming back is simple: I treat a photo card the same way I'd treat any other design project — real layout choices, real color decisions, not a template with your photo dropped in. Corporate clients get the same care for a mailer as a family does for their holiday photo.",
         features: [
           "Custom family photo cards",
+          "Folded 5×7 cards (10×7 paper folded in half)",
+          "Flat 5×7 cards, printed on both sides, with optional rounded corners",
           "Corporate & business holiday mailers",
           "Matte, glossy, or foil finishes",
           "Early booking gets first pick of finishes",
@@ -688,6 +695,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "What finishes are available?",
             answer: "Matte, glossy, or foil, depending on the design and your budget.",
+          },
+          {
+            question: "What card formats do you offer?",
+            answer:
+              "Two 5×7 formats. A folded card is printed on 10×7 paper and folded in half into a 5×7 card, with room for a message or photos inside. A flat card is a single 5×7 card printed on both sides — great for photo cards, with a design or message on the back — and can have rounded corners for a softer, finished look.",
           },
           {
             question: "Can you design a corporate holiday mailer, not just family cards?",
@@ -714,13 +726,15 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Custom greeting cards for birthdays, thank-yous, invitations, announcements, and every other occasion — one-off or full sets.",
         tagline: "Not every occasion needs a holiday budget.",
         description:
-          "Birthdays, thank-yous, invitations, announcements, sympathy — whether it's a single card or a full set for a shop shelf, you get the same care with layout, type, and color, sized right for print or ready to share digitally.",
+          "Birthdays, thank-yous, invitations, announcements, sympathy — whether it's a single card or a full set for a shop shelf, you get the same care with layout, type, and color — printed as a folded or flat 5×7 card, or ready to share digitally.",
         details:
           "A greeting card is often the only physical, handmade-feeling thing someone gets all year — it's worth getting right even when the occasion is small. I design each one with the same layout and color care as a bigger project, whether it's a single birthday card or a full set for a shop shelf.",
         features: [
           "Birthdays, thank-yous & invitations",
           "Announcements & sympathy cards",
           "One-off designs or full sets",
+          "Folded 5×7 cards (10×7 paper folded in half)",
+          "Flat 5×7 cards, printed on both sides, with optional rounded corners",
           "Print-ready or digital-share formats",
         ],
         faqs: [
@@ -736,6 +750,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Can I order just one card?",
             answer: "Yes — one-off designs are common, not just full sets.",
+          },
+          {
+            question: "What card formats do you offer?",
+            answer:
+              "Two 5×7 formats. A folded card is printed on 10×7 paper and folded in half into a 5×7 card, with room for a message or photos inside. A flat card is a single 5×7 card printed on both sides — great for photo cards, with a design or message on the back — and can have rounded corners for a softer, finished look.",
           },
           {
             question: "Do you offer digital versions I can text or email?",

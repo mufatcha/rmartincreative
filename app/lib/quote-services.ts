@@ -174,6 +174,18 @@ export const SERVICES: ServiceOption[] = [
         options: ["Holiday / Christmas", "Birthday", "Photo card", "Other custom card"],
       },
       { id: "quantity", label: "Quantity needed", type: "text" },
+      {
+        id: "format",
+        label: "Card format",
+        type: "radio",
+        options: ["Folded 5×7 (10×7 folded in half)", "Flat 5×7, printed both sides", "Not sure"],
+      },
+      {
+        id: "corners",
+        label: "Rounded corners? (flat cards only)",
+        type: "radio",
+        options: ["Yes", "No", "Not sure"],
+      },
       { id: "photo", label: "Include a family or personal photo?", type: "radio", options: ["Yes", "No"] },
       { id: "style", label: "Design style", type: "select", options: ["Illustrated", "Photo-based", "Minimal / modern", "Not sure"] },
       { id: "mailing", label: "Need envelope addressing or mailing service?", type: "radio", options: ["Yes", "No"] },

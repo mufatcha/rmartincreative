@@ -65,6 +65,7 @@ export default function HolidaySpotlight() {
             <ul className="mt-7 grid gap-3 text-sm text-white/80 sm:grid-cols-2">
               {[
                 "Photo & non-photo layouts",
+                "Folded or flat 5×7 cards",
                 "Foil, matte or glossy finishes",
                 "Corporate mailing lists welcome",
                 "Digital + print delivery",
