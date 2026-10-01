@@ -109,13 +109,18 @@ export default function ServiceAreaSection() {
         </div>
 
         <Reveal delay={FAQS.length * 80}>
-          <a
-            href="#contact"
-            className="group mt-14 inline-flex items-center gap-2 text-sm font-semibold text-violet-600 transition-colors hover:text-violet-700"
-          >
-            Get a quote for your area
-            <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </a>
+          <div className="mt-14 flex flex-wrap items-center gap-6">
+            <a
+              href="/service-area"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-violet-600 transition-colors hover:text-violet-700"
+            >
+              See every town I serve
+              <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+            <a href="#contact" className="text-sm font-semibold text-ink-soft transition-colors hover:text-ink">
+              Get a quote for your area
+            </a>
+          </div>
         </Reveal>
       </div>
     </section>

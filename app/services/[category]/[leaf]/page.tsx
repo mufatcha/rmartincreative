@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import ChristmasTownLinks from "../../../components/ChristmasTownLinks";
 import CtaSection from "../../../components/CtaSection";
 import ServiceLeafPage from "../../../components/ServiceLeafPage";
 import { SERVICE_CATEGORIES, getServiceLeaf } from "../../../lib/services-data";
@@ -38,6 +39,7 @@ export default async function LeafPage({
   return (
     <>
       <ServiceLeafPage category={match.category} leaf={match.leaf} />
+      {leafSlug === "christmas-cards" && <ChristmasTownLinks />}
       <CtaSection />
     </>
   );
