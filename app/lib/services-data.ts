@@ -15,7 +15,7 @@ import {
   IconShirt,
   IconSignpost,
 } from "../components/icons";
-import { SERVICE_HOME_CITY, SERVICE_HUB_CITY } from "./business";
+import { SERVICE_HOME_CITY } from "./business";
 
 export type IconComponent = ComponentType<{ className?: string }>;
 
@@ -1028,7 +1028,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     metaDescription:
       "Custom yard signs and posters for businesses and individuals — real estate and grand-opening signage, event posters, and personal celebration signs.",
     tagline: "Signage that works just as hard for a business as it does for a backyard.",
-    description: `From real estate and grand-opening signs to a graduation poster for the front yard, yard signs and posters get noticed by everyone who walks or drives by — I design and print both for personal occasions and business use around ${SERVICE_HOME_CITY} and ${SERVICE_HUB_CITY}.`,
+    description: `From real estate and grand-opening signs to a graduation poster for the front yard, yard signs and posters get noticed by everyone who walks or drives by — I design and print both for personal occasions and business use around ${SERVICE_HOME_CITY} and across Northern Illinois.`,
     details:
       "The line between a business sign and a personal one is thinner than it looks: a real estate agent's open-house sign and a family's “Congratulations, Graduate” yard sign use the same materials and the same design principles — clear at a glance, readable from the street, built to hold up outside. Whether it's for a storefront or a driveway, I design each piece to actually get read at a distance, not just look good up close.",
     features: [],
@@ -1271,7 +1271,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "High-resolution scans with basic dust cleanup",
           "Files organized and labeled",
           "Digital files delivered, ready to back up and share",
-          `Local drop-off & pickup around ${SERVICE_HUB_CITY}, or mail-in`,
+          "Local drop-off & [pickup](/service-area) across my service area, or mail-in",
         ],
         faqs: [
           {
@@ -1292,7 +1292,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
           {
             question: "Do I need to drop off my photos in person?",
-            answer: `Local drop-off and pickup is available around ${SERVICE_HUB_CITY}, or you can mail prints in and get them back along with your digital files.`,
+            answer: "Local drop-off and [pickup](/service-area) is available across my service area, or you can mail prints in and get them back along with your digital files.",
           },
           {
             question: "Will I get my original photos back?",

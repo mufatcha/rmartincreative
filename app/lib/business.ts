@@ -1,3 +1,5 @@
+import { TOWNS, type Town } from "./data/towns";
+
 export const BUSINESS_NAME = "Ryan Martin Design & Print";
 export const BUSINESS_PHONE_DISPLAY = "(312) 866-2762";
 export const BUSINESS_PHONE_TEL = "tel:+13128662762";
@@ -9,24 +11,22 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.NODE_ENV === "production" ? PRODUCTION_URL : "http://localhost:3000");
 
-export const SERVICE_AREA_CITIES = [
-  { name: "Richmond", state: "IL" },
-  { name: "Spring Grove", state: "IL" },
-  { name: "Fox Lake", state: "IL" },
-  { name: "Round Lake", state: "IL" },
-  { name: "Wauconda", state: "IL" },
-  { name: "Antioch", state: "IL" },
-  { name: "Lake Villa", state: "IL" },
-  { name: "Wadsworth", state: "IL" },
-  { name: "Gurnee", state: "IL" },
-  { name: "McHenry", state: "IL" },
-  { name: "Crystal Lake", state: "IL" },
-  { name: "Woodstock", state: "IL" },
-  { name: "Algonquin", state: "IL" },
-  { name: "Carpentersville", state: "IL" },
-  { name: "Genoa City", state: "WI" },
-  { name: "Lake Geneva", state: "WI" },
-] as const;
+// The service area comes from app/lib/data/towns.ts — the complete list of towns
+// served. Chicago neighborhoods are covered by "Chicago" itself, and the home
+// corridors are listed first.
+const CATEGORY_ORDER: Town["category"][] = [
+  "Richmond to Gurnee Corridor",
+  "Richmond to West Dundee Corridor",
+  "Loop Drive",
+  "Chicago Metro Area",
+];
+
+export const SERVICE_AREA_CITIES: { name: string; state: string }[] = CATEGORY_ORDER.flatMap((category) =>
+  TOWNS.filter((t) => t.category === category && t.type !== "chicago_neighborhood").map((t) => ({
+    name: t.name,
+    state: t.state,
+  }))
+);
 
 export const STATE_NAMES: Record<string, string> = {
   IL: "Illinois",
@@ -35,12 +35,11 @@ export const STATE_NAMES: Record<string, string> = {
 
 export const SERVICE_AREA_BOUNDS = {
   north: "Lake Geneva, WI",
-  south: "Carpentersville, IL",
+  south: "Chicago, IL",
   west: "Woodstock, IL",
-  east: "Gurnee, IL",
+  east: "Lake Michigan",
 } as const;
 
-export const SERVICE_HUB_CITY = "Gurnee";
 export const SERVICE_HOME_CITY = "Richmond";
 export const SERVICE_STATE = "Illinois";
 export const SERVICE_STATE_ABBR = "IL";

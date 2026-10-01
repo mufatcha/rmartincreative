@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { CSSProperties } from "react";
 import Reveal from "./Reveal";
 import { IconArrowRight, IconSnowflake } from "./icons";
@@ -83,6 +84,12 @@ export default function HolidaySpotlight() {
               Reserve my card design
               <IconArrowRight className="h-4 w-4" />
             </a>
+            <Link
+              href="/christmas-cards"
+              className="ml-5 mt-9 inline-block text-sm font-semibold text-amber-300 hover:text-amber-200"
+            >
+              Find your town →
+            </Link>
           </div>
         </Reveal>
 

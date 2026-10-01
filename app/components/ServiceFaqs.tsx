@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import { renderInlineLinks, stripInlineLinks } from "../lib/inline-links";
 import type { ServiceFaq } from "../lib/services-data";
 
 export default function ServiceFaqs({ faqs }: { faqs: ServiceFaq[] }) {
@@ -10,7 +11,7 @@ export default function ServiceFaqs({ faqs }: { faqs: ServiceFaq[] }) {
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      acceptedAnswer: { "@type": "Answer", text: stripInlineLinks(faq.answer) },
     })),
   };
 
@@ -30,7 +31,7 @@ export default function ServiceFaqs({ faqs }: { faqs: ServiceFaq[] }) {
           <Reveal key={faq.question} delay={i * 80} className="break-inside-avoid pb-8">
             <div>
               <h3 className="text-base font-semibold">{faq.question}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft">{faq.answer}</p>
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft">{renderInlineLinks(faq.answer)}</p>
             </div>
           </Reveal>
         ))}

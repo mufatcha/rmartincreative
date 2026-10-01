@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
+import { renderInlineLinks } from "../lib/inline-links";
 import RelatedServices from "./RelatedServices";
 import ServiceBreadcrumb from "./ServiceBreadcrumb";
 import ServiceCta from "./ServiceCta";
@@ -62,7 +63,7 @@ export default function ServiceLeafPage({
             {leaf.features.map((item) => (
               <li key={item} className="flex items-center gap-2">
                 <span className={`h-1.5 w-1.5 rounded-full bg-gradient-to-br ${category.accent}`} />
-                {item}
+                {renderInlineLinks(item)}
               </li>
             ))}
           </ul>

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "./lib/business";
+import { getChristmasTownPages } from "./lib/data/christmas-towns";
 import { SERVICE_CATEGORIES } from "./lib/services-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -34,6 +35,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_URL}/service-area`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${SITE_URL}/new-business`,
       lastModified,
       changeFrequency: "monthly",
@@ -46,5 +53,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     ...servicePages,
+    {
+      url: `${SITE_URL}/christmas-cards`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...getChristmasTownPages().map((p) => ({
+      url: `${SITE_URL}/christmas-cards/${p.slug}`,
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
   ];
 }

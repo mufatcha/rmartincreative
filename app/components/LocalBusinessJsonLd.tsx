@@ -3,7 +3,7 @@ import {
   BUSINESS_NAME,
   BUSINESS_PHONE_TEL,
   SERVICE_AREA_CITIES,
-  SERVICE_HUB_CITY,
+  SERVICE_HOME_CITY,
   SERVICE_STATE_ABBR,
   STATE_NAMES,
   SITE_URL,
@@ -22,7 +22,7 @@ function buildSchema() {
     email: BUSINESS_EMAIL,
     address: {
       "@type": "PostalAddress",
-      addressLocality: SERVICE_HUB_CITY,
+      addressLocality: SERVICE_HOME_CITY,
       addressRegion: SERVICE_STATE_ABBR,
       addressCountry: "US",
     },

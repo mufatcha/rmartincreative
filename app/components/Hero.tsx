@@ -81,8 +81,8 @@ export default function Hero() {
             Small businesses need a website, search visibility, print, and
             a brand that holds together &mdash; but not a full-time marketing
             department. I&rsquo;m Ryan Martin, one experienced partner based in
-            Richmond, IL, who handles all of it for businesses across Gurnee
-            and Northern Illinois.
+            Richmond, IL, who handles all of it for businesses across Gurnee,
+            Northern Illinois, and Southeast Wisconsin.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">

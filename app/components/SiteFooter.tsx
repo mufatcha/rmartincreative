@@ -7,7 +7,7 @@ const COMPANY_LINKS = [
   { href: "/services", label: "All services" },
   { href: "/#portfolio", label: "Work" },
   { href: "/#process", label: "How it works" },
-  { href: "/#service-area", label: "Service area" },
+  { href: "/service-area", label: "Service area" },
   { href: "/#contact", label: "Contact" },
 ];
 
@@ -45,6 +45,13 @@ export default function SiteFooter() {
                   </Link>
                 </li>
               )}
+              {audience.id === "personal" && (
+                <li>
+                  <Link href="/cards-and-photos" className="hover:text-ink">
+                    Cards &amp; Photos
+                  </Link>
+                </li>
+              )}
               {getCategoriesFor(audience.id).map((category) => (
                 <li key={category.slug}>
                   <Link href={`/services/${category.slug}`} className="hover:text-ink">
@@ -52,13 +59,6 @@ export default function SiteFooter() {
                   </Link>
                 </li>
               ))}
-              {audience.id === "personal" && (
-                <li>
-                  <Link href="/cards-and-photos" className="hover:text-ink">
-                    Cards &amp; photos overview
-                  </Link>
-                </li>
-              )}
             </ul>
           </div>
         ))}
