@@ -348,29 +348,29 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         slug: "website-hosting",
         title: "Website Hosting & Management",
         metaDescription:
-          "Modern website hosting for small businesses — free hosting on Vercel, version-controlled backups on GitHub, and faster load times with Cloudflare.",
+          "Modern website hosting for small businesses on Cloudflare — fast global hosting, built-in security, version-controlled backups on GitHub, and automatic updates, often with no monthly host bill.",
         tagline: "Lower hosting costs, safer backups, and faster load times.",
         description:
-          "Most small business sites are still paying monthly for hosting that a modern setup handles for free. I host sites on Vercel, keep every version of the code safely backed up on GitHub, and put Cloudflare in front for speed and uptime — no traditional web host bill required.",
+          "Most small business sites are still paying monthly for hosting that a modern setup handles for free. I host sites on Cloudflare's global network, keep every version of the code safely backed up on GitHub, and publish updates automatically — no traditional web host bill required.",
         details:
-          "The old model — a shared hosting plan billed every month whether or not anyone visits your site — isn't the only option anymore. Vercel's free tier runs the same global infrastructure used by major companies and covers most small business sites at no cost. GitHub keeps a complete, dated history of every change to your site, so nothing is ever truly lost and any update can be rolled back in minutes. Cloudflare sits in front of it all, serving your site from servers close to each visitor for faster load times, absorbing traffic spikes, and watching for downtime so problems get caught immediately instead of days later.",
+          "The old model — a shared hosting plan billed every month whether or not anyone visits your site — isn't the only option anymore. Cloudflare runs one of the largest networks in the world, serving your site from data centers close to each visitor for fast load times, with security and protection against traffic spikes built in. Its free plan covers most small business sites, and it's built for commercial use. GitHub keeps a complete, dated history of every change to your site, so nothing is ever truly lost: every update is published automatically, and any change can be rolled back in minutes.",
         features: [
-          "Free or near-free hosting on Vercel instead of a monthly host bill",
+          "Free or near-free hosting on Cloudflare instead of a monthly host bill",
+          "Fast load times from Cloudflare's global network",
+          "Built-in security, HTTPS, and protection from traffic spikes",
           "Every change version-controlled on GitHub — nothing is ever lost",
-          "Instant rollback to a previous version if something breaks",
-          "Cloudflare CDN for faster load times worldwide",
-          "Uptime monitoring so outages get caught immediately",
+          "Updates published automatically, with instant rollback if something breaks",
         ],
         faqs: [
           {
             question: "How much does this actually save compared to traditional hosting?",
             answer:
-              "Traditional hosts often charge monthly fees whether your site gets traffic or not. Vercel's free tier covers most small business sites entirely, so ongoing hosting costs can drop to $0 — you'd typically only pay for the domain name itself.",
+              "Traditional hosts often charge monthly fees whether your site gets traffic or not. Cloudflare's free plan covers most small business sites entirely, so ongoing hosting costs can drop to $0 — you'd typically only pay for the domain name itself. Larger or busier sites may need Cloudflare's low-cost paid plan, and I'll tell you upfront if yours does.",
           },
           {
             question: "Is free hosting actually reliable for a real business site?",
             answer:
-              "Yes — Vercel's free tier runs on the same global infrastructure used by much larger companies. It's a different pricing model than a traditional host, not a downgrade in reliability.",
+              "Yes — Cloudflare's free plan runs on the same global network that much larger companies rely on, and it's meant for commercial sites. It's a different pricing model than a traditional host, not a downgrade in reliability.",
           },
           {
             question: "What is GitHub, and why does my site need it?",
@@ -380,7 +380,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "What does Cloudflare actually do for my site?",
             answer:
-              "Cloudflare sits in front of your site to speed up load times for visitors anywhere in the world, absorb traffic spikes, and add a layer of security and uptime monitoring.",
+              "Cloudflare hosts your site on its worldwide network, so pages load quickly for visitors anywhere. It also handles HTTPS, absorbs traffic spikes, and blocks a lot of malicious traffic before it ever reaches your site.",
           },
           {
             question: "Can this be set up for a site I already have?",
@@ -390,7 +390,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Do I need to manage any of this myself?",
             answer:
-              "No — I handle the Vercel, GitHub, and Cloudflare setup and can keep managing it going forward, or hand over full access if you'd rather control it yourself.",
+              "No — I handle the Cloudflare and GitHub setup and can keep managing it going forward, or hand over full access if you'd rather control it yourself.",
           },
         ],
         icon: IconCloud,

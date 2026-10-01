@@ -1,4 +1,4 @@
-import { BUSINESS_EMAIL } from "../../lib/business";
+import { QUOTE_INBOX_EMAIL } from "../../lib/business";
 import { getQuoteService } from "../../lib/quote-services";
 import { getR2, presignGet } from "../../lib/r2";
 import { MAX_FILES, formatBytes } from "../../lib/upload-rules";
@@ -141,7 +141,7 @@ export async function POST(request: Request) {
     headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       from: process.env.QUOTE_FROM_EMAIL || "Quote Requests <onboarding@resend.dev>",
-      to: [process.env.QUOTE_TO_EMAIL || BUSINESS_EMAIL],
+      to: [process.env.QUOTE_TO_EMAIL || QUOTE_INBOX_EMAIL],
       reply_to: email,
       subject: `Quote request: ${service.label} — ${name}`,
       html,

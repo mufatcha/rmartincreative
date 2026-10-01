@@ -3,7 +3,11 @@ import { TOWNS, type Town } from "./data/towns";
 export const BUSINESS_NAME = "Ryan Martin Design & Print";
 export const BUSINESS_PHONE_DISPLAY = "(312) 866-2762";
 export const BUSINESS_PHONE_TEL = "tel:+13128662762";
-export const BUSINESS_EMAIL = "rmartincreative@gmail.com";
+export const BUSINESS_EMAIL = "ryan@rmartincreative.com";
+/** Where quote-form emails are delivered (override with QUOTE_TO_EMAIL).
+ *  Kept on the Gmail inbox: until rmartincreative.com is verified in Resend,
+ *  Resend can only deliver to the address the account was created with. */
+export const QUOTE_INBOX_EMAIL = "rmartincreative@gmail.com";
 
 export const PRODUCTION_URL = "https://rmartincreative.com";
 

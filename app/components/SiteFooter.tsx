@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL } from "../lib/business";
+import { ABOUT } from "../lib/data/about";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
 const COMPANY_LINKS = [
   { href: "/", label: "Home" },
+  // The About page appears here automatically once it's published.
+  ...(ABOUT.published ? [{ href: "/about", label: "About" }] : []),
   { href: "/services", label: "All services" },
   { href: "/#portfolio", label: "Work" },
   { href: "/#process", label: "How it works" },

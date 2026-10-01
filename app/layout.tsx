@@ -22,9 +22,9 @@ const geistMono = Geist_Mono({
 });
 
 const TITLE =
-  "Ryan Martin | Freelance Designer & Printer — Gurnee & Richmond, IL";
+  "Ryan Martin Design & Print | Marketing, Web & Print Partner for Small Businesses in Richmond, IL";
 const DESCRIPTION =
-  "Ryan Martin — freelance design, print & web serving Northern Illinois and Southern Wisconsin: holiday and greeting cards, business printing, custom apparel, website design, and photo scanning, restoration, and color correction.";
+  "Your marketing team without the payroll: websites, search and AI visibility, business printing, signs, and apparel for small businesses across Northern Illinois and Southeast Wisconsin, plus custom Christmas cards and photo restoration. Based in Richmond, IL.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -33,9 +33,8 @@ export const metadata: Metadata = {
     template: `%s | ${BUSINESS_NAME}`,
   },
   description: DESCRIPTION,
-  alternates: {
-    canonical: "/",
-  },
+  // No site-wide canonical here: every page sets its own, and a layout-level
+  // one would make any page that forgets mark itself a duplicate of the home page.
   openGraph: {
     type: "website",
     url: "/",

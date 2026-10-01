@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "./lib/business";
+import { ABOUT } from "./lib/data/about";
 import { getChristmasTownPages } from "./lib/data/christmas-towns";
 import { SERVICE_CATEGORIES } from "./lib/services-data";
 
@@ -34,6 +35,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    ...(ABOUT.published
+      ? [{ url: `${SITE_URL}/about`, lastModified, changeFrequency: "yearly" as const, priority: 0.6 }]
+      : []),
     {
       url: `${SITE_URL}/service-area`,
       lastModified,
