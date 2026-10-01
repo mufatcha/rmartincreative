@@ -57,7 +57,7 @@ export default function Image() {
             color: "#5a5270",
           }}
         >
-          Freelance Design &amp; Print · Northern Illinois &amp; Southern Wisconsin
+          Marketing, Web &amp; Print · Northern Illinois &amp; Southeast Wisconsin
         </div>
       </div>
     ),

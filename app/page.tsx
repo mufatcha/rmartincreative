@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
 import ComparisonSection from "./components/ComparisonSection";
@@ -12,6 +13,10 @@ import PortfolioSection from "./components/PortfolioSection";
 import ServiceAreaSection from "./components/ServiceAreaSection";
 import TrustedBySection from "./components/TrustedBySection";
 import CtaSection from "./components/CtaSection";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 // Rebuild the page hourly so the seasonal hero badge (app/lib/season.ts) stays current.
 export const revalidate = 3600;
