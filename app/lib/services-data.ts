@@ -527,8 +527,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           src: "/webp-assets/free-search-ai-health-check.webp",
           alt: "Free Search + AI Health Check: a tablet showing a Google search performance check, connected to a phone where an AI assistant analyzes the site, with a plain-English health check report marked no cost, no obligation",
           fit: "expand",
-          width: 2816,
-          height: 1536,
+          width: 1600,
+          height: 873,
         },
       },
       {

@@ -60,7 +60,7 @@ export default function ChristmasCardEssentials() {
         <p className="mt-10 text-sm leading-relaxed text-ink-soft">
           <span className="font-semibold text-ink">Pricing:</span> design starts at{" "}
           {startsAt("greeting-cards/christmas-cards")}: {usd(CARD_PRICES.designedSide)} per designed side,{" "}
-          {usd(CARD_PRICES.framedPhotoSide)} for a framed photo only, and {usd(CARD_PRICES.textSide)} per text-only side, in any combination — so a folded card with a designed front and a
+          {usd(CARD_PRICES.framedPhotoSide)} to add a framed photo inside or on the back, and {usd(CARD_PRICES.textSide)} per text-only side, in any combination — so a folded card with a designed front and a
           message inside is {usd(cardDesignPrice(1, 1))}, and a folded card designed on all 4 sides is{" "}
           {usd(cardDesignPrice(4))}. Plus printing by quantity and finish. {cardRevisionPolicy()}
         </p>

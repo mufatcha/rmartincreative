@@ -9,7 +9,8 @@
 export const CARD_PRICES = {
   /** A side with a photo, artwork, or full design. */
   designedSide: 40,
-  /** A side with just your photo in a frame or border. */
+  /** Your photo in a simple frame, on an inside page or the back. An add-on:
+   *  every card has at least one designed side, so designedSide is the minimum. */
   framedPhotoSide: 20,
   /** A side with a text-only layout, like a message inside. */
   textSide: 10,
@@ -50,6 +51,7 @@ export function cardDesignPrice(designedSides: number, textSides = 0, framedPhot
 export const CARD_EXAMPLES = [
   { label: "One-sided flat card", designedSides: 1, price: cardDesignPrice(1) },
   { label: "Folded card designed front, message inside", designedSides: 1, price: cardDesignPrice(1, 1) },
+  { label: "Folded card designed front, framed photo and message inside", designedSides: 1, price: cardDesignPrice(1, 1, 1) },
   { label: "Flat card designed front and back", designedSides: 2, price: cardDesignPrice(2) },
   { label: "Folded card designed on all 4 sides", designedSides: 4, price: cardDesignPrice(4) },
 ];
@@ -82,12 +84,12 @@ export function christmasSpecialDiscount(designedSides: number): number {
 const CARD_PRICING: ServicePricing = {
   lines: [
     { label: "Each designed side (photos and artwork)", price: designedSide },
-    { label: "Framed photo only", price: framedPhotoSide },
+    { label: "Framed photo only (inside or back)", price: framedPhotoSide },
     { label: "Each text-only side (like a message inside)", price: textSide },
   ],
   plusPrinting: true,
   startsAt: cardDesignPrice(1),
-  note: `Mix and match across the card's sides: a folded card has 4 (front, inside left, inside right, back) and a flat card has 2. For example: ${CARD_EXAMPLES.map((e) => `${e.label.charAt(0).toLowerCase()}${e.label.slice(1)}: ${usd(e.price)}`).join("; ")}. ${cardRevisionPolicy()}`,
+  note: `Every card has at least one designed side, so cards start at ${usd(designedSide)}. Mix and match across the rest: a folded card has 4 (front, inside left, inside right, back) and a flat card has 2. For example: ${CARD_EXAMPLES.map((e) => `${e.label.charAt(0).toLowerCase()}${e.label.slice(1)}: ${usd(e.price)}`).join("; ")}. ${cardRevisionPolicy()}`,
 };
 
 export const PRICING: Record<string, ServicePricing> = {
@@ -205,5 +207,5 @@ export function cardRevisionPolicy(): string {
 export function cardPriceAnswer(): string {
   const { designedSide, framedPhotoSide, textSide } = CARD_PRICES;
   const examples = CARD_EXAMPLES.map((e) => `${e.label.toLowerCase()}: ${usd(e.price)}`).join("; ");
-  return `Card design is priced per side, in any combination: ${usd(designedSide)} for each designed side, ${usd(framedPhotoSide)} for a side with just your photo in a frame, and ${usd(textSide)} for each text-only side, plus printing. A folded card has 4 sides (front, inside left, inside right, back) and a flat card has 2. For example — ${examples}. ${cardRevisionPolicy()} Printing is quoted by quantity and finish.`;
+  return `Card design is priced per side, in any combination: ${usd(designedSide)} for each designed side, ${usd(framedPhotoSide)} to add a framed photo on an inside page or the back, and ${usd(textSide)} for each text-only side, plus printing. Every card has at least one designed side, so the minimum is ${usd(designedSide)}. A folded card has 4 sides (front, inside left, inside right, back) and a flat card has 2. For example — ${examples}. ${cardRevisionPolicy()} Printing is quoted by quantity and finish.`;
 }
