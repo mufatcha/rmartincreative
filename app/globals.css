@@ -38,6 +38,11 @@ section[id] {
   scroll-margin-top: 5.5rem;
 }
 
+/* Pages with the audience tabs under the nav have a taller fixed header. */
+html:has([data-audience-tabs]) section[id] {
+  scroll-margin-top: 8.5rem;
+}
+
 /* ---------- Reveal on scroll ---------- */
 .reveal {
   opacity: 0;

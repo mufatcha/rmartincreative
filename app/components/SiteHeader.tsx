@@ -1,23 +1,61 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import QuoteModal from "./QuoteModal";
-import { IconArrowRight } from "./icons";
+import { IconArrowRight, IconSnowflake } from "./icons";
 import type { SeasonalNavLink } from "../lib/season";
-import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
+import { ABOUT } from "../lib/data/about";
+import { SERVICE_AUDIENCES, getCategoriesFor, type ServiceAudience } from "../lib/services-data";
 
 const PAGE_LINKS = [
   { href: "/new-business", label: "New Business" },
-  { href: "/cards-and-photos", label: "Cards & Photos" },
   { href: "/#portfolio", label: "Work" },
+  ...(ABOUT.published ? [{ href: "/about", label: "About" }] : []),
 ];
+
+// Audience switcher shown under the nav on these two pages only. Each tab is
+// its own page, so both keep their own URL, title, and search listing.
+const AUDIENCE_TABS = [
+  { href: "/", label: "For Businesses" },
+  { href: "/cards-and-photos", label: "For Families" },
+];
+
+// Desktop dropdown columns: businesses with the shared signs, prints &
+// apparel group stacked on the left, personal & family on the right.
+const MENU_COLUMNS: ServiceAudience[][] = [["business", "shared"], ["personal"]];
+
+// Services menu entries. Christmas Cards gets its own entry above Greeting
+// Cards (its parent category) so it's always one click away, all year.
+function servicesMenuFor(audience: ServiceAudience) {
+  return getCategoriesFor(audience).flatMap((category) => {
+    const entry = {
+      href: `/services/${category.slug}`,
+      title: category.title,
+      icon: category.icon,
+      accent: category.accent,
+    };
+    if (category.slug !== "greeting-cards") return [entry];
+    return [
+      {
+        href: "/services/greeting-cards/christmas-cards",
+        title: "Christmas Cards",
+        icon: IconSnowflake,
+        accent: "from-rose-600 via-red-500 to-emerald-600",
+      },
+      entry,
+    ];
+  });
+}
 
 export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLink }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const showTabs = AUDIENCE_TABS.some((t) => t.href === pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -89,34 +127,38 @@ export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLi
             </button>
 
             {servicesOpen && (
-              <div className="absolute left-1/2 top-full mt-4 w-[34rem] -translate-x-1/2 rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-ink/10">
+              <div className="absolute left-1/2 top-full z-20 mt-4 w-[34rem] -translate-x-1/2 rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-ink/10">
                 <div className="grid grid-cols-2 gap-8">
-                  {SERVICE_AUDIENCES.map((audience) => (
-                    <div key={audience.id}>
-                      <p className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
-                        {audience.label}
-                      </p>
-                      <ul className="mt-3 space-y-1">
-                        {getCategoriesFor(audience.id).map((category) => {
-                          const Icon = category.icon;
-                          return (
-                            <li key={category.slug}>
-                              <Link
-                                href={`/services/${category.slug}`}
-                                onClick={closeAll}
-                                className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper-tint"
-                              >
-                                <span
-                                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br text-white ${category.accent}`}
-                                >
-                                  <Icon className="h-4 w-4" />
-                                </span>
-                                {category.title}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
+                  {MENU_COLUMNS.map((column) => (
+                    <div key={column.join()} className="space-y-6">
+                      {SERVICE_AUDIENCES.filter((a) => column.includes(a.id)).map((audience) => (
+                        <div key={audience.id}>
+                          <p className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
+                            {audience.label}
+                          </p>
+                          <ul className="mt-3 space-y-1">
+                            {servicesMenuFor(audience.id).map((item) => {
+                              const Icon = item.icon;
+                              return (
+                                <li key={item.href}>
+                                  <Link
+                                    href={item.href}
+                                    onClick={closeAll}
+                                    className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper-tint"
+                                  >
+                                    <span
+                                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br text-white ${item.accent}`}
+                                    >
+                                      <Icon className="h-4 w-4" />
+                                    </span>
+                                    {item.title}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
@@ -184,6 +226,29 @@ export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLi
         </button>
       </div>
 
+      {showTabs && (
+        <nav aria-label="Who it's for" data-audience-tabs className="mx-auto max-w-6xl px-6 pb-3">
+          <div className="mx-auto grid w-full max-w-xs grid-cols-2 rounded-full bg-white/70 p-1 shadow-sm ring-1 ring-ink/10 backdrop-blur lg:mx-0">
+            {AUDIENCE_TABS.map((tab) => {
+              const active = tab.href === pathname;
+              return (
+                <Link
+                  key={tab.href}
+                  href={tab.href}
+                  onClick={closeAll}
+                  aria-current={active ? "page" : undefined}
+                  className={`rounded-full px-4 py-1.5 text-center text-sm font-semibold transition-colors ${
+                    active ? "bg-ink text-paper shadow-sm" : "text-ink-soft hover:text-ink"
+                  }`}
+                >
+                  {tab.label}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+      )}
+
       {menuOpen && (
         <nav className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-ink/10 bg-paper px-6 py-4 lg:hidden">
           <Link
@@ -201,14 +266,14 @@ export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLi
                 {audience.label}
               </p>
               <div className="mt-1 flex flex-col">
-                {getCategoriesFor(audience.id).map((category) => (
+                {servicesMenuFor(audience.id).map((item) => (
                   <Link
-                    key={category.slug}
-                    href={`/services/${category.slug}`}
+                    key={item.href}
+                    href={item.href}
                     onClick={closeAll}
                     className="rounded-lg px-2 py-2 text-sm font-medium text-ink hover:bg-paper-tint"
                   >
-                    {category.title}
+                    {item.title}
                   </Link>
                 ))}
               </div>

@@ -8,15 +8,20 @@ import {
   STATE_NAMES,
   SITE_URL,
 } from "../lib/business";
+import { ABOUT } from "../lib/data/about";
 
 function buildSchema() {
   return {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "ProfessionalService"],
+    "@id": `${SITE_URL}/#business`,
     name: BUSINESS_NAME,
-    founder: { "@type": "Person", name: "Ryan Martin" },
+    founder: ABOUT.published
+      ? { "@type": "Person", "@id": `${SITE_URL}/about#ryan-martin`, name: "Ryan Martin", url: `${SITE_URL}/about` }
+      : { "@type": "Person", name: "Ryan Martin" },
     description:
-      "Freelance design, print, and web services covering Christmas & holiday cards, greeting cards, business cards, brochures, business documents, custom apparel (FeedTheFlames), website design & development, and photo scanning, restoration, and color correction across Northern Illinois and southern Wisconsin.",
+      "An outsourced marketing team for small businesses: websites, search and AI visibility, business printing, signs, and apparel (FeedTheFlames), plus custom Christmas and greeting cards and photo restoration for families. Based in Richmond, IL, serving Northern Illinois and Southeast Wisconsin.",
+    slogan: "Your marketing team, without the payroll.",
     url: SITE_URL,
     telephone: BUSINESS_PHONE_TEL,
     email: BUSINESS_EMAIL,

@@ -17,7 +17,7 @@ const COMPANY_LINKS = [
 export default function SiteFooter() {
   return (
     <footer className="border-t border-ink/10 py-14">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 text-sm text-ink-soft sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 text-sm text-ink-soft sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-2.5">
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-fuchsia-500 to-amber-400 text-[11px] font-bold text-white">

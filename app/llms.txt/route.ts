@@ -6,6 +6,7 @@ import {
   SERVICE_HOME_CITY,
 } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
+import { getPricing, pricingSummary } from "../lib/data/pricing";
 import { TOWN_GROUPS, getChristmasTownPages } from "../lib/data/christmas-towns";
 import { TOWNS } from "../lib/data/towns";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
@@ -26,6 +27,22 @@ export function GET() {
     return [`### ${audience.label}`, ...lines].join("\n");
   }).join("\n\n");
 
+  // Every priced service, in menu order. Prices come from app/lib/data/pricing.ts.
+  const prices = SERVICE_AUDIENCES.flatMap((audience) =>
+    getCategoriesFor(audience.id).flatMap((c) => {
+      const own = getPricing(c.slug);
+      const entries = own
+        ? [{ title: c.title, path: `/services/${c.slug}`, pricing: own }]
+        : c.children.flatMap((leaf) => {
+            const pricing = getPricing(c.slug, leaf.slug);
+            return pricing ? [{ title: leaf.title, path: `/services/${c.slug}/${leaf.slug}`, pricing }] : [];
+          });
+      return entries.map(
+        (e) => `- [${e.title}](${url(e.path)}): ${pricingSummary(e.pricing)}${e.pricing.note ? ` ${e.pricing.note}` : ""}`
+      );
+    })
+  ).join("\n");
+
   const towns = TOWNS.filter((t) => t.type !== "chicago_neighborhood").map((t) => `${t.name}, ${t.state}`);
 
   const christmas = TOWN_GROUPS.map((g) => {
@@ -45,6 +62,10 @@ export function GET() {
 - Location: ${SERVICE_HOME_CITY}, IL (home studio). Local pickup, drop-off, and hand delivery across the service area; everything else by mail, shipping, and email.
 - Contact: ${BUSINESS_PHONE_DISPLAY} · ${BUSINESS_EMAIL} · quote form on every page of ${site}
 - Christmas cards: folded 5×7 (10×7 paper folded in half) or flat 5×7 printed on both sides, with optional rounded corners; matte, glossy, or foil finishes. Booking in October or early November is recommended.
+
+## Starting prices
+Design prices in USD. "Plus printing" means printing is quoted separately by quantity, size, and finish. Anything not listed is quoted per project.
+${prices}
 
 ## Main pages
 - [Home](${url("/")}): overview and the Marketing Partner Plan (one flat monthly rate)

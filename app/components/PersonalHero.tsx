@@ -23,7 +23,7 @@ const PROMISES = [
 
 export default function PersonalHero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-36 sm:pb-28 sm:pt-44">
+    <section className="relative overflow-hidden pb-20 pt-48 sm:pb-28 sm:pt-56">
       <div
         aria-hidden
         className="animate-drift-a pointer-events-none absolute -left-32 -top-24 h-[26rem] w-[26rem] rounded-full bg-gradient-to-br from-rose-300 via-red-200 to-transparent opacity-50 blur-3xl"

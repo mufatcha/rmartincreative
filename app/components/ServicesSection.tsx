@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
+import { startsAt } from "../lib/data/pricing";
 import {
   IconArrowRight,
+  IconBanner,
   IconBriefcase,
   IconCard,
   IconGlobe,
@@ -15,7 +17,16 @@ import {
 
 // Grouped by what a small business is trying to do, not by product, so the
 // full scope reads as one marketing team rather than a list of vendors.
-const GROUPS = [
+// `prices` are keys in app/lib/data/pricing.ts; the card shows the lowest as "From $X".
+type Service = {
+  icon: typeof IconGlobe;
+  title: string;
+  description: string;
+  href: string;
+  prices?: string[];
+};
+
+const GROUPS: { title: string; blurb: string; accent: string; badge: string; services: Service[] }[] = [
   {
     title: "Get found",
     blurb: "Be easy to find, whether customers search Google or ask AI.",
@@ -28,6 +39,7 @@ const GROUPS = [
         description:
           "Custom sites, WordPress, and Shopify, BigCommerce, or Wix stores, ready for search and AI from launch.",
         href: "#web-design",
+        prices: ["website-design-development"],
       },
       {
         icon: IconSearch,
@@ -49,12 +61,14 @@ const GROUPS = [
         title: "Business Cards",
         description: "Clean, memorable layouts on the stock and finish that fit your brand.",
         href: "#business-printing",
+        prices: ["business-printing/business-cards"],
       },
       {
         icon: IconLayers,
         title: "Brochures & Collateral",
         description: "Tri-folds, one-pagers, menus, and flyers built to be read.",
         href: "#business-printing",
+        prices: ["business-printing/brochures-collateral"],
       },
       {
         icon: IconPresentation,
@@ -67,6 +81,14 @@ const GROUPS = [
         title: "Yard Signs & Posters",
         description: "Signage for events, open houses, and storefronts.",
         href: "/services/signs-posters",
+        prices: ["signs-posters/yard-signs", "signs-posters/posters"],
+      },
+      {
+        icon: IconBanner,
+        title: "Banners",
+        description: "Vinyl, matte paper, or adhesive banners for grand openings, events, and storefronts.",
+        href: "/services/banners-canvas/banners",
+        prices: ["banners-canvas/banners"],
       },
     ],
   },
@@ -81,18 +103,21 @@ const GROUPS = [
         title: "Corporate Holiday Cards",
         description: "Corporate holiday mailers and client cards, designed early to beat the rush.",
         href: "/services/greeting-cards/christmas-cards",
+        prices: ["greeting-cards/christmas-cards"],
       },
       {
         icon: IconCard,
         title: "Greeting Cards",
         description: "Thank-yous, announcements, and invitations, in print or digital.",
         href: "/services/greeting-cards/everyday-cards",
+        prices: ["greeting-cards/everyday-cards"],
       },
       {
         icon: IconShirt,
         title: "T-Shirts & Apparel",
         description: "Staff shirts, event tees, and branded apparel under my FeedTheFlames brand.",
         href: "#tshirts",
+        prices: ["apparel"],
       },
     ],
   },
@@ -148,6 +173,11 @@ export default function ServicesSection() {
                             <span className="mt-0.5 block text-sm leading-relaxed text-ink-soft">
                               {service.description}
                             </span>
+                            {service.prices && (
+                              <span className="mt-1 block text-xs font-semibold text-ink">
+                                From {startsAt(...service.prices)}
+                              </span>
+                            )}
                           </span>
                         </Link>
                       </li>

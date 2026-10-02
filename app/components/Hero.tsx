@@ -44,7 +44,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden pt-36 pb-24 sm:pt-44 sm:pb-32"
+      className="relative overflow-hidden pt-48 pb-24 sm:pt-56 sm:pb-32"
     >
       <div
         aria-hidden
@@ -134,7 +134,7 @@ export default function Hero() {
             <p className="mt-10 text-sm font-semibold tracking-wide">
               RYAN MARTIN
             </p>
-            <p className="text-[11px] text-white/60">Freelance Design &amp; Print</p>
+            <p className="text-[11px] text-white/60">Marketing, Web &amp; Print</p>
           </div>
 
           <div
