@@ -188,7 +188,12 @@ export const SERVICES: ServiceOption[] = [
       },
       { id: "photo", label: "Include a family or personal photo?", type: "radio", options: ["Yes", "No"] },
       { id: "style", label: "Design style", type: "select", options: ["Illustrated", "Photo-based", "Minimal / modern", "Not sure"] },
-      { id: "mailing", label: "Need envelope addressing or mailing service?", type: "radio", options: ["Yes", "No"] },
+      {
+        id: "extras",
+        label: "Any finishing touches? (quoted per job)",
+        type: "checkboxes",
+        options: ["Addressing & mailing", "Wax seals", "Custom envelopes & liners", "“From Santa” gift tags", "None"],
+      },
       { id: "deadline", label: "Needed by (mailing date)", type: "text" },
     ],
   },

@@ -5,6 +5,8 @@ import RelatedServices from "./RelatedServices";
 import ServiceBreadcrumb from "./ServiceBreadcrumb";
 import ServiceCta from "./ServiceCta";
 import ServiceFaqs from "./ServiceFaqs";
+import CardExtras from "./CardExtras";
+import { CARD_EXTRAS_ANCHOR, getCardExtras } from "../lib/data/card-extras";
 import { LeafPricing } from "./ServicePricing";
 import ServiceVisual from "./ServiceVisual";
 import { IconArrowRight } from "./icons";
@@ -45,7 +47,11 @@ export default function ServiceLeafPage({
               <p className="mt-3 text-lg font-medium text-violet-600">{leaf.tagline}</p>
               <p className="mt-4 text-lg text-ink-soft">{leaf.description}</p>
               <p className="mt-4 text-base leading-relaxed text-ink-soft">{leaf.details}</p>
-              <ServiceCta />
+              <ServiceCta
+                extrasHref={
+                  getCardExtras(`${category.slug}/${leaf.slug}`).length > 0 ? `#${CARD_EXTRAS_ANCHOR}` : undefined
+                }
+              />
             </div>
           </Reveal>
           <Reveal delay={120}>
@@ -71,6 +77,8 @@ export default function ServiceLeafPage({
         </Reveal>
 
         <LeafPricing category={category} leafSlug={leaf.slug} />
+
+        <CardExtras category={category} leafSlug={leaf.slug} />
 
         {siblings.length > 0 && (
           <Reveal delay={200}>
