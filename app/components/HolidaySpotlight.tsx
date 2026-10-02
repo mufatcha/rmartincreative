@@ -70,7 +70,10 @@ export default function HolidaySpotlight() {
                 "Photo & non-photo layouts",
                 "Folded or flat 5×7 cards",
                 "Foil, matte or glossy finishes",
-                "Corporate mailing lists welcome",
+                "Addressed, stamped & mailed for you",
+                "Hand-pressed wax seals",
+                "Custom envelopes & liners",
+                "Personalized “From Santa” tags",
                 "Digital + print delivery",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2">

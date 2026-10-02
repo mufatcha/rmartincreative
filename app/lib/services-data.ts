@@ -735,6 +735,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Matte, glossy, or foil finishes",
           "Early booking gets first pick of finishes",
           "Guaranteed delivery before the holidays when booked in time",
+          "Addressing & mailing to your full list, postage handled",
+          "Hand-pressed wax seals, single or two-tone, or Christmas-themed",
+          "Custom envelopes & liners, or Christmas-themed envelopes",
+          "Personalized “From Santa” gift tags",
         ],
         faqs: [
           {
@@ -771,6 +775,21 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             answer:
               "Reprints and small additions are usually straightforward as long as it's within the same print run window — just let me know as early as possible.",
           },
+          {
+            question: "Can you address and mail my Christmas cards?",
+            answer:
+              "Yes. Send me your mailing list and I'll address every envelope, add postage, and drop the whole batch off at the post office. Addressing and mailing are quoted per job, separately from card design.",
+          },
+          {
+            question: "Do you offer wax seals for Christmas cards?",
+            answer:
+              "Yes — each seal is poured and pressed by hand, so every one is unique. Choose one color or two-tone, any color, with your initials or monogram, or a Christmas-themed stamp. Wax seals are quoted per job.",
+          },
+          {
+            question: "Can you make personalized gift tags from Santa?",
+            answer:
+              "Yes — custom “From Santa” gift tags personalized with each child's name, designed to match your cards or in their own North Pole style. They're quoted per job.",
+          },
         ],
         icon: IconGift,
         image: {
@@ -795,6 +814,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Folded 5×7 cards (10×7 paper folded in half)",
           "Flat 5×7 cards, printed on both sides, with optional rounded corners",
           "Print-ready or digital-share formats",
+          "Addressing & mailing, postage handled",
+          "Hand-pressed wax seals, custom envelopes & liners",
         ],
         faqs: [
           {
@@ -827,6 +848,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             question: "Do you print the cards too, or just design them?",
             answer: "Both — I can hand off print-ready files or handle printing as part of the project.",
           },
+          {
+            question: "Can you address, seal, and mail the cards for me?",
+            answer:
+              "Yes. I can address your cards, add postage, and mail them, seal each envelope with a hand-pressed wax seal in any color and monogram, and design envelopes and liners to match. Extras are quoted per job.",
+          },
         ],
         icon: IconGift,
         image: {
@@ -841,11 +867,14 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Wedding invitations, save-the-dates, and RSVP cards designed as a matching set, plus day-of signage, banners, and posters for the ceremony and reception.",
         tagline: "Invitations, signage, and every printed detail of the big day.",
         description:
-          "Wedding invitations, save-the-dates, and RSVP cards designed as a matching set — plus the signage, banners, and posters that carry the same look through the ceremony and reception.",
+          "Wedding invitations, save-the-dates, and RSVP cards designed as a matching set, finished with hand-pressed wax seals and addressed and mailed for you — plus the signage, banners, and posters that carry the same look through the ceremony and reception.",
         details:
-          "A wedding's printed pieces are one of the first things guests see and one of the last things left over as a keepsake, so they're worth designing as a set rather than one-off pieces. I start with the invitation suite — invitations, save-the-dates, RSVP cards — then extend that same design language to welcome signs, seating charts, menus, and banners, so everything from the mailbox to the reception hall feels like one event.",
+          "A wedding's printed pieces are one of the first things guests see and one of the last things left over as a keepsake, so they're worth designing as a set rather than one-off pieces. I start with the invitation suite — invitations, save-the-dates, RSVP cards — then extend that same design language to welcome signs, seating charts, menus, and banners, so everything from the mailbox to the reception hall feels like one event. I can also finish the invitations by hand: wax seals poured and pressed one at a time in your colors and monogram, envelopes and liners designed to match, and every invitation addressed, stamped, and mailed to your guest list.",
         features: [
           "Invitations, save-the-dates & RSVP cards",
+          "Hand-pressed wax seals in your colors & monogram",
+          "Guest addressing, postage & mailing",
+          "Custom envelopes & liners to match the suite",
           "Welcome signs & seating charts",
           "Ceremony & reception banners",
           "Programs, menus & table numbers",
@@ -881,6 +910,16 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             question: "Do you handle printing, or just design?",
             answer:
               "Both — I can design print-ready files for your printer of choice, or handle design and printing together.",
+          },
+          {
+            question: "Can you address and mail our wedding invitations?",
+            answer:
+              "Yes. Send me your guest list and I'll address every invitation, add postage, and drop them off at the post office, so they all go out together. Addressing and mailing are quoted per job.",
+          },
+          {
+            question: "Do you offer wax seals for wedding invitations?",
+            answer:
+              "Yes — every seal is poured and pressed by hand, so no two are exactly alike. Choose one color or two-tone with an accent color, in your wedding colors, with your initials or monogram. Wax seals are quoted per job.",
           },
         ],
         icon: IconGift,

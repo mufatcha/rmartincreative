@@ -5,6 +5,8 @@
 // Keys are "category" or "category/leaf" slugs from app/lib/services-data.ts.
 // Services not listed here stay "quoted per project".
 
+import { CARD_EXTRAS_NOTE } from "./card-extras";
+
 /** Card design is priced per side; the card examples below are built from these. */
 export const CARD_PRICES = {
   /** A side with a photo, artwork, or full design. */
@@ -89,7 +91,7 @@ const CARD_PRICING: ServicePricing = {
   ],
   plusPrinting: true,
   startsAt: cardDesignPrice(1),
-  note: `Every card has at least one designed side, so cards start at ${usd(designedSide)}. Mix and match across the rest: a folded card has 4 (front, inside left, inside right, back) and a flat card has 2. For example: ${CARD_EXAMPLES.map((e) => `${e.label.charAt(0).toLowerCase()}${e.label.slice(1)}: ${usd(e.price)}`).join("; ")}. ${cardRevisionPolicy()}`,
+  note: `Every card has at least one designed side, so cards start at ${usd(designedSide)}. Mix and match across the rest: a folded card has 4 (front, inside left, inside right, back) and a flat card has 2. For example: ${CARD_EXAMPLES.map((e) => `${e.label.charAt(0).toLowerCase()}${e.label.slice(1)}: ${usd(e.price)}`).join("; ")}. ${cardRevisionPolicy()} ${CARD_EXTRAS_NOTE}`,
 };
 
 export const PRICING: Record<string, ServicePricing> = {

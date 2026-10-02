@@ -1,5 +1,6 @@
 import ChristmasSpecial from "./ChristmasSpecial";
 import Reveal from "./Reveal";
+import { CARD_EXTRAS_NOTE, getCardExtras } from "../lib/data/card-extras";
 import { CARD_PRICES, cardDesignPrice, cardRevisionPolicy, christmasSpecialActive, startsAt, usd } from "../lib/data/pricing";
 
 // Shared details for every local Christmas card page. Kept below each page's
@@ -54,6 +55,19 @@ export default function ChristmasCardEssentials() {
             </Reveal>
           ))}
         </ol>
+
+        <div className="mt-12">
+          <h3 className="text-lg font-semibold">Finishing touches</h3>
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {getCardExtras("greeting-cards/christmas-cards").map((extra) => (
+              <li key={extra.title} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink/5">
+                <p className="text-sm font-semibold">{extra.title}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{extra.body}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-xs text-ink-soft">{CARD_EXTRAS_NOTE}</p>
+        </div>
 
         {christmasSpecialActive() && <ChristmasSpecial showExamples className="mt-10 max-w-2xl" />}
 
