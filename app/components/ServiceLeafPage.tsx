@@ -5,6 +5,7 @@ import RelatedServices from "./RelatedServices";
 import ServiceBreadcrumb from "./ServiceBreadcrumb";
 import ServiceCta from "./ServiceCta";
 import ServiceFaqs from "./ServiceFaqs";
+import { LeafPricing } from "./ServicePricing";
 import ServiceVisual from "./ServiceVisual";
 import { IconArrowRight } from "./icons";
 import type { ServiceCategory, ServiceLeaf } from "../lib/services-data";
@@ -68,6 +69,8 @@ export default function ServiceLeafPage({
             ))}
           </ul>
         </Reveal>
+
+        <LeafPricing category={category} leafSlug={leaf.slug} />
 
         {siblings.length > 0 && (
           <Reveal delay={200}>

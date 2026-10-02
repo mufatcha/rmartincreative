@@ -10,6 +10,7 @@ import ServiceBreadcrumb from "../../components/ServiceBreadcrumb";
 import ServiceFaqs from "../../components/ServiceFaqs";
 import { IconArrowRight, IconExternalLink, IconSnowflake } from "../../components/icons";
 import { BUSINESS_NAME, SITE_URL, STATE_NAMES } from "../../lib/business";
+import { cardPriceAnswer, startsAt } from "../../lib/data/pricing";
 import {
   getChristmasTownByKey,
   getChristmasTownBySlug,
@@ -231,7 +232,15 @@ export default async function ChristmasTownPage({ params }: { params: Promise<{ 
             </div>
           )}
 
-          <ServiceFaqs faqs={content.faqs} />
+          <ServiceFaqs
+            faqs={[
+              ...content.faqs,
+              {
+                question: `How much do custom Christmas cards cost in ${name}?`,
+                answer: `Christmas card design starts at ${startsAt("greeting-cards/christmas-cards")}. ${cardPriceAnswer()}`,
+              },
+            ]}
+          />
         </div>
       </section>
 

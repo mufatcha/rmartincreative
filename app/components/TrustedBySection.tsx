@@ -1,7 +1,28 @@
 import Image from "next/image";
+import Link from "next/link";
 import CountUp from "./CountUp";
 import Reveal from "./Reveal";
-import { CLIENTS, STATS, TESTIMONIALS } from "../lib/business";
+import { CLIENTS, SITE_URL, STATS, TESTIMONIALS } from "../lib/business";
+import { ABOUT } from "../lib/data/about";
+import { IconArrowRight } from "./icons";
+
+// Testimonials as Review markup, attached to the site-wide LocalBusiness node by
+// its @id. It lives here, not in LocalBusinessJsonLd, because review markup
+// should only appear on the page that shows the reviews. No star ratings: the
+// testimonials don't have any, and Google doesn't show stars for reviews a
+// business publishes about itself anyway.
+function reviewsJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${SITE_URL}/#business`,
+    review: TESTIMONIALS.map((t) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: t.name, address: t.location },
+      reviewBody: t.quote,
+    })),
+  };
+}
 
 export default function TrustedBySection() {
   if (CLIENTS.length === 0 && STATS.length === 0 && TESTIMONIALS.length === 0) {
@@ -46,6 +67,22 @@ export default function TrustedBySection() {
               </Reveal>
             ))}
           </div>
+        )}
+
+        {STATS.length > 0 && ABOUT.published && (
+          <p className="mt-8 text-center">
+            <Link
+              href="/about"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-700"
+            >
+              The story behind the 20+ years
+              <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </p>
+        )}
+
+        {TESTIMONIALS.length > 0 && (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewsJsonLd()) }} />
         )}
 
         {TESTIMONIALS.length > 0 && (

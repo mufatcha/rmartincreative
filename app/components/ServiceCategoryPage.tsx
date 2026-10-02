@@ -5,6 +5,7 @@ import RelatedServices from "./RelatedServices";
 import ServiceBreadcrumb from "./ServiceBreadcrumb";
 import ServiceCta from "./ServiceCta";
 import ServiceFaqs from "./ServiceFaqs";
+import { CategoryPricing } from "./ServicePricing";
 import ServiceVisual from "./ServiceVisual";
 import { IconArrowRight } from "./icons";
 import type { ServiceCategory } from "../lib/services-data";
@@ -90,6 +91,8 @@ export default function ServiceCategoryPage({ category }: { category: ServiceCat
             </ul>
           </Reveal>
         )}
+
+        <CategoryPricing category={category} />
 
         {category.related && (
           <Reveal delay={160}>

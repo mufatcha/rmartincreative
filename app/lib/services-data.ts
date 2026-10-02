@@ -1,6 +1,8 @@
 import type { ComponentType } from "react";
 import {
+  IconBanner,
   IconBriefcase,
+  IconCanvas,
   IconCart,
   IconCode,
   IconCloud,
@@ -16,6 +18,7 @@ import {
   IconSignpost,
 } from "../components/icons";
 import { SERVICE_HOME_CITY } from "./business";
+import { cardPriceAnswer, priceAnswer, startsAt } from "./data/pricing";
 
 export type IconComponent = ComponentType<{ className?: string }>;
 
@@ -23,8 +26,14 @@ export type ServiceFaq = { question: string; answer: string };
 export type ServiceImage = {
   src: string;
   alt: string;
-  /** "contain" shows the whole image unframed — for mockups with transparent or floating edges. */
-  fit?: "cover" | "contain";
+  /** "contain" shows the whole image unframed — for mockups with transparent or floating edges.
+   *  "expand" crops it to the frame, then shows the full image over the page on hover (needs width and height). */
+  fit?: "cover" | "contain" | "expand";
+  /** Wraps the image in a border in the page's accent colors — for images whose background blends into the page. */
+  framed?: boolean;
+  /** The image's real pixel size — required for "expand". */
+  width?: number;
+  height?: number;
 };
 export type ServiceBeforeAfter = {
   beforeSrc: string;
@@ -50,11 +59,12 @@ export type ServiceLeaf = {
   beforeAfter?: ServiceBeforeAfter;
 };
 
-export type ServiceAudience = "business" | "personal";
+export type ServiceAudience = "business" | "personal" | "shared";
 
 export type ServiceCategory = {
   slug: string;
-  /** Business services lead the site; personal ones live on /cards-and-photos. */
+  /** Business services lead the site; personal ones live on /cards-and-photos;
+   *  "shared" (signs, prints & apparel) serve both. */
   audience: ServiceAudience;
   title: string;
   metaDescription: string;
@@ -90,7 +100,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does a website cost?",
         answer:
-          "It depends on scope — a small overhaul and an ongoing update plan are priced very differently. I'll give you a firm quote after a short conversation about what you need, no cookie-cutter packages.",
+          `A starter website — a single page or up to 5 pages — is ${startsAt("website-design-development")}, including a contact form, hosting, email forwarding, and your domain for the first year. Bigger sites, online stores, overhauls, and update plans are quoted after a short conversation about what you need.`,
       },
       {
         question: "How long does a website project take?",
@@ -459,6 +469,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     icon: IconSearch,
     accent: "from-emerald-500 via-teal-500 to-cyan-600",
+    image: {
+      src: "/webp-assets/search-vs-ai.webp",
+      alt: "Illustration comparing traditional search results, where pages are found and ranked by relevance, with an AI conversational answer that generates a reply and shows its sources",
+      fit: "contain",
+    },
     children: [
       {
         slug: "search-health-check",
@@ -508,6 +523,13 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconSearch,
+        image: {
+          src: "/webp-assets/free-search-ai-health-check.webp",
+          alt: "Free Search + AI Health Check: a tablet showing a Google search performance check, connected to a phone where an AI assistant analyzes the site, with a plain-English health check report marked no cost, no obligation",
+          fit: "expand",
+          width: 1600,
+          height: 873,
+        },
       },
       {
         slug: "search-ai-update",
@@ -559,6 +581,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconSearch,
+        image: {
+          src: "/webp-assets/search-plus-ai-updates.webp",
+          alt: "A small bakery's website on a desktop monitor with its page peeling back to reveal structured business data and schema markup underneath, with SEO optimization, AI recommendations, and a rising analytics chart around it",
+        },
       },
       {
         slug: "monthly-retainer",
@@ -608,6 +634,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconSearch,
+        image: {
+          src: "/webp-assets/monthly-retainer.webp",
+          framed: true,
+          alt: "Illustration of a monthly search and AI retainer: a dashboard with a rising trend line, surrounded by search optimization, AI chat insights, and monthly report icons",
+        },
       },
     ],
   },
@@ -627,7 +658,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much do custom cards cost?",
         answer:
-          "Pricing depends on quantity, finish, and whether it's a one-off design or a full set — I'll quote based on what you need.",
+          `Custom Christmas and greeting cards start at ${startsAt("greeting-cards/christmas-cards")} for design, plus printing. ${cardPriceAnswer()} Wedding invitations are quoted by the pieces in the suite.`,
       },
       {
         question: "How long does it take to design and print cards?",
@@ -661,6 +692,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     icon: IconGift,
     accent: "from-fuchsia-500 via-pink-500 to-amber-400",
+    image: {
+      src: "/webp-assets/greeting-card.webp",
+      alt: "Folded photo greeting card with a family portrait and soft pink shapes standing on a wooden table, beside a matching chartreuse and cream envelope",
+    },
     children: [
       {
         slug: "christmas-cards",
@@ -685,7 +720,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much do Christmas cards cost?",
             answer:
-              "Pricing depends on quantity and finish (matte, glossy, or foil) — reach out with your rough headcount for a quote.",
+              `Christmas card design starts at ${startsAt("greeting-cards/christmas-cards")}. ${cardPriceAnswer()}`,
           },
           {
             question: "How early should I book my Christmas cards?",
@@ -718,6 +753,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconGift,
+        image: {
+          src: "/webp-assets/christmas-card-burgandy.webp",
+          alt: "Folded burgundy “Merry Christmas” photo card with a family portrait on the cover, beside matching burgundy envelopes with a gold patterned liner, red satin ribbon, and wooden stars",
+        },
       },
       {
         slug: "everyday-cards",
@@ -741,7 +780,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much does a custom greeting card cost?",
             answer:
-              "Pricing depends on whether it's a single design or a full set — a one-off card is usually quick and affordable, and I'll quote a full set based on quantity.",
+              `Greeting card design starts at ${startsAt("greeting-cards/everyday-cards")}. ${cardPriceAnswer()}`,
           },
           {
             question: "How long does a card take to design?",
@@ -770,6 +809,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconGift,
+        image: {
+          src: "/webp-assets/greeting-card.webp",
+          alt: "Folded photo greeting card with a family portrait and soft pink shapes standing on a wooden table, beside a matching chartreuse and cream envelope",
+        },
       },
       {
         slug: "wedding-invitations",
@@ -821,6 +864,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconGift,
+        image: {
+          src: "/webp-assets/wedding.webp",
+          alt: "Wedding invitation suite on deckled paper with sage green botanical accents: invitation, RSVP card, menu, place card, and a floral-lined sage envelope, with a gold wax seal, white flowers, and silk ribbon",
+        },
       },
     ],
   },
@@ -840,7 +887,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does business printing cost?",
         answer:
-          "Pricing varies by piece and quantity — a batch of business cards is priced differently than a full brochure or deck. I'll quote each piece based on what you need.",
+          `Business card design is ${startsAt("business-printing/business-cards")} and tri-fold brochure design is ${startsAt("business-printing/brochures-collateral")}, plus printing, which is quoted by quantity and stock. Pitch decks and other documents are quoted per project.`,
       },
       {
         question: "How long does business printing take?",
@@ -870,6 +917,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     icon: IconBriefcase,
     accent: "from-zinc-800 via-zinc-600 to-amber-500",
+    image: {
+      src: "/webp-assets/business-printing.webp",
+      alt: "Matching branded print pieces on a desk: black business cards with a gold foil logo, an open tri-fold brochure, a bound quarterly performance review with charts, and a logo pen and mug",
+    },
     children: [
       {
         slug: "business-cards",
@@ -891,7 +942,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much do business cards cost?",
             answer:
-              "Pricing depends on quantity and finish — foil and textured stocks cost more than standard matte. I'll quote once I know roughly how many you need.",
+              `${priceAnswer("business-printing/business-cards")} Printing depends on quantity and finish — foil and textured stocks cost more than standard matte — so I'll quote it once I know roughly how many you need.`,
           },
           {
             question: "What's the minimum order quantity?",
@@ -918,6 +969,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconBriefcase,
+        image: {
+          src: "/webp-assets/business-card.webp",
+          alt: "Black business card with a gold foil “Substratum Protocol” logo for Sarah Jenkins, Consultant, propped against a stack of cards on a wooden desk",
+        },
       },
       {
         slug: "brochures-collateral",
@@ -939,7 +994,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much does a brochure cost?",
             answer:
-              "Pricing depends on size, fold, and quantity — a simple flyer costs less than a full tri-fold print run. I'll quote based on your specs.",
+              `${priceAnswer("business-printing/brochures-collateral")} Flyers, menus, and one-pagers are quoted by size, and printing by quantity.`,
           },
           {
             question: "How long does a brochure take to design and print?",
@@ -968,6 +1023,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconLayers,
+        image: {
+          src: "/webp-assets/brochures-and-collateral.webp",
+          alt: "Open tri-fold brochure for “Substratum Protocol” on a wooden desk, with a charcoal and gold “Our Services” panel, service icons, and photos of business professionals",
+        },
       },
       {
         slug: "business-documents",
@@ -1018,12 +1077,16 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconPresentation,
+        image: {
+          src: "/webp-assets/brochure.webp",
+          alt: "Tri-fold “Elevate Your Reach” marketing brochure open on a desk, showing digital marketing and branding services alongside a teal, orange and navy “Grow Your Business” cover",
+        },
       },
     ],
   },
   {
     slug: "signs-posters",
-    audience: "business",
+    audience: "shared",
     title: "Yard Signs & Posters",
     metaDescription:
       "Custom yard signs and posters for businesses and individuals — real estate and grand-opening signage, event posters, and personal celebration signs.",
@@ -1036,7 +1099,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does a yard sign or poster cost?",
         answer:
-          "Pricing depends on size, quantity, and finish — a single yard sign is priced differently than a bulk poster order. I'll quote based on what you need.",
+          `Yard sign design starts at ${startsAt("signs-posters/yard-signs")} and poster design at ${startsAt("signs-posters/posters")}, plus printing, which is quoted by size, quantity, and finish.`,
       },
       {
         question: "How long does it take?",
@@ -1065,6 +1128,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     icon: IconSignpost,
     accent: "from-lime-500 via-green-600 to-teal-600",
+    image: {
+      src: "/webp-assets/yard-sign.webp",
+      alt: "Real estate “Open House, Saturday 10AM–2PM” yard sign with a lime green design and realty logo, staked in a front lawn on a suburban street",
+    },
     children: [
       {
         slug: "yard-signs",
@@ -1087,7 +1154,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much do yard signs cost?",
             answer:
-              "Pricing depends on size and quantity — a single sign is priced differently than a set for a business or event. I'll quote based on what you need.",
+              `${priceAnswer("signs-posters/yard-signs")} Printing is quoted by size and quantity, and pricing improves for sets.`,
           },
           {
             question: "How long does it take to get a yard sign made?",
@@ -1115,6 +1182,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconSignpost,
+        image: {
+          src: "/webp-assets/yard-sign.webp",
+          alt: "Real estate “Open House, Saturday 10AM–2PM” yard sign with a lime green design and realty logo, staked in a front lawn on a suburban street",
+        },
       },
       {
         slug: "posters",
@@ -1131,12 +1202,12 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Graduation, birthday & celebration posters",
           "Retail & storefront signage",
           "Multiple size options",
-          "Matte or glossy finish",
+          "Glossy, matte, or adhesive",
         ],
         faqs: [
           {
             question: "How much do posters cost?",
-            answer: "Pricing depends on size, finish, and quantity — I'll quote based on your specs.",
+            answer: `${priceAnswer("signs-posters/posters")} Printing is quoted by size, finish, and quantity.`,
           },
           {
             question: "How long does it take to design and print a poster?",
@@ -1153,9 +1224,9 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             answer: "Yes — bulk printing is available and pricing improves with quantity.",
           },
           {
-            question: "Matte or glossy — which should I choose?",
+            question: "Glossy, matte, or adhesive — which should I choose?",
             answer:
-              "Glossy makes colors pop and works well indoors; matte reduces glare and holds up better in bright or outdoor settings. I can recommend based on where it'll be displayed.",
+              "Glossy makes colors pop and works well indoors; matte reduces glare in bright rooms and under lights; adhesive sticks straight to a wall or window with no frame or tape. I can recommend based on where it'll be displayed.",
           },
           {
             question: "Can you design the poster from scratch?",
@@ -1164,12 +1235,146 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconPoster,
+        image: {
+          src: "/webp-assets/poster.webp",
+          alt: "Bold black and white “The Biggest Sale of the Year” poster in a metal frame, displayed in a storefront window facing a busy sidewalk",
+        },
+      },
+    ],
+  },
+  {
+    slug: "banners-canvas",
+    audience: "shared",
+    title: "Banners & Canvas Prints",
+    metaDescription:
+      "Custom banners in vinyl, matte paper, or adhesive for businesses, events, and celebrations, plus canvas prints of your photos and artwork — designed, proofed, and printed.",
+    tagline: "Big prints for storefronts, events, and the walls at home.",
+    description: `Banners for grand openings, sales, events, and parties, and canvas prints that turn a favorite photo or piece of artwork into something worth hanging — designed and printed for businesses and families around ${SERVICE_HOME_CITY} and across Northern Illinois.`,
+    details:
+      "Large prints are unforgiving: a low-resolution photo or a crowded layout that looks fine on a phone falls apart at banner or wall size. I check every file at full size, fix what can be fixed, and tell you up front if an image won't hold up — then send a proof before anything prints.",
+    features: [],
+    faqs: [
+      {
+        question: "How much do banners and canvas prints cost?",
+        answer: `Banner design starts at ${startsAt("banners-canvas/banners")} and canvas design at ${startsAt("banners-canvas/canvas-prints")}, plus printing, which is quoted by size, material, and quantity.`,
+      },
+      {
+        question: "Are these for businesses or personal use?",
+        answer:
+          "Both. A grand-opening banner and a graduation-party banner use the same process, and canvas prints work as well in an office lobby as in a living room.",
+      },
+      {
+        question: "Can you use a photo from my phone?",
+        answer:
+          "Often, yes. I'll check the resolution at the size you want and let you know before printing whether it'll look sharp, or suggest a size that will.",
+      },
+      {
+        question: "Do you design the artwork, or do I provide it?",
+        answer: "Either one: bring finished artwork, or I can design the layout from scratch.",
+      },
+    ],
+    icon: IconBanner,
+    accent: "from-violet-600 via-purple-500 to-indigo-500",
+    image: {
+      src: "/webp-assets/banner.webp",
+      alt: "Black and yellow “Vintage Innovations” vinyl banner with grommets, hung across a storefront above its glass doors",
+    },
+    children: [
+      {
+        slug: "banners",
+        title: "Banners",
+        metaDescription:
+          "Custom banners in vinyl, matte paper, or adhesive for grand openings, sales, events, teams, and celebrations — designed to read from a distance.",
+        tagline: "Grand openings, events, teams, and parties.",
+        description:
+          "Custom banners for businesses and events — grand openings, sales, trade shows, and sponsor banners, plus team, graduation, birthday, and welcome-home banners for the family.",
+        details:
+          "A banner gets a few seconds of attention from across a parking lot or a gym, so the design has to do its work fast: one clear message, big type, and strong contrast. I design for the distance it'll actually be read from, then print it ready to hang.",
+        features: [
+          "Grand opening, sale & storefront banners",
+          "Event, trade show & sponsor banners",
+          "Team, graduation, birthday & welcome-home banners",
+          "Vinyl, matte paper, or adhesive",
+          "Finished ready to hang",
+        ],
+        faqs: [
+          {
+            question: "How much does a custom banner cost?",
+            answer: `${priceAnswer("banners-canvas/banners")} Printing is quoted by size, material, and quantity.`,
+          },
+          {
+            question: "Vinyl, matte paper, or adhesive — which should I choose?",
+            answer:
+              "Vinyl is the tough, reusable choice for outdoors and events. Matte paper is a glare-free option for indoor displays and one-time events. Adhesive sticks straight to a wall, window, or storefront. Tell me where it's going and I'll recommend one.",
+          },
+          {
+            question: "Can a banner be used outside?",
+            answer: "Yes. Vinyl is the one to choose for outdoor use, since it holds up to wind, rain, and sun.",
+          },
+          {
+            question: "What size banner do I need?",
+            answer:
+              "It depends on how far away people will be when they read it. Tell me where it's going and I'll recommend a size that's readable from there.",
+          },
+          {
+            question: "Can I order several banners for an event or multiple locations?",
+            answer: "Yes. Multiple banners or versions for an event are common, and pricing improves with quantity.",
+          },
+        ],
+        icon: IconBanner,
+        image: {
+          src: "/webp-assets/banner.webp",
+          alt: "Black and yellow “Vintage Innovations” vinyl banner with grommets, hung across a storefront above its glass doors",
+        },
+      },
+      {
+        slug: "canvas-prints",
+        title: "Canvas Prints",
+        metaDescription:
+          "Custom canvas prints of family photos, restored photos, artwork, and brand imagery — checked at full size and proofed before printing.",
+        tagline: "Your favorite photo, ready for the wall.",
+        description:
+          "Canvas prints of family photos, wedding and graduation pictures, restored heirloom photos, or artwork — and branded canvas pieces for offices, lobbies, and waiting rooms.",
+        details:
+          "A canvas print is a photo blown up far past the size it was taken for, so I check the image at full size first, correct color and exposure, and fix small flaws before it prints. It pairs naturally with photo restoration: bring an old family photo back, then hang it.",
+        features: [
+          "Family, wedding & graduation photos",
+          "Restored heirloom photos",
+          "Artwork & illustrations",
+          "Branded wall art for offices & lobbies",
+          "Color checked and proofed before printing",
+        ],
+        faqs: [
+          {
+            question: "How much does a canvas print cost?",
+            answer: `${priceAnswer("banners-canvas/canvas-prints")} Printing is quoted by size once I know what you're thinking of.`,
+          },
+          {
+            question: "Will my photo look good on canvas?",
+            answer:
+              "I'll check it at the size you want before printing. If it won't hold up, I'll tell you and suggest a size that will look sharp.",
+          },
+          {
+            question: "Can you restore an old photo and print it on canvas?",
+            answer:
+              "Yes. Photo restoration and canvas prints go together well — repair the damage and correct the color first, then print.",
+          },
+          {
+            question: "Do you make canvas prints for businesses?",
+            answer: "Yes — branded wall art, team photos, and project photography for offices, lobbies, and waiting rooms.",
+          },
+        ],
+        icon: IconCanvas,
+        image: {
+          src: "/webp-assets/canvas-print.webp",
+          alt: "Close-up of a canvas print of bold abstract art, with a vivid red stripe across swirling purple, blue, and white, showing the canvas texture and wrapped edge",
+        },
       },
     ],
   },
   {
     slug: "apparel",
-    audience: "business",
+    audience: "shared",
     title: "T-Shirts & Apparel",
     metaDescription:
       "Custom apparel design and printing under the FeedTheFlames brand — screen printing and DTG, one-off tees to bulk team orders, S through 3XL.",
@@ -1188,7 +1393,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does custom apparel cost?",
         answer:
-          "Pricing depends on quantity, number of colors, and printing method — bulk orders bring the per-item cost down. Reach out with your quantity for a quote.",
+          `${priceAnswer("apparel")} Printing depends on quantity, number of colors, and printing method — bulk orders bring the per-item cost down — so reach out with your quantity for a quote.`,
       },
       {
         question: "How long does an apparel order take?",
@@ -1213,6 +1418,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     icon: IconShirt,
     accent: "from-orange-600 via-red-600 to-amber-500",
+    image: {
+      src: "/webp-assets/t-shirt.webp",
+      alt: "Smiling teacher at a classroom whiteboard wearing a white T-shirt with a distressed red apple graphic reading “M.Ed. — Non-Refundable, Non-Transferable”",
+    },
     children: [],
   },
   {
@@ -1301,6 +1510,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconPhoto,
+        image: {
+          src: "/webp-assets/photo-to-digital.webp",
+          alt: "Stacks of bundled printed photos beside a photo scanner feeding a portrait print, with the scanned photos shown on a monitor in photo-editing software",
+        },
       },
       {
         slug: "photo-restoration",
@@ -1407,14 +1620,19 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconPhoto,
+        image: {
+          src: "/webp-assets/color-correction.webp",
+          alt: "Before and after color correction of a family portrait: the before is dark with a heavy yellow-orange cast, and the after shows natural skin tones and true blues and whites",
+        },
       },
     ],
   },
 ];
 
 export const SERVICE_AUDIENCES: { id: ServiceAudience; label: string }[] = [
-  { id: "business", label: "For businesses" },
-  { id: "personal", label: "Personal & family" },
+  { id: "business", label: "For Businesses" },
+  { id: "personal", label: "Personal & Family" },
+  { id: "shared", label: "Signs, Prints & Apparel" },
 ];
 
 export function getCategoriesFor(audience: ServiceAudience): ServiceCategory[] {

@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import ChristmasSpecial from "./ChristmasSpecial";
 import Reveal from "./Reveal";
+import { christmasSpecialActive } from "../lib/data/pricing";
 import { IconArrowRight, IconSnowflake } from "./icons";
 
 type FlakeStyle = CSSProperties & { "--drift"?: string };
@@ -77,6 +79,7 @@ export default function HolidaySpotlight() {
                 </li>
               ))}
             </ul>
+            {christmasSpecialActive() && <ChristmasSpecial tone="dark" className="mt-8 max-w-xl" />}
             <a
               href="#contact"
               className="btn-shine relative mt-9 inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-rose-500 to-emerald-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-rose-900/40 transition-transform hover:scale-105"

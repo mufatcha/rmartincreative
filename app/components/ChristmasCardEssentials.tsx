@@ -1,4 +1,6 @@
+import ChristmasSpecial from "./ChristmasSpecial";
 import Reveal from "./Reveal";
+import { CARD_PRICES, cardDesignPrice, cardRevisionPolicy, christmasSpecialActive, startsAt, usd } from "../lib/data/pricing";
 
 // Shared details for every local Christmas card page. Kept below each page's
 // unique local content, so the shared text stays secondary.
@@ -53,7 +55,17 @@ export default function ChristmasCardEssentials() {
           ))}
         </ol>
 
-        <p className="mt-10 text-sm text-ink-soft">
+        {christmasSpecialActive() && <ChristmasSpecial showExamples className="mt-10 max-w-2xl" />}
+
+        <p className="mt-10 text-sm leading-relaxed text-ink-soft">
+          <span className="font-semibold text-ink">Pricing:</span> design starts at{" "}
+          {startsAt("greeting-cards/christmas-cards")}: {usd(CARD_PRICES.designedSide)} per designed side,{" "}
+          {usd(CARD_PRICES.framedPhotoSide)} to add a framed photo inside or on the back, and {usd(CARD_PRICES.textSide)} per text-only side, in any combination — so a folded card with a designed front and a
+          message inside is {usd(cardDesignPrice(1, 1))}, and a folded card designed on all 4 sides is{" "}
+          {usd(cardDesignPrice(4))}. Plus printing by quantity and finish. {cardRevisionPolicy()}
+        </p>
+
+        <p className="mt-3 text-sm text-ink-soft">
           <span className="font-semibold text-ink">Book early:</span> finishes and print slots fill up
           by late November, so October and early November orders get the most choice.
         </p>

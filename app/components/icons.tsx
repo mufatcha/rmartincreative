@@ -344,3 +344,30 @@ export function IconPoster({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function IconBanner({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="2.5" y="6" width="19" height="10" rx="1.2" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="5" cy="8.5" r="0.9" fill="currentColor" />
+      <circle cx="19" cy="8.5" r="0.9" fill="currentColor" />
+      <path stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M8 11h8M10 13.5h4" />
+    </svg>
+  );
+}
+
+export function IconCanvas({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3" y="4" width="18" height="16" rx="1.4" stroke="currentColor" strokeWidth="1.6" />
+      <path
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m3.5 17 5-5.5 4 4 2.5-2.5 5.5 5.5"
+      />
+      <circle cx="15.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}

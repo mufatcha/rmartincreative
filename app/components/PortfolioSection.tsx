@@ -29,7 +29,7 @@ const TILES: Tile[] = [
     pattern: "lines",
     image: {
       src: "/webp-assets/business-card.webp",
-      alt: "Stack of charcoal business cards with a silver-foil cube logo reading “Substratum Protocol — Business Systems & Architecture” beside a fountain pen",
+      alt: "Black business card with a gold foil “Substratum Protocol” logo for Sarah Jenkins, Consultant, propped against a stack of cards on a wooden desk",
     },
   },
   {
@@ -68,6 +68,15 @@ const TILES: Tile[] = [
       alt: "Side-by-side comparison of a torn, sepia-toned 1948 photo of Sarah and Henry in a family album next to the same portrait restored and colorized in a wood frame",
     },
     wide: true,
+  },
+  {
+    label: "Canvas Print",
+    className: "bg-gradient-to-br from-violet-600 via-purple-500 to-indigo-500",
+    pattern: "dots",
+    image: {
+      src: "/webp-assets/canvas-corner.webp",
+      alt: "Close-up of a gallery-wrapped canvas print's corner, with colorful artwork continuing around the edge and a neatly folded corner",
+    },
   },
 ];
 

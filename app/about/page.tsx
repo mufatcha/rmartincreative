@@ -23,9 +23,8 @@ const isLive = ABOUT.published || process.env.NODE_ENV === "development";
 
 export const metadata: Metadata = {
   title: "About Ryan Martin",
-  description: ABOUT.intro.startsWith("TODO")
-    ? `Ryan Martin is a designer, developer, and print partner for small businesses, based in ${SERVICE_HOME_CITY}, ${SERVICE_STATE_ABBR}.`
-    : ABOUT.intro,
+  // The intro runs long for a search snippet, so the description is its own line.
+  description: `Ryan Martin is a designer, developer, and print maker with 20+ years in web and print, working as the marketing team for small businesses. Based in ${SERVICE_HOME_CITY}, ${SERVICE_STATE_ABBR}.`,
   alternates: { canonical: "/about" },
   robots: ABOUT.published ? undefined : { index: false, follow: false },
 };
@@ -36,9 +35,12 @@ export default function AboutPage() {
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": `${SITE_URL}/about#ryan-martin`,
     name: "Ryan Martin",
-    jobTitle: ABOUT.role.startsWith("TODO") ? undefined : ABOUT.role,
-    worksFor: { "@type": "LocalBusiness", name: BUSINESS_NAME, url: SITE_URL },
+    jobTitle: ABOUT.role,
+    description: ABOUT.intro,
+    alumniOf: { "@type": "CollegeOrUniversity", name: "Saint Leo University" },
+    worksFor: { "@type": "LocalBusiness", "@id": `${SITE_URL}/#business`, name: BUSINESS_NAME, url: SITE_URL },
     address: { "@type": "PostalAddress", addressLocality: SERVICE_HOME_CITY, addressRegion: SERVICE_STATE_ABBR },
     email: `mailto:${BUSINESS_EMAIL}`,
     telephone: BUSINESS_PHONE_TEL,
