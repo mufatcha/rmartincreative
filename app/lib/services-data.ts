@@ -203,6 +203,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconGlobe,
+        image: {
+          src: "/webp-assets/website-overhaul.webp",
+          alt: "A website being rebuilt on a laptop, surrounded by its wireframe blueprint, code panels, a design system of colors, buttons, and type, and the finished responsive layout on phones and tablets",
+        },
       },
       {
         slug: "e-commerce-websites",
@@ -250,6 +254,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconCart,
+        image: {
+          src: "/webp-assets/e-commerce.webp",
+          alt: "An online store being built on a laptop, with its shop-grid wireframe, product cards with add-to-cart buttons, a shopping cart, payment options like Visa, PayPal, and Apple Pay, and the finished store on phones and tablets",
+        },
       },
       {
         slug: "wordpress-headless-cms",
@@ -301,6 +309,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconCode,
+        image: {
+          src: "/webp-assets/wordpress-headless-cms.webp",
+          alt: "Bright brick-walled office with a WordPress editor open on a desktop monitor and two laptops showing code and a content dashboard on a wooden worktable",
+        },
       },
       {
         slug: "website-updates",
@@ -353,6 +365,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconRefresh,
+        image: {
+          src: "/webp-assets/website-updates.webp",
+          alt: "Developer desk in a brick-walled studio with two monitors, one showing code in an editor and the other a site's content management dashboard, beside a notebook sketching how the docs and code connect",
+        },
       },
       {
         slug: "website-hosting",
@@ -404,6 +420,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconCloud,
+        image: {
+          src: "/webp-assets/website-hosting-management.webp",
+          alt: "Two monitors on a wooden desk, one showing a Cloudflare dashboard with web traffic, DDoS protection, and performance stats, and the other a site's code repository on GitHub",
+        },
       },
     ],
   },
@@ -754,8 +774,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         ],
         icon: IconGift,
         image: {
-          src: "/webp-assets/christmas-card-burgandy.webp",
-          alt: "Folded burgundy “Merry Christmas” photo card with a family portrait on the cover, beside matching burgundy envelopes with a gold patterned liner, red satin ribbon, and wooden stars",
+          src: "/webp-assets/christmas-card-red.webp",
+          alt: "Folded “Happy Holidays” photo card with a smiling extended-family portrait and gold foil lettering, beside a red envelope with a swirled liner, pinecones, red satin ribbon, and wooden stars",
         },
       },
       {

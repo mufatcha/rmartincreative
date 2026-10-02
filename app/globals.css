@@ -81,6 +81,32 @@ html:has([data-audience-tabs]) section[id] {
   animation: card-float 6s ease-in-out infinite;
 }
 
+/* Hero card variants: different paths, speeds, and start points so the four
+   cards drift independently instead of bobbing in sync. */
+@keyframes card-drift {
+  0%, 100% { transform: translate(0, 0) rotate(var(--rot, 0deg)); }
+  35% { transform: translate(7px, -9px) rotate(calc(var(--rot, 0deg) + 1.5deg)); }
+  70% { transform: translate(-4px, -15px) rotate(calc(var(--rot, 0deg) - 1deg)); }
+}
+@keyframes card-sway {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-9px) rotate(calc(var(--rot, 0deg) + 3deg)); }
+}
+@keyframes card-wander {
+  0%, 100% { transform: translate(0, 0) rotate(var(--rot, 0deg)); }
+  25% { transform: translate(-6px, -6px) rotate(calc(var(--rot, 0deg) - 1.5deg)); }
+  60% { transform: translate(5px, -13px) rotate(calc(var(--rot, 0deg) + 1deg)); }
+}
+.animate-card-drift {
+  animation: card-drift 7.4s ease-in-out infinite;
+}
+.animate-card-sway {
+  animation: card-sway 5.3s ease-in-out infinite;
+}
+.animate-card-wander {
+  animation: card-wander 8.6s ease-in-out infinite;
+}
+
 /* ---------- Marquee ---------- */
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -148,6 +174,9 @@ html:has([data-audience-tabs]) section[id] {
   .animate-drift-a,
   .animate-drift-b,
   .animate-card-float,
+  .animate-card-drift,
+  .animate-card-sway,
+  .animate-card-wander,
   .animate-marquee,
   .animate-hue,
   .snowflake,
