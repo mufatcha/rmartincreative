@@ -21,10 +21,12 @@ export default function Marquee() {
         {loop.map((item, i) => (
           <span
             key={`${item}-${i}`}
+            // The second copy only exists to make the loop seamless.
+            aria-hidden={i >= ITEMS.length || undefined}
             className="flex items-center gap-3 text-sm font-semibold uppercase tracking-wide text-paper/80"
           >
             {item}
-            <span className="text-amber-400">✦</span>
+            <span aria-hidden className="text-amber-400">✦</span>
           </span>
         ))}
       </div>

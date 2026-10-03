@@ -133,6 +133,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Yes, I can help set up or transfer hosting and domain registration as part of either service.",
       },
       {
+        question: "Can I review changes before they go live?",
+        answer:
+          "Yes. As an add-on, I can set up a private preview site: a second copy of your site that runs alongside the live one. It's locked behind a login and hidden from search engines and AI crawlers, so you can click through new pages and changes, share them with your team, and approve everything before it goes public. Once you sign off, the same changes are published to your live site. It's sometimes called a staging site, and it's quoted per project.",
+      },
+      {
         question: "Which platforms do you work with?",
         answer:
           "Custom-coded sites, WordPress, headless CMS platforms like Strapi and Prismic, and e-commerce on Shopify, BigCommerce, and Wix. I can also update most sites built on other platforms. The right choice depends on what the site needs to do and who will be updating it — I'll recommend one after we talk.",
@@ -164,6 +169,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Old page addresses redirected so existing links and rankings carry over",
           "Built on the platform that fits — custom code, WordPress, or an online store",
           "AI-assisted build for a faster launch, guided by hands-on web experience",
+          "Optional private preview site that stays in place after launch for proofing future changes",
         ],
         faqs: [
           {
@@ -331,6 +337,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Speed and mobile-usability tune-ups",
           "Seasonal refreshes (holiday hours, new offers, new photos)",
           "Redirects set up whenever a page moves, so no links break",
+          "Optional private preview site to approve changes before they go live",
         ],
         faqs: [
           {
@@ -363,6 +370,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             answer:
               "Updates are made carefully to protect existing rankings. If a page is renamed, moved, or removed, I set up a permanent (301) redirect so links from search results and other sites still land in the right place, and the authority those links carry isn't lost. If anything, updates tend to help — fresh content and fixed issues are good for both search rankings and AI discovery.",
           },
+          {
+            question: "Can I review changes before they go live?",
+            answer:
+              "Yes. As an add-on, I can set up a private preview site: a second copy of your site that runs alongside the live one. It's locked behind a login and hidden from search engines and AI crawlers, so you can click through new pages and changes, share them with your team, and approve everything before it goes public. Once you sign off, the same changes are published to your live site. It's sometimes called a staging site, and it's quoted per project.",
+          },
         ],
         icon: IconRefresh,
         image: {
@@ -386,6 +398,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Built-in security, HTTPS, and protection from traffic spikes",
           "Every change version-controlled on GitHub — nothing is ever lost",
           "Updates published automatically, with instant rollback if something breaks",
+          "Optional private preview site, hidden from the public and search engines",
         ],
         faqs: [
           {
@@ -417,6 +430,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             question: "Do I need to manage any of this myself?",
             answer:
               "No — I handle the Cloudflare and GitHub setup and can keep managing it going forward, or hand over full access if you'd rather control it yourself.",
+          },
+          {
+            question: "Can I have a private copy of my site for testing changes?",
+            answer:
+              "Yes, as a quoted add-on. Alongside your live site, I can run a private preview site on the same Cloudflare and GitHub setup. It's protected by a login and kept out of search engines and AI crawlers, so only you and your team see it. Changes go there first for your approval, then publish to the live site, with every version saved on GitHub.",
           },
         ],
         icon: IconCloud,
