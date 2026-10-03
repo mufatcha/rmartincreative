@@ -123,6 +123,12 @@ export const SERVICES: ServiceOption[] = [
       { id: "pages", label: "Roughly how many pages?", type: "select", options: ["1–3", "4–7", "8+", "Not sure"] },
       { id: "branding", label: "Do you have an existing logo and brand colors?", type: "radio", options: ["Yes", "No"] },
       { id: "ecommerce", label: "Do you need online selling / e-commerce?", type: "radio", options: ["Yes", "No"] },
+      {
+        id: "preview",
+        label: "Want a private preview site to approve changes before they go live? (quoted add-on)",
+        type: "radio",
+        options: ["Yes", "No", "Tell me more"],
+      },
       { id: "timeline", label: "Target launch date", type: "text" },
     ],
   },

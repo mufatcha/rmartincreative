@@ -63,6 +63,7 @@ export function GET() {
 - Location: ${SERVICE_HOME_CITY}, IL (home studio). Local pickup, drop-off, and hand delivery across the service area; everything else by mail, shipping, and email.
 - Contact: ${BUSINESS_PHONE_DISPLAY} · ${BUSINESS_EMAIL} · quote form on every page of ${site}
 - Christmas cards: folded 5×7 (10×7 paper folded in half) or flat 5×7 printed on both sides, with optional rounded corners; matte, glossy, or foil finishes. Booking in October or early November is recommended.
+- Websites: optional private preview site (staging site), a password-protected copy that runs alongside the live site, hidden from search engines and AI crawlers, for approving changes before they go live. Quoted per project.
 - Card extras for Christmas cards, greeting cards, and wedding invitations: ${cardExtrasList(false)}, plus personalized “From Santa” gift tags at Christmas. Wax seals are poured and pressed by hand in one or two colors, any color and monogram, or a Christmas-themed stamp. ${CARD_EXTRAS_NOTE}
 
 ## Starting prices

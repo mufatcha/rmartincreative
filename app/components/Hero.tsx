@@ -161,6 +161,7 @@ export default function Hero() {
           {/* One card per corner, each with its own motion, speed, and start
               point (negative delays) so they never move in sync. */}
           <div
+            aria-hidden
             className="animate-card-drift absolute -left-5 -top-10 hidden aspect-[5/7] w-32 flex-col justify-between rounded-xl bg-gradient-to-br from-rose-600 via-red-500 to-emerald-600 p-4 text-white shadow-2xl [animation-delay:-2.1s] sm:flex"
             style={{ "--rot": "-9deg", transform: "rotate(-9deg)" } as FloatStyle}
           >
@@ -174,6 +175,7 @@ export default function Hero() {
           </div>
 
           <div
+            aria-hidden
             className="animate-card-float absolute -right-3 -top-8 hidden w-44 rounded-2xl bg-gradient-to-br from-zinc-900 to-zinc-700 p-5 text-white shadow-2xl [animation-delay:-0.7s] sm:block"
             style={{ "--rot": "7deg", transform: "rotate(7deg)" } as FloatStyle}
           >
@@ -185,6 +187,7 @@ export default function Hero() {
           </div>
 
           <div
+            aria-hidden
             className="animate-card-wander absolute -bottom-8 -left-5 hidden aspect-video w-52 flex-col rounded-lg bg-white p-3 shadow-2xl ring-1 ring-ink/5 [animation-delay:-4.3s] sm:flex"
             style={{ "--rot": "-4deg", transform: "rotate(-4deg)" } as FloatStyle}
           >
@@ -210,6 +213,7 @@ export default function Hero() {
           </div>
 
           <div
+            aria-hidden
             className="animate-card-sway absolute -bottom-12 -right-4 hidden aspect-[3.67/8.5] w-24 flex-col rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 p-3 text-white shadow-2xl [animation-delay:-1.6s] sm:flex"
             style={{ "--rot": "10deg", transform: "rotate(10deg)" } as FloatStyle}
           >
