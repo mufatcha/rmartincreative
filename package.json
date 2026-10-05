@@ -12,7 +12,8 @@
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
-    "pdf:checklist": "bun scripts/pdf/launch-checklist.tsx"
+    "pdf:checklist": "bun scripts/pdf/launch-checklist.tsx",
+    "indexnow": "bun scripts/indexnow.ts"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.7",
