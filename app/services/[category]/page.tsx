@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CtaSection from "../../components/CtaSection";
+import PassportPrep from "../../components/PassportPrep";
+import PassportTownLinks from "../../components/PassportTownLinks";
 import ServiceCategoryPage from "../../components/ServiceCategoryPage";
 import { SERVICE_CATEGORIES, getServiceCategory } from "../../lib/services-data";
 
@@ -35,7 +37,14 @@ export default async function CategoryPage({
 
   return (
     <>
-      <ServiceCategoryPage category={category} />
+      <ServiceCategoryPage category={category}>
+        {category.slug === "passport-photos" && (
+          <>
+            <PassportTownLinks />
+            <PassportPrep />
+          </>
+        )}
+      </ServiceCategoryPage>
       <CtaSection />
     </>
   );

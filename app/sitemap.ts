@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "./lib/business";
 import { ABOUT } from "./lib/data/about";
+import { getPassportTownPages } from "./lib/data/passport-towns";
 import { getChristmasTownPages } from "./lib/data/christmas-towns";
 import { SERVICE_CATEGORIES } from "./lib/services-data";
 
@@ -68,6 +69,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.7,
+    })),
+
+    {
+      url: `${SITE_URL}/passport-photos`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    ...getPassportTownPages().map((p) => ({
+      url: `${SITE_URL}/passport-photos/${p.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 }

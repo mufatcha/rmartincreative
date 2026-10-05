@@ -3,11 +3,13 @@ import {
   IconGift,
   IconGlobe,
   IconLayers,
+  IconPassport,
   IconPhoto,
   IconRocket,
   IconShirt,
   IconSparkle,
 } from "../components/icons";
+import { PASSPORT_PAPERWORK, usd } from "./data/pricing";
 
 // Shared by the quote form (client) and /api/quote (server), so the email can
 // label every answer with the same question text the customer saw.
@@ -223,6 +225,35 @@ export const SERVICES: ServiceOption[] = [
         options: ["Yes", "No", "Not sure"],
       },
       { id: "deadline", label: "Needed by (if there's a date)", type: "text" },
+    ],
+  },
+  {
+    id: "passport",
+    fileHint: "If you'd like your own photo made passport-compliant, add it here.",
+    label: "Passport Photos",
+    icon: IconPassport,
+    questions: [
+      {
+        id: "how",
+        label: "How would you like your photos?",
+        type: "radio",
+        options: ["Visit at my home", "Visit at my business", "Make my own photo compliant"],
+      },
+      { id: "people", label: "How many people need passport photos?", type: "text" },
+      {
+        id: "paperwork",
+        label: `Want your application filled out and printed? (${usd(PASSPORT_PAPERWORK)})`,
+        type: "radio",
+        options: ["Yes — first-time application", "Yes — renewal by mail", "No thanks", "Not sure"],
+      },
+      { id: "town", label: "Town (for a visit)", type: "text" },
+      {
+        id: "delivery",
+        label: "How should your printed photos get to you?",
+        type: "radio",
+        options: ["Free USPS mail (3–4 business days)", "Same-day hand delivery (quoted)", "Not sure"],
+      },
+      { id: "deadline", label: "Needed by", type: "text" },
     ],
   },
   {

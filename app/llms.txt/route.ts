@@ -9,6 +9,7 @@ import { ABOUT } from "../lib/data/about";
 import { CARD_EXTRAS_NOTE, cardExtrasList } from "../lib/data/card-extras";
 import { getPricing, pricingSummary } from "../lib/data/pricing";
 import { TOWN_GROUPS, getChristmasTownPages } from "../lib/data/christmas-towns";
+import { getPassportTownPages } from "../lib/data/passport-towns";
 import { TOWNS } from "../lib/data/towns";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
@@ -85,6 +86,12 @@ ${services}
 
 ## Local Christmas card pages
 ${christmas}
+
+## Local passport photo pages
+At-home and on-site passport photos, with the nearest government passport acceptance facilities listed on each page.
+${getPassportTownPages()
+  .map((p) => `- [${p.name}, ${p.town.state}](${url(`/passport-photos/${p.slug}`)})`)
+  .join("\n")}
 
 ## Service area
 ${towns.join("; ")}; plus Chicago neighborhoods.

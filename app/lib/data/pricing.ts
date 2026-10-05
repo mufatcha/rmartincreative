@@ -30,7 +30,17 @@ export type PriceLine = {
   price: number | null;
   /** Show as "From $X". */
   from?: boolean;
+  /** An add-on to the line above: show as "+$X". */
+  add?: boolean;
+  /** Upper end of a price range: shows as "$price–$maxPrice". */
+  maxPrice?: number;
 };
+
+/** Passport photo visit (1 person) and the extra per infant (more time and care). */
+export const PASSPORT_VISIT = 135;
+export const PASSPORT_INFANT_EXTRA = 20;
+/** Passport application filled out and printed (first-time DS-11 or renewal by mail DS-82), sent with the photos. */
+export const PASSPORT_PAPERWORK = 55;
 
 export type ServicePricing = {
   lines: PriceLine[];
@@ -132,6 +142,20 @@ export const PRICING: Record<string, ServicePricing> = {
     lines: [{ label: "Canvas design (photo only)", price: 30 }],
     plusPrinting: true,
   },
+  "passport-photos": {
+    lines: [
+      { label: "Home or business visit: 1 compliant passport photo, 2 printed & cut copies + digital file", price: PASSPORT_VISIT },
+      { label: "Each additional person, same visit (same package)", price: 30, add: true },
+      { label: "Infants, each (extra time and care)", price: PASSPORT_INFANT_EXTRA, add: true },
+      { label: "Your own photo made compliant (background removal, sizing) + 1 printed & cut pair, depending on the background", price: 20, maxPrice: 40 },
+      { label: "Each additional printed & cut pair, any service", price: 1, add: true },
+      { label: "Application filled out and printed — first-time (DS-11) or renewal by mail (DS-82) — delivered with your photos", price: PASSPORT_PAPERWORK, add: true },
+      { label: "USPS mail delivery (3–4 business days)", price: 0 },
+      { label: "Same-day hand delivery", price: null },
+    ],
+    startsAt: PASSPORT_VISIT,
+    note: "By appointment. Every visit includes unlimited retakes until each photo meets U.S. State Department requirements. Prints are made off-site the same day the photos are taken and mailed right after printing; digital files are sent the same day by email, text, or both.",
+  },
   apparel: {
     lines: [
       { label: "T-shirt layout", price: 20 },
@@ -151,6 +175,9 @@ export function usd(amount: number): string {
 
 export function formatPrice(line: PriceLine): string {
   if (line.price === null) return "Quoted";
+  if (line.price === 0) return "Free";
+  if (line.maxPrice !== undefined) return `${usd(line.price)}–${usd(line.maxPrice)}`;
+  if (line.add) return `+${usd(line.price)}`;
   return line.from ? `From ${usd(line.price)}` : usd(line.price);
 }
 
@@ -170,7 +197,11 @@ export function pricingSummary(pricing: ServicePricing): string {
   const parts = pricing.lines.map((l) =>
     l.price === null
       ? `${l.label.toLowerCase()}: quoted per project`
-      : `${l.label.toLowerCase()}: ${l.from ? "from " : ""}${usd(l.price)}`
+      : l.price === 0
+        ? `${l.label.toLowerCase()}: free`
+        : l.maxPrice !== undefined
+          ? `${l.label.toLowerCase()}: ${usd(l.price)}–${usd(l.maxPrice)}`
+          : `${l.label.toLowerCase()}: ${l.add ? "+" : l.from ? "from " : ""}${usd(l.price)}`
   );
   const sentence = parts.join("; ");
   return `${sentence.charAt(0).toUpperCase()}${sentence.slice(1)}${pricing.plusPrinting ? ", plus printing" : ""}.`;

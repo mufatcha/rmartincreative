@@ -371,3 +371,14 @@ export function IconCanvas({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function IconPassport({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="5" y="2.5" width="14" height="19" rx="1.8" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="12" cy="10" r="3.4" stroke="currentColor" strokeWidth="1.6" />
+      <path stroke="currentColor" strokeWidth="1.2" d="M8.6 10h6.8M12 6.6c-1.3 1.6-1.3 5.2 0 6.8M12 6.6c1.3 1.6 1.3 5.2 0 6.8" />
+      <path stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M9 17h6" />
+    </svg>
+  );
+}

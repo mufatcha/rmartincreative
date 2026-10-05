@@ -3,7 +3,7 @@
 // picks it up automatically everywhere (hero badge and header nav both read
 // from this one file, so they can never drift out of sync).
 
-export type SeasonIcon = "globe" | "shirt" | "presentation" | "card" | "snowflake" | "sign";
+export type SeasonIcon = "globe" | "shirt" | "presentation" | "card" | "snowflake" | "sign" | "passport";
 
 export type SeasonalBadge = { text: string; icon: SeasonIcon };
 export type SeasonalNavLink = { label: string; href: string };
@@ -21,8 +21,8 @@ const MONTHLY: SeasonalContent[] = [
     nav: { label: "Yard Signs", href: "/services/signs-posters/yard-signs" },
   },
   {
-    badge: { text: "Custom Pitch Decks & Business Docs", icon: "presentation" },
-    nav: { label: "Pitch Decks", href: "/services/business-printing/business-documents" },
+    badge: { text: "At-Home Passport Photos for Summer Travel", icon: "passport" },
+    nav: { label: "Passport Photos", href: "/services/passport-photos" },
   },
   {
     badge: { text: "Order Custom T-Shirts & Apparel", icon: "shirt" },
