@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import Reveal from "./Reveal";
 import { renderInlineLinks } from "../lib/inline-links";
@@ -10,7 +11,8 @@ import ServiceVisual from "./ServiceVisual";
 import { IconArrowRight } from "./icons";
 import type { ServiceCategory } from "../lib/services-data";
 
-export default function ServiceCategoryPage({ category }: { category: ServiceCategory }) {
+/** `children` renders page-specific sections just above the FAQs. */
+export default function ServiceCategoryPage({ category, children }: { category: ServiceCategory; children?: ReactNode }) {
   const Icon = category.icon;
   const hasChildren = category.children.length > 0;
 
@@ -101,6 +103,8 @@ export default function ServiceCategoryPage({ category }: { category: ServiceCat
             </div>
           </Reveal>
         )}
+
+        {children}
 
         <ServiceFaqs faqs={category.faqs} />
       </div>

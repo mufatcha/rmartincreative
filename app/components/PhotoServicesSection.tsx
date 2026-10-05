@@ -20,6 +20,11 @@ const SERVICES = [
     body: "Faded prints and dull or off-color digital photos, made natural again.",
     href: "/services/photos/color-correction",
   },
+  {
+    title: "Passport Photos",
+    body: "Compliant passport photos taken at your home or business, printed and delivered.",
+    href: "/services/passport-photos",
+  },
 ];
 
 export default function PhotoServicesSection() {

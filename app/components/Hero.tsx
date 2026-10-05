@@ -7,6 +7,7 @@ import {
   IconArrowRight,
   IconCard,
   IconGlobe,
+  IconPassport,
   IconPresentation,
   IconShirt,
   IconSignpost,
@@ -20,6 +21,7 @@ const SEASON_ICONS: Record<SeasonIcon, typeof IconSnowflake> = {
   card: IconCard,
   snowflake: IconSnowflake,
   sign: IconSignpost,
+  passport: IconPassport,
 };
 
 type FloatStyle = CSSProperties & { "--rot"?: string };

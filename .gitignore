@@ -45,3 +45,6 @@ next-env.d.ts
 .open-next
 .wrangler
 .dev.vars
+
+# Local JPG copies of public/webp-assets (not deployed or tracked)
+/public/jpg-assets/
