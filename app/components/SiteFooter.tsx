@@ -11,6 +11,8 @@ const COMPANY_LINKS = [
   { href: "/#portfolio", label: "Work" },
   { href: "/#process", label: "How it works" },
   { href: "/service-area", label: "Service area" },
+  { href: "/payment", label: "Ways to pay" },
+  { href: "/privacy", label: "Privacy" },
   { href: "/#contact", label: "Contact" },
 ];
 
@@ -23,7 +25,7 @@ export default function SiteFooter() {
             <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-fuchsia-500 to-amber-400 text-[11px] font-bold text-white">
               RM
             </span>
-            <span className="font-semibold text-ink">Ryan Martin Design &amp; Print</span>
+            <span className="font-semibold text-ink">R. Martin Creative</span>
           </div>
           <p className="mt-3 max-w-xs">Your neighborhood designer for web, print, and everything in between.</p>
           <div className="mt-4 flex flex-col gap-1">
@@ -81,7 +83,7 @@ export default function SiteFooter() {
       </div>
 
       <p className="mx-auto mt-10 max-w-6xl px-6 text-xs text-ink-soft">
-        &copy; {new Date().getFullYear()} Ryan Martin Design &amp; Print
+        &copy; {new Date().getFullYear()} R. Martin Creative
       </p>
     </footer>
   );

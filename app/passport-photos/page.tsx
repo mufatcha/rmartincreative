@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageTitle } from "../lib/seo";
 import Link from "next/link";
 import CtaSection from "../components/CtaSection";
 import QuoteModal from "../components/QuoteModal";
@@ -8,7 +9,7 @@ import { getPassportTownPages } from "../lib/data/passport-towns";
 import { PASSPORT_VISIT, usd } from "../lib/data/pricing";
 
 export const metadata: Metadata = {
-  title: "Passport Photos Near You",
+  title: pageTitle("Passport Photos Near You"),
   description:
     "At-home and on-site passport photos in Richmond, McHenry, Crystal Lake, Woodstock, Algonquin, the Dundees, Lake Villa, Gurnee, and Lake Geneva — plus where to turn in your application in each town.",
   alternates: { canonical: "/passport-photos" },

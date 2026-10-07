@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageTitle } from "../../lib/seo";
 import { notFound } from "next/navigation";
 import CtaSection from "../../components/CtaSection";
 import PassportPrep from "../../components/PassportPrep";
@@ -20,7 +21,7 @@ export async function generateMetadata({
   if (!category) notFound();
 
   return {
-    title: category.title,
+    title: pageTitle(category.title),
     description: category.metaDescription,
     alternates: { canonical: `/services/${category.slug}` },
   };

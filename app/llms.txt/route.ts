@@ -6,6 +6,7 @@ import {
   SERVICE_HOME_CITY,
 } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
+import { PAYMENT_SUMMARY } from "../lib/data/payments";
 import { CARD_EXTRAS_NOTE, cardExtrasList } from "../lib/data/card-extras";
 import { getPricing, pricingSummary } from "../lib/data/pricing";
 import { TOWN_GROUPS, getChristmasTownPages } from "../lib/data/christmas-towns";
@@ -57,13 +58,14 @@ export function GET() {
 
   const body = `# ${BUSINESS_NAME}
 
-> ${BUSINESS_NAME} is Ryan Martin, a one-person design, web, and print studio based in ${SERVICE_HOME_CITY}, Illinois. It works as an outsourced marketing team for small businesses — websites, search and AI visibility, business printing, signs, and apparel — and also makes custom Christmas and greeting cards and does photo scanning, restoration, and color correction for families. It serves Northern Illinois (McHenry, Lake, Cook, and Kane counties, including Chicago) and Southeast Wisconsin.
+> ${BUSINESS_NAME} is a one-person design, web, and print studio based in ${SERVICE_HOME_CITY}, Illinois. It works as an outsourced marketing team for small businesses — websites, search and AI visibility, business printing, signs, and apparel — and also makes custom Christmas and greeting cards and does photo scanning, restoration, and color correction for families. It serves Northern Illinois (McHenry, Lake, Cook, and Kane counties, including Chicago) and Southeast Wisconsin.
 
 ## Key facts
 - Owner: Ryan Martin, designer and developer with 20+ years of website design and programming.
 - Location: ${SERVICE_HOME_CITY}, IL (home studio). Local pickup, drop-off, and hand delivery across the service area; everything else by mail, shipping, and email.
 - Contact: ${BUSINESS_PHONE_DISPLAY} · ${BUSINESS_EMAIL} · quote form on every page of ${site}
 - Christmas cards: folded 5×7 (10×7 paper folded in half) or flat 5×7 printed on both sides, with optional rounded corners; matte, glossy, or foil finishes. Booking in October or early November is recommended.
+- Payment: ${PAYMENT_SUMMARY} Details: ${url("/payment")}
 - Websites: optional private preview site (staging site), a password-protected copy that runs alongside the live site, hidden from search engines and AI crawlers, for approving changes before they go live. Quoted per project.
 - Card extras for Christmas cards, greeting cards, and wedding invitations: ${cardExtrasList(false)}, plus personalized “From Santa” gift tags at Christmas. Wax seals are poured and pressed by hand in one or two colors, any color and monogram, or a Christmas-themed stamp. ${CARD_EXTRAS_NOTE}
 

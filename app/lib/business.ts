@@ -1,6 +1,11 @@
 import { TOWNS, type Town } from "./data/towns";
 
-export const BUSINESS_NAME = "Ryan Martin Design & Print";
+// The business is "R. Martin Creative" (matches the domain, email, Google Business
+// Profile, and a future LLC). Ryan Martin is the person: never put the two in the
+// same sentence, title, description, or alt text.
+export const BUSINESS_NAME = "R. Martin Creative";
+/** Earlier name, kept only as schema.org alternateName so old searches still connect. */
+export const BUSINESS_ALT_NAME = "Ryan Martin Design & Print";
 export const BUSINESS_PHONE_DISPLAY = "(312) 866-2762";
 export const BUSINESS_PHONE_TEL = "tel:+13128662762";
 export const BUSINESS_EMAIL = "ryan@rmartincreative.com";

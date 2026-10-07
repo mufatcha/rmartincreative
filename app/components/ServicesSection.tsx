@@ -8,6 +8,7 @@ import {
   IconCard,
   IconGlobe,
   IconLayers,
+  IconMail,
   IconPresentation,
   IconSearch,
   IconShirt,
@@ -98,6 +99,12 @@ const GROUPS: { title: string; blurb: string; accent: string; badge: string; ser
     accent: "from-rose-500 via-red-500 to-emerald-600",
     badge: "bg-rose-50 text-rose-600",
     services: [
+      {
+        icon: IconMail,
+        title: "Email Marketing",
+        description: "Newsletters, branded templates, and automated follow-ups in Mailchimp, Constant Contact, or Klaviyo.",
+        href: "/services/email-marketing",
+      },
       {
         icon: IconSnowflake,
         title: "Corporate Holiday Cards",

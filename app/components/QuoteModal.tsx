@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { trackQuoteSubmitted } from "./Analytics";
 import FileDropzone from "./FileDropzone";
 import Turnstile, { turnstileEnabled } from "./Turnstile";
 import { IconArrowRight, IconClose } from "./icons";
@@ -117,6 +118,7 @@ export default function QuoteModal({
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) throw new Error(data.error || "Your request couldn't be sent.");
       setSubmitted(true);
+      trackQuoteSubmitted(service.id);
     } catch (err) {
       setSendError(err instanceof Error ? err.message : "Your request couldn't be sent.");
       setTurnstileToken("");
@@ -142,6 +144,8 @@ export default function QuoteModal({
       {open &&
         createPortal(
           <div
+            // Never record the quote form (names, contact details, uploads) in Clarity.
+            data-clarity-mask="true"
             className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 p-4 backdrop-blur-sm"
             onMouseDown={(e) => {
               if (e.target === e.currentTarget) close();

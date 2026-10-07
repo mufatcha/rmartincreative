@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
+import Analytics from "./components/Analytics";
 import LocalBusinessJsonLd from "./components/LocalBusinessJsonLd";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import { BUSINESS_NAME, SITE_URL } from "./lib/business";
 import { getSeasonalNavLink } from "./lib/season";
+import { getServicesMenu } from "./lib/services-menu";
 
 // Rebuild every route hourly so the header's seasonal nav link (app/lib/season.ts)
 // stays in sync with the homepage hero badge, even on statically-generated pages.
@@ -16,13 +18,8 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const TITLE =
-  "Ryan Martin Design & Print | Marketing, Web & Print Partner for Small Businesses in Richmond, IL";
+  "R. Martin Creative | Design, Web & Print in Richmond, IL";
 const DESCRIPTION =
   "Your marketing team without the payroll: websites, search and AI visibility, business printing, signs, and apparel for small businesses across Northern Illinois and Southeast Wisconsin, plus custom Christmas cards and photo restoration. Based in Richmond, IL.";
 
@@ -56,13 +53,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
-        <SiteHeader seasonalNav={seasonalNav} />
+        <SiteHeader seasonalNav={seasonalNav} servicesMenu={getServicesMenu()} />
         <main className="flex-1">{children}</main>
         <SiteFooter />
         <LocalBusinessJsonLd />
+        <Analytics />
       </body>
     </html>
   );

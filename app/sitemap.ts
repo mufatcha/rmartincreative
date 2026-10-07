@@ -72,6 +72,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
 
     {
+      url: `${SITE_URL}/privacy`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
+      url: `${SITE_URL}/payment`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
       url: `${SITE_URL}/passport-photos`,
       lastModified,
       changeFrequency: "monthly",

@@ -51,7 +51,7 @@ export default function ServiceVisual({
             className="pointer-events-none absolute right-0 top-1/2 z-30 w-[160%] max-w-[90vw] -translate-y-1/2 origin-right scale-[0.65] overflow-hidden rounded-2xl opacity-0 shadow-[0_30px_80px_rgba(32,26,46,0.35)] ring-1 ring-ink/10 transition duration-300 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
             style={{ aspectRatio }}
           >
-            <Image src={image.src} alt="" fill sizes="800px" className="object-cover" />
+            <Image src={image.src} alt={image.alt} fill sizes="800px" className="object-cover" />
           </div>
         </div>
       </>

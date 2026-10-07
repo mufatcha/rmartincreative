@@ -382,3 +382,12 @@ export function IconPassport({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function IconMail({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.6" />
+      <path stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}

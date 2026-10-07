@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Ryan Martin Design & Print";
+export const alt = "R. Martin Creative — Marketing, Web & Print in Northern Illinois and Southeast Wisconsin";
 export const size = {
   width: 1200,
   height: 630,
@@ -48,7 +48,7 @@ export default function Image() {
             color: "#201a2e",
           }}
         >
-          Ryan Martin
+          R. Martin Creative
         </div>
         <div
           style={{

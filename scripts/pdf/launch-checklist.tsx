@@ -156,8 +156,8 @@ function Cover() {
       <View style={{ marginTop: 34, flexDirection: "row", alignItems: "center" }}>
         <BrandMark size={42} />
         <View style={{ marginLeft: 12 }}>
-          <Text style={{ fontSize: 13, fontWeight: 700 }}>Ryan Martin</Text>
-          <Text style={{ fontSize: 10, color: C.inkSoft }}>Design &amp; Print</Text>
+          <Text style={{ fontSize: 13, fontWeight: 700 }}>{BUSINESS_NAME}</Text>
+          <Text style={{ fontSize: 10, color: C.inkSoft }}>Design, Web &amp; Print</Text>
         </View>
       </View>
 
