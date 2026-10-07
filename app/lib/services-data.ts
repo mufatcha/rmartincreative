@@ -11,6 +11,7 @@ import {
   IconLayers,
   IconMail,
   IconPassport,
+  IconPostcard,
   IconPhoto,
   IconPoster,
   IconPresentation,
@@ -81,6 +82,8 @@ export type ServiceCategory = {
   children: ServiceLeaf[];
   /** Slugs of closely related categories, cross-linked from this category's leaf pages. */
   related?: string[];
+  /** Search-result title, when it should say more than `title` (still kept within 60 characters). */
+  seoTitle?: string;
   /** Set once a real photo exists — omit to show the branded placeholder. */
   image?: ServiceImage;
 };
@@ -737,8 +740,90 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     ],
     icon: IconMail,
     accent: "from-fuchsia-600 via-pink-500 to-orange-400",
+    image: {
+      src: "/webp-assets/email-marketing.webp",
+      alt: "A branded \"Stay in touch!\" newsletter for a local Richmond shop being built in Mailchimp's campaign editor, with a store photo and a Visit Our Shop button",
+    },
     children: [],
     related: ["website-design-development", "search-ai-discovery"],
+  },
+  {
+    slug: "location-smart-postcards",
+    audience: "business",
+    title: "Location Smart Postcards",
+    seoTitle: "Location Smart Postcards: Big-Data Neighbor Mailings",
+    metaDescription:
+      "Neighbor postcard mailings for home services, auto, and real estate anywhere in the U.S.: targeted postcards to customers' neighbors, on soft-touch stock.",
+    tagline: "Neighbor postcard mailings, fueled by big data.",
+    description: `People pay attention to what's happening on their own street. When you sell a car, install solar panels, or finish a new roof, I send a postcard to the neighbors around that address, with a message written for your business and your offer — for a solar installer, "Your neighbor on Oak Street just went solar. Isn't it time you did too?" Design, targeted list, soft-touch printing, and mailing, handled start to finish — from ${SERVICE_HOME_CITY}, Illinois, for businesses anywhere in the United States.`,
+    details:
+      "It's the oldest marketing there is — keeping up with the Joneses — aimed precisely. Starting from your customer's address, I use neighborhood data and aerial map views to pick the households most likely to care: the same kind of home, the same street, the same need. Then the postcard does the rest: printed on a soft-feel stock that people notice the moment they pull it from the mailbox, with one clear offer and a reason to act now.",
+    features: [
+      "Postcards mailed to the neighbors of your recent customers",
+      "Fueled by big data: lists built from neighborhood data and aerial map views",
+      "Skips homes that already have what you sell, like a pool, solar panels, or a new deck",
+      "A custom message and design for every business and every offer",
+      "Soft-touch stock that stands out in the mailbox",
+      "Printing, postage, and mailing packaged together",
+      "Neighbor messages kept anonymous, or named only with your customer's written permission",
+      "Built for home services, auto sales and repair, real estate, and insurance",
+      "Available anywhere in the United States",
+    ],
+    faqs: [
+      {
+        question: "What is neighbor postcard marketing?",
+        answer:
+          "It's direct mail sent to the households around one of your recent customers. When someone on the street just bought a new car, added solar, or got a new roof, their neighbors are far more likely to consider the same thing — the postcard puts your offer in front of them at exactly that moment.",
+      },
+      {
+        question: "Which businesses is this for?",
+        answer:
+          "Any business whose work neighbors can see or hear about. Home services: renovations, deck builders, roofing and siding, window replacement, window cleaning, painters, handymen, HVAC, plumbers, electricians, septic systems, solar panels, lawn care, pool services, and backyard playgrounds. Auto and boats: car sales, mechanics, and boat cleaning and maintenance. Plus real estate agents and car insurance agents.",
+      },
+      {
+        question: "Will postcards go to neighbors who already have what I'm selling?",
+        answer:
+          "No. Lists are checked against neighborhood data and aerial map views, so homes that already have it are left off. If you're advertising pool installation because a neighbor just got a pool, the postcards skip every nearby house that already has a pool — you only pay to reach the homes that could actually buy.",
+      },
+      {
+        question: "Do you only mail in Illinois?",
+        answer:
+          "No — neighbor postcard mailings are available anywhere in the United States. I'm based in Richmond, Illinois, but the lists, printing, and mailing work the same whether your customers are down the road or across the country.",
+      },
+      {
+        question: "Will the postcard name my customer?",
+        answer:
+          "Not unless they agree to it. By default the message stays anonymous — \"your neighbor on Oak Street\" — which keeps the neighborly effect without naming anyone. If your customer gives written permission to be named, the postcard can say so, which makes it even more personal.",
+      },
+      {
+        question: "Who receives the postcards?",
+        answer:
+          "Households around your customer's address, chosen with neighborhood data and aerial map views — for example, homes on the same street, homes with similar roofs or yards, or homes in the same subdivision. We decide the area and number of postcards together for each campaign.",
+      },
+      {
+        question: "What does soft-touch mean?",
+        answer:
+          "It's a print finish with a smooth, velvety feel, so the postcard feels different from everything else in the mailbox. People tend to hold it a second longer, which is the whole point.",
+      },
+      {
+        question: "What's included?",
+        answer:
+          "Everything: the postcard design and offer, the targeted mailing list, printing on soft-touch stock, and mailing — postage is packaged in with the printing.",
+      },
+      {
+        question: "How much does a neighbor postcard mailing cost?",
+        answer:
+          "Each campaign is quoted based on how many postcards go out and how often you mail. Tell me your business, your offer, and how many recent jobs you'd like to mail around, and I'll put together a quote.",
+      },
+    ],
+    icon: IconPostcard,
+    accent: "from-cyan-500 via-sky-600 to-indigo-700",
+    image: {
+      src: "/webp-assets/smart-postcard.webp",
+      alt: "A \"Just Sold\" real estate postcard with gold-foil lettering, a photo of the sold home, and the line \"The home down the street just sold! Looking to sell?\"",
+    },
+    children: [],
+    related: ["business-printing", "email-marketing"],
   },
   {
     slug: "greeting-cards",
@@ -861,7 +946,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Do you offer wax seals for Christmas cards?",
             answer:
-              "Yes — each seal is poured and pressed by hand, so every one is unique. Choose one color or two-tone, any color, with your initials or monogram, or a Christmas-themed stamp. Wax seals are quoted per job.",
+              "Yes — each seal is poured and pressed by hand, so every one is unique. Choose one color or two-tone in any color combination, with your initials or monogram — or a Christmas-themed stamp. Wax seals are quoted per job.",
           },
           {
             question: "Can you make personalized gift tags from Santa?",
@@ -997,7 +1082,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Do you offer wax seals for wedding invitations?",
             answer:
-              "Yes — every seal is poured and pressed by hand, so no two are exactly alike. Choose one color or two-tone with an accent color, in your wedding colors, with your initials or monogram. Wax seals are quoted per job.",
+              "Yes — every seal is poured and pressed by hand, so no two are exactly alike. Choose one color or two-tone in any color combination — like your wedding colors — with your initials or monogram. Wax seals are quoted per job.",
           },
         ],
         icon: IconGift,

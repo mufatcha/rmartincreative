@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageTitle } from "../../lib/seo";
 import { notFound } from "next/navigation";
 import CtaSection from "../../components/CtaSection";
+import NeighborDataCallout from "../../components/NeighborDataCallout";
 import PassportPrep from "../../components/PassportPrep";
 import PassportTownLinks from "../../components/PassportTownLinks";
 import ServiceCategoryPage from "../../components/ServiceCategoryPage";
@@ -21,7 +22,7 @@ export async function generateMetadata({
   if (!category) notFound();
 
   return {
-    title: pageTitle(category.title),
+    title: pageTitle(category.seoTitle ?? category.title),
     description: category.metaDescription,
     alternates: { canonical: `/services/${category.slug}` },
   };
@@ -39,6 +40,7 @@ export default async function CategoryPage({
   return (
     <>
       <ServiceCategoryPage category={category}>
+        {category.slug === "location-smart-postcards" && <NeighborDataCallout />}
         {category.slug === "passport-photos" && (
           <>
             <PassportTownLinks />

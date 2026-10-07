@@ -8,7 +8,7 @@ import Turnstile, { turnstileEnabled } from "./Turnstile";
 import { IconArrowRight, IconClose } from "./icons";
 import { useFileUploads } from "./useFileUploads";
 import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL } from "../lib/business";
-import { SERVICES, type Field } from "../lib/quote-services";
+import { SERVICES, SERVICE_GROUPS, type Field } from "../lib/quote-services";
 
 // Step indexes, in order.
 const STEP_SERVICE = 0;
@@ -206,24 +206,32 @@ export default function QuoteModal({
 
                 <div className="mt-6 space-y-5">
                   {step === STEP_SERVICE && (
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      {SERVICES.map((s) => {
-                        const Icon = s.icon;
-                        const active = s.id === serviceId;
-                        return (
-                          <button
-                            key={s.id}
-                            type="button"
-                            onClick={() => setServiceId(s.id)}
-                            className={`flex flex-col items-start gap-2 rounded-2xl border p-4 text-left transition-colors ${
-                              active ? "border-violet-600 bg-violet-50" : "border-ink/10 hover:border-ink/25"
-                            }`}
-                          >
-                            <Icon className="h-6 w-6 text-violet-600" />
-                            <span className="text-sm font-semibold">{s.label}</span>
-                          </button>
-                        );
-                      })}
+                    <div className="space-y-5">
+                      {SERVICE_GROUPS.map((group) => (
+                        <div key={group.id}>
+                          <p className="text-xs font-semibold uppercase tracking-widest text-ink-soft">{group.label}</p>
+                          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                            {SERVICES.filter((s) => s.group === group.id).map((s) => {
+                              const Icon = s.icon;
+                              const active = s.id === serviceId;
+                              return (
+                                <button
+                                  key={s.id}
+                                  type="button"
+                                  onClick={() => setServiceId(s.id)}
+                                  aria-pressed={active}
+                                  className={`flex items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left transition-colors ${
+                                    active ? "border-violet-600 bg-violet-50" : "border-ink/10 hover:border-ink/25"
+                                  }`}
+                                >
+                                  <Icon className="h-[18px] w-[18px] shrink-0 text-violet-600" />
+                                  <span className="text-sm font-semibold leading-snug">{s.label}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   )}
 

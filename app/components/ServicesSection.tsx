@@ -9,6 +9,7 @@ import {
   IconGlobe,
   IconLayers,
   IconMail,
+  IconPostcard,
   IconPresentation,
   IconSearch,
   IconShirt,
@@ -30,7 +31,7 @@ type Service = {
 const GROUPS: { title: string; blurb: string; accent: string; badge: string; services: Service[] }[] = [
   {
     title: "Get found",
-    blurb: "Be easy to find, whether customers search Google or ask AI.",
+    blurb: "Be easy to find on Google, in AI answers, and in your customers' own neighborhoods.",
     accent: "from-sky-500 via-blue-500 to-indigo-600",
     badge: "bg-sky-50 text-sky-600",
     services: [
@@ -48,6 +49,12 @@ const GROUPS: { title: string; blurb: string; accent: string; badge: string; ser
         description:
           "Show up on Google and in AI answers, starting with a free health check.",
         href: "#search-ai",
+      },
+      {
+        icon: IconPostcard,
+        title: "Location Smart Postcards",
+        description: "Soft-touch postcards to the neighbors of every customer you serve.",
+        href: "#neighbor-postcards",
       },
     ],
   },
@@ -123,7 +130,7 @@ const GROUPS: { title: string; blurb: string; accent: string; badge: string; ser
         icon: IconShirt,
         title: "T-Shirts & Apparel",
         description: "Staff shirts, event tees, and branded apparel under my FeedTheFlames brand.",
-        href: "#tshirts",
+        href: "/services/apparel",
         prices: ["apparel"],
       },
     ],

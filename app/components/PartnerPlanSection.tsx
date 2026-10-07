@@ -1,6 +1,6 @@
-import QuoteModal from "./QuoteModal";
 import Reveal from "./Reveal";
 import { IconArrowRight, IconSparkle } from "./icons";
+import { BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL } from "../lib/business";
 
 const INCLUDED = [
   "Website updates, hosting, and upkeep",
@@ -35,13 +35,14 @@ export default function PartnerPlanSection() {
                 contract.
               </p>
               <div className="mt-9">
-                <QuoteModal
-                  initialServiceId="partner"
-                  triggerClassName="btn-shine group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink shadow-lg transition-transform hover:scale-105"
+                {/* A conversation, not a form: the plan usually follows a first project. */}
+                <a
+                  href={BUSINESS_PHONE_TEL}
+                  className="btn-shine group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink shadow-lg transition-transform hover:scale-105"
                 >
-                  Let&rsquo;s talk about a plan
+                  Let&rsquo;s talk about a plan: {BUSINESS_PHONE_DISPLAY}
                   <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </QuoteModal>
+                </a>
               </div>
             </div>
 
