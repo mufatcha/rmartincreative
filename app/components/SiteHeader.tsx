@@ -4,10 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import QuoteModal from "./QuoteModal";
-import { IconArrowRight, IconSnowflake } from "./icons";
+import { IconArrowRight } from "./icons";
 import type { SeasonalNavLink } from "../lib/season";
 import { ABOUT } from "../lib/data/about";
-import { SERVICE_AUDIENCES, getCategoriesFor, type ServiceAudience } from "../lib/services-data";
+import type { ServiceAudience } from "../lib/services-data";
+import type { ServicesMenuGroup } from "../lib/services-menu";
 
 const PAGE_LINKS = [
   { href: "/new-business", label: "New Business" },
@@ -26,30 +27,14 @@ const AUDIENCE_TABS = [
 // apparel group stacked on the left, personal & family on the right.
 const MENU_COLUMNS: ServiceAudience[][] = [["business", "shared"], ["personal"]];
 
-// Services menu entries. Christmas Cards gets its own entry above Greeting
-// Cards (its parent category) so it's always one click away, all year.
-function servicesMenuFor(audience: ServiceAudience) {
-  return getCategoriesFor(audience).flatMap((category) => {
-    const entry = {
-      href: `/services/${category.slug}`,
-      title: category.title,
-      icon: category.icon,
-      accent: category.accent,
-    };
-    if (category.slug !== "greeting-cards") return [entry];
-    return [
-      {
-        href: "/services/greeting-cards/christmas-cards",
-        title: "Christmas Cards",
-        icon: IconSnowflake,
-        accent: "from-rose-600 via-red-500 to-emerald-600",
-      },
-      entry,
-    ];
-  });
-}
-
-export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLink }) {
+export default function SiteHeader({
+  seasonalNav,
+  servicesMenu,
+}: {
+  seasonalNav: SeasonalNavLink;
+  /** Built on the server (lib/services-menu.tsx) so the services data stays out of this bundle. */
+  servicesMenu: ServicesMenuGroup[];
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -100,10 +85,7 @@ export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLi
             RM
           </span>
           <span className="text-sm font-semibold tracking-tight sm:text-base">
-            Ryan Martin
-            <span className="ml-1.5 hidden text-ink-soft font-normal sm:inline">
-              Design &amp; Print
-            </span>
+            R. Martin Creative
           </span>
         </Link>
 
@@ -131,14 +113,13 @@ export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLi
                 <div className="grid grid-cols-2 gap-8">
                   {MENU_COLUMNS.map((column) => (
                     <div key={column.join()} className="space-y-6">
-                      {SERVICE_AUDIENCES.filter((a) => column.includes(a.id)).map((audience) => (
+                      {servicesMenu.filter((a) => column.includes(a.id)).map((audience) => (
                         <div key={audience.id}>
                           <p className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
                             {audience.label}
                           </p>
                           <ul className="mt-3 space-y-1">
-                            {servicesMenuFor(audience.id).map((item) => {
-                              const Icon = item.icon;
+                            {audience.items.map((item) => {
                               return (
                                 <li key={item.href}>
                                   <Link
@@ -149,7 +130,7 @@ export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLi
                                     <span
                                       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br text-white ${item.accent}`}
                                     >
-                                      <Icon className="h-4 w-4" />
+                                      {item.icon}
                                     </span>
                                     {item.title}
                                   </Link>
@@ -260,13 +241,13 @@ export default function SiteHeader({ seasonalNav }: { seasonalNav: SeasonalNavLi
             Featured: {seasonalNav.label}
           </Link>
 
-          {SERVICE_AUDIENCES.map((audience) => (
+          {servicesMenu.map((audience) => (
             <div key={audience.id} className="mt-3">
               <p className="px-2 text-xs font-semibold uppercase tracking-widest text-ink-soft">
                 {audience.label}
               </p>
               <div className="mt-1 flex flex-col">
-                {servicesMenuFor(audience.id).map((item) => (
+                {audience.items.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}

@@ -1,5 +1,6 @@
 import {
   BUSINESS_EMAIL,
+  BUSINESS_ALT_NAME,
   BUSINESS_NAME,
   BUSINESS_PHONE_TEL,
   SERVICE_AREA_CITIES,
@@ -9,6 +10,7 @@ import {
   SITE_URL,
 } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
+import { PAYMENT_ACCEPTED } from "../lib/data/payments";
 
 function buildSchema() {
   return {
@@ -16,12 +18,15 @@ function buildSchema() {
     "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": `${SITE_URL}/#business`,
     name: BUSINESS_NAME,
+    alternateName: BUSINESS_ALT_NAME,
     founder: ABOUT.published
       ? { "@type": "Person", "@id": `${SITE_URL}/about#ryan-martin`, name: "Ryan Martin", url: `${SITE_URL}/about` }
       : { "@type": "Person", name: "Ryan Martin" },
     description:
       "An outsourced marketing team for small businesses: websites, search and AI visibility, business printing, signs, and apparel (FeedTheFlames), plus custom Christmas and greeting cards and photo restoration for families. Based in Richmond, IL, serving Northern Illinois and Southeast Wisconsin.",
     slogan: "Your marketing team, without the payroll.",
+    paymentAccepted: PAYMENT_ACCEPTED,
+    currenciesAccepted: "USD, BTC, DOGE, SOL, SUI",
     url: SITE_URL,
     telephone: BUSINESS_PHONE_TEL,
     email: BUSINESS_EMAIL,

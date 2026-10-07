@@ -100,14 +100,14 @@ export default function PersonalHero() {
           </div>
         </div>
 
-        <div aria-hidden className="relative mx-auto h-[26rem] w-full max-w-sm sm:h-[32rem]">
+        <div className="relative mx-auto h-[26rem] w-full max-w-sm sm:h-[32rem]">
           <div
             className="animate-card-float absolute left-2 top-0 w-48 overflow-hidden rounded-2xl bg-white p-2 shadow-2xl ring-1 ring-ink/5 sm:w-56"
             style={{ "--rot": "-7deg", transform: "rotate(-7deg)" } as FloatStyle}
           >
             <Image
               src="/webp-assets/christmas-card-portrait.webp"
-              alt=""
+              alt="Custom photo Christmas card design with a family portrait"
               width={800}
               height={1200}
               sizes="224px"
@@ -121,7 +121,7 @@ export default function PersonalHero() {
           >
             <Image
               src="/webp-assets/birthday-card-2.webp"
-              alt=""
+              alt="Custom birthday card design"
               width={1710}
               height={1140}
               sizes="240px"
@@ -135,7 +135,7 @@ export default function PersonalHero() {
           >
             <Image
               src="/webp-assets/photo-restoration.webp"
-              alt=""
+              alt="Old damaged photo restored and repaired"
               width={2816}
               height={1536}
               sizes="288px"

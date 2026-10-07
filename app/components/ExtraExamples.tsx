@@ -94,7 +94,7 @@ export default function ExtraExamples({ title, examples }: { title: string; exam
                       i === index ? "ring-violet-500" : "ring-transparent opacity-70 hover:opacity-100"
                     }`}
                   >
-                    <Image src={example.src} alt="" fill sizes="80px" className="object-cover" />
+                    <Image src={example.src} alt={example.alt} fill sizes="80px" className="object-cover" />
                   </button>
                 ))}
               </div>

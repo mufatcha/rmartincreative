@@ -9,6 +9,7 @@ import {
   IconGift,
   IconGlobe,
   IconLayers,
+  IconMail,
   IconPassport,
   IconPhoto,
   IconPoster,
@@ -681,6 +682,63 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         },
       },
     ],
+  },
+  {
+    slug: "email-marketing",
+    audience: "business",
+    title: "Email Marketing",
+    metaDescription:
+      "Email marketing for small businesses in Northern Illinois — newsletter design and sending, branded templates, Mailchimp, Constant Contact, and Klaviyo setup, and automated welcome and follow-up emails.",
+    tagline: "Stay in front of customers who already know you.",
+    description: `Your email list is the one marketing channel you own outright — no algorithm decides who sees it. I design, write, and send newsletters and promotions, build branded templates you can reuse, set up your email platform, and automate the welcome and follow-up emails that run on their own, for small businesses around ${SERVICE_HOME_CITY} and beyond.`,
+    details:
+      "Most small businesses collect email addresses and then never send anything, or send something that looks nothing like the rest of their brand. I treat email like the rest of your marketing: it matches your website, cards, and signs, says one clear thing, and gives people a reason to click. Whether you want me to handle every send or just set things up so your team can, I work in the platform you already use — or help you pick one.",
+    features: [
+      "Newsletter and promotion design, writing, and sending",
+      "Branded email templates your team can reuse",
+      "Platform setup: Mailchimp, Constant Contact, Klaviyo, or whatever you use",
+      "Signup forms on your website, connected to your list",
+      "List import and cleanup",
+      "Automations: welcome series, follow-ups after a purchase or quote, and abandoned-cart emails for online stores",
+      "Mobile-friendly design that looks right in every inbox",
+      "Simple reports on opens and clicks, in plain English",
+    ],
+    faqs: [
+      {
+        question: "How much does email marketing cost?",
+        answer:
+          "It's quoted per project. A one-time platform setup or template is priced differently than a monthly newsletter plan. Tell me what you have and what you'd like to send, and I'll quote it.",
+      },
+      {
+        question: "Which email platform should I use?",
+        answer:
+          "It depends on your business. Mailchimp is an easy all-around choice, Constant Contact is popular with local businesses and nonprofits, and Klaviyo is built for online stores, especially on Shopify. If you already have one, I'll work in it.",
+      },
+      {
+        question: "Can you write the emails, or just design them?",
+        answer:
+          "Both. I can write, design, and send every email, or build templates and a plan so your team can send them on their own.",
+      },
+      {
+        question: "What's an email automation?",
+        answer:
+          "An email that sends itself when something happens — a welcome series when someone joins your list, a thank-you and review request after a purchase, a follow-up after a quote, or a reminder when an online shopper leaves items in their cart. Set it up once and it keeps working.",
+      },
+      {
+        question: "Do I need a big list to start?",
+        answer:
+          "No. A small list of real customers is worth more than a big list of strangers. I'll add signup forms to your website and help you grow the list from there.",
+      },
+      {
+        question: "Can my emails match my website and print materials?",
+        answer:
+          "Yes — that's the point of having one person handle all of it. Your emails use the same colors, fonts, and voice as your website, cards, and signs.",
+      },
+    ],
+    icon: IconMail,
+    accent: "from-fuchsia-600 via-pink-500 to-orange-400",
+    children: [],
+    related: ["website-design-development", "search-ai-discovery"],
   },
   {
     slug: "greeting-cards",

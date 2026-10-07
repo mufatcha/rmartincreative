@@ -3,6 +3,7 @@ import {
   IconGift,
   IconGlobe,
   IconLayers,
+  IconMail,
   IconPassport,
   IconPhoto,
   IconRocket,
@@ -132,6 +133,33 @@ export const SERVICES: ServiceOption[] = [
         options: ["Yes", "No", "Tell me more"],
       },
       { id: "timeline", label: "Target launch date", type: "text" },
+    ],
+  },
+  {
+    id: "email",
+    fileHint: "Your logo, a past email you liked, or anything you'd like to send.",
+    label: "Email Marketing",
+    icon: IconMail,
+    questions: [
+      {
+        id: "help",
+        label: "What would you like help with?",
+        type: "checkboxes",
+        options: ["Newsletters & promotions", "Branded templates", "Platform setup & signup forms", "Automations", "Not sure yet"],
+      },
+      {
+        id: "platform",
+        label: "Which email platform do you use?",
+        type: "select",
+        options: ["Mailchimp", "Constant Contact", "Klaviyo", "Something else", "None yet — help me choose"],
+      },
+      { id: "listSize", label: "Roughly how many people are on your list?", type: "text", placeholder: "e.g. 250, or none yet" },
+      {
+        id: "frequency",
+        label: "How often would you like to send?",
+        type: "select",
+        options: ["Weekly", "Twice a month", "Monthly", "Seasonal or occasional", "Not sure"],
+      },
     ],
   },
   {

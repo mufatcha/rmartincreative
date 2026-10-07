@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageTitle } from "../lib/seo";
 import CtaSection from "../components/CtaSection";
 import QuoteModal from "../components/QuoteModal";
 import Reveal from "../components/Reveal";
@@ -6,7 +7,7 @@ import { SERVICE_HOME_CITY } from "../lib/business";
 import { TOWNS, type Town } from "../lib/data/towns";
 
 export const metadata: Metadata = {
-  title: "Service Area: Local Pickup, Drop-off & Delivery",
+  title: pageTitle("Service Area: Local Pickup, Drop-off & Delivery"),
   description:
     "Based in Richmond, IL, with local pickup, drop-off, and hand delivery across McHenry and Lake counties, the Fox River Valley, Chicago and its northern suburbs, and southeast Wisconsin.",
   alternates: { canonical: "/service-area" },
