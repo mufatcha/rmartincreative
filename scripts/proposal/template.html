@@ -1,0 +1,226 @@
+<!doctype html>
+<!--
+  Website review proposal template (R. Martin Creative).
+  Scaffold a copy with:  bun run proposal:new <client-slug>
+  Fill every [BRACKETED] placeholder, then:  bun run proposal:pdf proposals/<client-slug>
+  Writing rules and the full process: .claude/skills/website-review/SKILL.md
+-->
+<html lang="en"><head><meta charset="utf-8">
+<title>[CLIENT NAME] · Website Proposal</title>
+<link rel="stylesheet" href="../../scripts/proposal/proposal.css">
+</head><body>
+
+<!-- 1 COVER -->
+<section class="page cover">
+ <div class="top">
+  <div class="brand"><img src="../../scripts/proposal/rm-logo.svg" alt=""><div><div class="n">R. Martin Creative</div><div class="t">Marketing, Web &amp; Print</div></div></div>
+  <div class="kick">Website audit &amp; proposal · prepared for [CLIENT NAME]</div>
+  <!-- One sentence, ~12-18 words. Put the hook in .grad; it can wrap across lines. -->
+  <div class="headline">A better website for [CLIENT SHORT NAME] <span class="grad">[THE HOOK, E.G. FOR LESS THAN ONE YEAR OF SQUARESPACE,]</span> [THE CLOSER, E.G. WITH NO RECURRING FEES.]</div>
+  <p class="lead">What we found on [client-domain.com], two homepage designs, and [ONE-LINE SUMMARY OF THE PROPOSAL].</p>
+  <div class="meta"><span>[MONTH YEAR]</span><span>Richmond, Illinois</span><span>rmartincreative.com</span></div>
+ </div>
+ <div class="collage">
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span>[client-domain.com]</span></div><img src="shots/a-desktop.jpg" alt=""></div>
+  <div class="phone"><img src="shots/b-mobile.jpg" alt=""></div>
+ </div>
+</section>
+
+<!-- 2 AT A GLANCE -->
+<section class="page">
+ <div class="kick">At a glance</div>
+ <h1>[HEADLINE: WHAT THE BUSINESS HAS EARNED VS. WHAT THE SITE DOES]</h1>
+ <p class="lead">[3-4 SENTENCES: WHO THEY ARE, WHAT'S WORKING, WHAT THE SITE IS MISSING, WHAT THE FIX IS.]</p>
+ <div class="g3" style="margin:16px 0 13px">
+  <div class="card stat"><b>[STAT 1]</b><span>[WHAT IT MEANS IN PLAIN WORDS]</span></div>
+  <div class="card stat"><b>[STAT 2]</b><span>[WHAT IT MEANS]</span></div>
+  <div class="card stat"><b>[STAT 3]</b><span>[WHAT IT MEANS]</span></div>
+ </div>
+ <div class="g2">
+  <div class="band"><h2>What we recommend</h2><ul>
+   <li><b>[PRICE / BUILD]</b> [DETAIL]</li>
+   <li><b>Next.js</b> builds a fast, search-friendly site.</li>
+   <li><b>Cloudflare</b> hosts it free on its global network, with free SSL.</li>
+   <li><b>Resend</b> delivers the website's form emails, free.</li>
+   <li><b>[OTHER PIECE]</b> [DETAIL]</li></ul></div>
+  <div class="band"><h2>What [CLIENT SHORT NAME] gets</h2><ul>
+   <li>[OUTCOME]</li>
+   <li>[OUTCOME]</li>
+   <li>[OUTCOME]</li>
+   <li>About <b>$[X] saved over five years</b> [CONTEXT] (page 8).</li>
+   <li>Full ownership of the site files. No subscription to lose.</li></ul></div>
+ </div>
+ <div class="card inside" style="margin-top:13px"><div class="rule"></div><p><b>Inside:</b> the audit findings (pages 3–4), two homepage designs (5–6), the build options (7), the savings (8), how the new site works and what it costs to run (9), and the plan (10).</p></div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>2</span></div>
+</section>
+
+<!-- 3 AUDIT: numbers come from `bun run proposal:audit` -->
+<section class="page">
+ <div class="kick">Audit · [D MONTH YYYY]</div>
+ <h1>What we measured on [client-domain.com]</h1>
+ <p class="lead sm">We loaded [N] pages in a real Chrome browser at desktop and phone sizes. Phone tests used a simulated mid-range phone on a slow connection, similar to Google's own speed tests. Speed targets are Google's Core Web Vitals.</p>
+ <table style="margin-top:12px">
+  <tr><th style="width:46%">Check</th><th>Result</th><th>Target</th><th>Status</th></tr>
+  <!-- Pills: gr = Good, y = Needs work, r = Poor / Heavy / Missing. ~8-10 rows. -->
+  <tr><td>Main content visible, homepage on a phone</td><td class="m">[X] s</td><td class="m">≤ 2.5 s</td><td><span class="pill gr">Good</span></td></tr>
+  <tr><td>Layout jumping, [WORST PAGE] on a phone</td><td class="m">[X]</td><td class="m">≤ 0.10</td><td><span class="pill r">Poor</span></td></tr>
+  <tr><td>Homepage download size</td><td class="m">[X] MB</td><td class="m">under 500 KB</td><td><span class="pill r">Heavy</span></td></tr>
+  <tr><td>Readable words on the homepage</td><td class="m">[X]</td><td class="m">300+</td><td><span class="pill r">Thin</span></td></tr>
+  <tr><td>Tap-to-call phone links, all pages</td><td class="m">[X]</td><td class="m">every page</td><td><span class="pill r">Missing</span></td></tr>
+  <tr><td>Pages with a Google search description</td><td class="m">[X] of [N]</td><td class="m">[N] of [N]</td><td><span class="pill y">Needs work</span></td></tr>
+  <tr><td>Address, phone and hours in Google's structured data</td><td class="m">[X]</td><td class="m">all three</td><td><span class="pill y">Needs work</span></td></tr>
+  <tr><td>Main heading on the homepage</td><td class="m">[X]</td><td class="m">1</td><td><span class="pill y">Needs work</span></td></tr>
+ </table>
+ <div style="display:grid;grid-template-columns:2.25fr 1fr;gap:14px;margin-top:16px;align-items:start">
+  <div><div class="frame"><img src="shots/current-desktop-home.jpg" alt=""></div><div class="cap">[CAPTION: WHAT'S WRONG IN THIS SCREENSHOT]</div></div>
+  <div><div class="frame" style="border-radius:12px"><img src="shots/current-mobile-home.jpg" alt="" style="height:2.05in;object-fit:cover;object-position:top"></div><div class="cap">[CAPTION]</div></div>
+ </div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>3</span></div>
+</section>
+
+<!-- 4 WHAT IT MEANS -->
+<section class="page">
+ <div class="kick">Audit · What it means</div>
+ <h1>[N] problems, one root cause</h1>
+ <p class="lead sm">[2-3 SENTENCES NAMING THE ROOT CAUSE.]</p>
+ <div class="g2" style="margin-top:14px">
+  <div class="card"><span class="tag r">High impact</span><h3>[PROBLEM]</h3><ul><li>[EVIDENCE]</li><li>[EVIDENCE]</li><li>[EVIDENCE]</li></ul></div>
+  <div class="card"><span class="tag r">High impact</span><h3>[PROBLEM]</h3><ul><li>[EVIDENCE]</li><li>[EVIDENCE]</li><li>[EVIDENCE]</li></ul></div>
+  <div class="card"><span class="tag y">Medium impact</span><h3>[PROBLEM]</h3><ul><li>[EVIDENCE]</li><li>[EVIDENCE]</li><li>[EVIDENCE]</li></ul></div>
+  <div class="card"><span class="tag y">Medium impact</span><h3>[PROBLEM]</h3><ul><li>[EVIDENCE]</li><li>[EVIDENCE]</li><li>[EVIDENCE]</li></ul></div>
+ </div>
+ <div class="band" style="margin-top:14px"><h2>Fix now, whatever is decided</h2><p>[2-4 QUICK FIXES ON THE CURRENT SITE, THEN HOW THE NEW SITE SOLVES THE ROOT CAUSE.]</p></div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>4</span></div>
+</section>
+
+<!-- 5 CONCEPT A: screenshots from `bun run proposal:shots` -->
+<section class="page">
+ <div class="kick">Homepage design · Concept A</div>
+ <h1>[CONCEPT A NAME]</h1>
+ <p class="lead sm">[ONE OR TWO SENTENCES ON THE LOOK AND WHAT VISITORS SEE FIRST.]</p>
+ <div class="frame concept-desk" style="margin-top:14px"><div class="bar"><i></i><i></i><i></i><span>[client-domain.com]</span></div><img src="shots/a-desktop.jpg" alt=""></div>
+ <div class="concept">
+  <div class="phone"><img src="shots/a-mobile.jpg" alt=""></div>
+  <div><h2>What's on the page</h2><ul><li>[SECTION]</li><li>[SECTION]</li><li>[SECTION]</li><li>[SECTION]</li><li>[SECTION]</li><li>On phones, [STICKY CALL / BOOK BAR].</li></ul>
+   <p class="cap" style="font-size:10px;margin-top:6px">[NOTE, E.G. PHOTOS ARE THE CLIENT'S OWN. WORDING IS A DRAFT FOR APPROVAL.]</p></div>
+ </div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>5</span></div>
+</section>
+
+<!-- 6 CONCEPT B -->
+<section class="page">
+ <div class="kick">Homepage design · Concept B</div>
+ <h1>[CONCEPT B NAME]</h1>
+ <p class="lead sm">[ONE OR TWO SENTENCES.]</p>
+ <div class="frame concept-desk" style="margin-top:14px"><div class="bar"><i></i><i></i><i></i><span>[client-domain.com]</span></div><img src="shots/b-desktop.jpg" alt=""></div>
+ <div class="concept">
+  <div class="phone"><img src="shots/b-mobile.jpg" alt=""></div>
+  <div><h2>What's on the page</h2><ul><li>[SECTION]</li><li>[SECTION]</li><li>[SECTION]</li><li>[SECTION]</li><li>[SECTION]</li><li>[STICKY BAR ON PHONES]</li></ul>
+   <p class="cap" style="font-size:10px;margin-top:6px">Both designs use the same pages and content, so [CLIENT SHORT NAME] can pick either look, or mix the two.</p></div>
+ </div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>6</span></div>
+</section>
+
+<!-- 7 BUILD OPTIONS: always state a page count; cap the base option at 10 pages. -->
+<section class="page">
+ <div class="kick">Two ways to build it</div>
+ <h1>Pick the size that fits</h1>
+ <p class="lead sm">Both options use the same design, the same forms and the same free hosting. [WHAT THE DIFFERENCE IS.]</p>
+ <div class="g2" style="margin-top:14px">
+  <div class="card"><span class="tag pu">Standard</span><div class="price">$[PRICE] <small>one time</small></div><p style="margin:6px 0 8px">[N] focused pages.</p><ul><li>Home</li><li>[PAGE]</li><li>[PAGE]</li><li>[PAGE]</li><li>[PAGE]</li><li>About</li><li>Contact</li></ul></div>
+  <div class="card" style="border:1.5px solid #c9a8ff"><span class="tag pu">Expanded</span><div class="price">$[PRICE] <small>one time</small></div><p style="margin:6px 0 8px">Everything in Standard, plus [EXTRA]: [N] pages in all.</p><ul><li>[EXTRA DETAIL]</li><li>[EXTRA DETAIL]</li><li>[EXTRA DETAIL]</li><li>[EXTRA DETAIL]</li></ul></div>
+ </div>
+ <table style="margin-top:16px">
+  <tr><th style="width:46%">Included</th><th>Standard</th><th>Expanded</th></tr>
+  <tr><td>Homepage design (Concept A or B)</td><td class="m">yes</td><td class="m">yes</td></tr>
+  <tr><td>[ROW]</td><td class="m">[ ]</td><td class="m">[ ]</td></tr>
+  <tr><td>Total pages</td><td class="m">[N]</td><td class="m">[N]</td></tr>
+  <tr><td>One-time price</td><td class="m">$[PRICE]</td><td class="m">$[PRICE]</td></tr>
+  <tr><td>Monthly website fee</td><td class="m">$0</td><td class="m">$0</td></tr>
+ </table>
+ <div class="band" style="margin-top:16px"><h2>[WHY THE EXPANDED OPTION HELPS]</h2><p>[2-3 SENTENCES.]</p></div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>7</span></div>
+</section>
+
+<!-- 8 SAVINGS: current host's published prices only. Domain costs are the owner's and stay out of every number. -->
+<section class="page">
+ <div class="kick">The savings</div>
+ <h1>Pay once instead of every year</h1>
+ <p class="lead sm">[HOST] charges a subscription for as long as the site is online. The new site is a one-time build, $[PRICE] for Standard or $[PRICE] for Expanded, and hosting on Cloudflare is free. Prices below are [HOST]'s published plan prices as of [MONTH YEAR].</p>
+ <table style="margin-top:12px">
+  <tr><th style="width:34%">[HOST] plan</th><th>Per month</th><th>Per year</th><th>3 years</th><th>5 years</th></tr>
+  <tr><td><b>[PLAN]</b>, billed yearly</td><td class="m">$[ ]</td><td class="m">$[ ]</td><td class="m">$[ ]</td><td class="m">$[ ]</td></tr>
+  <tr><td><b>[PLAN]</b>, billed monthly</td><td class="m">$[ ]</td><td class="m">$[ ]</td><td class="m">$[ ]</td><td class="m">$[ ]</td></tr>
+  <tr class="hl"><td><b>New site: Standard</b> ([N] pages)</td><td class="m">$0</td><td class="m">$[PRICE] once</td><td class="m">$[PRICE]</td><td class="m">$[PRICE]</td></tr>
+  <tr class="hl"><td><b>New site: Expanded</b> ([N] pages)</td><td class="m">$0</td><td class="m">$[PRICE] once</td><td class="m">$[PRICE]</td><td class="m">$[PRICE]</td></tr>
+ </table>
+ <h2 style="margin-top:20px">Five-year cost</h2>
+ <!-- Bar width = 4.6in × value ÷ largest value. -->
+ <div class="bars">
+  <span>[HOST PLAN, BILLING]</span><div class="row"><div class="bar" style="width:4.6in"></div><span class="mono">$[ ]</span></div>
+  <span><b>New site: Expanded</b></span><div class="row"><div class="bar us" style="width:[ ]in"></div><span class="mono"><b>$[ ]</b></span></div>
+  <span><b>New site: Standard</b></span><div class="row"><div class="bar us" style="width:[ ]in"></div><span class="mono"><b>$[ ]</b></span></div>
+ </div>
+ <div class="g2" style="margin-top:18px">
+  <div class="card stat"><span class="label">Standard · $[PRICE]</span><b><span class="grad">$[X] saved</span></b><span>Over five years against [PLAN]. Pays for itself in about [N] months.</span></div>
+  <div class="card stat"><span class="label">Expanded · $[PRICE]</span><b><span class="grad">$[X] saved</span></b><span>Over five years against [PLAN]. Pays for itself in about [N] months.</span></div>
+ </div>
+ <div class="band" style="margin-top:14px"><h2>Good to know</h2><ul style="margin-top:4px">
+  <li><b>Check the current plan</b> in [HOST] under [WHERE BILLING LIVES]. Older plans may be priced differently; the comparison works the same way.</li>
+  <li><b>Timing:</b> if the plan renews yearly, launching the new site before the next renewal date avoids paying for another full year.</li>
+  <li><b>The domain name is [CLIENT SHORT NAME]'s to keep and pay for either way</b>, so it's left out of these numbers. It can stay registered where it is; we only point it at the new site.</li></ul></div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>8</span></div>
+</section>
+
+<!-- 9 PLATFORM & COSTS -->
+<section class="page">
+ <div class="kick">The new site &amp; running costs</div>
+ <h1>How the new site works</h1>
+ <div class="g2" style="margin-top:12px">
+  <div class="card"><h3>Next.js</h3><p>The website framework used by many of the web's largest sites. Pages are built ahead of time, so they load fast on any phone. Photos are resized and compressed automatically, and nothing jumps while the page loads.</p></div>
+  <div class="card"><h3>Cloudflare</h3><p>Hosts the site free on its Workers plan, from 300+ locations worldwide. Static pages are served with no request limit, and dynamic requests get 100,000 a day. Free SSL included.</p></div>
+  <div class="card"><h3>[FORM] → [CLIENT SHORT NAME]'s inbox</h3><p>The form sends through <b>Resend</b> straight to the email [CLIENT SHORT NAME] already uses, and the customer gets a confirmation. Resend's free plan covers 3,000 emails a month.</p></div>
+  <div class="card"><h3>[OPTIONAL EXTRA, E.G. info@ EMAIL]</h3><p>[DETAIL.]</p></div>
+ </div>
+ <h2 style="margin-top:18px">Estimated monthly running costs</h2>
+ <table>
+  <tr><th style="width:24%">Service</th><th>What it does</th><th style="width:16%">Cost</th></tr>
+  <tr><td><b>Next.js</b></td><td>Website framework (open source)</td><td><span class="pill pu">Free</span></td></tr>
+  <tr><td><b>Cloudflare Workers</b></td><td>Hosting, global delivery, SSL</td><td><span class="pill pu">Free</span></td></tr>
+  <tr><td><b>Resend</b></td><td>Delivers form submissions and confirmations, 3,000 a month</td><td><span class="pill pu">Free</span></td></tr>
+  <tr><td><b>[CURRENT HOST]</b></td><td>Cancelled after launch</td><td class="m">$0</td></tr>
+  <tr><td><b>Domain name</b></td><td>[client-domain.com] renewal</td><td class="m">owner pays</td></tr>
+ </table>
+ <div class="band" style="margin-top:16px"><h2>What [CLIENT SHORT NAME] gives up, and what it doesn't</h2><p>[HOST]'s drag-and-drop editor goes away. To change hours, post a holiday closure, swap a photo or edit text, just send Ryan the update. Small changes like these take only a few moments. The site files belong to [CLIENT SHORT NAME] and can be moved to any host at any time.</p></div>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>9</span></div>
+</section>
+
+<!-- 10 PLAN -->
+<section class="page">
+ <div class="kick">The plan</div>
+ <h1>From today's site to the new one</h1>
+ <div style="margin-top:14px">
+  <div class="step"><div class="num">1</div><div><h3>Pick a design and an option</h3><p>Choose Concept A, Concept B or a mix, and Standard or Expanded. [WHAT TO CONFIRM.]</p></div></div>
+  <div class="step"><div class="num">2</div><div><h3>Build</h3><p>Build the Next.js site on Cloudflare: [LIST THE PAGES], with Google's structured data and a sitemap.</p></div></div>
+  <div class="step"><div class="num">3</div><div><h3>Connect and switch over</h3><p>Connect the forms through Resend, point the domain at Cloudflare and redirect the old page addresses so nothing breaks.</p></div></div>
+  <div class="step"><div class="num">4</div><div><h3>Cancel [CURRENT HOST]</h3><p>Once the new site is live and checked, cancel the [CURRENT HOST] website plan, ideally before its next renewal date.</p></div></div>
+ </div>
+ <h2 style="margin-top:6px">Targets after launch</h2>
+ <table>
+  <tr><th style="width:46%">Measure</th><th>Today</th><th>Goal</th></tr>
+  <tr><td>Homepage download size</td><td class="m">[X]</td><td class="m">under 500 KB</td></tr>
+  <tr><td>Layout jumping, worst page</td><td class="m">[X]</td><td class="m">under 0.10</td></tr>
+  <tr><td>Tap-to-call links</td><td class="m">[X]</td><td class="m">every page</td></tr>
+  <tr><td>Site pages</td><td class="m">[X]</td><td class="m">[N] or [N]</td></tr>
+  <tr><td>Monthly website fee</td><td class="m">$[X]</td><td class="m">$0</td></tr>
+ </table>
+ <div class="g2" style="margin-top:16px">
+  <div class="card"><h2>What we'll need from [CLIENT SHORT NAME]</h2><ul><li>A design choice and approval of the wording</li><li>[ITEM]</li><li>Access to [DOMAIN REGISTRAR] to point the domain</li><li>The email address for form requests</li><li>Any newer photos</li></ul></div>
+  <div class="card"><h2>Good to know</h2><ul><li>The current site stays live until launch day.</li><li>Build options are on page 7.</li><li>Savings figures are on page 8.</li><li>Free-tier limits are on page 9.</li></ul></div>
+ </div>
+ <div class="cta" style="margin-top:16px"><img src="../../scripts/proposal/rm-logo.svg" alt=""><div><b>Ready when you are.</b><span>R. Martin Creative · 312-866-2762 · ryan@rmartincreative.com · rmartincreative.com</span></div></div>
+ <p class="sources">Sources: [PRICING PAGE] ([MONTH YEAR]) · developers.cloudflare.com/workers/platform/limits · resend.com/pricing. Lab measurements from [D MON YYYY]. Real-visitor results may differ.</p>
+ <div class="foot"><span>[CLIENT NAME] · Website proposal</span><span>10</span></div>
+</section>
+<script src="../../scripts/proposal/grad.js"></script>
+</body></html>

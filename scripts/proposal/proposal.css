@@ -1,0 +1,96 @@
+/* Shared styles for website review proposals (US Letter, printed to PDF by render.mjs). */
+@font-face{font-family:'Geist';font-weight:100 900;font-style:normal;src:url('fonts/Geist.woff2') format('woff2')}
+@font-face{font-family:'Geist Mono';font-weight:100 900;font-style:normal;src:url('fonts/GeistMono.woff2') format('woff2')}
+@page{size:letter;margin:0}
+:root{--bg:#fffaf2;--band:#fff2e2;--ink:#201a2e;--body:#2c2540;--mute:#5a5270;--line:#eee3d3;--purple:#7c3aed;--grad:linear-gradient(90deg,#7c3aed,#d946ef 55%,#f59e0b)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{font-family:Geist,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* Page shell */
+.page{width:8.5in;height:11in;position:relative;overflow:hidden;padding:.62in .62in 0;page-break-after:always;background:var(--bg)}
+.page:last-child{page-break-after:auto}
+.foot{position:absolute;left:.62in;right:.62in;bottom:.36in;display:flex;justify-content:space-between;font-family:'Geist Mono';font-size:8.5px;color:var(--mute)}
+
+/* Type */
+.kick{font-family:'Geist Mono';font-size:9.5px;letter-spacing:.14em;color:var(--purple);text-transform:uppercase}
+h1{font-size:30px;letter-spacing:-.025em;line-height:1.1;font-weight:700;margin:10px 0 10px}
+h2{font-size:17px;letter-spacing:-.01em;font-weight:600;margin:0 0 8px}
+h3{font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
+p.lead{font-size:12.5px;line-height:1.6;color:var(--body)}
+p.lead.sm{font-size:11.5px}
+p,li{font-size:11.5px;line-height:1.6;color:var(--body)}
+ul{padding-left:14px}li{margin-bottom:5px}li::marker{color:var(--ink)}
+b{font-weight:600;color:var(--ink)}
+.mono{font-family:'Geist Mono'}
+
+/* Cover */
+.cover{padding:0}
+.cover .top{padding:.62in .82in 0}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:42px;height:42px;border-radius:10px;box-shadow:0 6px 18px -6px rgba(124,58,237,.6)}
+.brand .n{font-weight:600;font-size:13px}.brand .t{font-size:11px;color:var(--mute)}
+.cover .kick{margin-top:34px}
+.headline{font-size:42px;line-height:1.04;letter-spacing:-.035em;font-weight:700;margin:16px 0 18px}
+.cover .lead{font-size:14px;max-width:6.2in}
+.meta{font-family:'Geist Mono';font-size:10px;color:var(--mute);margin-top:18px;display:flex;gap:26px}
+.collage{position:absolute;left:0;right:0;bottom:0;height:5.05in;background:var(--band)}
+.collage .frame{position:absolute;left:.6in;top:.42in;width:5.6in;transform:rotate(-2deg)}
+.collage .phone{position:absolute;right:.55in;top:.95in;width:1.95in;transform:rotate(3deg)}
+
+/* Blocks */
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.band{background:var(--band);border-radius:12px;padding:16px 18px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.stat b{display:block;font-size:26px;letter-spacing:-.03em;font-weight:700;margin-bottom:4px}
+.stat span{font-size:9.5px;line-height:1.5;color:var(--mute);display:block}
+.stat .label{font-family:'Geist Mono';font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.inside{display:flex;gap:22px;align-items:center;padding:18px 20px}
+.inside .rule{width:68px;height:3px;border-radius:2px;background:var(--grad);flex:none}
+.inside p{font-size:12px}
+.price{font-size:30px;font-weight:700;letter-spacing:-.03em}
+.price small{font-size:12px;font-weight:400;color:var(--mute);letter-spacing:0}
+
+/* Tables and status pills */
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{font-family:'Geist Mono';font-weight:400;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
+td{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+td.m{font-family:'Geist Mono';font-size:11px}
+tr.hl{background:#f6efff}
+.pill,.tag{display:inline-block;font-family:'Geist Mono';font-size:8.5px;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.tag{margin-bottom:8px}
+.y{background:#fff1c2;color:#7a4b00}   /* Needs work / Medium impact */
+.r{background:#ffe0e6;color:#b4123a}   /* Poor / Heavy / High impact */
+.gr{background:#dcf7e3;color:#13703a}  /* Good */
+.pu{background:#f0e7ff;color:#6425d0}  /* Free / option labels */
+
+/* Screenshot frames */
+.frame{background:#fff;border:1px solid #e7dccb;border-radius:10px;overflow:hidden;box-shadow:0 10px 30px -14px rgba(32,26,46,.25)}
+.frame .bar{height:22px;background:#f4ece0;display:flex;align-items:center;gap:5px;padding:0 10px;font-family:'Geist Mono';font-size:8.5px;color:var(--mute)}
+.frame .bar i{width:6px;height:6px;border-radius:50%;background:#d8cdbd;display:inline-block}
+.frame .bar span{margin-left:10px}
+.frame img{display:block;width:100%}
+.phone{background:#1d1830;border-radius:26px;padding:7px;box-shadow:0 14px 30px -12px rgba(32,26,46,.45)}
+.phone img{display:block;width:100%;border-radius:20px}
+.cap{font-size:9px;color:var(--mute);margin-top:6px;line-height:1.45}
+.concept{display:grid;grid-template-columns:1.95in 1fr;gap:26px;margin-top:18px}
+.concept .phone img{height:3.4in;object-fit:cover;object-position:top}
+.concept-desk img{height:4.25in;object-fit:cover;object-position:top}
+
+/* Bar chart (one-axis, direct-labeled) */
+.bars{display:grid;grid-template-columns:1.55in 1fr;align-items:center;row-gap:9px;column-gap:12px;font-size:11px;margin-top:8px}
+.bars .row{display:flex;align-items:center;gap:8px}
+.bars .bar{height:16px;background:#b9b1c7;border-radius:0 4px 4px 0}
+.bars .bar.us{background:var(--purple)}
+
+/* Plan steps and closing call to action */
+.num{width:22px;height:22px;border-radius:50%;background:var(--grad);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+.step{display:flex;gap:14px;margin-bottom:11px}.step h3{margin-bottom:2px}
+.cta{background:var(--ink);border-radius:12px;padding:16px 18px;display:flex;gap:16px;align-items:center;color:#fff}
+.cta img{width:42px;height:42px}.cta b{color:#fff;font-size:15px}.cta span{display:block;font-size:11px;color:#d9d3e6;margin-top:3px}
+.sources{font-size:8.5px;color:var(--mute);margin-top:9px;line-height:1.5}
+
+/* Gradient text. grad.js colors each letter, because background-clip:text
+   leaves hairlines around the text in Chromium's PDF output. */
+.grad span{display:inline!important;font-size:inherit!important;line-height:inherit!important;margin:0!important;letter-spacing:inherit}

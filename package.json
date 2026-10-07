@@ -13,7 +13,11 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "pdf:checklist": "bun scripts/pdf/launch-checklist.tsx",
-    "indexnow": "bun scripts/indexnow.ts"
+    "indexnow": "bun scripts/indexnow.ts",
+    "proposal:new": "bun scripts/proposal/new.mjs",
+    "proposal:audit": "bun scripts/proposal/audit.mjs",
+    "proposal:shots": "bun scripts/proposal/shots.mjs",
+    "proposal:pdf": "bun scripts/proposal/render.mjs"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.7",
@@ -32,6 +36,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "playwright": "1.56.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

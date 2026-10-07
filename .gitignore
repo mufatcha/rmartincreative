@@ -48,3 +48,6 @@ next-env.d.ts
 
 # Local JPG copies of public/webp-assets (not deployed or tracked)
 /public/jpg-assets/
+
+# website review proposals (client files; templates live in scripts/proposal)
+/proposals/
