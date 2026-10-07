@@ -5,11 +5,10 @@ import ComparisonSection from "./components/ComparisonSection";
 import ServicesSection from "./components/ServicesSection";
 import PartnerPlanSection from "./components/PartnerPlanSection";
 import BusinessPrintingSection from "./components/BusinessPrintingSection";
-import TShirtSection from "./components/TShirtSection";
+import NeighborPostcardSection from "./components/NeighborPostcardSection";
 import WebDesignSection from "./components/WebDesignSection";
 import SearchAiSection from "./components/SearchAiSection";
 import ProcessSection from "./components/ProcessSection";
-import PortfolioSection from "./components/PortfolioSection";
 import ServiceAreaSection from "./components/ServiceAreaSection";
 import TrustedBySection from "./components/TrustedBySection";
 import CtaSection from "./components/CtaSection";
@@ -32,9 +31,8 @@ export default function Home() {
       <BusinessPrintingSection />
       <WebDesignSection />
       <SearchAiSection />
-      <TShirtSection />
+      <NeighborPostcardSection />
       <ProcessSection />
-      <PortfolioSection />
       <ServiceAreaSection />
       <TrustedBySection />
       <CtaSection />

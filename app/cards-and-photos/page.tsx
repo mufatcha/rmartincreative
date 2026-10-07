@@ -5,6 +5,7 @@ import GreetingCardsSection from "../components/GreetingCardsSection";
 import HolidaySpotlight from "../components/HolidaySpotlight";
 import PersonalHero from "../components/PersonalHero";
 import PhotoServicesSection from "../components/PhotoServicesSection";
+import TShirtSection from "../components/TShirtSection";
 
 export const metadata: Metadata = {
   title: pageTitle("Custom Cards, Invitations & Photo Restoration"),
@@ -20,6 +21,7 @@ export default function PersonalPage() {
       <HolidaySpotlight />
       <GreetingCardsSection />
       <PhotoServicesSection />
+      <TShirtSection />
       <CtaSection
         heading="Let’s make something worth keeping."
         body="Whether it’s this year’s family Christmas card, a wedding invitation, or a box of old photos — tell me what you have in mind and I’ll reply with a quote and timeline."

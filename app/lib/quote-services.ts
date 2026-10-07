@@ -5,10 +5,11 @@ import {
   IconLayers,
   IconMail,
   IconPassport,
+  IconPostcard,
   IconPhoto,
   IconRocket,
   IconShirt,
-  IconSparkle,
+  IconSignpost,
 } from "../components/icons";
 import { PASSPORT_PAPERWORK, usd } from "./data/pricing";
 
@@ -25,9 +26,19 @@ export type Field = {
   placeholder?: string;
 };
 
+export type ServiceGroup = "business" | "personal" | "shared";
+
+/** Headings on the form's "What do you need?" step — match the site's Services menu. */
+export const SERVICE_GROUPS: { id: ServiceGroup; label: string }[] = [
+  { id: "business", label: "For Businesses" },
+  { id: "personal", label: "Personal & Family" },
+  { id: "shared", label: "Signs, Prints & Apparel" },
+];
+
 export type ServiceOption = {
   id: string;
   label: string;
+  group: ServiceGroup;
   icon: typeof IconGlobe;
   questions: Field[];
   /** Helper text on the optional file-upload step. */
@@ -37,6 +48,7 @@ export type ServiceOption = {
 export const SERVICES: ServiceOption[] = [
   {
     id: "launch",
+    group: "business",
     fileHint: "Anything you already have: a logo, sketches, a business plan, or examples you like.",
     label: "New Business Launch",
     icon: IconRocket,
@@ -68,30 +80,8 @@ export const SERVICES: ServiceOption[] = [
     ],
   },
   {
-    id: "partner",
-    fileHint: "Logo, brand files, or anything that shows how your business looks today.",
-    label: "Marketing Partner Plan",
-    icon: IconSparkle,
-    questions: [
-      { id: "business", label: "Business name", type: "text" },
-      { id: "currentSite", label: "Current website (if any)", type: "url", placeholder: "www.yourdomain.com" },
-      {
-        id: "areas",
-        label: "Where do you need the most help?",
-        type: "checkboxes",
-        options: ["Website", "Search + AI visibility", "Print & signage", "Cards & client gifts", "Apparel", "Not sure yet"],
-      },
-      {
-        id: "current",
-        label: "Who handles your marketing today?",
-        type: "select",
-        options: ["I do it myself", "A part-time or full-time employee", "An agency or freelancers", "No one right now"],
-      },
-      { id: "goals", label: "What would you like marketing to do for your business this year?", type: "textarea" },
-    ],
-  },
-  {
     id: "website",
+    group: "business",
     fileHint: "Logo, photos, or content for the site — whatever you have is fine.",
     label: "Website or Online Store",
     icon: IconGlobe,
@@ -137,6 +127,7 @@ export const SERVICES: ServiceOption[] = [
   },
   {
     id: "email",
+    group: "business",
     fileHint: "Your logo, a past email you liked, or anything you'd like to send.",
     label: "Email Marketing",
     icon: IconMail,
@@ -163,7 +154,32 @@ export const SERVICES: ServiceOption[] = [
     ],
   },
   {
+    id: "neighbor",
+    group: "business",
+    fileHint: "Your logo, a past mailer, or a photo of a recent job.",
+    label: "Location Smart Postcards",
+    icon: IconPostcard,
+    questions: [
+      { id: "business", label: "What kind of business is it?", type: "text", placeholder: "e.g. car dealer, solar, roofing" },
+      { id: "offer", label: "What offer would you like to promote?", type: "textarea" },
+      { id: "jobs", label: "How many recent jobs or sales would you like to mail around?", type: "text" },
+      {
+        id: "naming",
+        label: "Will customers give permission to be named on the postcard?",
+        type: "radio",
+        options: ["Keep it anonymous", "Some will give permission", "Not sure"],
+      },
+      {
+        id: "frequency",
+        label: "How often would you like to mail?",
+        type: "select",
+        options: ["One campaign", "Monthly", "After every job", "Not sure"],
+      },
+    ],
+  },
+  {
     id: "search-ai",
+    group: "business",
     fileHint: "Screenshots or reports from past search work, if you have them.",
     label: "Traditional Search + AI Discovery",
     icon: IconLayers,
@@ -182,6 +198,7 @@ export const SERVICES: ServiceOption[] = [
   },
   {
     id: "printing",
+    group: "business",
     fileHint: "Artwork, logo, or examples of pieces you like.",
     label: "Business Printing",
     icon: IconBriefcase,
@@ -199,6 +216,7 @@ export const SERVICES: ServiceOption[] = [
   },
   {
     id: "cards",
+    group: "personal",
     fileHint: "Photos for your card, or examples of designs you like.",
     label: "Holiday & Greeting Cards",
     icon: IconGift,
@@ -235,6 +253,7 @@ export const SERVICES: ServiceOption[] = [
   },
   {
     id: "photos",
+    group: "personal",
     fileHint: "Add the photos you’d like help with — full-size scans are best, but a quick phone snapshot is fine for a quote.",
     label: "Photo-to-Digital & Restoration",
     icon: IconPhoto,
@@ -257,6 +276,7 @@ export const SERVICES: ServiceOption[] = [
   },
   {
     id: "passport",
+    group: "personal",
     fileHint: "If you'd like your own photo made passport-compliant, add it here.",
     label: "Passport Photos",
     icon: IconPassport,
@@ -285,7 +305,38 @@ export const SERVICES: ServiceOption[] = [
     ],
   },
   {
+    id: "signs",
+    group: "shared",
+    fileHint: "Photos, artwork, or a logo — and a picture of where it'll go, if that helps.",
+    label: "Signs, Banners & Canvas",
+    icon: IconSignpost,
+    questions: [
+      {
+        id: "items",
+        label: "What would you like?",
+        type: "checkboxes",
+        options: ["Yard signs", "Posters", "Banners", "Canvas prints", "Not sure yet"],
+      },
+      {
+        id: "for",
+        label: "What's it for?",
+        type: "radio",
+        options: ["A business", "An event or celebration", "My home"],
+      },
+      { id: "size", label: "Size and quantity (if you know)", type: "text", placeholder: "e.g. 3 yard signs, or one 24×36 poster" },
+      {
+        id: "material",
+        label: "Banner or poster material (if you know)",
+        type: "select",
+        options: ["Vinyl", "Matte paper", "Adhesive", "Glossy", "Not sure"],
+      },
+      { id: "artwork", label: "Do you have artwork, or need a design?", type: "radio", options: ["I have artwork", "I need a design"] },
+      { id: "deadline", label: "Needed by", type: "text" },
+    ],
+  },
+  {
     id: "apparel",
+    group: "shared",
     fileHint: "Artwork, logo, or a sketch of your idea.",
     label: "Apparel",
     icon: IconShirt,

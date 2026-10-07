@@ -12,7 +12,6 @@ import type { ServicesMenuGroup } from "../lib/services-menu";
 
 const PAGE_LINKS = [
   { href: "/new-business", label: "New Business" },
-  { href: "/#portfolio", label: "Work" },
   ...(ABOUT.published ? [{ href: "/about", label: "About" }] : []),
 ];
 
@@ -86,6 +85,13 @@ export default function SiteHeader({
           </span>
           <span className="text-sm font-semibold tracking-tight sm:text-base">
             R. Martin Creative
+            {/* Descriptor hides on phones so the name and menu button fit on one line. */}
+            <span className="hidden font-normal text-ink-soft sm:inline">
+              <span aria-hidden className="mx-2 text-ink/25">
+                |
+              </span>
+              Web, Design, Print
+            </span>
           </span>
         </Link>
 

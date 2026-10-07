@@ -35,9 +35,9 @@ export const CARD_EXTRAS: CardExtra[] = [
   {
     id: "wax-seals",
     title: "Hand-pressed wax seals",
-    body: "Every seal is poured and pressed by hand, so no two are exactly alike. Choose one color or two-tone with an accent color, in any color, with any letters or monogram.",
+    body: "Every seal is poured and pressed by hand, so no two are exactly alike. Choose one color or two-tone in any color combination, with any letters or monogram.",
     christmasBody:
-      "Every seal is poured and pressed by hand, so no two are exactly alike. Choose one color or two-tone with an accent color, in any color, with any letters or monogram — or a Christmas-themed stamp.",
+      "Every seal is poured and pressed by hand, so no two are exactly alike. Choose one color or two-tone in any color combination, with any letters or monogram — or a Christmas-themed stamp.",
     christmasExamples: [
       {
         src: "/webp-assets/wax-stamp-christmas-envelope.webp",

@@ -391,3 +391,13 @@ export function IconMail({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function IconPostcard({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="2.5" y="5" width="19" height="14" rx="1.8" stroke="currentColor" strokeWidth="1.6" />
+      <path stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" d="M12 8v8M5.5 9h4M5.5 12h4M5.5 15h3" />
+      <rect x="14.5" y="8" width="4" height="4.5" rx="0.6" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  );
+}
