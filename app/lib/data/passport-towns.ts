@@ -7,7 +7,6 @@
 import type { ServiceFaq } from "../services-data";
 import { getChristmasTownByKey, townKey } from "./christmas-towns";
 import type { PassportOfficeId } from "./passport-offices";
-import { PASSPORT_INFANT_EXTRA, usd } from "./pricing";
 import { TOWNS, type Town } from "./towns";
 
 export type PassportTownContent = {
@@ -21,6 +20,8 @@ export type PassportTownContent = {
   offices: PassportOfficeId[];
   faqs: ServiceFaq[];
   /** Other page keys, shown as "Nearby" links. */
+  /** This page's own "How to look your best" tip (unique per page). */
+  lookBest: { question: string; answer: string };
   nearby: string[];
   alsoServes?: string[];
 };
@@ -46,6 +47,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
           "Yes. You can turn in a first-time application at any passport acceptance facility in the country, so the Wilmot post office works just as well as one in Illinois.",
       },
     ],
+    lookBest: {
+      question: "How can I take a flattering passport photo without breaking the rules?",
+      answer:
+        "Keep your posture upright with your shoulder blades gently pinched back. Relax your face so a neutral expression reads as pleasant rather than stern. I use soft, indirect front lighting to get rid of heavy shadows under the eyes — that's what makes a compliant photo look like you on a good day.",
+    },
     nearby: ["mchenry", "woodstock", "lake-geneva"],
   },
 
@@ -69,6 +75,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
           "Yes — I can set up at your office for a whole team in one visit, which is handy when several people are traveling for work.",
       },
     ],
+    lookBest: {
+      question: "What's the secret to avoiding a mugshot look in a passport photo?",
+      answer:
+        "Soft, diffused light and a little positioning. Harsh overhead light is what creates dark hollows around the eyes, so the light should come from straight ahead, bright and even. Lengthen your neck slightly toward the camera and keep your chin level to avoid any extra folds under it.",
+    },
     nearby: ["richmond", "crystal-lake", "woodstock"],
     alsoServes: ["Ringwood", "Solon Mills", "Prairie Grove"],
   },
@@ -93,6 +104,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
           "Most rejections are small things: shadows on the background, a head that's too big or small in the frame, glare, or a photo that's been edited. I check each photo against the State Department's requirements before you're done, and retake it as many times as needed.",
       },
     ],
+    lookBest: {
+      question: "How should lighting and positioning be set up for the best passport picture?",
+      answer:
+        "The main light goes directly behind or beside the camera at eye level, so it fills facial shadows evenly. I have you stand two to three feet in front of the backdrop so you don't cast a dark outline behind you. All you need to do is relax your shoulders down.",
+    },
     nearby: ["algonquin", "woodstock", "mchenry"],
     alsoServes: ["Lakewood", "Prairie Grove"],
   },
@@ -117,6 +133,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
           "Yes. I can fill out and print your first-time application (or a renewal by mail) and send it with your photos, so all you do at the county desk is show your documents and sign in front of the agent.",
       },
     ],
+    lookBest: {
+      question: "What clothing and colors look best against a white passport backdrop?",
+      answer:
+        "Solid jewel tones like navy blue, emerald green, or burgundy create crisp contrast against the light background. Skip white or cream tops — they blend into the backdrop and leave you with a \"floating head.\"",
+    },
     nearby: ["crystal-lake", "mchenry", "richmond"],
   },
 
@@ -140,6 +161,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
         answer: "Yes — same service and price in both towns, at your home or your business.",
       },
     ],
+    lookBest: {
+      question: "How do you avoid a double chin and harsh shadows in a passport photo?",
+      answer:
+        "Push your ears slightly forward toward the camera — a photographer's trick known as \"turtling\" — which defines your jawline without tilting your head up. Paired with soft fill light from the front, it smooths out deep shadows under the nose and chin.",
+    },
     nearby: ["crystal-lake", "west-dundee", "woodstock"],
   },
 
@@ -163,6 +189,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
         answer: "Yes — the same at-home and on-site passport photo service covers Carpentersville and Sleepy Hollow.",
       },
     ],
+    lookBest: {
+      question: "How should I style my makeup and hair so it looks natural on camera?",
+      answer:
+        "Choose matte makeup so bright lights don't create shine, and wear a touch more blush and lip color than usual, since camera lighting can wash out skin tone. Tuck your hair behind your ears so your full face outline and eyebrows stay visible.",
+    },
     nearby: ["algonquin", "crystal-lake"],
     alsoServes: ["Carpentersville", "Sleepy Hollow"],
   },
@@ -181,12 +212,12 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
         answer:
           "Yes — the Lake Villa post office on Cedar Avenue accepts passport applications, and so does the Round Lake post office nearby. Book through usps.com or call ahead.",
       },
-      {
-        question: "Can you take my baby's passport photo at home?",
-        answer:
-          `Yes. Babies need their eyes open, facing the camera, with no hands or toys in the frame — much easier at home than at a counter. Infant photos are an extra ${usd(PASSPORT_INFANT_EXTRA)} each.`,
-      },
     ],
+    lookBest: {
+      question: "How do I take a flattering passport photo at home?",
+      answer:
+        "Set up near a large window with soft daylight, with your phone or camera at exactly eye level on a tripod. Use a plain, matte backdrop, stand about two feet in front of it, and use the self-timer instead of a close-up selfie, which distorts your features. Then send it to me and I'll make it compliant — background, sizing, and printing included.",
+    },
     nearby: ["gurnee", "richmond"],
     alsoServes: ["Lindenhurst", "Old Mill Creek"],
   },
@@ -210,6 +241,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
         answer: "Yes — I can set up at your business and take photos for one person or a whole team in one visit.",
       },
     ],
+    lookBest: {
+      question: "How do you get a natural expression that still looks friendly?",
+      answer:
+        "A natural smile is allowed; big, open-mouth grins are what get photos rejected. \"Smile with your eyes\" by gently lifting your cheeks while your lips rest together naturally. Take a slow breath and exhale right before the shot to relax your mouth and brow.",
+    },
     nearby: ["lake-villa", "richmond"],
   },
 
@@ -233,6 +269,11 @@ export const PASSPORT_TOWNS: Record<string, PassportTownContent> = {
           "Yes. I'm based in Richmond, Illinois, about 20 minutes away, and serve Lake Geneva and the surrounding Walworth County area.",
       },
     ],
+    lookBest: {
+      question: "What are the biggest mistakes to avoid in a passport photo?",
+      answer:
+        "Glasses, glossy lip products, and white tops top the list. Close-up wide-angle shots — like phone selfies — distort your proportions, and a camera angled up or down changes the shape of your face. The lens should be at exactly eye level.",
+    },
     nearby: ["richmond"],
   },
 };

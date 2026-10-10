@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "./lib/business";
 import { ABOUT } from "./lib/data/about";
+import { EXTRAS } from "./lib/data/extras";
 import { getPassportTownPages } from "./lib/data/passport-towns";
 import { getChristmasTownPages } from "./lib/data/christmas-towns";
 import { SERVICE_CATEGORIES } from "./lib/services-data";
@@ -71,6 +72,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     })),
 
+    {
+      url: `${SITE_URL}/extras`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    ...EXTRAS.map((e) => ({
+      url: `${SITE_URL}/extras/${e.slug}`,
+      lastModified: new Date(e.published),
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+    })),
     {
       url: `${SITE_URL}/privacy`,
       lastModified,

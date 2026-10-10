@@ -10,6 +10,7 @@ const COMPANY_LINKS = [
   { href: "/services", label: "All services" },
   { href: "/#process", label: "How it works" },
   { href: "/service-area", label: "Service area" },
+  { href: "/extras", label: "Notes & Freebies" },
   { href: "/payment", label: "Ways to pay" },
   { href: "/privacy", label: "Privacy" },
   { href: "/#contact", label: "Contact" },

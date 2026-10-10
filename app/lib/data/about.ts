@@ -7,7 +7,10 @@ export const ABOUT = {
   published: true,
 
   /** Your headshot or a photo of you at work. Save it to public/webp-assets/ and set the path, e.g. "/webp-assets/ryan-martin.webp". */
-  photo: null as { src: string; alt: string } | null,
+  photo: {
+    src: "/webp-assets/ryan-and-elizabeth-martin.webp",
+    alt: "Ryan Martin and his wife, Elizabeth, smiling together",
+  } as { src: string; alt: string } | null,
 
   /** Short role line under your name, e.g. "Designer, developer & print partner for small businesses". */
   role: "Designer, developer & print maker for small businesses",

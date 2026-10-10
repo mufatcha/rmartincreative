@@ -27,3 +27,40 @@ export const PASSPORT_PREP: { heading: string; items: string[] }[] = [
 /** One-paragraph version for the FAQ. */
 export const PASSPORT_PREP_SUMMARY =
   "Wear an everyday shirt in a color that isn't white or very light — blue, black, or gray work best — and no uniform or camouflage. Take off hats, large jewelry, and glasses (glasses only with a signed doctor's note; daily religious or medical head coverings need a signed statement). Keep your hair off your eyes, eyebrows, and the edges of your face: a low ponytail, bun, or braid is easiest, small bobby pins are fine, and big headbands or bows aren't.";
+
+/** "Look your best" tips. All stay within State Department rules: a natural
+ *  smile is allowed, and nothing involves editing or retouching the photo. */
+export const PASSPORT_LOOK_BEST: { title: string; body: string }[] = [
+  {
+    title: "Pick a flattering neckline",
+    body: "A crew neck, V-neck, or collar in a solid, darker color frames your face. Skip busy patterns and logos.",
+  },
+  {
+    title: "Keep makeup natural and matte",
+    body: "Your everyday makeup is perfect. A little powder cuts shine under the lights; skip glitter and heavy contour.",
+  },
+  {
+    title: "Smile with your eyes",
+    body: "A relaxed, closed-mouth smile is allowed. Think of something you love right before the shot — it shows in your eyes.",
+  },
+  {
+    title: "Chin slightly forward",
+    body: "Sit up tall and push your chin a touch forward and down. It sharpens your jawline and still looks straight on.",
+  },
+  {
+    title: "Wear contacts, not glasses",
+    body: "Glasses aren't allowed, so if you need to see, wear your contacts — and you won't be squinting.",
+  },
+  {
+    title: "Groom like your everyday look",
+    body: "Hair styled the way you usually wear it, flyaways smoothed, beard trimmed. You should look like yourself on a good day.",
+  },
+  {
+    title: "Blink, then relax",
+    body: "Blink a couple of times just before the shot so your eyes are bright and fully open, then let your shoulders drop.",
+  },
+  {
+    title: "Let me handle the lighting",
+    body: "I set up soft, even light with no shadows on your face or the background — and retake as many times as you like.",
+  },
+];

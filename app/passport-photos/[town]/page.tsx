@@ -17,8 +17,9 @@ import {
   mapsUrl,
   type PassportOffice,
 } from "../../lib/data/passport-offices";
+import { passportCommonFaqs } from "../../lib/data/passport-faqs";
 import { getPassportTownByKey, getPassportTownBySlug, getPassportTownPages } from "../../lib/data/passport-towns";
-import { PASSPORT_PAPERWORK, PASSPORT_VISIT, priceAnswer, usd } from "../../lib/data/pricing";
+import { PASSPORT_PAPERWORK, PASSPORT_VISIT, usd } from "../../lib/data/pricing";
 
 // Only towns with written content get a page; anything else is a 404.
 export const dynamicParams = false;
@@ -90,13 +91,7 @@ export default async function PassportTownPage({ params }: { params: Promise<{ t
   const agency = getPassportOffice("chicago-passport-agency");
   const nearby = content.nearby.map((key) => getPassportTownByKey(key)).filter((p) => p !== undefined);
 
-  const faqs = [
-    ...content.faqs,
-    {
-      question: `How much do at-home passport photos cost in ${name}?`,
-      answer: priceAnswer("passport-photos"),
-    },
-  ];
+  const faqs = [...content.faqs, ...passportCommonFaqs()];
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
@@ -251,7 +246,7 @@ export default async function PassportTownPage({ params }: { params: Promise<{ t
 
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
-          <PassportPrep />
+          <PassportPrep lookBest={content.lookBest} place={name} />
           <ServiceFaqs faqs={faqs} />
 
           {nearby.length > 0 && (

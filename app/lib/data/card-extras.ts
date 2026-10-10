@@ -1,5 +1,5 @@
-// Finishing-touch extras for cards: addressing and mailing, wax seals,
-// envelopes, and (at Christmas) "From Santa" tags. Edit them here and the card
+// Finishing-touch extras for cards: addressing and mailing, wax seals, and
+// envelopes & liners. Edit them here and the card
 // service pages, their FAQs, the local Christmas pages, the quote form, and
 // /llms.txt all update. Extras are quoted per job — card starting prices don't
 // include them.
@@ -57,19 +57,20 @@ export const CARD_EXTRAS: CardExtra[] = [
       },
     ],
   },
-  {
-    id: "santa-tags",
-    title: "Personalized “From Santa” tags",
-    body: "Custom gift tags from Santa himself, personalized with each child's name, ready for the presents under the tree.",
-    christmasOnly: true,
-    examples: [
-      {
-        src: "/webp-assets/santa-tags.webp",
-        alt: "Vintage-style kraft gift tags reading “For Lily,” “For Noah,” “For Chloe,” and “For Hana,” each marked “From Santa” with a red sleigh, beside wrapped presents in front of a Christmas tree",
-      },
-    ],
-  },
 ];
+
+/** "From Santa" gift tags: their own Christmas product, ordered on their own —
+ *  not a card add-on. Shown as an "Also available" idea on the Christmas pages. */
+export const SANTA_TAGS = {
+  title: "Personalized “From Santa” gift tags",
+  body: "Custom gift tags from Santa himself, personalized with each child's name, for the presents under the tree. Order them on their own, with or without Christmas cards.",
+  examples: [
+    {
+      src: "/webp-assets/santa-tags.webp",
+      alt: "Vintage-style kraft gift tags reading “For Lily,” “For Noah,” “For Chloe,” and “For Hana,” each marked “From Santa” with a red sleigh, beside wrapped presents in front of a Christmas tree",
+    },
+  ] as ExtraExample[],
+};
 
 /** Anchor id of the extras section, for the "Make Them One of a Kind" button. */
 export const CARD_EXTRAS_ANCHOR = "finishing-touches";

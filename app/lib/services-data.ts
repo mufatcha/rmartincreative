@@ -20,9 +20,10 @@ import {
   IconShirt,
   IconSignpost,
 } from "../components/icons";
-import { BUSINESS_PHONE_DISPLAY, SERVICE_HOME_CITY } from "./business";
+import { SERVICE_HOME_CITY } from "./business";
 import { PASSPORT_PREP_SUMMARY } from "./data/passport-prep";
-import { PASSPORT_INFANT_EXTRA, PASSPORT_PAPERWORK, PASSPORT_VISIT, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
+import { passportCommonFaqs } from "./data/passport-faqs";
+import { PASSPORT_PAPERWORK, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
 
 export type IconComponent = ComponentType<{ className?: string }>;
 
@@ -901,7 +902,6 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Addressing & mailing to your full list, postage handled",
           "Hand-pressed wax seals, single or two-tone, or Christmas-themed",
           "Custom envelopes & liners, or Christmas-themed envelopes",
-          "Personalized “From Santa” gift tags",
         ],
         faqs: [
           {
@@ -951,7 +951,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Can you make personalized gift tags from Santa?",
             answer:
-              "Yes — custom “From Santa” gift tags personalized with each child's name, designed to match your cards or in their own North Pole style. They're quoted per job.",
+              "Yes — custom “From Santa” gift tags personalized with each child's name, designed to match your cards or in their own North Pole style. They're their own product, so you can order them with or without Christmas cards. They're quoted per job.",
           },
         ],
         icon: IconGift,
@@ -1872,18 +1872,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       "Infant and kids' photos taken at home, where they're comfortable",
     ],
     faqs: [
-      {
-        question: "How much do at-home passport photos cost?",
-        answer: `${priceAnswer("passport-photos")} The visit includes one compliant passport photo with unlimited retakes, two printed and cut copies, and the digital file; each additional person on the same visit gets the same.`,
-      },
-      {
-        question: "Can you take passport photos of babies and infants?",
-        answer: `Yes — and doing it at home, where your baby is comfortable, makes it much easier. Infant photos are an extra ${usd(PASSPORT_INFANT_EXTRA)} each — so a home visit just for a baby's photo is ${usd(PASSPORT_VISIT + PASSPORT_INFANT_EXTRA)} — since they take more time and care to get a compliant shot: eyes open, facing the camera, against a plain background, with no hands or toys in the frame.`,
-      },
-      {
-        question: "How do I book a passport photo appointment?",
-        answer: `Passport photos are by appointment. Send a request through the quote form or call ${BUSINESS_PHONE_DISPLAY}, and we'll pick a time that works for you — at your home or business. Let me know how many people need photos and whether anyone is an infant or needs their application filled out.`,
-      },
+      ...passportCommonFaqs(),
       {
         question: "What makes a passport photo compliant?",
         answer:
@@ -1894,8 +1883,9 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         answer: PASSPORT_PREP_SUMMARY,
       },
       {
-        question: "What if the first photo isn't right?",
-        answer: "I retake it — as many times as it takes, at no extra charge, until the photo meets the requirements.",
+        question: "How can I look good in my passport photo?",
+        answer:
+          "Wear a solid, darker top with a crew neck, V-neck, or collar; keep makeup natural with a little powder to cut shine; and wear contacts instead of glasses. Sit up tall with your chin slightly forward and down, blink just before the shot, and give a relaxed, closed-mouth smile — it's allowed. I handle soft, even lighting and retake as many times as you like.",
       },
       {
         question: "Can you use a photo I already took?",
@@ -1910,16 +1900,6 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Can you fill out my passport application?",
         answer: `Yes — for first-time applicants and for renewals by mail, it's ${usd(PASSPORT_PAPERWORK)}. I'll fill out the right form with you, print it, and send it along with your printed photos by the delivery method you choose. First-time applications (Form DS-11) have to be turned in in person at a passport acceptance facility, like many post offices: bring the form with your ID and proof of citizenship, and don't sign it ahead of time — you'll sign it in front of the acceptance agent. Renewals by mail (Form DS-82) are for most adults whose last passport is undamaged and was issued within the past 15 years when they were 16 or older: you sign the form yourself and mail it with your most recent passport, the new photo, and the fee.`,
-      },
-      {
-        question: "Can I get more than two printed copies?",
-        answer:
-          "Yes. Every service includes one printed and cut pair, and each additional pair is just $1 — handy if you're applying for more than one document or want spares.",
-      },
-      {
-        question: "When will I get my passport photos?",
-        answer:
-          "Your digital file is sent the same day by email, text message, or both. Your two printed and cut copies are printed off-site the same day the photos are taken and mailed right after printing — USPS delivery is free and usually takes 3–4 business days. Need them sooner? Same-day hand delivery can be arranged and is quoted separately.",
       },
     ],
     icon: IconPassport,

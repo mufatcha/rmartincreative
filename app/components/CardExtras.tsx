@@ -1,6 +1,7 @@
+import Link from "next/link";
 import ExtraExamples from "./ExtraExamples";
 import Reveal from "./Reveal";
-import { CARD_EXTRAS_ANCHOR, CARD_EXTRAS_NOTE, getCardExtras } from "../lib/data/card-extras";
+import { CARD_EXTRAS_ANCHOR, CARD_EXTRAS_NOTE, SANTA_TAGS, getCardExtras } from "../lib/data/card-extras";
 import type { ServiceCategory } from "../lib/services-data";
 
 /** "Finishing touches" extras for card pages. Renders nothing on other pages. */
@@ -24,6 +25,23 @@ export default function CardExtras({ category, leafSlug }: { category: ServiceCa
           ))}
         </div>
         <p className="mt-4 text-sm text-ink-soft">{CARD_EXTRAS_NOTE}</p>
+
+        {leafSlug === "christmas-cards" && (
+          <div className="mt-8 flex flex-col gap-1 rounded-2xl border border-dashed border-rose-300 bg-rose-50/60 p-6 sm:flex-row sm:items-start sm:gap-6">
+            <div className="sm:flex-1">
+              <p className="text-xs font-semibold uppercase tracking-widest text-rose-600">Also available</p>
+              <h3 className="mt-1 font-semibold">{SANTA_TAGS.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{SANTA_TAGS.body}</p>
+              <Link
+                href="/extras/free-santa-gift-tags"
+                className="mt-2 inline-block text-sm font-semibold text-rose-600 hover:text-rose-700"
+              >
+                Or grab the free printable version &rarr;
+              </Link>
+            </div>
+            <ExtraExamples title={SANTA_TAGS.title} examples={SANTA_TAGS.examples} />
+          </div>
+        )}
       </div>
     </Reveal>
   );
