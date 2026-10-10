@@ -1,6 +1,6 @@
 import ChristmasSpecial from "./ChristmasSpecial";
 import Reveal from "./Reveal";
-import { CARD_EXTRAS_NOTE, getCardExtras } from "../lib/data/card-extras";
+import { CARD_EXTRAS_NOTE, SANTA_TAGS, getCardExtras } from "../lib/data/card-extras";
 import { CARD_PRICES, cardDesignPrice, cardRevisionPolicy, christmasSpecialActive, startsAt, usd } from "../lib/data/pricing";
 
 // Shared details for every local Christmas card page. Kept below each page's
@@ -67,6 +67,9 @@ export default function ChristmasCardEssentials() {
             ))}
           </ul>
           <p className="mt-3 text-xs text-ink-soft">{CARD_EXTRAS_NOTE}</p>
+          <p className="mt-4 text-sm leading-relaxed text-ink-soft">
+            <span className="font-semibold text-ink">Also available:</span> {SANTA_TAGS.body}
+          </p>
         </div>
 
         {christmasSpecialActive() && <ChristmasSpecial showExamples className="mt-10 max-w-2xl" />}

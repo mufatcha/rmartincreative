@@ -10,6 +10,7 @@ import { PAYMENT_SUMMARY } from "../lib/data/payments";
 import { CARD_EXTRAS_NOTE, cardExtrasList } from "../lib/data/card-extras";
 import { getPricing, pricingSummary } from "../lib/data/pricing";
 import { TOWN_GROUPS, getChristmasTownPages } from "../lib/data/christmas-towns";
+import { EXTRAS } from "../lib/data/extras";
 import { getPassportTownPages } from "../lib/data/passport-towns";
 import { TOWNS } from "../lib/data/towns";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
@@ -67,7 +68,7 @@ export function GET() {
 - Christmas cards: folded 5×7 (10×7 paper folded in half) or flat 5×7 printed on both sides, with optional rounded corners; matte, glossy, or foil finishes. Booking in October or early November is recommended.
 - Payment: ${PAYMENT_SUMMARY} Details: ${url("/payment")}
 - Websites: optional private preview site (staging site), a password-protected copy that runs alongside the live site, hidden from search engines and AI crawlers, for approving changes before they go live. Quoted per project.
-- Card extras for Christmas cards, greeting cards, and wedding invitations: ${cardExtrasList(false)}, plus personalized “From Santa” gift tags at Christmas. Wax seals are poured and pressed by hand in one or two colors, any color and monogram, or a Christmas-themed stamp. ${CARD_EXTRAS_NOTE}
+- Card extras for Christmas cards, greeting cards, and wedding invitations: ${cardExtrasList(false)}. Wax seals are poured and pressed by hand in one or two colors, any color and monogram, or a Christmas-themed stamp. ${CARD_EXTRAS_NOTE} Personalized “From Santa” gift tags are also sold on their own at Christmas.
 
 ## Starting prices
 Design prices in USD. "Plus printing" means printing is quoted separately by quantity, size, and finish. Anything not listed is quoted per project.
@@ -85,6 +86,10 @@ ${prices}
 
 ## Services
 ${services}
+
+## Notes & Freebies
+Free printables and helpful notes, no email required ([all extras](${url("/extras")})).
+${EXTRAS.map((e) => `- [${e.title}](${url(`/extras/${e.slug}`)}): ${e.description}`).join("\n")}
 
 ## Local Christmas card pages
 ${christmas}

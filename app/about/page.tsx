@@ -85,7 +85,8 @@ export default function AboutPage() {
 
           <div className="relative mx-auto w-full max-w-xs">
             {ABOUT.photo ? (
-              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl ring-1 ring-ink/5">
+              // Square, matching the photo, so nothing is cropped.
+              <div className="relative aspect-square overflow-hidden rounded-3xl shadow-2xl ring-1 ring-ink/5">
                 <Image src={ABOUT.photo.src} alt={ABOUT.photo.alt} fill sizes="320px" className="object-cover" priority />
               </div>
             ) : (

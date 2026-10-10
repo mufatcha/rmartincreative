@@ -232,7 +232,7 @@ export const SERVICES: ServiceOption[] = [
         id: "format",
         label: "Card format",
         type: "radio",
-        options: ["Folded 5×7 (10×7 folded in half)", "Flat 5×7, printed both sides", "Not sure"],
+        options: ["Folded 5×7 (10×7 folded in half)", "Flat 5×7, printed both sides", "Other size or format", "Not sure"],
       },
       {
         id: "corners",
@@ -246,7 +246,7 @@ export const SERVICES: ServiceOption[] = [
         id: "extras",
         label: "Any finishing touches? (quoted per job)",
         type: "checkboxes",
-        options: ["Addressing & mailing", "Wax seals", "Custom envelopes & liners", "“From Santa” gift tags", "None"],
+        options: ["Addressing & mailing", "Wax seals", "Custom envelopes & liners", "None"],
       },
       { id: "deadline", label: "Needed by (mailing date)", type: "text" },
     ],

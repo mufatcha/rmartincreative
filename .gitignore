@@ -48,3 +48,6 @@ next-env.d.ts
 
 # Local JPG copies of public/webp-assets (not deployed or tracked)
 /public/jpg-assets/
+
+# IndexNow: fingerprints of the last submission (bun run indexnow --changed)
+/.indexnow/

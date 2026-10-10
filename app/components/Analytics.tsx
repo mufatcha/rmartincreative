@@ -55,3 +55,10 @@ export function trackQuoteSubmitted(serviceId: string) {
   w.gtag?.("event", "generate_lead", { service: serviceId });
   w.clarity?.("event", "quote_submitted");
 }
+
+/** Records a free download from Notes & Freebies (GA4 "file_download") and a Clarity event. */
+export function trackFreebieDownload(slug: string, fileName: string) {
+  const w = window as AnalyticsWindow;
+  w.gtag?.("event", "file_download", { freebie: slug, file_name: fileName });
+  w.clarity?.("event", "freebie_download");
+}
