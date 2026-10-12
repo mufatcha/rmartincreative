@@ -70,9 +70,9 @@ const EXTRAS_LIST: Extra[] = [
     published: "2026-10-09",
     image: {
       src: "/webp-assets/wordpress-vs-cms.webp",
-      alt: "Diagram comparing traditional WordPress, where the frontend, theme, and backend run together on one web server and database, with a headless CMS, where content stored on a cloud API server is sent to a separate frontend through API calls",
-      width: 1341,
-      height: 1006,
+      alt: "Headless CMS vs. WordPress, Explained: an API server and databases connected through a glowing data network to WordPress dashboards, plugin pieces, and website layouts",
+      width: 1200,
+      height: 896,
     },
   },
   {
@@ -85,9 +85,9 @@ const EXTRAS_LIST: Extra[] = [
     published: "2026-10-09",
     image: {
       src: "/webp-assets/free-yourdomain-email.webp",
-      alt: "Diagram of free domain email: incoming mail to hello@yourbusiness.com is forwarded by Cloudflare Email Routing to a Gmail inbox, and replies written in Gmail are sent and signed by Resend's SMTP server with SPF, DKIM, and DMARC authentication",
-      width: 1600,
-      height: 1195,
+      alt: "Free @YourDomain Email in Gmail with Cloudflare & Resend: a Gmail inbox and @ symbol linked by a data pipeline through Cloudflare custom routing and DNS to Resend's sending API",
+      width: 1200,
+      height: 896,
     },
   },
   {
@@ -100,9 +100,9 @@ const EXTRAS_LIST: Extra[] = [
     published: "2026-10-09",
     image: {
       src: "/webp-assets/nextjs-hosting-cloudflare-github.webp",
-      alt: "Diagram of Next.js hosting: Next.js, the builder, turns your design into fast pages; code changes are saved to GitHub, the safe, as a time-machine backup; and Cloudflare, the delivery network, automatically builds and publishes the site in minutes, serving it from the server closest to each visitor",
-      width: 1600,
-      height: 1195,
+      alt: "Next.js Hosting on Cloudflare & GitHub: GitHub code branches flowing through a CI/CD pipeline to the Cloudflare cloud, which serves the deployed React site around the globe",
+      width: 1200,
+      height: 896,
     },
   },
   {
@@ -115,9 +115,9 @@ const EXTRAS_LIST: Extra[] = [
     published: "2026-10-09",
     image: {
       src: "/webp-assets/modern-nextjs-website.webp",
-      alt: "Six benefits of a modern Next.js website: fast-loading pages, automatic image optimization for every screen, built for search and AI, security with no plugins or public login page, low or no hosting costs on Cloudflare, and room to grow with booking, a store, or apps",
-      width: 1600,
-      height: 1195,
+      alt: "Benefits of a Modern Next.js Website: speed gauges and a lightning bolt, rising performance charts, SEO first-page and conversion-rate panels, and a shopping cart along a glowing data path",
+      width: 1200,
+      height: 896,
     },
   },
   {
