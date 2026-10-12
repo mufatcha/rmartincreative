@@ -8,7 +8,6 @@ import Reveal from "../components/Reveal";
 import { IconArrowRight } from "../components/icons";
 import {
   BUSINESS_EMAIL,
-  BUSINESS_NAME,
   BUSINESS_PHONE_TEL,
   SERVICE_HOME_CITY,
   SERVICE_STATE_ABBR,
@@ -41,7 +40,7 @@ export default function AboutPage() {
     jobTitle: ABOUT.role,
     description: ABOUT.intro,
     alumniOf: { "@type": "CollegeOrUniversity", name: "Saint Leo University" },
-    worksFor: { "@type": "LocalBusiness", "@id": `${SITE_URL}/#business`, name: BUSINESS_NAME, url: SITE_URL },
+    worksFor: { "@id": `${SITE_URL}/#business` },
     address: { "@type": "PostalAddress", addressLocality: SERVICE_HOME_CITY, addressRegion: SERVICE_STATE_ABBR },
     email: `mailto:${BUSINESS_EMAIL}`,
     telephone: BUSINESS_PHONE_TEL,

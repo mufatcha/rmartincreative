@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fragment } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import QuoteModal from "./QuoteModal";
@@ -37,12 +38,17 @@ function getArticle(slug: string) {
 }
 
 export function extraArticleMetadata(slug: string): Metadata {
-  const { title, description } = getArticle(slug);
+  const { title, description, image } = getArticle(slug);
   return {
     title: pageTitle(title),
     description,
     alternates: { canonical: `/extras/${slug}` },
-    openGraph: { title, description, type: "article" },
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      ...(image ? { images: [{ url: image.src, width: image.width, height: image.height, alt: image.alt }] } : {}),
+    },
   };
 }
 
@@ -133,7 +139,7 @@ function Block({ block }: { block: ArticleBlock }) {
 }
 
 export default function ExtraArticle({ slug, content }: { slug: string; content: ArticleContent }) {
-  const { title, description, published, category } = getArticle(slug);
+  const { title, description, published, category, image } = getArticle(slug);
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -143,6 +149,7 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
     url: `${SITE_URL}/extras/${slug}`,
     datePublished: published,
     inLanguage: "en-US",
+    ...(image ? { image: `${SITE_URL}${image.src}` } : {}),
     ...(ABOUT.published ? { author: { "@type": "Person", "@id": `${SITE_URL}/about#ryan-martin`, name: "Ryan Martin" } } : {}),
     publisher: { "@id": `${SITE_URL}/#business` },
   };
@@ -167,6 +174,19 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
               {rich(para)}
             </p>
           ))}
+          {image && (
+            <div className="mt-10 overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-ink/5">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                sizes="(min-width: 768px) 720px, 100vw"
+                className="h-auto w-full"
+                priority
+              />
+            </div>
+          )}
         </div>
       </section>
 

@@ -22,7 +22,7 @@ export async function generateMetadata({
   if (!match) notFound();
 
   return {
-    title: pageTitle(match.leaf.title),
+    title: pageTitle(match.leaf.seoTitle ?? match.leaf.title),
     description: match.leaf.metaDescription,
     alternates: { canonical: `/services/${categorySlug}/${leafSlug}` },
   };

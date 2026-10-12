@@ -825,7 +825,7 @@ export const CHRISTMAS_TOWNS: Record<string, ChristmasTownContent> = {
     ],
     holidays: [
       "Kenosha's Lightin' Up Downtown and city tree lighting open the season the day after Thanksgiving, with a drone show over the harbor, family activities, and free streetcar rides all day.",
-      "In December, the Holiday HarborMarket brings dozens of vendors, live music, and food to the lakefront.",
+      "In December, the Holiday HarborMarket brings local vendors together downtown for a day of holiday shopping.",
     ],
     designIdeas: [
       {
@@ -859,7 +859,7 @@ export const CHRISTMAS_TOWNS: Record<string, ChristmasTownContent> = {
     ],
     events: [
       { name: "Lightin' Up Downtown Kenosha", url: "https://www.visitkenosha.com/holidays/lightin-up/" },
-      { name: "Kenosha Holiday HarborMarket", url: "https://www.visitkenosha.com/event/kenosha-holiday-winter-harbormarket/394/" },
+      { name: "Kenosha Holiday HarborMarket", url: "https://www.kenoshaharbormarket.com/" },
     ],
     nearby: ["pleasant-prairie", "lake-geneva", "waukegan", "wadsworth"],
     alsoServes: ["Paddock Lake", "Wheatland", "New Munster", "Slades Corners"],

@@ -16,15 +16,15 @@ const CONTENT: ArticleContent = {
   blocks: [
     {
       type: "numbered",
-      heading: "What “headless” means",
+      heading: "What is a headless CMS, and how does it work?",
       items: [
         {
           title: "The body: where your team edits",
-          body: "The CMS (content management system) is where you log in to write pages, upload photos, and update prices or hours. With a headless CMS like Strapi or Prismic, that's all it does.",
+          body: "The CMS (content management system) is where you log in to write pages, upload photos, and update prices or hours. With a headless CMS like Strapi or Prismic, that's all it does: it's the backend that holds your content.",
         },
         {
           title: "The head: the website visitors see",
-          body: "The website is built separately, often with [Next.js](/extras/benefits-of-a-nextjs-website), and designed exactly the way your business needs, without being boxed in by a theme.",
+          body: "The website is built separately, usually as a custom [Next.js](/extras/benefits-of-a-nextjs-website) website, and designed exactly the way your business needs, without being boxed in by a theme.",
         },
         {
           title: "The connection between them",
@@ -34,9 +34,9 @@ const CONTENT: ArticleContent = {
     },
     {
       type: "bullets",
-      heading: "The benefits over traditional WordPress",
+      heading: "How a headless CMS compares with traditional WordPress",
       items: [
-        "**Faster pages.** Instead of assembling each page from a database on every visit, the website's pages are built ahead of time and ready the moment someone clicks.",
+        "**Faster pages.** Performance is the biggest difference between the two. Instead of assembling each page from a database on every visit, the website's pages are built ahead of time and ready the moment someone clicks.",
         "**Better security.** The editor lives apart from the public website, so there's no login page on your site for bots to hammer, and no plugins on the public site for hackers to exploit.",
         "**Far less to learn.** Really running a WordPress site means learning the dashboard, themes, page builders, plugin settings, and how they all affect each other. A headless CMS gives your team a handful of simple, clearly labeled fields to fill in, and that's it.",
         "**No plugin bloat.** Getting a WordPress site to look and work the way you want usually means adding plugin after plugin: one for forms, one for speed, one for search, one for security, one for the layout. Each adds code that slows the site down, needs its own updates, and can clash with the others after a future update. With a headless CMS, the site is customized directly in its own code, so there are no plugins to pile up and no version conflicts waiting down the road.",
@@ -60,6 +60,7 @@ const CONTENT: ArticleContent = {
       paragraphs: [
         "Traditional WordPress is still a good choice in some cases. If your team already knows it well, publishes new content every day, or relies on a specific plugin, like a membership system or online courses, it can be the simpler path. It just needs to be built cleanly, with a custom theme and no pile of plugins slowing it down.",
         "There's also a middle ground: **headless WordPress**. Your team keeps the WordPress editor it already knows, while visitors get a fast, modern website built separately.",
+        "So how does headless WordPress compare with a native headless CMS like Strapi or Prismic? Headless WordPress makes sense when you have years of content and a team that knows WordPress well. Strapi and Prismic were designed to be headless from the start, so their editors are simpler, and there's no WordPress core or plugins to keep updated behind the scenes.",
       ],
     },
     {
@@ -74,10 +75,10 @@ const CONTENT: ArticleContent = {
   ],
   cta: {
     heading: "Let's find the right fit for your site",
-    body: "Tell me how your team updates the website today and what's frustrating about it. I'll recommend headless, WordPress, or something else, whatever actually fits.",
+    body: "I build custom Next.js websites with a Strapi or Prismic CMS backend, and clean WordPress sites when that's the better fit. Tell me how your team updates the website today and what's frustrating about it, and I'll recommend whatever actually fits.",
     serviceId: "website",
     button: "Talk about your website",
-    link: { href: CMS, label: "WordPress & headless CMS" },
+    link: { href: CMS, label: "Next.js & headless CMS development" },
   },
   faqs: [
     {
@@ -91,13 +92,23 @@ const CONTENT: ArticleContent = {
         "Usually it's easier. WordPress has a real learning curve: the dashboard, themes, blocks, and plugin settings all work a little differently. A headless CMS just shows simple fields set up around your actual content, so there's far less to learn and less to accidentally break. Adding a brand-new kind of page or feature does need a developer, while everyday updates don't.",
     },
     {
-      question: "Which headless CMS do you work with?",
+      question: "What's the easiest headless CMS for non-technical content editors?",
       answer:
-        "Mostly Strapi and Prismic, and WordPress itself can also be used as a headless CMS. The right one depends on your content, your team, and your budget.",
+        "The easiest one is the one set up around your content, showing your team only the fields they need. I mostly build with Strapi and Prismic, and both can be set up that simply. Prismic's visual page builder suits teams that like arranging page sections themselves, while Strapi is open source and gives you full control over where your content lives. WordPress itself can also be used as a headless CMS if your team already knows it.",
     },
     {
-      question: "Can I switch from WordPress to a headless CMS without losing my content or my Google rankings?",
-      answer: `Yes. Your content can be moved over, and your page addresses kept (or redirected), so search engines don't lose track of your pages. See [website overhauls](${WEB}/website-overhaul).`,
+      question: "Is a headless CMS better for website security than WordPress?",
+      answer:
+        "Usually, yes. The public website is just ready-made pages, with no login page, database, or plugins exposed for attackers to target, and the editor sits behind its own secure login somewhere else. A WordPress site can be secure too, but it takes constant updates to stay that way.",
+    },
+    {
+      question: "Is a headless CMS better than WordPress for SEO and site speed?",
+      answer:
+        "For site speed, a headless site usually comes out ahead, because its pages are built in advance instead of on every visit. Speed is part of how Google ranks pages, and the clean structure and structured data built into a headless site help search engines and AI understand it. WordPress can rank well too, but it often takes several plugins to get there, and each one can slow the site down.",
+    },
+    {
+      question: "Can I migrate from WordPress to a headless CMS without losing SEO?",
+      answer: `Yes. Your content is moved over, your page addresses are kept or redirected to their new locations, and your titles, descriptions, and structured data come along too, so search engines can carry your rankings over to the new site. See [website overhauls](${WEB}/website-overhaul).`,
     },
     {
       question: "Can I preview changes before they go live?",
@@ -105,9 +116,9 @@ const CONTENT: ArticleContent = {
         "Yes. Drafts can be previewed on the real design before you publish, so you know exactly how a page will look.",
     },
     {
-      question: "Does a headless CMS cost more than WordPress?",
+      question: "How much does it cost to convert a WordPress site to a headless CMS?",
       answer:
-        "Not necessarily. Many headless CMSs have free plans for small sites, and the website itself can often be hosted free on Cloudflare. The build itself is quoted per project, after a short conversation about what you need.",
+        "It depends on how many pages and types of content you have and what the site needs to do, so converting a WordPress site to a headless setup is quoted per project after a short conversation. Ongoing costs are often lower than WordPress: many headless CMSs have free plans for small sites, and the website itself can often be hosted free on Cloudflare.",
     },
   ],
 };

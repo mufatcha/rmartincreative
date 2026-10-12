@@ -19,7 +19,7 @@ const FORMATS = [
 const STEPS = [
   { title: "Share your photos & ideas", body: "Send your favorite photos, colors, and the message you'd like." },
   { title: "Review your proof", body: "You'll see a proof and we'll revise until it feels just right." },
-  { title: "Printed & finished", body: "Matte, glossy, or foil, printed on the format you chose." },
+  { title: "Printed & finished", body: "Matte, glossy, gold foil, or embossed, on heavyweight, recycled, or kraft cardstock." },
   { title: "Delivered", body: "Hand delivered or shipped, plus digital files to share by text or email." },
 ];
 
