@@ -13,6 +13,13 @@ const FEATURES = [
   "Design, printing, postage, and mailing in one package",
 ];
 
+// Sample messages: every campaign's message is written for that business and offer.
+const EXAMPLES = [
+  { industry: "Solar", message: "Your neighbor on Oak Street just went solar. Isn’t it time you did too?" },
+  { industry: "Roofing", message: "We just put a new roof on a home on Maple Avenue. Is yours ready for winter?" },
+  { industry: "Lawn care", message: "That lawn on Elm Court is one of ours. Want yours looking this good?" },
+];
+
 // A tiny neighborhood: the customer's house (highlighted) and the homes around it.
 const HOUSES = Array.from({ length: 15 }, (_, i) => i);
 
@@ -46,12 +53,22 @@ export default function NeighborPostcardSection() {
               .
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">
-              When you sell a car, add solar, or finish a new roof, the neighbors notice. I send them a postcard while
-              it&rsquo;s fresh, with a message written for your business and your offer — for a solar installer,
-              &ldquo;Your neighbor on Oak Street just went solar. Isn&rsquo;t it time you did too?&rdquo; It&rsquo;s
-              printed on a soft-feel stock they&rsquo;ll notice the moment it comes out of the mailbox. Available for
-              businesses anywhere in the U.S.
+              When you sell a car, add solar, or finish a new roof, the neighbors notice. I build the whole campaign for
+              you: I write a message for your business and your offer, design the postcard, find the right neighbors,
+              and handle the printing and mailing while the job is still fresh. Every card is printed on a soft-feel
+              stock they&rsquo;ll notice the moment it comes out of the mailbox. Available for businesses anywhere in
+              the U.S.
             </p>
+            <div className="mt-6 max-w-xl rounded-2xl bg-white/5 p-5 ring-1 ring-white/10">
+              <p className="text-xs font-semibold uppercase tracking-widest text-cyan-300">Example messages</p>
+              <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-white/80">
+                {EXAMPLES.map((ex) => (
+                  <li key={ex.industry}>
+                    <span className="font-semibold text-white">{ex.industry}:</span> &ldquo;{ex.message}&rdquo;
+                  </li>
+                ))}
+              </ul>
+            </div>
             <ul className="mt-7 grid gap-3 text-sm text-white/80 sm:grid-cols-2">
               {FEATURES.map((item) => (
                 <li key={item} className="flex items-center gap-2">

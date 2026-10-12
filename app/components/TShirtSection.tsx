@@ -49,11 +49,11 @@ export default function TShirtSection() {
               FeedTheFlames Etsy shop, or start from scratch with a custom
               order.
             </p>
-            <ul className="mt-7 grid gap-3 text-sm text-white/80 sm:grid-cols-2">
+            <ul className="mt-7 -mb-3 text-sm text-white/80 sm:columns-2 sm:gap-x-3">
               {FEATURES.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
-                  {item}
+                <li key={item} className="flex break-inside-avoid items-start gap-2 pb-3">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-orange-400" />
+                  <span className="text-pretty">{item}</span>
                 </li>
               ))}
             </ul>

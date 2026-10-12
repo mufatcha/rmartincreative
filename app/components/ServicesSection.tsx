@@ -20,12 +20,14 @@ import {
 // Grouped by what a small business is trying to do, not by product, so the
 // full scope reads as one marketing team rather than a list of vendors.
 // `prices` are keys in app/lib/data/pricing.ts; the card shows the lowest as "From $X".
+// `priceLabel` is fixed text for services without a fixed price in pricing.ts.
 type Service = {
   icon: typeof IconGlobe;
   title: string;
   description: string;
   href: string;
   prices?: string[];
+  priceLabel?: string;
 };
 
 const GROUPS: { title: string; blurb: string; accent: string; badge: string; services: Service[] }[] = [
@@ -49,12 +51,14 @@ const GROUPS: { title: string; blurb: string; accent: string; badge: string; ser
         description:
           "Show up on Google and in AI answers, starting with a free health check.",
         href: "#search-ai",
+        priceLabel: "Free Health Check",
       },
       {
         icon: IconPostcard,
         title: "Location Smart Postcards",
         description: "Soft-touch postcards to the neighbors of every customer you serve.",
         href: "#neighbor-postcards",
+        priceLabel: "From $425",
       },
     ],
   },
@@ -187,9 +191,9 @@ export default function ServicesSection() {
                             <span className="mt-0.5 block text-sm leading-relaxed text-ink-soft">
                               {service.description}
                             </span>
-                            {service.prices && (
+                            {(service.prices || service.priceLabel) && (
                               <span className="mt-1 block text-xs font-semibold text-ink">
-                                From {startsAt(...service.prices)}
+                                {service.prices ? `From ${startsAt(...service.prices)}` : service.priceLabel}
                               </span>
                             )}
                           </span>

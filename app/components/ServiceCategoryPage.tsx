@@ -83,14 +83,39 @@ export default function ServiceCategoryPage({ category, children }: { category: 
           </div>
         ) : (
           <Reveal delay={120}>
-            <ul className="mt-16 grid gap-3 text-sm text-ink-soft sm:grid-cols-2">
+            <ul className="mt-16 -mb-3 text-sm text-ink-soft sm:columns-2 sm:gap-x-3">
               {category.features.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className={`h-1.5 w-1.5 rounded-full bg-gradient-to-br ${category.accent}`} />
-                  {renderInlineLinks(item)}
+                <li key={item} className="flex break-inside-avoid items-start gap-2 pb-3">
+                  <span className={`mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br ${category.accent}`} />
+                  <span className="text-pretty">{renderInlineLinks(item)}</span>
                 </li>
               ))}
             </ul>
+          </Reveal>
+        )}
+
+        {category.stack && (
+          <Reveal delay={140}>
+            <div className="mt-16">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-violet-600">Platforms &amp; tools</h2>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {category.stack.map((group) => (
+                  <div key={group.title} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink/5">
+                    <h3 className="text-sm font-semibold">{group.title}</h3>
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {group.items.map((item) => (
+                        <li
+                          key={item}
+                          className="rounded-full bg-paper-tint px-3 py-1 text-xs font-medium text-ink-soft ring-1 ring-ink/5"
+                        >
+                          {renderInlineLinks(item)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
           </Reveal>
         )}
 

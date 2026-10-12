@@ -46,6 +46,21 @@ export const EXTRAS_HUB = {
 
 const EXTRAS_LIST: Extra[] = [
   {
+    slug: "schema-markup-json-ld-seo-ai",
+    kind: "note",
+    category: "web",
+    title: "Schema Markup & JSON-LD for SEO and AI",
+    description:
+      "What schema markup and JSON-LD are, how structured data affects Google rankings, rich results, and AI answers, and what every small business site needs.",
+    published: "2026-10-12",
+    image: {
+      src: "/webp-assets/schema-markup-for-seo-and-ai.webp",
+      alt: "Schema Markup & JSON-LD for SEO and AI: glowing AI brain chips connected through a data network to rich search results with star ratings, product and video cards, and JSON-LD code panels with rising ranking arrows",
+      width: 1600,
+      height: 1195,
+    },
+  },
+  {
     slug: "headless-cms-vs-wordpress",
     kind: "note",
     category: "web",

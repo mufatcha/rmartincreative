@@ -20,7 +20,7 @@ import {
   IconShirt,
   IconSignpost,
 } from "../components/icons";
-import { SERVICE_HOME_CITY } from "./business";
+import { BUSINESS_PHONE_DISPLAY, SERVICE_HOME_CITY } from "./business";
 import { PASSPORT_PREP_SUMMARY } from "./data/passport-prep";
 import { passportCommonFaqs } from "./data/passport-faqs";
 import { PASSPORT_PAPERWORK, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
@@ -87,6 +87,9 @@ export type ServiceCategory = {
   related?: string[];
   /** Search-result title, when it should say more than `title` (still kept within 60 characters). */
   seoTitle?: string;
+  /** Named platforms and tools, shown as a "Platforms & tools" block so search engines
+   *  and AI assistants connect the service with them. Items may use "[text](/path)". */
+  stack?: { title: string; items: string[] }[];
   /** Set once a real photo exists — omit to show the branded placeholder. */
   image?: ServiceImage;
 };
@@ -98,18 +101,43 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     related: ["search-ai-discovery"],
     title: "Website Design & Development",
     metaDescription:
-      "Custom website design and development in Northern Illinois — from full rebuilds and online stores to small ongoing updates, designed and built end-to-end with no drag-and-drop templates, and ready for search engines and AI from day one.",
+      "Custom website design and development in Richmond, IL and Northern Illinois: Next.js, WordPress, headless CMS, and Shopify stores, ready for search and AI.",
     tagline: "Custom sites, built and maintained end-to-end.",
     description:
-      "Whether you need a brand-new site or your current one just needs some attention, I design and build every site myself — clean, fast, mobile-friendly, and ready for search engines and AI from launch, with real metadata and structured data baked in instead of bolted on afterward. That includes online stores on Shopify, BigCommerce, and Wix, WordPress sites, and headless CMS builds for sites and web apps. AI-assisted development gets new sites built faster than ever, and more than 20 years of hand-coding websites keeps the quality where it belongs.",
+      "Whether you need a brand-new custom site, an online store, or an existing site that needs attention, I design and build every site myself. Every build is clean, fast, mobile-friendly, and ready for search engines and AI from launch, with real metadata and structured data (schema markup) baked in instead of bolted on afterward. I build custom sites and web apps on Next.js, editable sites on WordPress and headless CMS platforms like Strapi and Prismic, and online stores on Shopify, BigCommerce, and Wix. More than 20 years of hand-coding websites, combined with AI-assisted development, gets new sites built faster than ever without cutting corners.",
     details:
-      "Not sure whether you need a full overhaul or just an update? Most of the time it's obvious once we talk through what's not working — an outdated design and structure calls for a rebuild, while content or performance issues can usually be fixed in place.",
+      "Based in Richmond, IL, I work directly with small businesses, organizations, and startups across Northern Illinois and Southeast Wisconsin, from McHenry and Gurnee to Lake Geneva and Kenosha. Local clients get face-to-face planning when it helps, and everyone gets clear communication with no agency middle managers. Not sure whether you need a full overhaul or just an update? Most of the time it's obvious once we talk through what's not working.",
     features: [],
+    stack: [
+      {
+        title: "Custom sites & web apps",
+        items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "React", "TypeScript", "JavaScript", "Python", "SQL", "Tailwind CSS"],
+      },
+      {
+        title: "Content management",
+        items: ["WordPress", "[Strapi](/extras/headless-cms-vs-wordpress)", "[Prismic](/extras/headless-cms-vs-wordpress)"],
+      },
+      { title: "Online stores", items: ["Shopify", "BigCommerce", "Wix"] },
+      {
+        title: "Hosting & backups",
+        items: [
+          "[Cloudflare](/extras/nextjs-cloudflare-github-hosting)",
+          "[GitHub](/extras/nextjs-cloudflare-github-hosting)",
+          "Vercel",
+          "GoDaddy",
+          "Bluehost",
+          "HostGator",
+          "SiteGround",
+          "Hostinger",
+          "DreamHost",
+        ],
+      },
+    ],
     faqs: [
       {
         question: "How much does a website cost?",
         answer:
-          `A starter website — a single page or up to 5 pages — is ${startsAt("website-design-development")}, including a contact form, hosting, email forwarding, and your domain for the first year. Bigger sites, online stores, overhauls, and update plans are quoted after a short conversation about what you need.`,
+          `A starter website — a single page or up to 5 pages — is ${startsAt("website-design-development")}, including a contact form, hosting, [email forwarding](/extras/free-domain-email-gmail-cloudflare-resend), and your domain for the first year. Bigger sites, online stores, overhauls, and update plans are quoted after a short conversation about what you need.`,
       },
       {
         question: "How long does a website project take?",
@@ -124,7 +152,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How do I get started?",
         answer:
-          "Send a message through the quote form or give me a call — I'll ask a few questions about your goals and current site, then follow up with a scope and price.",
+          `Send a message through the quote form or call ${BUSINESS_PHONE_DISPLAY}. I'll ask a few questions about your goals and current site, then follow up with a scope, timeline, and price.`,
       },
       {
         question: "Which one do I need — an overhaul or an update?",
@@ -134,12 +162,12 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Will my new site be ready for search engines and AI?",
         answer:
-          "Yes, right out of the box. Every site launches with clean page structure, unique titles and meta descriptions, structured data (schema markup), an XML sitemap, fast load times, and a mobile-friendly layout — the same foundations Google and AI assistants rely on to understand and recommend a business. If you want to go further, the Search + AI Discovery services build on that foundation.",
+          "Yes, right out of the box. Every site launches with clean page structure, unique titles and meta descriptions, structured data ([schema markup](/extras/schema-markup-json-ld-seo-ai)), an XML sitemap, fast load times, and a mobile-friendly layout — the same foundations Google and AI assistants rely on to understand and recommend a business. If you want to go further, the Search + AI Discovery services build on that foundation.",
       },
       {
         question: "Do you handle hosting and domains too?",
         answer:
-          "Yes, I can help set up or transfer hosting and domain registration as part of either service.",
+          "Yes, I can help set up or transfer hosting and domain registration as part of either service. Most sites I build are hosted on Cloudflare, often for free, and backed up on GitHub. Here's [how that setup works](/extras/nextjs-cloudflare-github-hosting).",
       },
       {
         question: "Can I review changes before they go live?",
@@ -149,7 +177,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Which platforms do you work with?",
         answer:
-          "Custom-coded sites, WordPress, headless CMS platforms like Strapi and Prismic, and e-commerce on Shopify, BigCommerce, and Wix. I can also update most sites built on other platforms. The right choice depends on what the site needs to do and who will be updating it — I'll recommend one after we talk.",
+          "Custom-coded sites (usually built with [Next.js](/extras/benefits-of-a-nextjs-website) and React), WordPress, [headless CMS](/extras/headless-cms-vs-wordpress) platforms like Strapi and Prismic, and e-commerce on Shopify, BigCommerce, and Wix. I can also update most sites built on other platforms. The right choice depends on what the site needs to do and who will be updating it — I'll recommend one after we talk.",
       },
     ],
     icon: IconGlobe,
@@ -164,19 +192,19 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         slug: "website-overhaul",
         title: "Website Overhaul",
         metaDescription:
-          "A full website redesign and rebuild — custom design, mobile-first, and built to load fast — from first sketch to a live site.",
+          "Website overhauls in Richmond, IL and Northern Illinois: a full custom redesign and rebuild, mobile-first and fast, with 301 redirects to protect rankings.",
         tagline: "A full redesign and rebuild, from first sketch to launch.",
         description:
-          "For sites that need more than a patch job. I start from your goals and your content, design a layout custom to your brand — not a recycled template — and build it out into a fast, mobile-friendly site ready to go live.",
+          "For established businesses whose current site no longer reflects who they are or what they sell. I start from your goals and your content, design a layout custom to your brand — not a recycled template — and build it into a fast, mobile-first site built to win calls and leads, ready for Google and AI search from launch.",
         details:
-          "Most redesigns start with the same problem: the current site doesn't reflect the business anymore, or it was never built with a real strategy in mind. I start by figuring out what the site actually needs to do — win more calls, sell online, make a strong first impression — then design and build around that, instead of starting from a template and hoping it fits. Because AI-assisted development shortens the build itself, more of the timeline goes where it matters: getting the design, content, and details right.",
+          "Most redesigns start with the same problem: the current site doesn't reflect the business anymore, or it was never built with a real strategy in mind. I start by figuring out what the site actually needs to do — win more calls, sell online, make a strong first impression — then design and build around that, instead of starting from a template and hoping it fits. Because AI-assisted development shortens the build itself, more of the timeline goes where it matters: getting the design, content, and details right. Based in Richmond, IL, I work directly with business owners across Northern Illinois and Southeast Wisconsin, with clear communication and no agency account managers in between.",
         features: [
           "Custom design, not a drag-and-drop template",
-          "Mobile-first layout that holds up on any screen",
+          "Mobile-first layout, tested on phones, tablets, and desktops",
           "Fresh copy structure and page layout, not just a reskin",
-          "Search- and AI-ready at launch: metadata, schema markup, and a sitemap",
-          "Old page addresses redirected so existing links and rankings carry over",
-          "Built on the platform that fits — custom code, WordPress, or an online store",
+          "Search- and AI-ready at launch: page titles, meta descriptions, [schema markup](/extras/schema-markup-json-ld-seo-ai), and an XML sitemap",
+          "Every old page address mapped with 301 redirects, so existing links and rankings carry over",
+          "Built on the platform that fits — custom code with [Next.js](/extras/benefits-of-a-nextjs-website), WordPress, or an online store",
           "AI-assisted build for a faster launch, guided by hands-on web experience",
           "Optional private preview site that stays in place after launch for proofing future changes",
         ],
@@ -184,7 +212,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much does a website overhaul cost?",
             answer:
-              "Every overhaul is quoted based on page count, features like e-commerce, and content needs — you'll get a clear, itemized quote before any work starts.",
+              `Every overhaul is quoted as a flat rate based on page count, features like e-commerce or booking, and content needs — you'll get a clear, itemized quote before any work starts. Working with a smaller budget, or only need a few pages? A [starter website](/services/website-design-development#pricing), a single page or up to 5 pages, is ${startsAt("website-design-development")}.`,
           },
           {
             question: "How long does a website overhaul take?",
@@ -209,12 +237,17 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Will a redesign hurt my Google rankings?",
             answer:
-              "Not when the move is handled properly. Before launch, I inventory every page on your current site and map each old address to its new one with permanent (301) redirects, so visitors, bookmarks, and links from other sites all land in the right place — and the ranking value those links have built up carries over to the new site. After launch, I check for broken links and fix anything that slipped through.",
+              "Not when the move is handled properly. Before launch, I inventory every page on your current site and map each old address to its new one with permanent (301) redirects, so visitors, bookmarks, and links from other sites all land in the right place — and the ranking value those links have built up carries over to the new site. After launch, I check for broken links and fix anything that slipped through. To keep growing from there, [Search + AI Discovery](/services/search-ai-discovery) picks up where the build leaves off, starting with a [free health check](/services/search-ai-discovery/search-health-check).",
           },
           {
             question: "What happens after the site launches?",
             answer:
               "You get full ownership of the site and files. If you'd like ongoing updates or maintenance afterward, that's available separately as a Website Updates engagement.",
+          },
+          {
+            question: "How do I get started?",
+            answer:
+              `Send a message through the quote form or call ${BUSINESS_PHONE_DISPLAY}. We'll talk through what isn't working on your current site and what the new one needs to do, then I'll follow up with a clear scope, timeline, and quote.`,
           },
         ],
         icon: IconGlobe,
@@ -226,20 +259,24 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "e-commerce-websites",
         title: "E-Commerce Websites",
+        seoTitle: "E-Commerce Website Design & Development",
         metaDescription:
-          "E-commerce website design and development on Shopify, BigCommerce, and Wix — custom storefronts, product setup, payments, and shipping, ready to sell from launch.",
+          "E-commerce website design in Richmond, IL and Northern Illinois: custom Shopify, BigCommerce, and Wix stores with payments and shipping set up, ready to sell.",
         tagline: "A storefront that looks like your brand and is ready to sell.",
         description:
-          "Whether you're opening your first online store or outgrowing the one you have, I design and build storefronts on Shopify, BigCommerce, and Wix — customized to your brand instead of looking like every other theme, and set up to take orders from day one.",
+          "Whether you're opening your first online store or outgrowing the one you have, I design and build storefronts on Shopify, BigCommerce, and Wix — customized to your brand instead of looking like every other theme, and set up to take payments, calculate shipping, and process orders from day one.",
         details:
-          "The right platform depends on what you sell and how you want to run the store day to day. Shopify is a strong all-around choice for most product businesses, BigCommerce handles larger catalogs and more complex selling well, and Wix works nicely for smaller shops that want everything in one easy-to-edit place. I'll help you choose, then handle the design, product setup, payments, shipping, and the search and AI groundwork so the store is ready to be found.",
+          "The right platform depends on what you sell and how you want to run the store day to day. Shopify is a strong all-around choice for most product businesses, BigCommerce handles larger catalogs and more complex selling well, and Wix works nicely for smaller shops that want everything in one easy-to-edit place. I'll help you choose, then handle the design, product setup, payments, shipping, and the search and AI groundwork so the store is ready to be found. Based in Richmond, IL, I work directly with product businesses across Northern Illinois and Southeast Wisconsin, with no agency account managers in between.",
         features: [
           "Storefronts on Shopify, BigCommerce, or Wix",
-          "Custom theme design that matches your brand",
-          "Product, collection, and inventory setup",
-          "Payments, shipping, and tax settings configured",
-          "Product pages structured for search engines and AI",
-          "Migration from an existing store, with redirects in place",
+          "Custom theme design that matches your brand, not an off-the-shelf theme left as-is",
+          "Products, collections, variants like size and color, and inventory set up",
+          "Payments (like Shopify Payments, PayPal, or Stripe), shipping rates, and tax settings configured",
+          "Product [schema markup](/extras/schema-markup-json-ld-seo-ai), so prices and availability show up cleanly in Google and AI answers",
+          "Mobile-first shopping and checkout",
+          "Migration from an existing store, with 301 redirects so rankings carry over",
+          "A walkthrough on adding products, updating prices, and fulfilling orders",
+          "Turn shipping addresses into new customers with [Location Smart Postcards](/services/location-smart-postcards) mailed to their neighbors",
         ],
         faqs: [
           {
@@ -250,7 +287,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much does an online store cost?",
             answer:
-              "It's quoted based on the number of products, the amount of custom design, and any integrations you need. Keep in mind the platform itself also charges a monthly subscription, which I'll walk you through before we start.",
+              "It's quoted as a flat rate based on the number of products, the amount of custom design, and any apps or integrations you need. Keep in mind the platform itself also charges a monthly subscription, which I'll walk you through before we start.",
           },
           {
             question: "Can you move my existing store to a new platform?",
@@ -267,6 +304,16 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             answer:
               "Yes — whether it's a theme redesign, new product pages, or fixing something that isn't working, I can work within an existing Shopify, BigCommerce, or Wix store.",
           },
+          {
+            question: "How can I find more customers once the store is live?",
+            answer:
+              "Every order you ship has an address, and the neighbors around it are often looking for the same thing. [Location Smart Postcards](/services/location-smart-postcards) mails a postcard to the households around your customers, with a message written for your offer. For getting found online, [Search + AI Discovery](/services/search-ai-discovery) starts with a [free health check](/services/search-ai-discovery/search-health-check).",
+          },
+          {
+            question: "How do I get started?",
+            answer:
+              `Send a message through the quote form or call ${BUSINESS_PHONE_DISPLAY}. We'll talk through what you sell and how you run the store, compare platforms, and then I'll follow up with a clear scope, timeline, and quote.`,
+          },
         ],
         icon: IconCart,
         image: {
@@ -277,19 +324,23 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "wordpress-headless-cms",
         title: "WordPress & Headless CMS",
+        seoTitle: "WordPress & Headless CMS Development",
         metaDescription:
-          "Custom WordPress websites and headless CMS builds on Strapi and Prismic — easy content editing for your team, paired with fast, modern front ends and web apps.",
+          "Custom WordPress sites and headless CMS builds on Strapi and Prismic in Richmond, IL and Northern Illinois: easy team editing and fast Next.js front ends.",
         tagline: "Content you can edit yourself, on a site built to last.",
         description:
-          "When your team needs to publish and update content on its own, I build on a content management system. That can mean a custom WordPress site with an editor you'll recognize, or a headless CMS like Strapi or Prismic paired with a fast, modern front end for sites and web apps that need more flexibility.",
+          "When your team needs to publish blog posts, update service pages, or add new team members on its own, I build on a content management system set up around how you work. That can mean a custom WordPress site with an editor you'll recognize, or a headless CMS like Strapi or Prismic paired with a fast, modern front end for sites and web apps that need more flexibility.",
         details:
-          "WordPress is still a great choice for content-heavy sites — blogs, news, resources, and service pages your team updates often — as long as it's built cleanly, with a custom theme and no pile of plugins slowing it down. For projects that outgrow a traditional site, a headless CMS keeps the easy editing experience but separates it from the front end, so the same content can power a website, a web app, or both, with the speed and flexibility of custom code.",
+          "WordPress is still a great choice for content-heavy sites — blogs, news, resources, and service pages your team updates often — as long as it's built cleanly, with a custom theme and no pile of plugins slowing it down. For projects that outgrow a traditional site, a headless CMS keeps the easy editing experience but separates it from the front end, so the same content can power a website, a web app, or both, with the speed and flexibility of custom code. Based in Richmond, IL, I work directly with business owners, marketing teams, and organizations across Northern Illinois and Southeast Wisconsin, with no agency account managers in between.",
         features: [
-          "Custom WordPress themes, not bloated page builders",
-          "Editing screens set up around your actual content",
-          "Headless CMS builds on Strapi or Prismic, with fast, modern front ends",
-          "Web apps powered by the same content as your site",
-          "Search- and AI-ready structure from launch",
+          "Custom WordPress themes, not bloated page builders like Elementor or Divi",
+          "Editing screens and custom fields set up around your actual content",
+          "Headless CMS builds on Strapi or Prismic, with fast, modern [Next.js](/extras/benefits-of-a-nextjs-website) front ends",
+          "Web apps, like member portals or resource libraries, powered by the same content as your site",
+          "Search- and AI-ready at launch: page titles, meta descriptions, [schema markup](/extras/schema-markup-json-ld-seo-ai), and an XML sitemap",
+          "301 redirects when moving from an old WordPress or legacy site, so rankings carry over",
+          "A walkthrough for your team on editing and publishing before launch",
+          "Not sure which fits? Read [Headless CMS vs. WordPress, Explained](/extras/headless-cms-vs-wordpress)",
         ],
         faqs: [
           {
@@ -300,7 +351,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Should I choose WordPress or a headless CMS?",
             answer:
-              "WordPress is a great fit for most content-driven business sites and is familiar to a lot of teams. A headless CMS makes more sense when you need top performance, a custom web app, or the same content shown in more than one place. I'll recommend the right fit after learning how you'll use the site.",
+              "WordPress is a great fit for most content-driven business sites and is familiar to a lot of teams. A headless CMS makes more sense when you need top performance, a custom web app, or the same content shown in more than one place. I'll recommend the right fit after learning how you'll use the site. I compare the two side by side in [Headless CMS vs. WordPress, Explained](/extras/headless-cms-vs-wordpress).",
           },
           {
             question: "Which headless CMS do you use?",
@@ -315,12 +366,17 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Can you take over or rebuild an existing WordPress site?",
             answer:
-              "Yes — I can clean up and update an existing WordPress site, or rebuild it from the ground up if it's slow or hard to manage, with redirects in place so no links or rankings are lost.",
+              "Yes — I can clean up, speed up, and update an existing WordPress site, or rebuild it from the ground up with a custom theme if it's slow or hard to manage, with permanent (301) redirects in place so no links or rankings are lost. For a full redesign, see [Website Overhaul](/services/website-design-development/website-overhaul).",
           },
           {
             question: "Can you build a web app, not just a website?",
             answer:
               "Yes — headless CMS platforms work well as the content back end for custom web apps, like member portals, resource libraries, or product catalogs. We'll scope the features together before any build starts.",
+          },
+          {
+            question: "How do I get started?",
+            answer:
+              `Send a message through the quote form or call ${BUSINESS_PHONE_DISPLAY}. We'll go over how your team publishes today, compare the platform options, and then I'll follow up with a clear scope, timeline, and quote.`,
           },
         ],
         icon: IconCode,
@@ -423,7 +479,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "What is GitHub, and why does my site need it?",
             answer:
-              "GitHub stores a complete history of every version of your site's code. If an update ever breaks something, I can roll back to the exact version that worked instead of rebuilding from scratch.",
+              "GitHub stores a complete history of every version of your site's code. If an update ever breaks something, I can roll back to the exact version that worked instead of rebuilding from scratch. See [how Next.js, GitHub, and Cloudflare work together](/extras/nextjs-cloudflare-github-hosting).",
           },
           {
             question: "What does Cloudflare actually do for my site?",

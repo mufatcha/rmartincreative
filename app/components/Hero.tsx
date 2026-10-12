@@ -98,11 +98,11 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
-            Small businesses need a website, search visibility, print, and
-            a brand that holds together &mdash; but not a full-time marketing
-            department. I&rsquo;m Ryan Martin, one experienced partner based in
-            Richmond, IL, who handles all of it for businesses across Gurnee,
-            Northern Illinois, and Southeast Wisconsin.
+            Small businesses need a website, search visibility, print, and brand consistency
+            &mdash; without the cost of a full-time marketing department. I’m Ryan Martin, 
+            an experienced single-point partner based in Richmond, IL, delivering end-to-end 
+            design, web, and search strategy for local businesses across Northern Illinois 
+            and Southeast Wisconsin.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">

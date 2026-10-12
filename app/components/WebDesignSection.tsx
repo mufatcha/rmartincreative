@@ -66,9 +66,9 @@ export default function WebDesignSection() {
             </p>
             <ul className="mt-7 space-y-3 text-sm text-ink-soft">
               {FEATURES.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-sky-500" />
-                  {item}
+                <li key={item} className="flex items-start gap-2">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500" />
+                  <span className="text-pretty">{item}</span>
                 </li>
               ))}
             </ul>
