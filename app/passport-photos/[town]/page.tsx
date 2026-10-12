@@ -10,7 +10,7 @@ import Reveal from "../../components/Reveal";
 import ServiceBreadcrumb from "../../components/ServiceBreadcrumb";
 import ServiceFaqs from "../../components/ServiceFaqs";
 import { IconArrowRight, IconExternalLink, IconPassport } from "../../components/icons";
-import { BUSINESS_NAME, SITE_URL, STATE_NAMES } from "../../lib/business";
+import { SITE_URL, STATE_NAMES } from "../../lib/business";
 import {
   PASSPORT_OFFICES_CHECKED,
   getPassportOffice,
@@ -98,7 +98,7 @@ export default async function PassportTownPage({ params }: { params: Promise<{ t
     "@type": "Service",
     name: `Passport photos in ${place}`,
     serviceType: "Passport photos",
-    provider: { "@type": "LocalBusiness", "@id": `${SITE_URL}/#business`, name: BUSINESS_NAME, url: SITE_URL },
+    provider: { "@id": `${SITE_URL}/#business` },
     areaServed: {
       "@type": "City",
       name: town.name,

@@ -51,6 +51,8 @@ export type ServiceBeforeAfter = {
 export type ServiceLeaf = {
   slug: string;
   title: string;
+  /** Search title, when it should say more than the on-page title. */
+  seoTitle?: string;
   metaDescription: string;
   tagline: string;
   description: string;
@@ -830,11 +832,12 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "greeting-cards",
     audience: "personal",
     title: "Greeting Cards",
+    seoTitle: "Custom Christmas & Greeting Cards",
     metaDescription:
       "Custom greeting card design — Christmas and holiday cards, plus everyday cards for birthdays, thank-yous, and every occasion in between.",
     tagline: "A card for every moment worth marking.",
     description:
-      "From the biggest holiday mailer of the year to a single birthday card, every card gets the same care with layout, type, and color. Printed cards come in two 5×7 formats: folded (10×7 paper folded in half) or flat and printed on both sides.",
+      "From the biggest holiday mailer of the year to a single birthday card, every card gets the same care with layout, type, and color. Printed cards come in two 5×7 formats: folded (10×7 paper folded in half) or flat and printed on both sides, with options like gold foil, embossing, and heavyweight or recycled cardstock.",
     details:
       "Whether it's the one mailer everyone in your family looks forward to each December or a single birthday card for someone specific, both get the same design process: real layout and color decisions, not a template with a photo dropped in.",
     features: [],
@@ -884,24 +887,30 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "christmas-cards",
         title: "Christmas Cards",
+        seoTitle: "Custom Photo & Business Christmas Cards",
         metaDescription:
-          "Custom Christmas and holiday cards — family photo cards and corporate mailers, designed early to beat the December rush.",
+          "Custom family photo Christmas cards and corporate cards with your logo, with gold foil, embossing, and premium cardstock. Rush printing available.",
         tagline: "My favorite project of the year.",
         description:
-          "Custom family photo cards, corporate holiday mailers, and everything in between — designed early enough to beat the December rush. Choose a folded 5×7 card or a flat 5×7 card printed on both sides, in the finish you want: matte, glossy, or foil.",
+          "Custom family photo cards, corporate Christmas cards with your logo, and everything in between — designed early enough to beat the December rush, with rush printing when you're running late. Choose a folded 5×7 card or a flat 5×7 card printed on both sides, then finish it your way: matte or glossy, gold foil stamping, or embossing, on heavyweight, recycled, or kraft cardstock.",
         details:
-          "Christmas cards are the single busiest thing I do every year, and the reason clients keep coming back is simple: I treat a photo card the same way I'd treat any other design project — real layout choices, real color decisions, not a template with your photo dropped in. Corporate clients get the same care for a mailer as a family does for their holiday photo.",
+          "Christmas cards are the single busiest thing I do every year, and the reason clients keep coming back is simple: I treat a photo card the same way I'd treat any other design project — real layout choices, real color decisions, not a template with your photo dropped in. Minimalist and modern, vintage, rustic, or a funny photo card that makes everyone laugh — the style is up to you. Corporate clients get the same care for a mailer as a family does for their holiday photo.",
         features: [
-          "Custom family photo cards",
+          "Custom family photo cards, with one photo or several",
+          "Dog and cat photo cards — pets are family, too",
+          "Your own message printed inside",
           "Folded 5×7 cards (10×7 paper folded in half)",
           "Flat 5×7 cards, printed on both sides, with optional rounded corners",
-          "Corporate & business holiday mailers",
-          "Matte, glossy, or foil finishes",
+          "Corporate Christmas cards with your logo",
+          "Each card personalized with the recipient's name",
+          "Matte or glossy finishes, gold foil stamping & embossing",
+          "Heavyweight, recycled, or kraft cardstock",
           "Early booking gets first pick of finishes",
           "Guaranteed delivery before the holidays when booked in time",
+          "Rush printing for last-minute orders",
           "Addressing & mailing to your full list, postage handled",
           "Hand-pressed wax seals, single or two-tone, or Christmas-themed",
-          "Custom envelopes & liners, or Christmas-themed envelopes",
+          "Custom printed envelopes & liners, or Christmas-themed envelopes",
         ],
         faqs: [
           {
@@ -915,8 +924,14 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
               "As early in the fall as possible. Clients who book early get first pick of finishes and guaranteed delivery before the holidays.",
           },
           {
-            question: "What finishes are available?",
-            answer: "Matte, glossy, or foil, depending on the design and your budget.",
+            question: "What finishes and paper are available?",
+            answer:
+              "Matte or glossy, plus gold foil stamping and embossing for a raised, premium touch. Cards can be printed on heavyweight cardstock for a thick, substantial feel, recycled cardstock for an eco-friendly card, or kraft paper for a rustic look. I'll help you choose based on the design and your budget.",
+          },
+          {
+            question: "Matte or glossy: which is better for photo Christmas cards?",
+            answer:
+              "Both print photos beautifully. Glossy makes colors pop and gives photos a vivid, polished shine. Matte has a softer, more elegant look with no glare, and it's easier to write on if you like adding a handwritten note. If you're not sure, I'll recommend one for your photo.",
           },
           {
             question: "What card formats do you offer?",
@@ -924,14 +939,34 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
               "Two 5×7 formats. A folded card is printed on 10×7 paper and folded in half into a 5×7 card, with room for a message or photos inside. A flat card is a single 5×7 card printed on both sides — great for photo cards, with a design or message on the back — and can have rounded corners for a softer, finished look.",
           },
           {
-            question: "Can you design a corporate holiday mailer, not just family cards?",
+            question: "Can you design corporate Christmas cards, not just family cards?",
             answer:
-              "Yes — corporate and business holiday mailers are just as common as family photo cards.",
+              "Yes — corporate and business holiday cards are just as common as family photo cards. I design them around your logo and brand colors, can print each card with the recipient's name, and can match the envelopes to your brand. Real estate agents, insurance agents, and other businesses use them to thank clients every year, and I can address and mail the whole list for you.",
           },
           {
             question: "How many photos can I include?",
             answer:
-              "Most designs work well with one to three photos, though layouts can be adjusted to fit more.",
+              "Most designs work well with one to three photos, though layouts can be adjusted to fit more. A folded card has room for extra photos inside, too.",
+          },
+          {
+            question: "Can I add a custom message inside the card?",
+            answer:
+              "Yes. A folded card has two inside pages for your own message, a family update, or a favorite verse, designed to match the front.",
+          },
+          {
+            question: "Can you put our dog or cat on the card?",
+            answer:
+              "Of course — pets are part of the family. They can be the star of the card or pose with everyone else.",
+          },
+          {
+            question: "What styles of Christmas cards can you design?",
+            answer:
+              "Anything from minimalist and modern to vintage, rustic kraft, elegant gold foil, or a funny photo card. If you'd like a non-denominational greeting, a “Happy Holidays” or “Season's Greetings” card works for everyone on your list.",
+          },
+          {
+            question: "Can you do rush Christmas cards for a last-minute order?",
+            answer:
+              "Yes — rush printing is available. Tell me your deadline and I'll let you know what's possible and quote the rush. Booking early is still the best way to get your first choice of finishes.",
           },
           {
             question: "What if I need to reprint or add addresses later?",
@@ -976,6 +1011,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "One-off designs or full sets",
           "Folded 5×7 cards (10×7 paper folded in half)",
           "Flat 5×7 cards, printed on both sides, with optional rounded corners",
+          "Gold foil, embossing & heavyweight, recycled, or kraft cardstock",
           "Print-ready or digital-share formats",
           "Addressing & mailing, postage handled",
           "Hand-pressed wax seals, custom envelopes & liners",

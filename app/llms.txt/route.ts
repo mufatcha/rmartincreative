@@ -65,7 +65,7 @@ export function GET() {
 - Owner: Ryan Martin, designer and developer with 20+ years of website design and programming.
 - Location: ${SERVICE_HOME_CITY}, IL (home studio). Local pickup, drop-off, and hand delivery across the service area; everything else by mail, shipping, and email.
 - Contact: ${BUSINESS_PHONE_DISPLAY} · ${BUSINESS_EMAIL} · quote form on every page of ${site}
-- Christmas cards: folded 5×7 (10×7 paper folded in half) or flat 5×7 printed on both sides, with optional rounded corners; matte, glossy, or foil finishes. Booking in October or early November is recommended.
+- Christmas cards: folded 5×7 (10×7 paper folded in half) or flat 5×7 printed on both sides, with optional rounded corners; matte or glossy finishes, gold foil stamping, and embossing, on heavyweight, recycled, or kraft cardstock. Family and pet photo cards, corporate cards with a logo, and cards personalized with each recipient's name. Booking in October or early November is recommended; rush printing is available for last-minute orders.
 - Payment: ${PAYMENT_SUMMARY} Details: ${url("/payment")}
 - Websites: optional private preview site (staging site), a password-protected copy that runs alongside the live site, hidden from search engines and AI crawlers, for approving changes before they go live. Quoted per project.
 - Card extras for Christmas cards, greeting cards, and wedding invitations: ${cardExtrasList(false)}. Wax seals are poured and pressed by hand in one or two colors, any color and monogram, or a Christmas-themed stamp. ${CARD_EXTRAS_NOTE} Personalized “From Santa” gift tags are also sold on their own at Christmas.

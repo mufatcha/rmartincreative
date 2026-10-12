@@ -12,13 +12,13 @@ const ADDRESS = "hello@yourbusiness.com";
 
 const CONTENT: ArticleContent = {
   intro: [
-    `An email address like \`${ADDRESS}\` looks far more professional than a Gmail or Yahoo address on a business card, an invoice, or a quote. Most people assume it means paying for a business email plan every month, for every person. It doesn't have to.`,
-    "With three free services, you can receive and send email at your own domain, right from the Gmail inbox you already use. Setup takes about 30 minutes, and once it's done, you won't have to think about it again.",
+    `An email address like \`${ADDRESS}\` looks far more professional than a Gmail or Yahoo address on a business card, an invoice, or a quote. Most people assume it means paying a monthly fee for Google Workspace, for every person. It doesn't have to.`,
+    "Here's how to set up free custom domain email in the personal Gmail you already use, so you can send and receive from your own domain with three free services. It's the cheapest way to get a professional email address for a one-person business: the only cost is your domain name. Setup takes about 30 minutes, and once it's done, you won't have to think about it again.",
   ],
   blocks: [
     {
       type: "numbered",
-      heading: "How it works",
+      heading: "How Cloudflare Email Routing, Resend, and Gmail work together",
       items: [
         {
           title: "Cloudflare receives your email",
@@ -70,7 +70,7 @@ const CONTENT: ArticleContent = {
     },
     {
       type: "steps",
-      heading: "Step 3: Send from your domain in Gmail",
+      heading: "Step 3: Set up Resend SMTP in Gmail's “Send mail as” settings",
       items: [
         "In Gmail on a computer, click the gear icon → **See all settings** → **Accounts and Import**.",
         "Next to **Send mail as**, click **Add another email address**.",
@@ -79,38 +79,38 @@ const CONTENT: ArticleContent = {
         `Gmail sends a confirmation email to \`${ADDRESS}\`, and thanks to Step 1, it lands right in your Gmail. Click the link or enter the code.`,
         "Back in **Accounts and Import**, click **make default** next to your domain address, so every new email and reply goes out from it automatically.",
       ],
-      note: "The default carries over to the Gmail app on your phone. To send from a different address now and then, just tap the “From” line.",
+      note: "The default carries over to the Gmail app on your phone, so you can send professional business emails from your phone, for free. To send from a different address now and then, just tap the “From” line.",
     },
     {
       type: "steps",
-      heading: "Step 4 (recommended): Add a DMARC record",
+      heading: "Step 4 (recommended): Add a DMARC record in Cloudflare",
       items: [
         "In Cloudflare, go to **DNS** → **Records** → **Add record**.",
         "Choose type **TXT**, enter `_dmarc` as the name, and `v=DMARC1; p=none;` as the content. Save.",
       ],
-      note: "DMARC tells Gmail, Yahoo, and other providers that your domain has an email policy. It's a small step that helps your messages reach the inbox instead of spam.",
+      note: "DMARC works alongside the records Resend added in Step 2 to authenticate your email. It tells Gmail, Yahoo, and other providers that your domain has an email policy, a small step that helps your messages reach the inbox instead of spam.",
     },
     {
       type: "text",
-      heading: "Is this better than Google Workspace?",
+      heading: "A free Google Workspace alternative for small businesses",
       paragraphs: [
         "It depends on what you need. Google Workspace is a paid plan, billed per person, that gives each person a separate mailbox plus shared calendars, Drive storage, and admin controls. For a growing team, it's worth it.",
-        "For a one-person business or a small team that's happy reading email in a personal Gmail inbox, the free setup does the job: a professional address, sent and received in an inbox you already know.",
+        "For freelancers, one-person businesses, and small teams that are happy reading email in a personal Gmail inbox, this free setup does the job without a monthly subscription: a professional address, sent and received in an inbox you already know.",
       ],
     },
   ],
   cta: {
     heading: "Want it set up for you?",
-    body: "Email forwarding at your domain is part of every starter website I build. Already have a site? I can set up your domain email on its own, too.",
+    body: "Custom domain email forwarding comes with every small business starter website I build, and I can set up sending from Gmail, too. Already have a site? I can do the whole setup on its own.",
     serviceId: "website",
     button: "Ask about domain email",
     link: { href: HOSTING, label: "Website hosting & management" },
   },
   faqs: [
     {
-      question: "Is custom-domain email with Gmail, Cloudflare, and Resend really free?",
+      question: "Can I really get a custom business email address for free?",
       answer:
-        "Yes, for typical small business use. Gmail and Cloudflare Email Routing are free, and Resend's free plan currently includes up to 3,000 emails a month (100 a day), which is plenty for everyday business email. You still pay for your domain name itself.",
+        "Yes, for typical small business use. With your domain on Cloudflare DNS and a free Resend account, you get a free business email address that works right in Gmail. Gmail and Cloudflare Email Routing are free, and Resend's free plan currently includes up to 3,000 emails a month (100 a day), which is plenty for everyday business email. You still pay for your domain name itself.",
     },
     {
       question: "Will people see my Gmail address when I send from my domain?",
@@ -118,9 +118,14 @@ const CONTENT: ArticleContent = {
         "No. When you send from your domain address, the recipient sees only that address, and their replies come back to it.",
     },
     {
-      question: "Will my emails go to spam?",
+      question: "Why are my custom domain emails going to spam, and how do I fix it?",
       answer:
-        "Setting up Resend's DNS records and a DMARC record means your messages are signed and verified as coming from your domain, which is what email providers check. No one can promise every message reaches every inbox, but this is the same kind of authentication that big senders use.",
+        "Usually it's missing authentication. Check that your domain shows as verified in Resend, that Gmail is sending through smtp.resend.com, and that you've added a DMARC record (Step 4). Together, those prove your messages really come from your domain, which is what email providers check. No one can promise every message reaches every inbox, but this is the same kind of authentication big senders use.",
+    },
+    {
+      question: "What are the Resend SMTP settings for Gmail?",
+      answer:
+        "SMTP server smtp.resend.com, port 587 with a TLS connection (or port 465 with SSL), username resend, and your Resend API key as the password. Enter them in Gmail under Settings → Accounts and Import → Send mail as.",
     },
     {
       question: "Can I have more than one address, like info@ and billing@?",

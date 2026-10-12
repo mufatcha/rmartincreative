@@ -10,7 +10,7 @@ import Reveal from "../../components/Reveal";
 import ServiceBreadcrumb from "../../components/ServiceBreadcrumb";
 import ServiceFaqs from "../../components/ServiceFaqs";
 import { IconArrowRight, IconExternalLink, IconSnowflake } from "../../components/icons";
-import { BUSINESS_NAME, SITE_URL, STATE_NAMES } from "../../lib/business";
+import { SITE_URL, STATE_NAMES } from "../../lib/business";
 import { cardPriceAnswer, startsAt } from "../../lib/data/pricing";
 import {
   getChristmasTownByKey,
@@ -62,7 +62,7 @@ export default async function ChristmasTownPage({ params }: { params: Promise<{ 
     "@type": "Service",
     name: `Custom Christmas cards in ${place}`,
     serviceType: "Christmas card design and printing",
-    provider: { "@type": "LocalBusiness", name: BUSINESS_NAME, url: SITE_URL },
+    provider: { "@id": `${SITE_URL}/#business` },
     areaServed: {
       "@type": "City",
       name: town.name,
