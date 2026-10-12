@@ -42,6 +42,28 @@ export const STATE_NAMES: Record<string, string> = {
   WI: "Wisconsin",
 };
 
+/** The service area grouped by state, then county (Chicago neighborhoods are
+ *  covered by "Chicago"), for the About page's "Service area & local reach". */
+export function serviceAreaByCounty(): { state: string; counties: { county: string; towns: string[] }[] }[] {
+  const states = ["IL", "WI"];
+  return states.map((state) => {
+    const towns = TOWNS.filter((t) => t.state === state && t.type !== "chicago_neighborhood");
+    // Home county first, then outward.
+    const order = ["McHenry", "Lake", "Kane", "Cook", "Kenosha", "Walworth"];
+    const counties = [...new Set(towns.map((t) => t.county))].sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    return {
+      state,
+      counties: counties.map((county) => ({
+        county,
+        towns: towns
+          .filter((t) => t.county === county)
+          .map((t) => t.name)
+          .sort((a, b) => a.localeCompare(b)),
+      })),
+    };
+  });
+}
+
 export const SERVICE_AREA_BOUNDS = {
   north: "Lake Geneva, WI",
   south: "Chicago, IL",
@@ -50,6 +72,7 @@ export const SERVICE_AREA_BOUNDS = {
 } as const;
 
 export const SERVICE_HOME_CITY = "Richmond";
+export const SERVICE_HOME_ZIP = "60071";
 export const SERVICE_STATE = "Illinois";
 export const SERVICE_STATE_ABBR = "IL";
 

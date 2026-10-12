@@ -5,16 +5,21 @@ import { notFound } from "next/navigation";
 import CtaSection from "../components/CtaSection";
 import QuoteModal from "../components/QuoteModal";
 import Reveal from "../components/Reveal";
+import ServiceFaqs from "../components/ServiceFaqs";
 import { IconArrowRight } from "../components/icons";
 import {
   BUSINESS_EMAIL,
   BUSINESS_PHONE_TEL,
   SERVICE_HOME_CITY,
+  SERVICE_HOME_ZIP,
   SERVICE_STATE_ABBR,
   SITE_URL,
+  STATE_NAMES,
   STATS,
+  serviceAreaByCounty,
 } from "../lib/business";
 import { ABOUT, aboutHasTodos } from "../lib/data/about";
+import { renderInlineLinks } from "../lib/inline-links";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
 // Draft until ABOUT.published is true: visible on the dev server only.
@@ -105,7 +110,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">How I got here</h2>
               {ABOUT.story.map((p) => (
                 <p key={p} className="mt-4 text-lg leading-relaxed text-ink-soft">
-                  {p}
+                  {renderInlineLinks(p)}
                 </p>
               ))}
             </div>
@@ -154,6 +159,43 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Service area & local reach, grouped by state and county (from lib/data/towns.ts).
+          Top padding only: the "What I do" section below brings its own. */}
+      <section className="pt-16 sm:pt-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Service area &amp; local reach</h2>
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-ink-soft">
+            Based in {SERVICE_HOME_CITY}, {SERVICE_STATE_ABBR} {SERVICE_HOME_ZIP}, with pickup, drop-off, and delivery
+            across Northern Illinois and Southeast Wisconsin.
+          </p>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {serviceAreaByCounty().map(({ state, counties }) => (
+              <div key={state} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink/5">
+                <h3 className="font-semibold">{state === "IL" ? "Northern Illinois" : "Southeast Wisconsin"}</h3>
+                <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-ink-soft">
+                  {counties.map(({ county, towns }) => (
+                    <li key={county}>
+                      <span className="font-medium text-ink">
+                        {county} County, {STATE_NAMES[state]}:
+                      </span>{" "}
+                      {towns.join(", ")}
+                      {county === "Cook" ? ", and Chicago neighborhoods" : ""}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <Link
+            href="/service-area"
+            className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-700"
+          >
+            See the full service area
+            <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </section>
+
       {/* What I do (from the real service list) + personal note */}
       <section className="py-16 sm:py-20">
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2">
@@ -194,6 +236,13 @@ export default function AboutPage() {
             Clients I&rsquo;ve worked with
             <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
+        </div>
+      </section>
+
+      {/* Direct Q&A for search engines and AI assistants (FAQPage structured data) */}
+      <section className="pb-16 sm:pb-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <ServiceFaqs faqs={ABOUT.faqs} />
         </div>
       </section>
 

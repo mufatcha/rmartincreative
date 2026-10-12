@@ -5,6 +5,7 @@ import {
   BUSINESS_PHONE_TEL,
   SERVICE_AREA_CITIES,
   SERVICE_HOME_CITY,
+  SERVICE_HOME_ZIP,
   SERVICE_STATE_ABBR,
   STATE_NAMES,
   SITE_URL,
@@ -34,6 +35,7 @@ function buildSchema() {
       "@type": "PostalAddress",
       addressLocality: SERVICE_HOME_CITY,
       addressRegion: SERVICE_STATE_ABBR,
+      postalCode: SERVICE_HOME_ZIP,
       addressCountry: "US",
     },
     areaServed: SERVICE_AREA_CITIES.map((city) => ({

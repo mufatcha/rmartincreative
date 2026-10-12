@@ -22,7 +22,9 @@ export type ArticleBlock =
   | { type: "numbered"; heading: string; items: { title: string; body: string }[] }
   | { type: "steps"; heading: string; items: string[]; note?: string }
   | { type: "bullets"; heading: string; items: string[] }
-  | { type: "text"; heading: string; paragraphs: string[] };
+  | { type: "text"; heading: string; paragraphs: string[] }
+  /** A code sample (shown as-is, not run through `rich`), with optional text before and after. */
+  | { type: "code"; heading: string; paragraphs: string[]; code: string; note?: string };
 
 export type ArticleContent = {
   intro: string[];
@@ -133,6 +135,20 @@ function Block({ block }: { block: ArticleBlock }) {
               {rich(para)}
             </p>
           ))}
+        </>
+      );
+    case "code":
+      return (
+        <>
+          {block.paragraphs.map((para) => (
+            <p key={para} className={`mt-4 text-lg ${p}`}>
+              {rich(para)}
+            </p>
+          ))}
+          <pre className="mt-6 overflow-x-auto rounded-2xl bg-ink p-6 text-sm leading-relaxed text-paper shadow-sm">
+            <code className="font-mono">{block.code}</code>
+          </pre>
+          {block.note && <p className={`mt-6 text-sm ${p}`}>{rich(block.note)}</p>}
         </>
       );
   }

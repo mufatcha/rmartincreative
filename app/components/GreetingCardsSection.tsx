@@ -43,11 +43,11 @@ export default function GreetingCardsSection() {
               the same care with layout, type, and color — sized right for
               print or ready to share digitally.
             </p>
-            <ul className="mt-7 grid gap-3 text-sm text-ink-soft sm:grid-cols-2">
+            <ul className="mt-7 -mb-3 text-sm text-ink-soft sm:columns-2 sm:gap-x-3">
               {OCCASIONS.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-500" />
-                  {item}
+                <li key={item} className="flex break-inside-avoid items-start gap-2 pb-3">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-fuchsia-500" />
+                  <span className="text-pretty">{item}</span>
                 </li>
               ))}
             </ul>

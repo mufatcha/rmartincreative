@@ -42,6 +42,9 @@ export const PASSPORT_INFANT_EXTRA = 20;
 /** Passport application filled out and printed (first-time DS-11 or renewal by mail DS-82), sent with the photos. */
 export const PASSPORT_PAPERWORK = 55;
 
+/** The entry-level website, also offered as the budget option on the overhaul page. */
+export const STARTER_WEBSITE = 350;
+
 export type ServicePricing = {
   lines: PriceLine[];
   /** Adds "plus printing" — printing is quoted by quantity, size, and finish. */
@@ -49,6 +52,8 @@ export type ServicePricing = {
   /** Lowest price to lead with in summaries. Defaults to the lowest line. */
   startsAt?: number;
   note?: string;
+  /** Related services linked under the pricing box ("Also consider"), to point clients toward what pairs well. */
+  links?: { label: string; href: string; note?: string }[];
 };
 
 const { designedSide, framedPhotoSide, textSide } = CARD_PRICES;
@@ -106,8 +111,36 @@ const CARD_PRICING: ServicePricing = {
 
 export const PRICING: Record<string, ServicePricing> = {
   "website-design-development": {
-    lines: [{ label: "Starter website (a single page or up to 5 pages)", price: 350 }],
-    note: "Includes a contact form, hosting, and email forwarding (you@yourdomain.com to your Gmail) for the life of the site, plus your domain for the first year — renewal after that is billed separately. Hosting stays included as long as Cloudflare's free plan allows. Larger sites and online stores are quoted per project.",
+    lines: [{ label: "Starter website (a single page or up to 5 pages)", price: STARTER_WEBSITE }],
+    note: "Includes a contact form, hosting, and email forwarding (you@yourdomain.com to your Gmail) for the life of the site, plus your domain for the first year — renewal after that is billed separately. Hosting stays included as long as Cloudflare's free plan allows. Larger sites, custom web apps, and online stores are quoted per project.",
+    links: [
+      {
+        label: "Search + AI Discovery",
+        href: "/services/search-ai-discovery",
+        note: "get found on Google and in AI answers, starting with a free health check",
+      },
+      {
+        label: "Marketing Partner Plan",
+        href: "/#partner-plan",
+        note: "keep your site, search, and marketing going for one flat monthly rate",
+      },
+    ],
+  },
+  "website-design-development/website-overhaul": {
+    lines: [{ label: "Full website overhaul", price: null }],
+    note: "Quoted as a flat rate based on page count, features like e-commerce or booking, and content needs, with a clear, itemized quote before any work starts.",
+    links: [
+      {
+        label: `Starter Website (${usd(STARTER_WEBSITE)})`,
+        href: "/services/website-design-development#pricing",
+        note: "a fresh single page web app or up to 5 page website, when a full overhaul is more than you need",
+      },
+      {
+        label: "Search + AI Discovery",
+        href: "/services/search-ai-discovery",
+        note: "build on your new site's rankings and AI visibility after launch",
+      },
+    ],
   },
   "business-printing/business-cards": {
     lines: [{ label: "Business card design", price: 30 }],

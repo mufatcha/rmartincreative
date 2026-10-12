@@ -15,10 +15,12 @@ import type { ServiceCategory } from "../lib/services-data";
 
 type Row = { label: string; price: string; href?: string };
 
-function PricingBox({ rows, plusPrinting, note }: { rows: Row[]; plusPrinting?: boolean; note?: string }) {
+type PricingBoxProps = { rows: Row[]; plusPrinting?: boolean; note?: string; links?: Pricing["links"] };
+
+function PricingBox({ rows, plusPrinting, note, links }: PricingBoxProps) {
   return (
     <Reveal>
-      <div className="mt-14 rounded-2xl bg-white p-7 shadow-sm ring-1 ring-ink/5">
+      <div id="pricing" className="mt-14 scroll-mt-24 rounded-2xl bg-white p-7 shadow-sm ring-1 ring-ink/5">
         <h2 className="text-xs font-semibold uppercase tracking-widest text-violet-600">Pricing</h2>
         <dl className="mt-4 divide-y divide-ink/10">
           {rows.map((row) => (
@@ -42,6 +44,21 @@ function PricingBox({ rows, plusPrinting, note }: { rows: Row[]; plusPrinting?: 
             {note && <p>{note}</p>}
           </div>
         )}
+        {links && links.length > 0 && (
+          <div className="mt-5 border-t border-ink/10 pt-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-ink-soft">Also consider</p>
+            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-ink-soft">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="font-semibold text-violet-600 hover:text-violet-700">
+                    {link.label}
+                  </Link>
+                  {link.note && <> &mdash; {link.note}</>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </Reveal>
   );
@@ -56,7 +73,12 @@ export function LeafPricing({ category, leafSlug }: { category: ServiceCategory;
   const special = category.slug === "greeting-cards" && leafSlug === "christmas-cards" && christmasSpecialActive();
   return (
     <>
-      <PricingBox rows={pricing.lines.map(toRow)} plusPrinting={pricing.plusPrinting} note={pricing.note} />
+      <PricingBox
+        rows={pricing.lines.map(toRow)}
+        plusPrinting={pricing.plusPrinting}
+        note={pricing.note}
+        links={pricing.links}
+      />
       {special && <ChristmasSpecial showExamples className="mt-6" />}
     </>
   );
@@ -65,7 +87,8 @@ export function LeafPricing({ category, leafSlug }: { category: ServiceCategory;
 /** Pricing for a category page: its own prices, or a "from" price for each priced service in it. */
 export function CategoryPricing({ category }: { category: ServiceCategory }) {
   const own: Pricing | undefined = getPricing(category.slug);
-  if (own) return <PricingBox rows={own.lines.map(toRow)} plusPrinting={own.plusPrinting} note={own.note} />;
+  if (own)
+    return <PricingBox rows={own.lines.map(toRow)} plusPrinting={own.plusPrinting} note={own.note} links={own.links} />;
 
   const rows = category.children.flatMap((leaf): Row[] => {
     const pricing = getPricing(category.slug, leaf.slug);

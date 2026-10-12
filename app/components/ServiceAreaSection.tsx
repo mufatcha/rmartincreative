@@ -2,13 +2,24 @@ import Reveal from "./Reveal";
 import { IconArrowRight } from "./icons";
 import {
   SERVICE_AREA_BOUNDS,
-  SERVICE_AREA_CITIES,
   SERVICE_HOME_CITY,
+  STATE_NAMES,
+  serviceAreaByCounty,
 } from "../lib/business";
 
-const CITY_LIST = SERVICE_AREA_CITIES.map(
-  (city) => `${city.name}, ${city.state}`
-).join(", ");
+// Towns grouped by region (home county first), from app/lib/data/towns.ts.
+const REGIONS = serviceAreaByCounty().map(({ state, counties }) => ({
+  state,
+  label: state === "IL" ? "Northern Illinois" : "Southeast Wisconsin",
+  towns: counties.flatMap((c) => c.towns),
+}));
+
+/** "McHenry, Lake, Kane, and Cook counties" for one state. */
+function countyList(state: string): string {
+  const names = serviceAreaByCounty().find((r) => r.state === state)?.counties.map((c) => c.county) ?? [];
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")}${names.length > 2 ? "," : ""} and ${names.at(-1)}` : names[0];
+  return `${list} counties in ${STATE_NAMES[state]}`;
+}
 
 const FAQS = [
   {
@@ -17,7 +28,8 @@ const FAQS = [
   },
   {
     question: "What towns do you cover?",
-    answer: `Towns across that area include ${CITY_LIST}, and everywhere in between.`,
+    // Key hubs only: the full town list is shown just above and on /service-area.
+    answer: `I cover ${countyList("IL")}, up through ${countyList("WI")}, including Richmond, McHenry, Crystal Lake, Gurnee, Lake Geneva, Kenosha, and the communities in between.`,
   },
   {
     question: "Do you serve Lake Geneva, Wisconsin?",
@@ -83,14 +95,21 @@ export default function ServiceAreaSection() {
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {SERVICE_AREA_CITIES.map((city) => (
-              <span
-                key={city.name}
-                className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-ink-soft ring-1 ring-ink/10"
-              >
-                {city.name}, {city.state}
-              </span>
+          <div className="mt-8 grid gap-6 md:grid-cols-[2fr_1fr]">
+            {REGIONS.map((region) => (
+              <div key={region.state}>
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-ink-soft">{region.label}</h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {region.towns.map((town) => (
+                    <span
+                      key={town}
+                      className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-ink-soft ring-1 ring-ink/10"
+                    >
+                      {town}
+                    </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </Reveal>

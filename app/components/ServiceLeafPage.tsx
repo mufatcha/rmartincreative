@@ -66,11 +66,11 @@ export default function ServiceLeafPage({
         </div>
 
         <Reveal delay={160}>
-          <ul className="mt-14 grid gap-3 text-sm text-ink-soft sm:grid-cols-2">
+          <ul className="mt-14 -mb-3 text-sm text-ink-soft sm:columns-2 sm:gap-x-3">
             {leaf.features.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <span className={`h-1.5 w-1.5 rounded-full bg-gradient-to-br ${category.accent}`} />
-                {renderInlineLinks(item)}
+              <li key={item} className="flex break-inside-avoid items-start gap-2 pb-3">
+                <span className={`mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br ${category.accent}`} />
+                <span className="text-pretty">{renderInlineLinks(item)}</span>
               </li>
             ))}
           </ul>
