@@ -23,7 +23,7 @@ import {
 import { BUSINESS_PHONE_DISPLAY, SERVICE_HOME_CITY } from "./business";
 import { PASSPORT_PREP_SUMMARY } from "./data/passport-prep";
 import { passportCommonFaqs } from "./data/passport-faqs";
-import { PASSPORT_PAPERWORK, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
+import { PASSPORT_PAPERWORK, WEB_APP, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
 
 export type IconComponent = ComponentType<{ className?: string }>;
 
@@ -138,6 +138,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         question: "How much does a website cost?",
         answer:
           `A starter website — a single page or up to 5 pages — is ${startsAt("website-design-development")}, including a contact form, hosting, [email forwarding](/extras/free-domain-email-gmail-cloudflare-resend), and your domain for the first year. Bigger sites, online stores, overhauls, and update plans are quoted after a short conversation about what you need.`,
+      },
+      {
+        question: "How much does a custom web app cost?",
+        answer:
+          `Custom web apps start at ${usd(WEB_APP)}. That covers one type of user, a login, a database, and up to 5 screens, like a customer portal, an order or booking form with an admin view, or an internal tool. AI-assisted development keeps the build fast and affordable, with every step reviewed by an experienced developer. Bigger apps are quoted after a free consultation.`,
       },
       {
         question: "How long does a website project take?",
@@ -371,7 +376,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Can you build a web app, not just a website?",
             answer:
-              "Yes — headless CMS platforms work well as the content back end for custom web apps, like member portals, resource libraries, or product catalogs. We'll scope the features together before any build starts.",
+              `Yes — headless CMS platforms work well as the content back end for custom web apps, like member portals, resource libraries, or product catalogs. Simple web apps start at ${usd(WEB_APP)}, and we'll scope the features together before any build starts.`,
           },
           {
             question: "How do I get started?",

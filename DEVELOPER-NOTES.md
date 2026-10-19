@@ -61,6 +61,4 @@ Service page text can carry links using `[text](/path)` in FAQ answers, feature 
 
 ## Open to-dos
 
-- [ ] **Resend:** verify `rmartincreative.com` in Resend, then quote emails can go to `ryan@rmartincreative.com` instead of the Gmail inbox (`QUOTE_INBOX_EMAIL` in `app/lib/business.ts`).
 - [ ] **Schema article links:** link `/extras/schema-markup-json-ld-seo-ai` from the Search + AI Update "Schema markup added where it's missing" bullet, the Free Search + AI Health Check and Search + AI Discovery FAQs, and the Next.js benefits article.
-- [ ] **Google Business Profile:** add its link to `SOCIAL_PROFILES` for the `sameAs` field.
