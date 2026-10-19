@@ -44,6 +44,8 @@ export const PASSPORT_PAPERWORK = 55;
 
 /** The entry-level website, also offered as the budget option on the overhaul page. */
 export const STARTER_WEBSITE = 350;
+/** A simple custom web app: one type of user, login, a database, and up to 5 screens. */
+export const WEB_APP = 1500;
 
 export type ServicePricing = {
   lines: PriceLine[];
@@ -111,8 +113,11 @@ const CARD_PRICING: ServicePricing = {
 
 export const PRICING: Record<string, ServicePricing> = {
   "website-design-development": {
-    lines: [{ label: "Starter website (a single page or up to 5 pages)", price: STARTER_WEBSITE }],
-    note: "Includes a contact form, hosting, and email forwarding (you@yourdomain.com to your Gmail) for the life of the site, plus your domain for the first year — renewal after that is billed separately. Hosting stays included as long as Cloudflare's free plan allows. Larger sites, custom web apps, and online stores are quoted per project.",
+    lines: [
+      { label: "Starter website (a single page or up to 5 pages)", price: STARTER_WEBSITE },
+      { label: "Custom web app (login, database, up to 5 screens)", price: WEB_APP, from: true },
+    ],
+    note: "Includes a contact form, hosting, and email forwarding (you@yourdomain.com to your Gmail) for the life of the site, plus your domain for the first year — renewal after that is billed separately. Hosting stays included as long as Cloudflare's free plan allows. Web apps start with one type of user, login, a database, and up to 5 screens. Bigger apps, larger sites, and online stores are quoted per project.",
     links: [
       {
         label: "Search + AI Discovery",

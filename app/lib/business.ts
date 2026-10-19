@@ -9,10 +9,11 @@ export const BUSINESS_ALT_NAME = "Ryan Martin Design & Print";
 export const BUSINESS_PHONE_DISPLAY = "(312) 866-2762";
 export const BUSINESS_PHONE_TEL = "tel:+13128662762";
 export const BUSINESS_EMAIL = "ryan@rmartincreative.com";
-/** Where quote-form emails are delivered (override with QUOTE_TO_EMAIL).
- *  Kept on the Gmail inbox: until rmartincreative.com is verified in Resend,
- *  Resend can only deliver to the address the account was created with. */
-export const QUOTE_INBOX_EMAIL = "rmartincreative@gmail.com";
+/** Where quote-form emails are delivered (override with QUOTE_TO_EMAIL). */
+export const QUOTE_INBOX_EMAIL = BUSINESS_EMAIL;
+/** Who quote-form emails come from (override with QUOTE_FROM_EMAIL). Works because
+ *  rmartincreative.com is verified in Resend. */
+export const QUOTE_FROM = `${BUSINESS_NAME} Quotes <quotes@rmartincreative.com>`;
 
 export const PRODUCTION_URL = "https://rmartincreative.com";
 
@@ -25,6 +26,8 @@ export const X_HANDLE = "@rmartincreative";
 export const SOCIAL_PROFILES: { name: string; label: string; url: string }[] = [
   { name: "X", label: `${X_HANDLE} on X`, url: "https://x.com/rmartincreative" },
   { name: "Facebook", label: `${BUSINESS_NAME} on Facebook`, url: "https://www.facebook.com/profile.php?id=61595559686046" },
+  // Google Business Profile, by its permanent Maps ID (cid), not a search link.
+  { name: "Google", label: `${BUSINESS_NAME} on Google Maps`, url: "https://maps.google.com/?cid=3394983410703261460" },
 ];
 
 export const SITE_URL =

@@ -73,6 +73,6 @@ The site runs on Cloudflare Workers through the [OpenNext adapter](https://openn
 5. **Allow the live domain** in the two places that currently only allow `localhost`:
    - **R2 `client-uploads` → Settings → CORS policy:** add `https://yourdomain.com` and `https://www.yourdomain.com` to `AllowedOrigins`.
    - **Turnstile → your widget → Hostnames:** add `yourdomain.com`.
-6. **Recommended:** verify your domain in Resend, then set `QUOTE_FROM_EMAIL` to something like `Ryan Martin Design <quotes@yourdomain.com>`.
+6. **Recommended:** verify your domain in Resend, then set `QUOTE_FROM` in `app/lib/business.ts` (or the `QUOTE_FROM_EMAIL` variable) to an address on that domain, like `R. Martin Creative Quotes <quotes@yourdomain.com>`.
 
 The Worker is about 2 MiB compressed, under the free plan's 3 MiB limit.
