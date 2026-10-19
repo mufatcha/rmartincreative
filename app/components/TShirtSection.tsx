@@ -1,10 +1,11 @@
 import type { CSSProperties } from "react";
 import Reveal from "./Reveal";
+import { FEEDTHEFLAMES_URL } from "../lib/business";
 import { IconArrowRight, IconExternalLink, IconFlame } from "./icons";
 
 type FloatStyle = CSSProperties & { "--rot"?: string };
 
-const ETSY_URL = "https://feedtheflamegraphics.etsy.com";
+const ETSY_URL = FEEDTHEFLAMES_URL;
 
 const FEATURES = [
   "Custom apparel design from scratch or your concept",

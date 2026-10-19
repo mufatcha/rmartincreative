@@ -7,7 +7,7 @@ import { IconArrowRight } from "../components/icons";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Services",
+  title: "Design, Web & Print Services for Northern Illinois",
   description:
     "Website design & development, traditional search + AI discovery, greeting cards, business printing, photo scanning and restoration, and custom apparel — freelance design and print services in Northern Illinois.",
   path: "/services",

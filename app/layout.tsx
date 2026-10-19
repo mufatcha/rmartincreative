@@ -7,6 +7,7 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import { BUSINESS_NAME, SITE_URL, X_HANDLE } from "./lib/business";
 import { getSeasonalNavLink } from "./lib/season";
+import { SITE_SHARE_IMAGE } from "./lib/seo";
 import { getServicesMenu } from "./lib/services-menu";
 
 // Rebuild every route hourly so the header's seasonal nav link (app/lib/season.ts)
@@ -38,6 +39,7 @@ export const metadata: Metadata = {
     siteName: BUSINESS_NAME,
     title: TITLE,
     description: DESCRIPTION,
+    images: [SITE_SHARE_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
@@ -45,6 +47,7 @@ export const metadata: Metadata = {
     creator: X_HANDLE,
     title: TITLE,
     description: DESCRIPTION,
+    images: [SITE_SHARE_IMAGE],
   },
 };
 

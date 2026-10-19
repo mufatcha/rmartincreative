@@ -30,6 +30,7 @@ Run `bun run` with nothing after it to list every script.
 - New images in `public/webp-assets/` get re-encoded before pushing: WebP quality 80, no wider than 1600px. Skip it if the file is already smaller.
 - When you replace an image, update its `width`, `height`, and `alt` wherever it's used (for articles, in `extras.ts`).
 - Social share images (1200×630 JPGs) live in `public/social-media-posts/`. They're generated, so don't edit them by hand; rerun `bun run social-images`.
+- The site-wide share image is a static file, `public/social-media-posts/site-share.jpg`, and the favicon, iPhone icon, and manifest icons come from `public/brand/rm-logo.svg`. Static files can't fail for Facebook's or X's crawlers the way generated images can.
 - Anything in `public/` goes live with the site. Private working files go in `Local/`, which is git-ignored.
 
 ## Content that lives in one place

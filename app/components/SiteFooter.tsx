@@ -30,9 +30,11 @@ export default function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-6 text-sm text-ink-soft sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-fuchsia-500 to-amber-400 text-[11px] font-bold text-white">
-              RM
-            </span>
+            {/* "RM" is drawn with CSS, not text, so scrapers don't read "RMR. Martin Creative". */}
+            <span
+              aria-hidden="true"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-fuchsia-500 to-amber-400 text-[11px] font-bold text-white before:content-['RM']"
+            />
             <span className="font-semibold text-ink">R. Martin Creative</span>
           </div>
           <p className="mt-3 max-w-xs">Your neighborhood designer for web, print, and everything in between.</p>
@@ -43,7 +45,7 @@ export default function SiteFooter() {
             <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-ink">
               {BUSINESS_EMAIL}
             </a>
-            <p>Serving Northern Illinois &amp; Southern Wisconsin</p>
+            <p>Serving Northern Illinois &amp; Southeast Wisconsin</p>
           </div>
           <div className="mt-4 flex items-center gap-3">
             {SOCIAL_PROFILES.map((profile) => {

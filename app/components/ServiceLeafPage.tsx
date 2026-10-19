@@ -5,6 +5,7 @@ import RelatedServices from "./RelatedServices";
 import ServiceBreadcrumb from "./ServiceBreadcrumb";
 import ServiceCta from "./ServiceCta";
 import ServiceFaqs from "./ServiceFaqs";
+import ServiceJsonLd from "./ServiceJsonLd";
 import CardExtras from "./CardExtras";
 import { CARD_EXTRAS_ANCHOR, getCardExtras } from "../lib/data/card-extras";
 import { LeafPricing } from "./ServicePricing";
@@ -109,6 +110,7 @@ export default function ServiceLeafPage({
         )}
 
         <ServiceFaqs faqs={leaf.faqs} />
+        <ServiceJsonLd category={category} leaf={leaf} />
       </div>
     </section>
   );

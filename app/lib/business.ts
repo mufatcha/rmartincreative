@@ -8,6 +8,8 @@ export const BUSINESS_NAME = "R. Martin Creative";
 export const BUSINESS_ALT_NAME = "Ryan Martin Design & Print";
 export const BUSINESS_PHONE_DISPLAY = "(312) 866-2762";
 export const BUSINESS_PHONE_TEL = "tel:+13128662762";
+/** The phone number as structured data expects it (schema.org telephone). */
+export const BUSINESS_PHONE_SCHEMA = "+1-312-866-2762";
 export const BUSINESS_EMAIL = "ryan@rmartincreative.com";
 /** Where quote-form emails are delivered (override with QUOTE_TO_EMAIL). */
 export const QUOTE_INBOX_EMAIL = BUSINESS_EMAIL;
@@ -16,6 +18,12 @@ export const QUOTE_INBOX_EMAIL = BUSINESS_EMAIL;
 export const QUOTE_FROM = `${BUSINESS_NAME} Quotes <quotes@rmartincreative.com>`;
 
 export const PRODUCTION_URL = "https://rmartincreative.com";
+
+/** Opening hours, matching the Google Business Profile (24-hour times, every day). */
+export const BUSINESS_HOURS = { opens: "09:00", closes: "19:00" };
+
+/** The FeedTheFlames apparel brand's Etsy shop. */
+export const FEEDTHEFLAMES_URL = "https://feedtheflamegraphics.etsy.com";
 
 /** The business's X (Twitter) handle, credited on shared links (app/layout.tsx). */
 export const X_HANDLE = "@rmartincreative";

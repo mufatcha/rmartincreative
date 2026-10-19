@@ -19,7 +19,7 @@ import {
 } from "../../lib/data/passport-offices";
 import { passportCommonFaqs } from "../../lib/data/passport-faqs";
 import { getPassportTownByKey, getPassportTownBySlug, getPassportTownPages } from "../../lib/data/passport-towns";
-import { PASSPORT_PAPERWORK, PASSPORT_VISIT, usd } from "../../lib/data/pricing";
+import { PASSPORT_PAPERWORK, PASSPORT_VISIT, getPricing, schemaOffers, usd } from "../../lib/data/pricing";
 
 // Only towns with written content get a page; anything else is a 404.
 export const dynamicParams = false;
@@ -106,7 +106,7 @@ export default async function PassportTownPage({ params }: { params: Promise<{ t
       name: town.name,
       containedInPlace: { "@type": "State", name: STATE_NAMES[town.state] ?? town.state },
     },
-    offers: { "@type": "Offer", price: PASSPORT_VISIT, priceCurrency: "USD" },
+    offers: schemaOffers(getPricing("passport-photos")!),
     url: `${SITE_URL}/passport-photos/${slug}`,
   };
 
