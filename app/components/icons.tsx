@@ -401,3 +401,22 @@ export function IconPostcard({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+/** The X (formerly Twitter) logo. */
+export function IconX({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M17.75 3h3.07l-6.71 7.67L22 21h-6.18l-4.84-6.33L5.44 21H2.37l7.18-8.2L2 3h6.34l4.37 5.78L17.75 3Zm-1.08 16.18h1.7L7.4 4.73H5.58l11.09 14.45Z" />
+    </svg>
+  );
+}
+
+/** The Facebook logo. The viewBox is cropped around the "f" so it matches the
+ *  visual size of the wider X logo at the same icon size. */
+export function IconFacebook({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="2.75 3.25 19 19" fill="currentColor" className={className}>
+      <path d="M13.5 21v-7.5h2.53l.38-2.93H13.5V8.7c0-.85.24-1.43 1.45-1.43h1.55V4.65A20.8 20.8 0 0 0 14.24 4.5c-2.23 0-3.76 1.36-3.76 3.87v2.2H7.95v2.93h2.53V21h3.02Z" />
+    </svg>
+  );
+}

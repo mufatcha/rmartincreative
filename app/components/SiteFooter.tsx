@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL } from "../lib/business";
+import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL, SOCIAL_PROFILES } from "../lib/business";
+import { IconFacebook, IconX } from "./icons";
+
+/** Icon and brand hover color for each profile in SOCIAL_PROFILES, by name. */
+const SOCIAL_STYLES: Record<string, { icon: typeof IconX; hover: string }> = {
+  X: { icon: IconX, hover: "hover:bg-black hover:text-white hover:ring-black" },
+  Facebook: { icon: IconFacebook, hover: "hover:bg-[#0866FF] hover:text-white hover:ring-[#0866FF]" },
+};
 import { ABOUT } from "../lib/data/about";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
@@ -37,6 +44,25 @@ export default function SiteFooter() {
             </a>
             <p>Serving Northern Illinois &amp; Southern Wisconsin</p>
           </div>
+          <div className="mt-4 flex items-center gap-3">
+            {SOCIAL_PROFILES.map((profile) => {
+              const style = SOCIAL_STYLES[profile.name];
+              const Icon = style?.icon;
+              return (
+                <a
+                  key={profile.url}
+                  href={profile.url}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  aria-label={profile.label}
+                  title={profile.label}
+                  className={`flex h-8 w-8 items-center justify-center rounded-full ring-1 ring-ink/10 transition-colors ${style?.hover ?? "hover:bg-ink hover:text-paper"}`}
+                >
+                  {Icon ? <Icon className="h-3.5 w-3.5" /> : <span className="text-xs font-semibold">{profile.name}</span>}
+                </a>
+              );
+            })}
+          </div>
         </div>
 
         {SERVICE_AUDIENCES.map((audience) => (
@@ -46,7 +72,7 @@ export default function SiteFooter() {
               {audience.id === "business" && (
                 <li>
                   <Link href="/new-business" className="hover:text-ink">
-                    New business launch guide
+                    New Business Launch Guide
                   </Link>
                 </li>
               )}

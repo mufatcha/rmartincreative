@@ -5,7 +5,7 @@ import Analytics from "./components/Analytics";
 import LocalBusinessJsonLd from "./components/LocalBusinessJsonLd";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
-import { BUSINESS_NAME, SITE_URL } from "./lib/business";
+import { BUSINESS_NAME, SITE_URL, X_HANDLE } from "./lib/business";
 import { getSeasonalNavLink } from "./lib/season";
 import { getServicesMenu } from "./lib/services-menu";
 
@@ -41,6 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: X_HANDLE,
+    creator: X_HANDLE,
     title: TITLE,
     description: DESCRIPTION,
   },

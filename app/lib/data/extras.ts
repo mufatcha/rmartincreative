@@ -46,6 +46,21 @@ export const EXTRAS_HUB = {
 
 const EXTRAS_LIST: Extra[] = [
   {
+    slug: "future-proof-website-data-beyond-wordpress",
+    kind: "note",
+    category: "web",
+    title: "How to Future-Proof Website Data Beyond Traditional WordPress",
+    description:
+      "Why WordPress's all-in-one design locks content in, and how headless CMS, structured schemas, and API-first systems keep your website data flexible for years.",
+    published: "2026-10-18",
+    image: {
+      src: "/webp-assets/future-proof-website-data-beyond-wordpress.webp",
+      alt: "Future-Proof Website Data Beyond WordPress: WordPress sites connected by API pipelines to a headless CMS data hub, which sends content through GraphQL and JSON to cloud servers, a mobile app, and AI APIs",
+      width: 1200,
+      height: 896,
+    },
+  },
+  {
     slug: "schema-markup-json-ld-seo-ai",
     kind: "note",
     category: "web",

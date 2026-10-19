@@ -51,3 +51,6 @@ next-env.d.ts
 
 # IndexNow: fingerprints of the last submission (bun run indexnow --changed)
 /.indexnow/
+
+# Local working files, not part of the site
+/Local/
