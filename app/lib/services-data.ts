@@ -1237,6 +1237,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconBook,
+        image: {
+          src: "/webp-assets/event-and-memorial-programs.webp",
+          alt: "Printed memorial programs on a wooden desk: “In Loving Memory” celebration of life programs with soft watercolor leaves, a stack of copies, and a folded order of service",
+        },
       },
     ],
   },
@@ -1336,6 +1340,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconSparkle,
+        image: {
+          src: "/webp-assets/logo-design.webp",
+          alt: "Logo design in progress on a desk: geometric “Substratum Protocol” logo concepts on a laptop and a pen tablet, pencil sketches in a notebook, a brand identity guide, Pantone swatches, and finished business cards",
+        },
       },
       {
         slug: "business-cards",
@@ -1506,6 +1514,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconBook,
+        image: {
+          src: "/webp-assets/magazines-and-catalogs.webp",
+          alt: "Printed magazines and catalogs open on a wooden desk: a magazine spread of feature stories with food photography, a fashion article, and a product catalog with a clean grid of items and prices, beside a stack of magazine covers",
+        },
       },
       {
         slug: "postcards-direct-mail",
@@ -1546,6 +1558,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconPostcard,
+        image: {
+          src: "/webp-assets/postcards-and-direct-mail.webp",
+          alt: "Direct mail pieces on a wooden desk: colorful promotional postcards with sale offers and address panels, a folded mailer, and stamped window envelopes ready to send",
+        },
       },
       {
         slug: "stickers-labels",
@@ -1587,6 +1603,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconCard,
+        image: {
+          src: "/webp-assets/stickers-and-labels.webp",
+          alt: "Custom stickers and product labels on a wooden desk: sticker sheets, die-cut logo stickers, holographic craft labels, and rolls of round organic product labels",
+        },
       },
       {
         slug: "business-documents",
@@ -1841,6 +1861,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           },
         ],
         icon: IconSignpost,
+        image: {
+          src: "/webp-assets/decals-and-vehicle-magnets.webp",
+          alt: "Navy pickup truck parked in a driveway with a white magnetic door sign for Blue Oak Landscaping & Design, showing an oak tree logo and a phone number",
+        },
       },
     ],
   },
