@@ -40,7 +40,7 @@ export type ChristmasTownContent = {
 export const TOWN_GROUPS: { id: TownGroup; label: string }[] = [
   { id: "mchenry", label: "McHenry County & the Fox River Valley" },
   { id: "lake", label: "Lake County" },
-  { id: "wisconsin", label: "Southern Wisconsin" },
+  { id: "wisconsin", label: "Southeast Wisconsin" },
   { id: "chicago", label: "Chicago" },
 ];
 

@@ -6,6 +6,7 @@ import RelatedServices from "./RelatedServices";
 import ServiceBreadcrumb from "./ServiceBreadcrumb";
 import ServiceCta from "./ServiceCta";
 import ServiceFaqs from "./ServiceFaqs";
+import ServiceJsonLd from "./ServiceJsonLd";
 import { CategoryPricing } from "./ServicePricing";
 import ServiceVisual from "./ServiceVisual";
 import { IconArrowRight } from "./icons";
@@ -132,6 +133,7 @@ export default function ServiceCategoryPage({ category, children }: { category: 
         {children}
 
         <ServiceFaqs faqs={category.faqs} />
+        <ServiceJsonLd category={category} />
       </div>
     </section>
   );

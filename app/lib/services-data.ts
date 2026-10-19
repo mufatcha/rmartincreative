@@ -205,6 +205,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "website-overhaul",
         title: "Website Overhaul",
+        seoTitle: "Website Redesign Services for Small Businesses",
         metaDescription:
           "Website overhauls in Richmond, IL and Northern Illinois: a full custom redesign and rebuild, mobile-first and fast, with 301 redirects to protect rankings.",
         tagline: "A full redesign and rebuild, from first sketch to launch.",
@@ -402,6 +403,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "website-updates",
         title: "Website Updates",
+        seoTitle: "Website Maintenance & Update Services",
         metaDescription:
           "Ongoing website updates and maintenance — content changes, new pages, security updates, and performance tune-ups for an existing site.",
         tagline: "Keep an existing site current without a full rebuild.",
@@ -528,7 +530,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "search-ai-discovery",
     audience: "business",
     related: ["website-design-development"],
-    title: "Traditional Search + AI Discovery",
+    title: "Search + AI Discovery",
+    seoTitle: "SEO & AI Search Optimization for Small Businesses",
     metaDescription:
       "Traditional search and AI discovery for small businesses — a free health check, a one-time optimization pass, or ongoing monthly management to get found on Google and in AI-powered answers.",
     tagline: "Get found on Google, and in the answers AI gives.",
@@ -651,6 +654,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "search-ai-update",
         title: "Search + AI Update",
+        seoTitle: "One-Time SEO & AI Search Optimization",
         metaDescription:
           "A one-time, hands-on search and AI discovery pass: on-page fixes, schema markup, question-and-answer content, internal linking, and Google Business Profile setup.",
         tagline: "A hands-on pass to fix what the health check finds.",
@@ -706,6 +710,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "monthly-retainer",
         title: "Monthly Retainer",
+        seoTitle: "Monthly SEO & AI Search Services, Month-to-Month",
         metaDescription:
           "Ongoing monthly search and AI discovery management — continued on-page work, monthly reporting, local listings, AI visibility checks, and review-generation strategy.",
         tagline: "Ongoing work to keep climbing, month over month.",
@@ -763,6 +768,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "email-marketing",
     audience: "business",
     title: "Email Marketing",
+    seoTitle: "Email Marketing & Newsletter Design for Small Business",
     metaDescription:
       "Email marketing for small businesses in Northern Illinois — newsletter design and sending, branded templates, Mailchimp, Constant Contact, and Klaviyo setup, and automated welcome and follow-up emails.",
     tagline: "Stay in front of customers who already know you.",
@@ -1068,6 +1074,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "everyday-cards",
         title: "Greeting Cards",
+        seoTitle: "Custom Birthday, Thank-You & Greeting Cards",
         metaDescription:
           "Custom greeting cards for birthdays, thank-yous, invitations, announcements, and every other occasion — one-off or full sets.",
         tagline: "Not every occasion needs a holiday budget.",
@@ -1248,6 +1255,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "business-printing",
     audience: "business",
     title: "Business Printing",
+    seoTitle: "Business Printing & Design | McHenry & Lake County",
     metaDescription:
       "Business printing and design: logos, business cards and letterhead, flyers, brochures, menus, postcards, labels, magazines, and catalogs, all one brand.",
     tagline: "Everything that carries your name into the room.",
@@ -1415,6 +1423,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "brochures-collateral",
         title: "Brochures & Collateral",
+        seoTitle: "Flyer & Brochure Design and Printing | Northern Illinois",
         metaDescription:
           "Tri-fold and bi-fold brochures, one-pagers, flyers, and menus — designed to be read, not just skimmed, and sized correctly for print.",
         tagline: "Built to be read, not just skimmed.",
@@ -1611,6 +1620,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "business-documents",
         title: "Business Documents",
+        seoTitle: "Pitch Deck, Presentation & Business Form Design",
         metaDescription:
           "Pitch decks, business plan presentations, sales and proposal decks, and internal update decks — structured to make the point on slide one.",
         tagline: "Structured to make the point on slide one.",
@@ -1669,6 +1679,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "signs-posters",
     audience: "shared",
     title: "Yard Signs & Posters",
+    seoTitle: "Yard Signs & Posters | McHenry & Lake County, IL",
     metaDescription:
       "Custom yard signs and posters for businesses and individuals — real estate and grand-opening signage, event posters, and personal celebration signs.",
     tagline: "Signage that works just as hard for a business as it does for a backyard.",
@@ -1717,6 +1728,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "yard-signs",
         title: "Yard Signs",
+        seoTitle: "Custom Yard Signs | McHenry & Lake County, IL",
         metaDescription:
           "Custom yard signs for real estate, grand openings, and personal celebrations — weather-resistant, with a stake included.",
         tagline: "Real estate, grand openings, birthdays, and everything in between.",
@@ -1771,6 +1783,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "posters",
         title: "Posters",
+        seoTitle: "Custom Poster Design & Printing | McHenry & Lake County",
         metaDescription:
           "Custom posters for business promotions, events, and personal celebrations — designed to grab attention and printed to hold up on display.",
         tagline: "Event, retail, and personal posters that actually get noticed.",
@@ -1872,6 +1885,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "banners-canvas",
     audience: "shared",
     title: "Banners & Canvas Prints",
+    seoTitle: "Custom Banners & Canvas Prints | Northern Illinois",
     metaDescription:
       "Custom banners in vinyl, matte paper, or adhesive for businesses, events, and celebrations, plus canvas prints of your photos and artwork — designed, proofed, and printed.",
     tagline: "Big prints for storefronts, events, and the walls at home.",
@@ -1909,6 +1923,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "banners",
         title: "Banners",
+        seoTitle: "Custom Banners & Vinyl Signs | McHenry & Lake County",
         metaDescription:
           "Custom banners in vinyl, matte paper, or adhesive for grand openings, sales, events, teams, and celebrations — designed to read from a distance.",
         tagline: "Grand openings, events, teams, and parties.",
@@ -1962,6 +1977,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "canvas-prints",
         title: "Canvas Prints",
+        seoTitle: "Custom Canvas Photo Prints | McHenry & Lake County",
         metaDescription:
           "Custom canvas prints of family photos, restored photos, artwork, and brand imagery — checked at full size and proofed before printing.",
         tagline: "Your favorite photo, ready for the wall.",
@@ -2008,6 +2024,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "apparel",
     audience: "shared",
     title: "T-Shirts & Apparel",
+    seoTitle: "Custom T-Shirts & Team Apparel | Northern Illinois",
     metaDescription:
       "Custom apparel design and printing under the FeedTheFlames brand — screen printing and DTG, one-off tees to bulk team orders, S through 3XL.",
     tagline: "Custom apparel, designed and printed under my own brand.",
@@ -2060,6 +2077,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "photos",
     audience: "personal",
     title: "Photo Services",
+    seoTitle: "Photo Scanning, Restoration & Color Correction",
     metaDescription:
       "Photo scanning, restoration, and color correction — old prints, slides, and negatives digitized, damaged photos repaired, and faded colors brought back to life.",
     tagline: "Scan it, repair it, and bring the color back.",
@@ -2100,6 +2118,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "photo-to-digital",
         title: "Photo-to-Digital",
+        seoTitle: "Photo Scanning: Old Prints to Digital Files",
         metaDescription:
           "Photo scanning and digitizing — old prints, slides, and negatives scanned into high-resolution digital files, cleaned up and organized.",
         tagline: "Old prints, slides, and negatives, made digital.",
@@ -2150,6 +2169,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "photo-restoration",
         title: "Photo Restoration",
+        seoTitle: "Old Photo Restoration & Colorization",
         metaDescription:
           "Photo restoration for damaged family photos — tears, creases, scratches, stains, and missing pieces repaired by hand, with optional colorization.",
         tagline: "Torn, creased, and faded photos, repaired by hand.",
@@ -2209,6 +2229,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         slug: "color-correction",
         title: "Color Correction",
+        seoTitle: "Faded Photo Color Correction",
         metaDescription:
           "Photo color correction for old prints and digital photos — faded, yellowed, dull, or badly lit photos corrected so skin tones, skies, and colors look natural again.",
         tagline: "Old prints and digital photos, with color that looks right again.",
@@ -2263,6 +2284,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     slug: "passport-photos",
     audience: "personal",
     title: "Passport Photos",
+    seoTitle: "At-Home Passport Photos | McHenry & Lake County",
     metaDescription:
       "At-home and on-site passport photos in Northern Illinois and Southeast Wisconsin — compliant photos with unlimited retakes, same-day digital files, two printed copies mailed free, and background removal for your own photos.",
     tagline: "Compliant passport photos, taken wherever you are — by appointment.",

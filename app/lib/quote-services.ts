@@ -182,7 +182,7 @@ export const SERVICES: ServiceOption[] = [
     id: "search-ai",
     group: "business",
     fileHint: "Screenshots or reports from past search work, if you have them.",
-    label: "Traditional Search + AI Discovery",
+    label: "Search + AI Discovery",
     icon: IconLayers,
     questions: [
       { id: "siteUrl", label: "Website URL", type: "url", placeholder: "www.yourdomain.com" },

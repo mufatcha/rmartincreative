@@ -10,7 +10,7 @@ import ServiceFaqs from "../components/ServiceFaqs";
 import { IconArrowRight } from "../components/icons";
 import {
   BUSINESS_EMAIL,
-  BUSINESS_PHONE_TEL,
+  BUSINESS_PHONE_SCHEMA,
   SERVICE_HOME_CITY,
   SERVICE_HOME_ZIP,
   SERVICE_STATE_ABBR,
@@ -51,8 +51,8 @@ export default function AboutPage() {
     alumniOf: { "@type": "CollegeOrUniversity", name: "Saint Leo University" },
     worksFor: { "@id": `${SITE_URL}/#business` },
     address: { "@type": "PostalAddress", addressLocality: SERVICE_HOME_CITY, addressRegion: SERVICE_STATE_ABBR },
-    email: `mailto:${BUSINESS_EMAIL}`,
-    telephone: BUSINESS_PHONE_TEL,
+    email: BUSINESS_EMAIL,
+    telephone: BUSINESS_PHONE_SCHEMA,
     url: `${SITE_URL}/about`,
     ...(ABOUT.photo ? { image: `${SITE_URL}${ABOUT.photo.src}` } : {}),
   };

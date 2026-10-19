@@ -202,7 +202,7 @@ export const PRICING: Record<string, ServicePricing> = {
       { label: "Magazine design, 16 pages (cover + 15 inside pages)", price: 600 },
       { label: "Catalog design, 8 pages (cover + 7 inside pages)", price: 300 },
       { label: "Each additional page", price: 35, add: true },
-      { label: "Product photo cleanup (background removal, color)", price: 5, from: true },
+      { label: "Product photo cleanup (background removal, color), per photo", price: 5, add: true },
     ],
     plusPrinting: true,
     // Lead with the smallest full job, not the per-photo cleanup add-on.
@@ -215,8 +215,8 @@ export const PRICING: Record<string, ServicePricing> = {
       { label: "Logo cleanup or redraw of an existing logo", price: 75 },
       { label: "Brand style sheet: colors, fonts & logo versions", price: 50, add: true },
     ],
-    // Lead with the smallest full job, not the add-on.
-    startsAt: 75,
+    // Lead with a new logo; the $75 cleanup is listed separately.
+    startsAt: 150,
     note: "You get the final logo in color, black, and white, as print-ready vector files plus PNGs for the web and social media.",
   },
   "business-printing/postcards-direct-mail": {
@@ -370,6 +370,43 @@ export function pricingSummary(pricing: ServicePricing): string {
 
 // The helpers below are for FAQ answers in services-data.ts. They throw on a
 // missing key, so a typo fails the build instead of printing a blank price.
+/** schema.org Offer objects for a service's price lines (quoted lines are left out). */
+export function schemaOffers(pricing: ServicePricing): Record<string, unknown>[] {
+  return pricing.lines.flatMap((l) => {
+    if (l.price === null) return [];
+    const offer: Record<string, unknown> = {
+      "@type": "Offer",
+      name: l.add ? `Add-on: ${l.label}` : l.label,
+      priceCurrency: "USD",
+      ...(pricing.plusPrinting ? { description: PRINTING_NOTE } : {}),
+    };
+    if (l.from || l.maxPrice !== undefined) {
+      offer.priceSpecification = {
+        "@type": "PriceSpecification",
+        priceCurrency: "USD",
+        minPrice: l.price,
+        ...(l.maxPrice !== undefined ? { maxPrice: l.maxPrice } : {}),
+      };
+    } else {
+      offer.price = l.price;
+    }
+    return [offer];
+  });
+}
+
+/** The business's overall price range for schema.org priceRange: the lowest service
+ *  starting price (free services aside) to the highest standalone price. */
+export function priceRange(): string {
+  const starts = Object.values(PRICING).flatMap((p) => {
+    const price = startingPrice(p);
+    return price === undefined || price === 0 ? [] : [price];
+  });
+  const highs = Object.values(PRICING).flatMap((p) =>
+    p.lines.flatMap((l) => (l.price === null || l.add ? [] : [l.maxPrice ?? l.price]))
+  );
+  return `${usd(Math.min(...starts))}–${usd(Math.max(...highs))}`;
+}
+
 function pricingFor(key: string): ServicePricing {
   const pricing = PRICING[key];
   if (!pricing) throw new Error(`No pricing for "${key}" in app/lib/data/pricing.ts`);

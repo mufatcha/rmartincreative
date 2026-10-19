@@ -19,9 +19,10 @@ export function pageTitleText(base: string): string {
   return branded.length <= MAX_TITLE_LENGTH ? branded : base;
 }
 
-/** The site-wide share image (app/opengraph-image.tsx), used by pages without their own. */
-const SITE_SHARE_IMAGE = {
-  url: "/opengraph-image",
+/** The site-wide share image, used by pages without their own. A static file, not a
+ *  generated route, so Facebook and X can always fetch it. */
+export const SITE_SHARE_IMAGE = {
+  url: "/social-media-posts/site-share.jpg",
   width: 1200,
   height: 630,
   alt: "R. Martin Creative — Marketing, Web & Print in Northern Illinois and Southeast Wisconsin",

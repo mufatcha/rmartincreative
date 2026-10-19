@@ -109,7 +109,7 @@ export const LAUNCH_PHASES: LaunchPhase[] = [
     help: [
       { label: "Website Design & Development", href: "/services/website-design-development" },
       { label: "E-Commerce Websites", href: "/services/website-design-development/e-commerce-websites" },
-      { label: "Traditional Search + AI Discovery", href: "/services/search-ai-discovery" },
+      { label: "Search + AI Discovery", href: "/services/search-ai-discovery" },
     ],
   },
   {

@@ -25,7 +25,7 @@ export default function SearchAiSection() {
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-emerald-700">
               <IconSearch className="h-3.5 w-3.5" />
-              Traditional Search + AI Discovery
+              Search + AI Discovery
             </span>
             <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
               Get found on Google, and in the answers AI gives.

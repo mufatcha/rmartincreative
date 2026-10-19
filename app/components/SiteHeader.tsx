@@ -80,9 +80,11 @@ export default function SiteHeader({
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" onClick={closeAll} className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-fuchsia-500 to-amber-400 text-sm font-bold text-white shadow-md shadow-fuchsia-500/30">
-            RM
-          </span>
+          {/* "RM" is drawn with CSS, not text, so scrapers don't read "RMR. Martin Creative". */}
+          <span
+            aria-hidden="true"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-fuchsia-500 to-amber-400 text-sm font-bold text-white shadow-md shadow-fuchsia-500/30 before:content-['RM']"
+          />
           <span className="text-sm font-semibold tracking-tight sm:text-base">
             R. Martin Creative
             {/* Descriptor hides on phones so the name and menu button fit on one line. */}

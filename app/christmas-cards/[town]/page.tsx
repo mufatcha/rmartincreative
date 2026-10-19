@@ -11,7 +11,7 @@ import ServiceBreadcrumb from "../../components/ServiceBreadcrumb";
 import ServiceFaqs from "../../components/ServiceFaqs";
 import { IconArrowRight, IconExternalLink, IconSnowflake } from "../../components/icons";
 import { SITE_URL, STATE_NAMES } from "../../lib/business";
-import { cardPriceAnswer, startsAt } from "../../lib/data/pricing";
+import { cardPriceAnswer, getPricing, schemaOffers, startsAt } from "../../lib/data/pricing";
 import {
   getChristmasTownByKey,
   getChristmasTownBySlug,
@@ -70,6 +70,7 @@ export default async function ChristmasTownPage({ params }: { params: Promise<{ 
       name: town.name,
       containedInPlace: { "@type": "State", name: STATE_NAMES[town.state] ?? town.state },
     },
+    offers: schemaOffers(getPricing("greeting-cards", "christmas-cards")!),
     url: `${SITE_URL}/christmas-cards/${slug}`,
   };
 
