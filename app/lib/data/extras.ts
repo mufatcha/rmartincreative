@@ -2,6 +2,10 @@
 // There's no posting schedule, so the hub lists these as a collection (newest
 // first), not as a dated blog. Each entry has its own page at /extras/[slug];
 // add the entry here and the hub, sitemap, and llms.txt pick it up.
+// After adding or changing a featured image, run `bun run social-images` to make
+// its link-share image (public/social-media-posts/<slug>.jpg).
+
+import type { Metadata } from "next";
 
 export type ExtraKind = "freebie" | "note";
 
@@ -162,4 +166,31 @@ export const EXTRAS: Extra[] = [...EXTRAS_LIST].sort((a, b) => b.published.local
 
 export function getExtra(slug: string): Extra | undefined {
   return EXTRAS.find((e) => e.slug === slug);
+}
+
+/** Link-share image size (Facebook, X, LinkedIn). Made by scripts/social-images.ts. */
+export const SOCIAL_IMAGE_SIZE = { width: 1200, height: 630 };
+
+export function socialImagePath(slug: string): string {
+  return `/social-media-posts/${slug}.jpg`;
+}
+
+/** Open Graph and X tags for a post: its own title and description, and its
+ *  link-share image when it has a featured image. */
+export function extraShareMetadata({ slug, title, description, image }: Extra): Pick<Metadata, "openGraph" | "twitter"> {
+  const url = socialImagePath(slug);
+  return {
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      ...(image ? { images: [{ url, ...SOCIAL_IMAGE_SIZE, alt: image.alt }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(image ? { images: [{ url, alt: image.alt }] } : {}),
+    },
+  };
 }

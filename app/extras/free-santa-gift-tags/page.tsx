@@ -8,7 +8,7 @@ import Reveal from "../../components/Reveal";
 import ServiceFaqs from "../../components/ServiceFaqs";
 import { IconArrowRight } from "../../components/icons";
 import { SITE_URL } from "../../lib/business";
-import { EXTRAS_HUB, getExtra, getExtraCategory } from "../../lib/data/extras";
+import { EXTRAS_HUB, extraShareMetadata, getExtra, getExtraCategory } from "../../lib/data/extras";
 import { pageTitle } from "../../lib/seo";
 import type { ServiceFaq } from "../../lib/services-data";
 
@@ -23,12 +23,12 @@ function extra() {
 }
 
 export function generateMetadata(): Metadata {
-  const { title, description, image } = extra();
+  const e = extra();
   return {
-    title: pageTitle(title),
-    description,
+    title: pageTitle(e.title),
+    description: e.description,
     alternates: { canonical: `/extras/${SLUG}` },
-    openGraph: { title, description, images: [{ url: image.src, width: image.width, height: image.height, alt: image.alt }] },
+    ...extraShareMetadata(e),
   };
 }
 
