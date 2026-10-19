@@ -9,7 +9,7 @@ import ServiceFaqs from "./ServiceFaqs";
 import { IconArrowRight } from "./icons";
 import { SITE_URL } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
-import { EXTRAS_HUB, getExtra, getExtraCategory } from "../lib/data/extras";
+import { EXTRAS_HUB, extraShareMetadata, getExtra, getExtraCategory } from "../lib/data/extras";
 import { renderInlineLinks } from "../lib/inline-links";
 import { pageTitle } from "../lib/seo";
 import type { ServiceFaq } from "../lib/services-data";
@@ -42,17 +42,12 @@ function getArticle(slug: string) {
 }
 
 export function extraArticleMetadata(slug: string): Metadata {
-  const { title, description, image } = getArticle(slug);
+  const extra = getArticle(slug);
   return {
-    title: pageTitle(title),
-    description,
+    title: pageTitle(extra.title),
+    description: extra.description,
     alternates: { canonical: `/extras/${slug}` },
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      ...(image ? { images: [{ url: image.src, width: image.width, height: image.height, alt: image.alt }] } : {}),
-    },
+    ...extraShareMetadata(extra),
   };
 }
 
