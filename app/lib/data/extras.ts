@@ -6,6 +6,7 @@
 // its link-share image (public/social-media-posts/<slug>.jpg).
 
 import type { Metadata } from "next";
+import { BUSINESS_NAME } from "../business";
 
 export type ExtraKind = "freebie" | "note";
 
@@ -183,6 +184,8 @@ export function extraShareMetadata({ slug, title, description, image }: Extra): 
     openGraph: {
       title,
       description,
+      url: `/extras/${slug}`,
+      siteName: BUSINESS_NAME,
       type: "article",
       ...(image ? { images: [{ url, ...SOCIAL_IMAGE_SIZE, alt: image.alt }] } : {}),
     },

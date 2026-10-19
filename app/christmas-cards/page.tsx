@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../lib/seo";
+import { pageMetadata } from "../lib/seo";
 import Link from "next/link";
 import ChristmasCardEssentials from "../components/ChristmasCardEssentials";
 import CtaSection from "../components/CtaSection";
@@ -9,10 +9,11 @@ import { IconArrowRight, IconSnowflake } from "../components/icons";
 import { TOWN_GROUPS, getChristmasTownPages } from "../lib/data/christmas-towns";
 
 export const metadata: Metadata = {
-  title: pageTitle("Custom Christmas Cards Near You"),
-  description:
-    "Custom Christmas and holiday cards for Richmond, Lake County, McHenry County, southern Wisconsin, and Chicago — folded or flat 5×7 cards, hand delivered or shipped.",
-  alternates: { canonical: "/christmas-cards" },
+  ...pageMetadata({
+    title: "Custom Christmas Cards Near You",
+    description: "Custom Christmas and holiday cards for Richmond, Lake County, McHenry County, southern Wisconsin, and Chicago — folded or flat 5×7 cards, hand delivered or shipped.",
+    path: "/christmas-cards",
+  }),
 };
 
 export default function ChristmasCardsHub() {

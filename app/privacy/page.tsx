@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { BUSINESS_EMAIL, BUSINESS_NAME, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL } from "../lib/business";
-import { pageTitle } from "../lib/seo";
+import { pageMetadata } from "../lib/seo";
 
 export const metadata: Metadata = {
-  title: pageTitle("Privacy Policy"),
-  description: `How ${BUSINESS_NAME} handles information from quote requests, uploads, and website analytics.`,
-  alternates: { canonical: "/privacy" },
+  ...pageMetadata({
+    title: "Privacy Policy",
+    description: `How ${BUSINESS_NAME} handles information from quote requests, uploads, and website analytics.`,
+    path: "/privacy",
+  }),
 };
 
 const UPDATED = "October 7, 2026";

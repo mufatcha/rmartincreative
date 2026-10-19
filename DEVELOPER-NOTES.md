@@ -43,6 +43,8 @@ Run `bun run` with nothing after it to list every script.
 | Towns in the service area | `app/lib/data/towns.ts` |
 | About page | `app/lib/data/about.ts` |
 
+**New pages:** set metadata with `pageMetadata({ title, description, path })` from `app/lib/seo.ts`. It adds the canonical address plus the page's own Facebook/X share tags. Without it, a page shares as the home page.
+
 Service page text can carry links using `[text](/path)` in FAQ answers, feature bullets, and the "Platforms & tools" items, but not in descriptions or taglines.
 
 ## Yearly and occasional updates

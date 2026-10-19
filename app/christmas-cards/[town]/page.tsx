@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -32,11 +32,13 @@ export async function generateMetadata({ params }: { params: Promise<{ town: str
   const place = `${page.name}, ${page.town.state}`;
 
   return {
-    title: pageTitle(`Custom Christmas Cards in ${place}`),
-    description: `${page.content.headline} Folded or flat 5×7 holiday cards designed around your photos, proofed with you, and ${
+    ...pageMetadata({
+      title: `Custom Christmas Cards in ${place}`,
+      description: `${page.content.headline} Folded or flat 5×7 holiday cards designed around your photos, proofed with you, and ${
       page.content.delivery.method === "ship" ? "shipped to your door" : "hand delivered or shipped"
     } in ${place}.`,
-    alternates: { canonical: `/christmas-cards/${slug}` },
+      path: `/christmas-cards/${slug}`,
+    }),
   };
 }
 

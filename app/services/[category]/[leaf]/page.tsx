@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../../../lib/seo";
+import { pageMetadata } from "../../../lib/seo";
 import { notFound } from "next/navigation";
 import ChristmasTownLinks from "../../../components/ChristmasTownLinks";
 import CtaSection from "../../../components/CtaSection";
@@ -22,9 +22,11 @@ export async function generateMetadata({
   if (!match) notFound();
 
   return {
-    title: pageTitle(match.leaf.seoTitle ?? match.leaf.title),
-    description: match.leaf.metaDescription,
-    alternates: { canonical: `/services/${categorySlug}/${leafSlug}` },
+    ...pageMetadata({
+      title: match.leaf.seoTitle ?? match.leaf.title,
+      description: match.leaf.metaDescription,
+      path: `/services/${categorySlug}/${leafSlug}`,
+    }),
   };
 }
 

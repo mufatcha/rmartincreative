@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import { notFound } from "next/navigation";
 import CtaSection from "../../components/CtaSection";
 import NeighborDataCallout from "../../components/NeighborDataCallout";
@@ -22,9 +22,11 @@ export async function generateMetadata({
   if (!category) notFound();
 
   return {
-    title: pageTitle(category.seoTitle ?? category.title),
-    description: category.metaDescription,
-    alternates: { canonical: `/services/${category.slug}` },
+    ...pageMetadata({
+      title: category.seoTitle ?? category.title,
+      description: category.metaDescription,
+      path: `/services/${category.slug}`,
+    }),
   };
 }
 
