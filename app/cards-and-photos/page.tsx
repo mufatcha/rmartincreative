@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../lib/seo";
+import { pageMetadata } from "../lib/seo";
 import CtaSection from "../components/CtaSection";
 import GreetingCardsSection from "../components/GreetingCardsSection";
 import HolidaySpotlight from "../components/HolidaySpotlight";
@@ -8,10 +8,11 @@ import PhotoServicesSection from "../components/PhotoServicesSection";
 import TShirtSection from "../components/TShirtSection";
 
 export const metadata: Metadata = {
-  title: pageTitle("Custom Cards, Invitations & Photo Restoration"),
-  description:
-    "Custom family Christmas cards, birthday and greeting cards, wedding invitations, and photo restoration — designed for you, proofed, and printed. Serving families in Northern Illinois.",
-  alternates: { canonical: "/cards-and-photos" },
+  ...pageMetadata({
+    title: "Custom Cards, Invitations & Photo Restoration",
+    description: "Custom family Christmas cards, birthday and greeting cards, wedding invitations, and photo restoration — designed for you, proofed, and printed. Serving families in Northern Illinois.",
+    path: "/cards-and-photos",
+  }),
 };
 
 export default function PersonalPage() {

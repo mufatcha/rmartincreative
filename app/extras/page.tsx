@@ -5,12 +5,14 @@ import CtaSection from "../components/CtaSection";
 import Reveal from "../components/Reveal";
 import { IconArrowRight } from "../components/icons";
 import { EXTRAS, EXTRAS_HUB, EXTRA_CATEGORIES, type Extra, type ExtraCategory } from "../lib/data/extras";
-import { pageTitle } from "../lib/seo";
+import { pageMetadata } from "../lib/seo";
 
 export const metadata: Metadata = {
-  title: pageTitle(`${EXTRAS_HUB.title}: Free Printables`),
-  description: EXTRAS_HUB.description,
-  alternates: { canonical: "/extras" },
+  ...pageMetadata({
+    title: `${EXTRAS_HUB.title}: Free Printables`,
+    description: EXTRAS_HUB.description,
+    path: "/extras",
+  }),
 };
 
 function ExtraCard({ extra, category, index }: { extra: Extra; category: ExtraCategory; index: number }) {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../lib/seo";
+import { pageMetadata } from "../lib/seo";
 import Link from "next/link";
 import CtaSection from "../components/CtaSection";
 import QuoteModal from "../components/QuoteModal";
@@ -8,10 +8,11 @@ import { IconArrowRight, IconSparkle } from "../components/icons";
 import { LAUNCH_PHASES, type LaunchItemKind } from "../lib/launch-timeline";
 
 export const metadata: Metadata = {
-  title: pageTitle("New Business Launch Guide: Branding & Marketing Timeline"),
-  description:
-    "Launching a new business? A week-by-week timeline of the branding, website, print, and marketing you'll need, with the questions to answer at each step.",
-  alternates: { canonical: "/new-business" },
+  ...pageMetadata({
+    title: "New Business Launch Guide: Branding & Marketing Timeline",
+    description: "Launching a new business? A week-by-week timeline of the branding, website, print, and marketing you'll need, with the questions to answer at each step.",
+    path: "/new-business",
+  }),
 };
 
 const KIND_STYLES: Record<LaunchItemKind, { label: string; className: string }> = {

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../lib/seo";
 import Link from "next/link";
 import Reveal from "../components/Reveal";
 import CtaSection from "../components/CtaSection";
 import { IconArrowRight } from "../components/icons";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Services",
   description:
     "Website design & development, traditional search + AI discovery, greeting cards, business printing, photo scanning and restoration, and custom apparel — freelance design and print services in Northern Illinois.",
-  alternates: { canonical: "/services" },
-};
+  path: "/services",
+});
 
 export default function ServicesIndexPage() {
   return (

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../lib/seo";
+import { pageMetadata } from "../lib/seo";
 import CtaSection from "../components/CtaSection";
 import QuoteModal from "../components/QuoteModal";
 import Reveal from "../components/Reveal";
@@ -9,9 +9,11 @@ import { BUSINESS_NAME, SERVICE_HOME_CITY, SERVICE_STATE_ABBR } from "../lib/bus
 import { CASH_CRYPTO_DISCOUNT, PAYMENT_METHODS } from "../lib/data/payments";
 
 export const metadata: Metadata = {
-  title: pageTitle("Ways to Pay: Goldbacks, Bitcoin, Crypto & Cards"),
-  description: `${BUSINESS_NAME} accepts Goldbacks, Bitcoin, Dogecoin, Solana, SUI, cash, and Visa, Mastercard, Discover, and American Express — with 4–8% off for cash and crypto. Based in ${SERVICE_HOME_CITY}, ${SERVICE_STATE_ABBR}.`,
-  alternates: { canonical: "/payment" },
+  ...pageMetadata({
+    title: "Ways to Pay: Goldbacks, Bitcoin, Crypto & Cards",
+    description: `${BUSINESS_NAME} accepts Goldbacks, Bitcoin, Dogecoin, Solana, SUI, cash, and Visa, Mastercard, Discover, and American Express — with 4–8% off for cash and crypto. Based in ${SERVICE_HOME_CITY}, ${SERVICE_STATE_ABBR}.`,
+    path: "/payment",
+  }),
 };
 
 const ACCENTS: Record<string, string> = {

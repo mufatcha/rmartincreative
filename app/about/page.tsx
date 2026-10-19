@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -27,10 +28,13 @@ const isLive = ABOUT.published || process.env.NODE_ENV === "development";
 
 export const metadata: Metadata = {
   // Absolute, so the "| R. Martin Creative" title template isn't added next to the name.
-  title: { absolute: "About Ryan Martin | Design, Web & Print in Richmond, IL" },
   // The intro runs long for a search snippet, so the description is its own line.
-  description: `Ryan Martin is a designer, developer, and print maker with 20+ years in web and print, working as the marketing team for small businesses. Based in ${SERVICE_HOME_CITY}, ${SERVICE_STATE_ABBR}.`,
-  alternates: { canonical: "/about" },
+  ...pageMetadata({
+    title: "About Ryan Martin | Design, Web & Print in Richmond, IL",
+    absolute: true,
+    description: `Ryan Martin is a designer, developer, and print maker with 20+ years in web and print, working as the marketing team for small businesses. Based in ${SERVICE_HOME_CITY}, ${SERVICE_STATE_ABBR}.`,
+    path: "/about",
+  }),
   robots: ABOUT.published ? undefined : { index: false, follow: false },
 };
 

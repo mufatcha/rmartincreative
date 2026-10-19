@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageTitle } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -34,9 +34,11 @@ export async function generateMetadata({ params }: { params: Promise<{ town: str
   if (!page) notFound();
   const place = `${page.name}, ${page.town.state}`;
   return {
-    title: pageTitle(`Passport Photos in ${place}`),
-    description: `At-home and on-site passport photos in ${place}: compliant photos with unlimited retakes, same-day digital files, printed copies mailed free, and where to turn in your application nearby.`,
-    alternates: { canonical: `/passport-photos/${slug}` },
+    ...pageMetadata({
+      title: `Passport Photos in ${place}`,
+      description: `At-home and on-site passport photos in ${place}: compliant photos with unlimited retakes, same-day digital files, printed copies mailed free, and where to turn in your application nearby.`,
+      path: `/passport-photos/${slug}`,
+    }),
   };
 }
 
