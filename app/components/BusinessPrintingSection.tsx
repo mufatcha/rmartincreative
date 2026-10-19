@@ -4,11 +4,11 @@ import { IconArrowRight, IconBriefcase, IconLayers, IconPresentation } from "./i
 const SUB_SERVICES = [
   {
     icon: IconBriefcase,
-    title: "Business Cards",
+    title: "Business Cards & Letterhead",
     accent: "bg-amber-500/15 text-amber-400",
     description:
       "Clean, memorable layouts that hold up in a stack of a hundred.",
-    items: ["Foil, matte or textured stock", "Double-sided layouts", "QR & digital contact options"],
+    items: ["Foil, matte or textured stock", "Double-sided layouts", "Matching letterhead & envelopes"],
   },
   {
     icon: IconLayers,

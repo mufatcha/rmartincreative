@@ -15,6 +15,7 @@ import {
   IconShirt,
   IconSignpost,
   IconSnowflake,
+  IconSparkle,
 } from "./icons";
 
 // Grouped by what a small business is trying to do, not by product, so the
@@ -69,9 +70,16 @@ const GROUPS: { title: string; blurb: string; accent: string; badge: string; ser
     badge: "bg-zinc-100 text-zinc-700",
     services: [
       {
+        icon: IconSparkle,
+        title: "Logo Design",
+        description: "An original logo, or a clean redraw of yours, ready for print, signs, and the web.",
+        href: "/services/business-printing/logo-design",
+        prices: ["business-printing/logo-design"],
+      },
+      {
         icon: IconBriefcase,
-        title: "Business Cards",
-        description: "Clean, memorable layouts on the stock and finish that fit your brand.",
+        title: "Business Cards & Letterhead",
+        description: "Business cards, letterhead, and envelopes on the stock and finish that fit your brand.",
         href: "#business-printing",
         prices: ["business-printing/business-cards"],
       },

@@ -46,7 +46,7 @@ export type Extra = {
 export const EXTRAS_HUB = {
   title: "Notes & Freebies",
   description:
-    "Free printables and helpful notes on design, print, and marketing — no sign-up, no email required. Download, personalize, and print at home.",
+    "Plain-English guides to websites, search, and AI for small businesses, plus free printables to download. No sign-up, no email required.",
 };
 
 const EXTRAS_LIST: Extra[] = [

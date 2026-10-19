@@ -46,6 +46,9 @@ export const PASSPORT_PAPERWORK = 55;
 export const STARTER_WEBSITE = 350;
 /** A simple custom web app: one type of user, login, a database, and up to 5 screens. */
 export const WEB_APP = 1500;
+/** A simple mobile app for iPhone and Android (React Native): one type of user, login,
+ *  a database, push notifications, up to 5 screens, and app store submission. */
+export const MOBILE_APP = 3000;
 
 export type ServicePricing = {
   lines: PriceLine[];
@@ -116,8 +119,9 @@ export const PRICING: Record<string, ServicePricing> = {
     lines: [
       { label: "Starter website (a single page or up to 5 pages)", price: STARTER_WEBSITE },
       { label: "Custom web app (login, database, up to 5 screens)", price: WEB_APP, from: true },
+      { label: "Mobile app for iPhone & Android (up to 5 screens, app store setup)", price: MOBILE_APP, from: true },
     ],
-    note: "Includes a contact form, hosting, and email forwarding (you@yourdomain.com to your Gmail) for the life of the site, plus your domain for the first year — renewal after that is billed separately. Hosting stays included as long as Cloudflare's free plan allows. Web apps start with one type of user, login, a database, and up to 5 screens. Bigger apps, larger sites, and online stores are quoted per project.",
+    note: "Includes a contact form, hosting, and email forwarding (you@yourdomain.com to your Gmail) for the life of the site, plus your domain for the first year — renewal after that is billed separately. Hosting stays included as long as Cloudflare's free plan allows. Web and mobile apps start with one type of user, login, a database, and up to 5 screens; mobile apps add push notifications and App Store and Google Play submission (Apple's $99/year and Google's one-time $25 developer fees are paid directly). Bigger apps, larger sites, and online stores are quoted per project.",
     links: [
       {
         label: "Search + AI Discovery",
@@ -130,6 +134,25 @@ export const PRICING: Record<string, ServicePricing> = {
         note: "keep your site, search, and marketing going for one flat monthly rate",
       },
     ],
+  },
+  "search-ai-discovery/search-health-check": {
+    lines: [{ label: "Search + AI Health Check", price: 0 }],
+    note: "No cost and no obligation to book anything afterward.",
+  },
+  "search-ai-discovery/search-ai-update": {
+    lines: [{ label: "One-time Search + AI Update", price: 300, from: true }],
+    note: "A flat project fee, set by your site's size and how much needs fixing. You'll get the exact price after a quick review of your site.",
+  },
+  "search-ai-discovery/monthly-retainer": {
+    lines: [{ label: "Monthly Retainer, per month", price: 200, from: true }],
+    note: "Month-to-month, with no long-term contract. The monthly rate is set by your site's size and how much ongoing work it needs.",
+  },
+  "email-marketing": {
+    lines: [
+      { label: "Email platform setup or template design", price: 150, from: true },
+      { label: "Monthly newsletter plan", price: null },
+    ],
+    note: "Monthly plans are quoted by how often you send and how much content each email needs.",
   },
   "website-design-development/website-overhaul": {
     lines: [{ label: "Full website overhaul", price: null }],
@@ -148,12 +171,96 @@ export const PRICING: Record<string, ServicePricing> = {
     ],
   },
   "business-printing/business-cards": {
-    lines: [{ label: "Business card design", price: 30 }],
+    lines: [
+      { label: "Business card design", price: 30 },
+      { label: "Letterhead design", price: 40 },
+      { label: "Envelope design (#10)", price: 25 },
+      { label: "Stationery set: business card, letterhead & envelope", price: 80 },
+      { label: "Gift certificate, coupon, or loyalty punch card", price: 30 },
+      { label: "Presentation folder design", price: 100 },
+    ],
     plusPrinting: true,
+    // Lead with business cards (the envelope alone is lower, but rarely ordered on its own).
+    startsAt: 30,
+    note: "Letterhead comes print-ready, plus an editable Word or Google Docs version for everyday letters.",
   },
   "business-printing/brochures-collateral": {
-    lines: [{ label: "Tri-fold brochure design", price: 200 }],
+    lines: [
+      { label: "Flyer or one-pager, one-sided", price: 40 },
+      { label: "Flyer, two-sided", price: 60 },
+      { label: "Bi-fold brochure design", price: 150 },
+      { label: "Tri-fold brochure design", price: 200 },
+      { label: "Door hanger or rack card", price: 40 },
+      { label: "Menu, single page", price: 60 },
+      { label: "Menu, folded", price: 150 },
+    ],
+    note: "Includes 2 rounds of edits and print-ready files. Larger multi-page menus are quoted by page count.",
     plusPrinting: true,
+  },
+  "business-printing/magazines-catalogs": {
+    lines: [
+      { label: "Magazine design, 16 pages (cover + 15 inside pages)", price: 600 },
+      { label: "Catalog design, 8 pages (cover + 7 inside pages)", price: 300 },
+      { label: "Each additional page", price: 35, add: true },
+      { label: "Product photo cleanup (background removal, color)", price: 5, from: true },
+    ],
+    plusPrinting: true,
+    // Lead with the smallest full job, not the per-photo cleanup add-on.
+    startsAt: 300,
+    note: "Page counts come in multiples of 4 for folded and stapled printing. Updates to an existing magazine or catalog are quoted by the pages that change. Product photo cleanup is per photo.",
+  },
+  "business-printing/logo-design": {
+    lines: [
+      { label: "Logo design (2 concepts, 2 rounds of edits)", price: 150 },
+      { label: "Logo cleanup or redraw of an existing logo", price: 75 },
+      { label: "Brand style sheet: colors, fonts & logo versions", price: 50, add: true },
+    ],
+    // Lead with the smallest full job, not the add-on.
+    startsAt: 75,
+    note: "You get the final logo in color, black, and white, as print-ready vector files plus PNGs for the web and social media.",
+  },
+  "business-printing/postcards-direct-mail": {
+    lines: [
+      { label: "Postcard design, one-sided", price: 40 },
+      { label: "Postcard design, two-sided", price: 60 },
+      { label: "Every Door Direct Mail (EDDM) route planning & USPS paperwork", price: 50, add: true },
+    ],
+    plusPrinting: true,
+    startsAt: 40,
+    note: "Postage is billed at USPS rates.",
+  },
+  "business-printing/stickers-labels": {
+    lines: [
+      { label: "Sticker or label design", price: 30, from: true },
+      { label: "Each additional flavor, scent, or version", price: 15, add: true },
+    ],
+    plusPrinting: true,
+    startsAt: 30,
+  },
+  "business-printing/business-documents": {
+    lines: [
+      { label: "Invoice or carbonless (NCR) form design", price: 40 },
+      { label: "Pitch deck or presentation", price: null },
+    ],
+    plusPrinting: true,
+    note: "Decks are quoted by slide count and how much content structuring is involved.",
+  },
+  "greeting-cards/programs": {
+    lines: [
+      { label: "Program design, single sheet (flat or folded)", price: 50 },
+      { label: "Booklet program, 8 pages", price: 150 },
+    ],
+    plusPrinting: true,
+    note: "Rush turnaround is available for memorial and funeral programs.",
+  },
+  "signs-posters/decals-magnets": {
+    lines: [
+      { label: "Window decal design (hours, logo, or sale)", price: 50, from: true },
+      { label: "Vehicle door magnet design (pair)", price: 50 },
+      { label: "Storefront window lettering", price: null },
+    ],
+    plusPrinting: true,
+    startsAt: 50,
   },
   "signs-posters/yard-signs": {
     lines: [
@@ -165,14 +272,18 @@ export const PRICING: Record<string, ServicePricing> = {
   "signs-posters/posters": {
     lines: [
       { label: "Simple one-photo design", price: 30, from: true },
+      { label: "Sale or promotion poster", price: 75, from: true },
       { label: "Event poster design", price: 200, from: true },
     ],
     plusPrinting: true,
+    note: "Common sizes are 11×17, 18×24, and 24×36 inches, with larger formats for storefronts and events.",
   },
   "banners-canvas/banners": {
     lines: [
       { label: "Text-only banner", price: 100, from: true },
       { label: "Banner with photos & design", price: 220, from: true },
+      { label: "Retractable (pull-up) banner design", price: 100, from: true },
+      { label: "Trade show backdrop design", price: 250, from: true },
     ],
     plusPrinting: true,
   },
@@ -193,6 +304,16 @@ export const PRICING: Record<string, ServicePricing> = {
     ],
     startsAt: PASSPORT_VISIT,
     note: "By appointment. Every visit includes unlimited retakes until each photo meets U.S. State Department requirements. Prints are made off-site the same day the photos are taken and mailed right after printing; digital files are sent the same day by email, text, or both.",
+  },
+  "photos/photo-restoration": {
+    lines: [
+      { label: "Light: dust, spots, small scratches, fading", price: 25 },
+      { label: "Moderate: creases, small tears, stains, minor missing areas", price: 50 },
+      { label: "Heavy: large tears, water damage, missing pieces, faces to rebuild", price: 100, from: true },
+      { label: "Colorization (black and white to color)", price: 25, add: true },
+    ],
+    startsAt: 25,
+    note: "Per photo, including the restored digital file. You'll get a price before any work starts. Prints in standard frame sizes are extra.",
   },
   apparel: {
     lines: [
@@ -232,14 +353,16 @@ export function startingPrice(pricing: ServicePricing): number | undefined {
 
 /** One-sentence plain-language summary, for FAQ answers and llms.txt. */
 export function pricingSummary(pricing: ServicePricing): string {
+  // Lowercase only the first letter, so names like "iPhone" keep their capitals.
+  const lower = (label: string) => label.charAt(0).toLowerCase() + label.slice(1);
   const parts = pricing.lines.map((l) =>
     l.price === null
-      ? `${l.label.toLowerCase()}: quoted per project`
+      ? `${lower(l.label)}: quoted per project`
       : l.price === 0
-        ? `${l.label.toLowerCase()}: free`
+        ? `${lower(l.label)}: free`
         : l.maxPrice !== undefined
-          ? `${l.label.toLowerCase()}: ${usd(l.price)}–${usd(l.maxPrice)}`
-          : `${l.label.toLowerCase()}: ${l.add ? "+" : l.from ? "from " : ""}${usd(l.price)}`
+          ? `${lower(l.label)}: ${usd(l.price)}–${usd(l.maxPrice)}`
+          : `${lower(l.label)}: ${l.add ? "+" : l.from ? "from " : ""}${usd(l.price)}`
   );
   const sentence = parts.join("; ");
   return `${sentence.charAt(0).toUpperCase()}${sentence.slice(1)}${pricing.plusPrinting ? ", plus printing" : ""}.`;
