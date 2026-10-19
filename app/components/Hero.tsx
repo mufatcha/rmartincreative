@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import heroImg from "@/public/webp-assets/ryan-martin-desktop.webp";
+import QuoteModal from "./QuoteModal";
 import { getSeasonalBadge, type SeasonIcon } from "../lib/season";
 import {
   IconArrowRight,
@@ -106,12 +107,9 @@ export default function Hero() {
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a
-              href="#contact"
-              className="btn-shine relative overflow-hidden rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper shadow-lg shadow-ink/20 transition-transform hover:scale-105"
-            >
+            <QuoteModal triggerClassName="btn-shine relative overflow-hidden rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper shadow-lg shadow-ink/20 transition-transform hover:scale-105">
               Get a Quote
-            </a>
+            </QuoteModal>
             <a
               href="#services"
               className="group inline-flex items-center gap-2 rounded-full border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-white"

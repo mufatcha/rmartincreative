@@ -9,6 +9,7 @@ import {
   SERVICE_STATE_ABBR,
   STATE_NAMES,
   SITE_URL,
+  SOCIAL_PROFILES,
 } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
 import { PAYMENT_ACCEPTED } from "../lib/data/payments";
@@ -29,6 +30,7 @@ function buildSchema() {
     paymentAccepted: PAYMENT_ACCEPTED,
     currenciesAccepted: "USD, BTC, DOGE, SOL, SUI",
     url: SITE_URL,
+    sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
     telephone: BUSINESS_PHONE_TEL,
     email: BUSINESS_EMAIL,
     address: {

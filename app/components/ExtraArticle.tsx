@@ -24,7 +24,9 @@ export type ArticleBlock =
   | { type: "bullets"; heading: string; items: string[] }
   | { type: "text"; heading: string; paragraphs: string[] }
   /** A code sample (shown as-is, not run through `rich`), with optional text before and after. */
-  | { type: "code"; heading: string; paragraphs: string[]; code: string; note?: string };
+  | { type: "code"; heading: string; paragraphs: string[]; code: string; note?: string }
+  /** A comparison table: the first column labels each row. */
+  | { type: "table"; heading: string; paragraphs: string[]; columns: string[]; rows: string[][]; note?: string };
 
 export type ArticleContent = {
   intro: string[];
@@ -148,6 +150,44 @@ function Block({ block }: { block: ArticleBlock }) {
           <pre className="mt-6 overflow-x-auto rounded-2xl bg-ink p-6 text-sm leading-relaxed text-paper shadow-sm">
             <code className="font-mono">{block.code}</code>
           </pre>
+          {block.note && <p className={`mt-6 text-sm ${p}`}>{rich(block.note)}</p>}
+        </>
+      );
+    case "table":
+      return (
+        <>
+          {block.paragraphs.map((para) => (
+            <p key={para} className={`mt-4 text-lg ${p}`}>
+              {rich(para)}
+            </p>
+          ))}
+          <div className="mt-6 overflow-x-auto rounded-2xl bg-white shadow-sm ring-1 ring-ink/5">
+            <table className="w-full min-w-[36rem] text-left text-sm">
+              <thead>
+                <tr className="border-b border-ink/10">
+                  {block.columns.map((col) => (
+                    <th key={col} scope="col" className="px-5 py-4 font-semibold text-ink">
+                      {col}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-ink/10">
+                {block.rows.map(([label, ...cells]) => (
+                  <tr key={label} className="align-top">
+                    <th scope="row" className="px-5 py-4 font-semibold text-ink">
+                      {label}
+                    </th>
+                    {cells.map((cell, i) => (
+                      <td key={i} className={`px-5 py-4 ${p}`}>
+                        {rich(cell)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           {block.note && <p className={`mt-6 text-sm ${p}`}>{rich(block.note)}</p>}
         </>
       );

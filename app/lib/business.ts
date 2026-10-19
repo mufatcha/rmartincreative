@@ -16,6 +16,17 @@ export const QUOTE_INBOX_EMAIL = "rmartincreative@gmail.com";
 
 export const PRODUCTION_URL = "https://rmartincreative.com";
 
+/** The business's X (Twitter) handle, credited on shared links (app/layout.tsx). */
+export const X_HANDLE = "@rmartincreative";
+
+/** Official social profiles. Each one is listed in the schema.org `sameAs` field
+ *  (LocalBusinessJsonLd), which tells search engines and AI tools these accounts
+ *  all belong to this business, and linked in the footer. Add new profiles here. */
+export const SOCIAL_PROFILES: { name: string; label: string; url: string }[] = [
+  { name: "X", label: `${X_HANDLE} on X`, url: "https://x.com/rmartincreative" },
+  { name: "Facebook", label: `${BUSINESS_NAME} on Facebook`, url: "https://www.facebook.com/profile.php?id=61595559686046" },
+];
+
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.NODE_ENV === "production" ? PRODUCTION_URL : "http://localhost:3000");
