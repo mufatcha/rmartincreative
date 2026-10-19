@@ -9,7 +9,7 @@ import { pageMetadata } from "../lib/seo";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: `${EXTRAS_HUB.title}: Free Printables`,
+    title: "Website Guides & Free Printables",
     description: EXTRAS_HUB.description,
     path: "/extras",
   }),

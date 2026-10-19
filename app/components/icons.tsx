@@ -429,3 +429,17 @@ export function IconGoogle({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function IconBook({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 6.5C10.3 5.2 7.9 4.5 4 4.5v13c3.9 0 6.3.7 8 2m0-13c1.7-1.3 4.1-2 8-2v13c-3.9 0-6.3.7-8 2m0-13v13"
+      />
+    </svg>
+  );
+}

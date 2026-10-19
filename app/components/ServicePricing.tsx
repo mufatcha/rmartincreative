@@ -94,7 +94,7 @@ export function CategoryPricing({ category }: { category: ServiceCategory }) {
     const pricing = getPricing(category.slug, leaf.slug);
     const price = pricing && startingPrice(pricing);
     if (price === undefined) return [];
-    return [{ label: leaf.title, price: `From ${usd(price)}`, href: `/services/${category.slug}/${leaf.slug}` }];
+    return [{ label: leaf.title, price: price === 0 ? "Free" : `From ${usd(price)}`, href: `/services/${category.slug}/${leaf.slug}` }];
   });
   if (rows.length === 0) return null;
 

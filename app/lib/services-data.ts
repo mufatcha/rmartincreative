@@ -1,8 +1,10 @@
 import type { ComponentType } from "react";
 import {
   IconBanner,
+  IconBook,
   IconBriefcase,
   IconCanvas,
+  IconCard,
   IconCart,
   IconCode,
   IconCloud,
@@ -19,11 +21,12 @@ import {
   IconSearch,
   IconShirt,
   IconSignpost,
+  IconSparkle,
 } from "../components/icons";
 import { BUSINESS_PHONE_DISPLAY, SERVICE_HOME_CITY } from "./business";
 import { PASSPORT_PREP_SUMMARY } from "./data/passport-prep";
 import { passportCommonFaqs } from "./data/passport-faqs";
-import { PASSPORT_PAPERWORK, WEB_APP, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
+import { MOBILE_APP, PASSPORT_PAPERWORK, WEB_APP, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
 
 export type IconComponent = ComponentType<{ className?: string }>;
 
@@ -104,7 +107,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       "Custom website design and development in Richmond, IL and Northern Illinois: Next.js, WordPress, headless CMS, and Shopify stores, ready for search and AI.",
     tagline: "Custom sites, built and maintained end-to-end.",
     description:
-      "Whether you need a brand-new custom site, an online store, or an existing site that needs attention, I design and build every site myself. Every build is clean, fast, mobile-friendly, and ready for search engines and AI from launch, with real metadata and structured data (schema markup) baked in instead of bolted on afterward. I build custom sites and web apps on Next.js, editable sites on WordPress and headless CMS platforms like Strapi and Prismic, and online stores on Shopify, BigCommerce, and Wix. More than 20 years of hand-coding websites, combined with AI-assisted development, gets new sites built faster than ever without cutting corners.",
+      "Whether you need a brand-new custom site, an online store, or an existing site that needs attention, I design and build every site myself. Every build is clean, fast, mobile-friendly, and ready for search engines and AI from launch, with real metadata and structured data (schema markup) baked in instead of bolted on afterward. I build custom sites and web apps on Next.js, mobile apps for iPhone and Android with React Native, editable sites on WordPress and headless CMS platforms like Strapi and Prismic, and online stores on Shopify, BigCommerce, and Wix. More than 20 years of hand-coding websites, combined with AI-assisted development, gets new sites built faster than ever without cutting corners.",
     details:
       "Based in Richmond, IL, I work directly with small businesses, organizations, and startups across Northern Illinois and Southeast Wisconsin, from McHenry and Gurnee to Lake Geneva and Kenosha. Local clients get face-to-face planning when it helps, and everyone gets clear communication with no agency middle managers. Not sure whether you need a full overhaul or just an update? Most of the time it's obvious once we talk through what's not working.",
     features: [],
@@ -113,6 +116,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         title: "Custom sites & web apps",
         items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "React", "TypeScript", "JavaScript", "Python", "SQL", "Tailwind CSS"],
       },
+      { title: "Mobile apps", items: ["React Native", "Expo", "iOS", "Android"] },
       {
         title: "Content management",
         items: ["WordPress", "[Strapi](/extras/headless-cms-vs-wordpress)", "[Prismic](/extras/headless-cms-vs-wordpress)"],
@@ -143,6 +147,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         question: "How much does a custom web app cost?",
         answer:
           `Custom web apps start at ${usd(WEB_APP)}. That covers one type of user, a login, a database, and up to 5 screens, like a customer portal, an order or booking form with an admin view, or an internal tool. AI-assisted development keeps the build fast and affordable, with every step reviewed by an experienced developer. Bigger apps are quoted after a free consultation.`,
+      },
+      {
+        question: "Do you build mobile apps for iPhone and Android?",
+        answer:
+          `Yes. Mobile apps start at ${usd(MOBILE_APP)}, built with React Native so one codebase runs on both iPhone and Android. That covers one type of user, a login, a database, push notifications, and up to 5 screens, plus submitting the app to the App Store and Google Play. Apple charges $99 a year and Google a one-time $25 for developer accounts, paid directly. Features like in-app payments, chat, or maps are quoted separately. Not sure you need the app stores? A [custom web app](#pricing) people can add to their home screen starts at ${usd(WEB_APP)}.`,
       },
       {
         question: "How long does a website project take?",
@@ -532,7 +541,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does it cost?",
         answer:
-          "The free health check costs nothing. A one-time Search + AI Update is quoted as a flat project fee, and the Monthly Retainer is a simple month-to-month rate — I'll recommend the right tier based on where your site stands.",
+          `The health check is free. A one-time Search + AI Update starts at ${startsAt("search-ai-discovery/search-ai-update")} as a flat project fee, and the Monthly Retainer starts at ${startsAt("search-ai-discovery/monthly-retainer")} a month, month-to-month. I'll recommend the right tier based on where your site stands.`,
       },
       {
         question: "Which service is right for me?",
@@ -661,7 +670,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much does a Search + AI Update cost?",
             answer:
-              "It's priced as a flat project fee based on site size and how much needs fixing — I'll quote it after reviewing your site.",
+              `It starts at ${startsAt("search-ai-discovery/search-ai-update")}, as a flat project fee based on site size and how much needs fixing. I'll give you the exact price after reviewing your site.`,
           },
           {
             question: "How long does it take?",
@@ -715,7 +724,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much does the monthly retainer cost?",
             answer:
-              "Priced as a flat monthly rate based on the size and needs of your site — I'll recommend a starting scope after an initial review.",
+              `It starts at ${startsAt("search-ai-discovery/monthly-retainer")} a month, as a flat monthly rate based on the size and needs of your site. I'll recommend a starting scope after an initial review.`,
           },
           {
             question: "What's included each month?",
@@ -774,7 +783,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does email marketing cost?",
         answer:
-          "It's quoted per project. A one-time platform setup or template is priced differently than a monthly newsletter plan. Tell me what you have and what you'd like to send, and I'll quote it.",
+          `Platform setup or a custom email template starts at ${startsAt("email-marketing")}. Monthly newsletter plans are quoted by how often you send and how much content each email needs. Tell me what you have and what you'd like to send, and I'll quote it.`,
       },
       {
         question: "Which email platform should I use?",
@@ -1188,6 +1197,47 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           alt: "Wedding invitation suite on deckled paper with sage green botanical accents: invitation, RSVP card, menu, place card, and a floral-lined sage envelope, with a gold wax seal, white flowers, and silk ribbon",
         },
       },
+      {
+        slug: "programs",
+        title: "Event & Memorial Programs",
+        seoTitle: "Funeral, Wedding & Event Program Design",
+        metaDescription:
+          "Funeral and memorial programs, wedding, church, and graduation programs designed and printed in Richmond, IL, with rush turnaround when time is short.",
+        tagline: "Programs that honor the day, ready when you need them.",
+        description:
+          "Funeral and memorial programs, wedding ceremony programs, church bulletins, and graduation and recital programs, designed around your photos and order of events and printed on quality stock.",
+        details:
+          "Programs are often needed on short notice, especially for a memorial service, so I keep the process simple: send the photos, the order of service, and any readings or tributes, and I'll lay it out with care and send a proof quickly. Single-sheet programs work for most services, and booklets leave room for more photos, a full obituary, or song lyrics.",
+        features: [
+          "Funeral & memorial programs",
+          "Wedding ceremony programs",
+          "Church, graduation & recital programs",
+          "Single-sheet or booklet layouts",
+          "Rush turnaround for memorial services",
+        ],
+        faqs: [
+          {
+            question: "How much do programs cost?",
+            answer: `${priceAnswer("greeting-cards/programs")} Printing is quoted by quantity and paper.`,
+          },
+          {
+            question: "How quickly can you make a memorial program?",
+            answer:
+              "Rush turnaround is available. Send the photos, the order of service, and any text as soon as you have them, and I'll get a proof back to you as fast as possible.",
+          },
+          {
+            question: "What do I need to send?",
+            answer:
+              "A few photos, the order of service or events, and any text you'd like included, such as an obituary, readings, song lyrics, or a thank-you note. I'll handle the layout.",
+          },
+          {
+            question: "Can the program match my wedding invitations?",
+            answer:
+              "Yes. Programs can be designed to match your [wedding invitation suite](/services/greeting-cards/wedding-invitations), using the same colors, fonts, and details.",
+          },
+        ],
+        icon: IconBook,
+      },
     ],
   },
   {
@@ -1195,7 +1245,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     audience: "business",
     title: "Business Printing",
     metaDescription:
-      "Business printing services — business cards, brochures and collateral, and business documents like pitch decks, designed to look like one brand.",
+      "Business printing and design: logos, business cards and letterhead, flyers, brochures, menus, postcards, labels, magazines, and catalogs, all one brand.",
     tagline: "Everything that carries your name into the room.",
     description:
       "Cards for the handshake, collateral for the counter, and documents for the boardroom — designed to look like one consistent brand.",
@@ -1206,7 +1256,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does business printing cost?",
         answer:
-          `Business card design is ${startsAt("business-printing/business-cards")} and tri-fold brochure design is ${startsAt("business-printing/brochures-collateral")}, plus printing, which is quoted by quantity and stock. Pitch decks and other documents are quoted per project.`,
+          `Logo design starts at ${startsAt("business-printing/logo-design")}. Business card design is ${startsAt("business-printing/business-cards")}, flyers and brochures start at ${startsAt("business-printing/brochures-collateral")}, and catalogs and magazines start at ${startsAt("business-printing/magazines-catalogs")}, plus printing, which is quoted by quantity and stock. Pitch decks and other documents are quoted per project.`,
       },
       {
         question: "How long does business printing take?",
@@ -1242,13 +1292,60 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     },
     children: [
       {
-        slug: "business-cards",
-        title: "Business Cards",
+        slug: "logo-design",
+        title: "Logo Design",
+        seoTitle: "Logo Design for Small Businesses",
         metaDescription:
-          "Custom business card design and printing — foil, matte, or textured stock, double-sided layouts, and QR or digital contact options.",
+          "Affordable logo design in Richmond, IL: an original logo for your business, or a cleanup of the one you have, with files ready for print, web, and social.",
+        tagline: "A mark that looks right on a sign, a shirt, and a phone screen.",
+        description:
+          "A new logo for a new business, or a cleanup of one that's been redrawn, stretched, and screenshotted too many times. Every logo is designed to work everywhere it'll appear: business cards, signs, shirts, your website, and social media.",
+        details:
+          "I start with a short conversation about your business, your customers, and the feel you want, then design two concepts. You pick a direction, we refine it together, and you get the finished logo in every format you'll need. A logo is the start of everything else you print, so it pairs naturally with matching business cards, letterhead, and a website.",
+        features: [
+          "2 original concepts to choose from",
+          "2 rounds of edits on your favorite",
+          "Color, black, and white versions",
+          "Vector files for print plus PNGs for web and social",
+          "Cleanup and redraws of existing logos",
+          "Optional brand style sheet with your colors and fonts",
+        ],
+        faqs: [
+          {
+            question: "How much does a logo cost?",
+            answer: `${priceAnswer("business-printing/logo-design")} Matching [business cards and letterhead](/services/business-printing/business-cards) can be added once the logo is final.`,
+          },
+          {
+            question: "What files will I get?",
+            answer:
+              "Vector files (like SVG and PDF) that stay sharp at any size for printing and signs, plus PNG files for your website and social media, in color, black, and white versions.",
+          },
+          {
+            question: "Can you fix my existing logo instead of starting over?",
+            answer:
+              "Yes. If your logo only exists as a blurry image or an old file, I can redraw it cleanly so it prints sharp again, without changing how it looks.",
+          },
+          {
+            question: "Do I own the logo?",
+            answer: "Yes. Once it's paid for, the final logo is yours to use anywhere.",
+          },
+          {
+            question: "Starting a new business?",
+            answer:
+              "The [new business launch guide](/new-business) walks through what to put in place first, from the logo and business cards to the website.",
+          },
+        ],
+        icon: IconSparkle,
+      },
+      {
+        slug: "business-cards",
+        title: "Business Cards & Letterhead",
+        seoTitle: "Business Card & Letterhead Design",
+        metaDescription:
+          "Custom business card, letterhead, and envelope design and printing in Richmond, IL: foil, matte, or textured stock, and matching stationery sets.",
         tagline: "Clean, memorable layouts that hold up in a stack of a hundred.",
         description:
-          "Business cards are a small canvas that still has to do a lot of work. I design layouts that stay legible and memorable at that size, then print them on the stock and finish that fits your brand.",
+          "Business cards are a small canvas that still has to do a lot of work. I design layouts that stay legible and memorable at that size, with matching letterhead and envelopes when you want a full set, then print them on the stock and finish that fits your brand.",
         details:
           "A business card gets handed over in seconds, so it has to say something fast: legible, memorable, and consistent with everything else you hand someone. I design the layout first, then help you pick a stock and finish — foil, matte, or textured — that actually fits how you'll use it.",
         features: [
@@ -1256,10 +1353,14 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Double-sided layouts",
           "QR & digital contact options",
           "Consistent with your other printed pieces",
+          "Matching letterhead & #10 envelopes",
+          "Editable Word or Google Docs letterhead for everyday letters",
+          "Presentation folders to match",
+          "Gift certificates, coupons & loyalty punch cards",
         ],
         faqs: [
           {
-            question: "How much do business cards cost?",
+            question: "How much do business cards and letterhead cost?",
             answer:
               `${priceAnswer("business-printing/business-cards")} Printing depends on quantity and finish — foil and textured stocks cost more than standard matte — so I'll quote it once I know roughly how many you need.`,
           },
@@ -1286,6 +1387,16 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             question: "Do you offer double-sided or specialty finishes?",
             answer: "Yes — double-sided layouts, foil, matte, and textured stock are all options.",
           },
+          {
+            question: "Do you design letterhead and envelopes too?",
+            answer:
+              "Yes. Letterhead and #10 envelopes are designed to match your business cards, or as a full stationery set with all three. Letterhead comes as a print-ready file plus an editable Word or Google Docs version, so you can type everyday letters and invoices on it yourself.",
+          },
+          {
+            question: "Do you make gift certificates and punch cards?",
+            answer:
+              "Yes. Gift certificates, coupons, and loyalty punch cards are designed to match your business cards, and can be numbered so you can track which ones come back.",
+          },
         ],
         icon: IconBriefcase,
         image: {
@@ -1306,14 +1417,15 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         features: [
           "Tri-fold & bi-fold layouts",
           "One-pagers & flyers",
+          "Door hangers & rack cards",
           "Menus & counter cards",
           "Print-ready files, sized correctly",
         ],
         faqs: [
           {
-            question: "How much does a brochure cost?",
+            question: "How much do flyers, brochures, and menus cost?",
             answer:
-              `${priceAnswer("business-printing/brochures-collateral")} Flyers, menus, and one-pagers are quoted by size, and printing by quantity.`,
+              `${priceAnswer("business-printing/brochures-collateral")} Each includes 2 rounds of edits and print-ready files. Larger multi-page menus are quoted by page count, and printing by quantity, size, and paper.`,
           },
           {
             question: "How long does a brochure take to design and print?",
@@ -1348,6 +1460,135 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         },
       },
       {
+        slug: "magazines-catalogs",
+        title: "Magazines & Catalogs",
+        seoTitle: "Magazine & Catalog Design",
+        metaDescription:
+          "Magazine and catalog design in Richmond, IL: community and company magazines, product catalogs, line cards, and price books, print-ready with a PDF version.",
+        tagline: "Pages people actually flip through.",
+        description:
+          "Community and company magazines, newsletters with real heft, product catalogs, line cards, and price books — laid out so every page is easy to read and easy to find your way around, then delivered print-ready with a PDF for email and your website.",
+        details:
+          "A magazine or catalog is a system, not a single page: the same fonts, grids, and page styles carry from the cover to the back, so readers always know where they are and products are easy to compare. I set up that system first, then flow in your articles, photos, products, and prices. Many businesses refresh a catalog every year or publish a magazine every season, so the files are kept on hand and updates only cost the pages that change.",
+        features: [
+          "Community, company & member magazines",
+          "Product catalogs, line cards & price books",
+          "Cover design and consistent page styles",
+          "Product photo cleanup and background removal",
+          "Print-ready files for stapled or bound printing",
+          "A PDF version for email and your website",
+        ],
+        faqs: [
+          {
+            question: "How much does magazine or catalog design cost?",
+            answer:
+              `${priceAnswer("business-printing/magazines-catalogs")} Printing is quoted by quantity, size, and paper once the page count is set.`,
+          },
+          {
+            question: "Why do page counts come in multiples of 4?",
+            answer:
+              "Stapled and folded publications are printed on sheets that each hold 4 pages, so the total is always 8, 12, 16, 20, and so on. If your content lands in between, I'll suggest how to fill or trim it.",
+          },
+          {
+            question: "Can you update my catalog or magazine for the next issue?",
+            answer:
+              "Yes. The design files are kept on hand, so the next issue or a yearly price update reuses the same layout, and you only pay for the pages that change.",
+          },
+          {
+            question: "Do I need to provide the photos and writing?",
+            answer:
+              "You provide the articles, product details, and photos, and I handle the layout. Phone photos are fine for products: I can clean them up, remove backgrounds, and even out the color. Help tightening the copy is available too.",
+          },
+          {
+            question: "Can I get a digital version too?",
+            answer:
+              "Yes. Every magazine and catalog comes with a PDF sized for email and your website, alongside the print-ready files.",
+          },
+        ],
+        icon: IconBook,
+      },
+      {
+        slug: "postcards-direct-mail",
+        title: "Postcards & Direct Mail",
+        seoTitle: "Postcard & Direct Mail Design",
+        metaDescription:
+          "Postcard and direct mail design in Richmond, IL: promotions, announcements, and Every Door Direct Mail (EDDM) campaigns, designed, printed, and mailed.",
+        tagline: "Mail that gets read on the walk back from the mailbox.",
+        description:
+          "Promotions, grand openings, announcements, and seasonal reminders, designed to be read in the few seconds between the mailbox and the kitchen counter. Send them to your own customer list, or blanket whole neighborhoods with USPS Every Door Direct Mail (EDDM).",
+        details:
+          "A postcard has one job: get someone to act. That means one clear offer, a headline you can read at arm's length, and an easy next step. I design both sides, help you pick a size, and can handle the EDDM route planning and USPS paperwork, so your postcards reach every home on the routes you choose without needing a mailing list. Want to mail the neighbors of your recent customers instead? That's what [Location Smart Postcards](/services/location-smart-postcards) are for.",
+        features: [
+          "One- and two-sided postcard designs",
+          "Promotions, announcements & seasonal reminders",
+          "Every Door Direct Mail (EDDM) route planning",
+          "Mail to your own customer list",
+          "Printed and mailed for you",
+        ],
+        faqs: [
+          {
+            question: "How much does postcard design cost?",
+            answer: `${priceAnswer("business-printing/postcards-direct-mail")} Printing is quoted by size and quantity, and postage is billed at USPS rates.`,
+          },
+          {
+            question: "What is Every Door Direct Mail (EDDM)?",
+            answer:
+              "It's a USPS service that delivers your postcard to every address on the mail routes you choose, with no mailing list needed. It's one of the most affordable ways to reach a whole neighborhood or town.",
+          },
+          {
+            question: "Can you mail to my own customer list instead?",
+            answer: "Yes. Send me your list, and I'll have the postcards addressed and mailed.",
+          },
+          {
+            question: "How is this different from Location Smart Postcards?",
+            answer:
+              "EDDM reaches every home on a route. [Location Smart Postcards](/services/location-smart-postcards) target only the neighbors around your recent customers' addresses, with a message written about that job, which makes them more personal and more likely to get a response.",
+          },
+        ],
+        icon: IconPostcard,
+      },
+      {
+        slug: "stickers-labels",
+        title: "Stickers & Labels",
+        seoTitle: "Sticker & Product Label Design",
+        metaDescription:
+          "Sticker and product label design in Richmond, IL: logo stickers, jar and bottle labels, and packaging labels, printed on paper, vinyl, or waterproof stock.",
+        tagline: "Small labels that make a product look ready for the shelf.",
+        description:
+          "Logo stickers, product labels for jars, bottles, candles, and baked goods, and packaging seals, designed to fit your container exactly and printed on the material that suits it.",
+        details:
+          "A label has to fit a curved jar, survive a fridge or a shower, and still make your product stand out on a crowded shelf. I design to your container's exact size, keep the required details like ingredients and net weight easy to read, and set up matching versions for every flavor or scent so your whole line looks like a family.",
+        features: [
+          "Logo & promotional stickers",
+          "Jar, bottle, candle & bakery labels",
+          "Matching versions for each flavor or scent",
+          "Sized to your container",
+          "Paper, vinyl, or waterproof stock",
+        ],
+        faqs: [
+          {
+            question: "How much does label design cost?",
+            answer: `${priceAnswer("business-printing/stickers-labels")} Printing is quoted by size, material, and quantity.`,
+          },
+          {
+            question: "Can you design labels for a whole product line?",
+            answer:
+              "Yes. Once the main label is designed, each additional flavor, scent, or version reuses the same layout with its own color and text, which keeps the line consistent and the cost low.",
+          },
+          {
+            question: "Will the labels hold up to water or the fridge?",
+            answer:
+              "Yes, with the right material. Waterproof vinyl and coated stocks hold up to moisture, condensation, and handling. Tell me where the product will live and I'll recommend one.",
+          },
+          {
+            question: "What information has to go on a food label?",
+            answer:
+              "It depends on what you sell and where, so check your state's requirements. I'll lay out whatever you need, like ingredients, net weight, and allergens, so it's clear and easy to read.",
+          },
+        ],
+        icon: IconCard,
+      },
+      {
         slug: "business-documents",
         title: "Business Documents",
         metaDescription:
@@ -1362,12 +1603,13 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Business plan presentations",
           "Sales & proposal decks",
           "Internal update / QBR decks",
+          "Invoices & carbonless (NCR) forms",
         ],
         faqs: [
           {
             question: "How much does a pitch deck or business document cost?",
             answer:
-              "Pricing depends on slide count and how much content structuring is involved — I'll quote after a quick look at your goals and existing material.",
+              `${priceAnswer("business-printing/business-documents")} Decks depend on slide count and how much content structuring is involved, so I'll quote after a quick look at your goals and existing material.`,
           },
           {
             question: "How long does a deck take to design?",
@@ -1520,7 +1762,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Business promotion & event posters",
           "Graduation, birthday & celebration posters",
           "Retail & storefront signage",
-          "Multiple size options",
+          "Sizes from 11×17 to 24×36 and larger",
           "Glossy, matte, or adhesive",
         ],
         faqs: [
@@ -1536,7 +1778,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "What sizes are available?",
             answer:
-              "Standard poster sizes cover most needs, with larger formats available for storefronts or events.",
+              "The most common sizes are 11×17 inches (counters and bulletin boards), 18×24 (windows and walls), and 24×36 (storefronts and events), with larger formats available. I'll recommend a size based on where it'll hang and how far away people will be reading it.",
           },
           {
             question: "Can I get multiple copies for an event or business?",
@@ -1558,6 +1800,47 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           src: "/webp-assets/poster.webp",
           alt: "Bold black and white “The Biggest Sale of the Year” poster in a metal frame, displayed in a storefront window facing a busy sidewalk",
         },
+      },
+      {
+        slug: "decals-magnets",
+        title: "Decals & Vehicle Magnets",
+        seoTitle: "Window Decal & Vehicle Magnet Design",
+        metaDescription:
+          "Window decals, storefront hours, and vehicle door magnets designed and printed in Richmond, IL, so your business is advertised wherever it's parked.",
+        tagline: "Turn your windows and your truck into advertising.",
+        description:
+          "Store hours and logo decals for the front door, sale and seasonal window graphics, and magnetic signs for your car or truck doors, designed to read clearly from the sidewalk or the road.",
+        details:
+          "A vehicle magnet works for you every time you park, and a clean window decal tells people you're open before they reach the door. I design for the distance they'll be read from: big, simple type, your logo, and a phone number or website people can remember at a glance. Magnets come off for the weekend, and window decals peel off cleanly when the season changes.",
+        features: [
+          "Store hours & logo window decals",
+          "Sale & seasonal window graphics",
+          "Vehicle door magnets (sold in pairs)",
+          "Designed to read from the road",
+          "Removable, without damaging glass or paint",
+        ],
+        faqs: [
+          {
+            question: "How much do decals and vehicle magnets cost?",
+            answer: `${priceAnswer("signs-posters/decals-magnets")} Printing is quoted by size, material, and quantity.`,
+          },
+          {
+            question: "Will a vehicle magnet damage my paint?",
+            answer:
+              "Not when it's cared for. Take magnets off now and then to clean and dry the surface underneath, and don't put them on freshly painted or curved areas.",
+          },
+          {
+            question: "Can window decals be removed?",
+            answer:
+              "Yes. Removable vinyl peels off cleanly, which makes it ideal for seasonal or sale graphics. Long-term store hours and logos can use a more permanent vinyl.",
+          },
+          {
+            question: "What should go on a vehicle magnet?",
+            answer:
+              "Keep it short: your logo or business name, what you do, and one way to reach you, like a phone number or website. People read it in a few seconds, often from another car.",
+          },
+        ],
+        icon: IconSignpost,
       },
     ],
   },
@@ -1612,6 +1895,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         features: [
           "Grand opening, sale & storefront banners",
           "Event, trade show & sponsor banners",
+          "Retractable pull-up banners & trade show backdrops",
           "Team, graduation, birthday & welcome-home banners",
           "Vinyl, matte paper, or adhesive",
           "Finished ready to hang",
@@ -1634,6 +1918,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             question: "What size banner do I need?",
             answer:
               "It depends on how far away people will be when they read it. Tell me where it's going and I'll recommend a size that's readable from there.",
+          },
+          {
+            question: "Do you design retractable banners and trade show displays?",
+            answer:
+              "Yes. Pull-up banners and trade show backdrops are designed to the exact size of your stand, with the important message up high where people can see it over a crowd.",
           },
           {
             question: "Can I order several banners for an event or multiple locations?",
@@ -1856,7 +2145,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How much does photo restoration cost?",
             answer:
-              "Each photo is quoted individually based on how much damage there is. Send a phone snapshot of the photo and I'll give you a price before any work starts.",
+              `${priceAnswer("photos/photo-restoration")} Each photo is priced by how much damage there is: send a phone snapshot and I'll tell you the price before any work starts.`,
           },
           {
             question: "How damaged is too damaged?",
@@ -1871,7 +2160,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Can you colorize a black-and-white photo?",
             answer:
-              "Yes — colorization is available as an add-on. If you know details like eye color or the color of a dress, share them and I'll match them.",
+              "Yes. Colorization is a $25 add-on. If you know details like eye color or the color of a dress, share them and I'll match them.",
           },
           {
             question: "Can I get a printed copy?",
