@@ -58,6 +58,8 @@ export type ServiceSample = {
   title: string;
   description: string;
   pages: { src: string; thumb: string; title: string; alt: string }[];
+  /** The whole sample as a downloadable PDF. */
+  pdf?: { href: string; fileName: string; details: string };
 };
 
 export type ServiceLeaf = {
@@ -78,6 +80,8 @@ export type ServiceLeaf = {
   beforeAfter?: ServiceBeforeAfter;
   /** A multi-page sample shown below the pricing box. */
   sample?: ServiceSample;
+  /** A 1200×630 image for Facebook/X/LinkedIn previews; defaults to the site-wide one. */
+  shareImage?: { url: string; width: number; height: number; alt: string };
 };
 
 export type ServiceAudience = "business" | "personal" | "shared";
@@ -663,6 +667,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         sample: {
           eyebrow: "Example report",
           title: "See a real health check report",
+          pdf: {
+            href: "/downloads/sample-website-health-check-report.pdf",
+            fileName: "Sample-Website-Health-Check-Report.pdf",
+            details: "PDF · 18 pages · 3.7 MB",
+          },
           description:
             "This is a real report from a local business's website, with their details blurred. Click any page to read it full size. Yours covers the same ground for your site: what's working, what's costing you customers, every suggested fix explained, and a step-by-step plan.",
           pages: [
@@ -775,6 +784,12 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
             alt: "Example website review, page 18: the step-by-step plan",
           },
           ],
+        },
+        shareImage: {
+          url: "/social-media-posts/free-website-search-health-check.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Free Website + Search Health Check: Is your website quietly losing you customers? A hand-checked review of speed, security, lead forms, and Google and AI visibility, with pages from a sample report. No cost, no sales pressure.",
         },
         icon: IconShieldCheck,
         image: {

@@ -21,7 +21,9 @@ export function pageTitleText(base: string): string {
 
 /** The site-wide share image, used by pages without their own. A static file, not a
  *  generated route, so Facebook and X can always fetch it. */
-export const SITE_SHARE_IMAGE = {
+export type ShareImage = { url: string; width: number; height: number; alt: string };
+
+export const SITE_SHARE_IMAGE: ShareImage = {
   url: "/social-media-posts/site-share.jpg",
   width: 1200,
   height: 630,
@@ -38,18 +40,21 @@ export function pageMetadata({
   description,
   path,
   absolute = false,
+  image = SITE_SHARE_IMAGE,
 }: {
   title: string;
   description: string;
   path: string;
   absolute?: boolean;
+  /** A 1200×630 share image for this page; defaults to the site-wide one. */
+  image?: ShareImage;
 }): Metadata {
   const text = absolute ? title : pageTitleText(title);
   return {
     title: { absolute: text },
     description,
     alternates: { canonical: path },
-    openGraph: { title: text, description, url: path, siteName: BUSINESS_NAME, type: "website", images: [SITE_SHARE_IMAGE] },
-    twitter: { card: "summary_large_image", title: text, description, images: [SITE_SHARE_IMAGE] },
+    openGraph: { title: text, description, url: path, siteName: BUSINESS_NAME, type: "website", images: [image] },
+    twitter: { card: "summary_large_image", title: text, description, images: [image] },
   };
 }
