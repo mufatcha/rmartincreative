@@ -9,6 +9,7 @@ import ServiceJsonLd from "./ServiceJsonLd";
 import CardExtras from "./CardExtras";
 import { CARD_EXTRAS_ANCHOR, getCardExtras } from "../lib/data/card-extras";
 import { LeafPricing } from "./ServicePricing";
+import SampleReport from "./SampleReport";
 import ServiceVisual from "./ServiceVisual";
 import { IconArrowRight } from "./icons";
 import type { ServiceCategory, ServiceLeaf } from "../lib/services-data";
@@ -78,6 +79,8 @@ export default function ServiceLeafPage({
         </Reveal>
 
         <LeafPricing category={category} leafSlug={leaf.slug} />
+
+        {leaf.sample && <SampleReport sample={leaf.sample} />}
 
         <CardExtras category={category} leafSlug={leaf.slug} />
 
