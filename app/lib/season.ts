@@ -65,8 +65,8 @@ const MONTHLY: SeasonalContent[] = [
 
 const DECEMBER_LATE: SeasonalContent = {
   // Dec 21–31
-  badge: { text: "Year-End Search + AI Health Checks", icon: "globe" },
-  nav: { label: "Search + AI Check", href: "/services/search-ai-discovery/search-health-check" },
+  badge: { text: "Year-End Website + Search Health Checks", icon: "globe" },
+  nav: { label: "Free Health Check", href: "/services/search-ai-discovery/search-health-check" },
 };
 
 // The business is in Northern Illinois, so switch over on local (Central) time.

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL, SOCIAL_PROFILES } from "../lib/business";
-import { IconFacebook, IconGoogle, IconX } from "./icons";
+import { IconArrowRight, IconFacebook, IconGoogle, IconX } from "./icons";
+import { BUSINESS_CTA } from "../lib/cta";
 
 /** Icon and brand hover color for each profile in SOCIAL_PROFILES, by name. */
 const SOCIAL_STYLES: Record<string, { icon: typeof IconX; hover: string }> = {
@@ -72,6 +73,17 @@ export default function SiteFooter() {
           <div key={audience.id}>
             <p className="text-xs font-semibold uppercase tracking-widest text-ink">{audience.label}</p>
             <ul className="mt-3 space-y-2">
+              {audience.id === "business" && (
+                <li>
+                  <Link
+                    href={BUSINESS_CTA.href}
+                    className="group inline-flex items-center gap-1.5 rounded-full bg-ink px-3.5 py-1.5 text-xs font-semibold text-paper shadow-sm transition-transform hover:scale-105"
+                  >
+                    {BUSINESS_CTA.label}
+                    <IconArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                </li>
+              )}
               {audience.id === "business" && (
                 <li>
                   <Link href="/new-business" className="hover:text-ink">

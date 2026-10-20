@@ -96,6 +96,7 @@ export const SERVICES: ServiceOption[] = [
           "Sell products online",
           "Portfolio or showcase",
           "Full rebrand or refresh",
+          "Free website health check",
           "Not sure yet",
         ],
       },

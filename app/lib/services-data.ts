@@ -19,6 +19,7 @@ import {
   IconPresentation,
   IconRefresh,
   IconSearch,
+  IconShieldCheck,
   IconShirt,
   IconSignpost,
   IconSparkle,
@@ -51,6 +52,14 @@ export type ServiceBeforeAfter = {
   caption?: string;
 };
 
+/** A multi-page sample shown on a service page, like an example report. */
+export type ServiceSample = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  pages: { src: string; thumb: string; title: string; alt: string }[];
+};
+
 export type ServiceLeaf = {
   slug: string;
   title: string;
@@ -67,6 +76,8 @@ export type ServiceLeaf = {
   image?: ServiceImage;
   /** Shows an interactive before/after slider in place of `image`. */
   beforeAfter?: ServiceBeforeAfter;
+  /** A multi-page sample shown below the pricing box. */
+  sample?: ServiceSample;
 };
 
 export type ServiceAudience = "business" | "personal" | "shared";
@@ -597,58 +608,178 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     children: [
       {
         slug: "search-health-check",
-        title: "Free Search + AI Health Check",
+        title: "Free Website + Search Health Check",
+        seoTitle: "Free Website & SEO Health Check for Small Businesses",
         metaDescription:
-          "A free, no-obligation search and AI discovery check covering technical basics, page speed, mobile-friendliness, your Google Business Profile, and how AI assistants describe your business.",
-        tagline: "A free, plain-English look at what's holding your site back.",
+          "A free website and search health check: speed, mobile layout, security, forms, hosting, and how you show up on Google and in AI answers, in plain English.",
+        tagline: "Find out what's wrong with your site before your customers do.",
         description:
-          "No cost, no obligation. I'll take a look at your current site — and at what AI assistants say when asked about your business — and send back a short, plain-English report: what's working, what's not, and the highest-impact fixes if you decide to move forward.",
+          "No cost, no obligation. I'll look over your website the way a customer, a developer, and a search engine would — speed, mobile layout, security, broken links and forms, hosting, backups, and how you show up on Google and in AI answers like ChatGPT — and send back a full, plain-English report on what's working, what's at risk, and what to fix first.",
         details:
-          "This isn't a sales pitch dressed up as an audit. You'll get a real look at where the site stands today and a short list of the highest-impact fixes, whether or not you decide to hire me for the next step.",
+          "Most website problems are invisible to the owner: a contact form that quietly stopped sending, an expired security certificate, plugins two years out of date, or hosting that costs three times what it should. The health check finds those before they cost you customers, and checks whether Google and AI assistants describe your business correctly, and tells you honestly whether your site needs a few updates or a full overhaul.",
         features: [
-          "Technical basics (titles, headings, metadata)",
-          "Page speed and mobile-friendliness check",
-          "Broken link and redirect check",
+          "Page speed and Core Web Vitals",
+          "Mobile layout on phones and tablets",
+          "Security: certificate, software, and plugin updates",
+          "Broken links, images, and contact forms",
+          "Hosting, domain, and email setup, including what you pay",
+          "Backups: whether they exist and can be restored",
+          "Page titles, headings, and metadata",
           "Google Business Profile review",
           "AI spot check: what ChatGPT and Google's AI Overviews say about you",
-          "A short written report with prioritized next steps",
+          "A full written report with every suggested fix explained",
           "No obligation to book anything after",
         ],
         faqs: [
           {
             question: "Is the health check really free?",
-            answer: "Yes — no cost and no obligation to book anything afterward.",
+            answer:
+              "Yes, completely. There's nothing to buy, book, or sign up for, and no pushy sales calls or follow-up pressure afterward. You get the full report with all suggested edits, changes, and explanations. What you do with it is entirely up to you.",
           },
           {
             question: "What do I get at the end?",
             answer:
-              "A short written report covering technical basics, page speed, mobile-friendliness, your Google Business Profile, and how AI assistants currently describe your business, plus a prioritized list of what to fix first.",
+              "A full written report in plain English: what's working, what's at risk, and every suggested fix explained in priority order, with a recommendation on whether [website updates](/services/website-design-development/website-updates) or a [full overhaul](/services/website-design-development/website-overhaul) makes more sense.",
           },
           {
-            question: "How long does the health check take?",
+            question: "What do you need from me to get started?",
+            answer: "Just your website address. I'll take it from there.",
+          },
+          {
+            question: "Do you need my passwords or admin access?",
+            answer:
+              "No. Everything is checked from the outside, the way a visitor, search engine, or AI assistant sees your site. If you'd like a deeper look at hosting or backups later, we can talk about access then.",
+          },
+          {
+            question: "What platforms do you check?",
+            answer:
+              "Any of them: WordPress, Wix, Squarespace, Shopify, GoDaddy and other site builders, or a custom-built site. Just send your website address.",
+          },
+          {
+            question: "How long does it take?",
             answer: "Most health checks are completed and sent back within a few business days.",
           },
-          {
-            question: "Do I have to book anything else afterward?",
-            answer: "No — it's genuinely no-obligation. Plenty of people just want the information.",
-          },
-          {
-            question: "What information do you need from me to get started?",
-            answer: "Just your website URL — I'll take it from there.",
-          },
-          {
-            question: "Is this the same as a full audit agencies charge for?",
-            answer:
-              "It covers the fundamentals that matter most for a small business site. It's intentionally focused and fast rather than an exhaustive enterprise-style audit.",
-          },
         ],
-        icon: IconSearch,
+        sample: {
+          eyebrow: "Example report",
+          title: "See a real health check report",
+          description:
+            "This is a real report from a local business's website, with their details blurred. Click any page to read it full size. Yours covers the same ground for your site: what's working, what's costing you customers, every suggested fix explained, and a step-by-step plan.",
+          pages: [
+          {
+            src: "/webp-assets/website-report-example/page-01.webp",
+            thumb: "/webp-assets/website-report-example/page-01-thumb.webp",
+            title: "Cover: the goal and the site today",
+            alt: "Example website review, page 1: the cover, with the goal and the site today",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-02.webp",
+            thumb: "/webp-assets/website-report-example/page-02-thumb.webp",
+            title: "What this plan covers",
+            alt: "Example website review, page 2: what this plan covers",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-03.webp",
+            thumb: "/webp-assets/website-report-example/page-03-thumb.webp",
+            title: "The biggest issue: built for desktop",
+            alt: "Example website review, page 3: the biggest issue: built for desktop",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-04.webp",
+            thumb: "/webp-assets/website-report-example/page-04-thumb.webp",
+            title: "The full checkup",
+            alt: "Example website review, page 4: the full checkup",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-05.webp",
+            thumb: "/webp-assets/website-report-example/page-05-thumb.webp",
+            title: "Four errors to fix first",
+            alt: "Example website review, page 5: four errors to fix first",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-06.webp",
+            thumb: "/webp-assets/website-report-example/page-06-thumb.webp",
+            title: "What each key page should say",
+            alt: "Example website review, page 6: what each key page should say",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-07.webp",
+            thumb: "/webp-assets/website-report-example/page-07-thumb.webp",
+            title: "Hundreds of near-copy pages",
+            alt: "Example website review, page 7: hundreds of near-copy pages",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-08.webp",
+            thumb: "/webp-assets/website-report-example/page-08-thumb.webp",
+            title: "Real pages for nearby towns",
+            alt: "Example website review, page 8: real pages for nearby towns",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-09.webp",
+            thumb: "/webp-assets/website-report-example/page-09-thumb.webp",
+            title: "How Google and AI decide who to trust",
+            alt: "Example website review, page 9: how google and ai decide who to trust",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-10.webp",
+            thumb: "/webp-assets/website-report-example/page-10-thumb.webp",
+            title: "Adding questions and answers",
+            alt: "Example website review, page 10: adding questions and answers",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-11.webp",
+            thumb: "/webp-assets/website-report-example/page-11-thumb.webp",
+            title: "Titles, headings, and descriptions",
+            alt: "Example website review, page 11: titles, headings, and descriptions",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-12.webp",
+            thumb: "/webp-assets/website-report-example/page-12-thumb.webp",
+            title: "Missing pages to add",
+            alt: "Example website review, page 12: missing pages to add",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-13.webp",
+            thumb: "/webp-assets/website-report-example/page-13-thumb.webp",
+            title: "Making Google's data match the page",
+            alt: "Example website review, page 13: making google's data match the page",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-14.webp",
+            thumb: "/webp-assets/website-report-example/page-14-thumb.webp",
+            title: "Extra features Google can show",
+            alt: "Example website review, page 14: extra features google can show",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-15.webp",
+            thumb: "/webp-assets/website-report-example/page-15-thumb.webp",
+            title: "Editing today's site vs. building new",
+            alt: "Example website review, page 15: editing today's site vs. building new",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-16.webp",
+            thumb: "/webp-assets/website-report-example/page-16-thumb.webp",
+            title: "Time estimate and upkeep",
+            alt: "Example website review, page 16: time estimate and upkeep",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-17.webp",
+            thumb: "/webp-assets/website-report-example/page-17-thumb.webp",
+            title: "Adding a new phone model, start to finish",
+            alt: "Example website review, page 17: adding a new phone model, start to finish",
+          },
+          {
+            src: "/webp-assets/website-report-example/page-18.webp",
+            thumb: "/webp-assets/website-report-example/page-18-thumb.webp",
+            title: "The step-by-step plan",
+            alt: "Example website review, page 18: the step-by-step plan",
+          },
+          ],
+        },
+        icon: IconShieldCheck,
         image: {
-          src: "/webp-assets/free-search-ai-health-check.webp",
-          alt: "Free Search + AI Health Check: a tablet showing a Google search performance check, connected to a phone where an AI assistant analyzes the site, with a plain-English health check report marked no cost, no obligation",
-          fit: "expand",
-          width: 1600,
-          height: 873,
+          src: "/webp-assets/free-website-health-check-report.webp",
+          alt: "Sample website review and plan, with client details blurred: a headline about a website that works on customers' phones and gets found in search, beside panels showing the site on a phone today and in Google today",
         },
       },
       {

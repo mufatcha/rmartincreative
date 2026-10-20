@@ -136,8 +136,8 @@ export const PRICING: Record<string, ServicePricing> = {
     ],
   },
   "search-ai-discovery/search-health-check": {
-    lines: [{ label: "Search + AI Health Check", price: 0 }],
-    note: "No cost and no obligation to book anything afterward.",
+    lines: [{ label: "Website + Search Health Check", price: 0 }],
+    note: "Completely free, with no strings attached: you don't have to buy, book, or sign up for anything, and you won't get pushy sales calls or follow-up pressure. You get the full report with all suggested edits, changes, and explanations. What you do with it is entirely up to you.",
   },
   "search-ai-discovery/search-ai-update": {
     lines: [{ label: "One-time Search + AI Update", price: 300, from: true }],

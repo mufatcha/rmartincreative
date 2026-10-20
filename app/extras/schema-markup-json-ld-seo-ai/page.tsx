@@ -94,7 +94,7 @@ const FAQS: ServiceFaq[] = [
   },
   {
     question: "How do I check whether my site already has schema markup?",
-    answer: `Paste a page address into Google's [Rich Results Test](https://search.google.com/test/rich-results). It lists every type of structured data it finds and flags errors. Or ask for a [free Search + AI Health Check](${SEARCH}/search-health-check), and I'll look at it along with the rest of your site.`,
+    answer: `Paste a page address into Google's [Rich Results Test](https://search.google.com/test/rich-results). It lists every type of structured data it finds and flags errors. Or ask for a [free Website + Search Health Check](${SEARCH}/search-health-check), and I'll look at it along with the rest of your site.`,
   },
 ];
 
@@ -145,7 +145,7 @@ const CONTENT: ArticleContent = {
       heading: "How I handle it",
       paragraphs: [
         `Every site I build includes schema markup from launch, generated from the same information as the visible page. When a price or an answer changes on the page, the markup changes with it, so the two never drift apart. See [website design & development](${WEB}).`,
-        `Already have a site? A [Search + AI Update](${SEARCH}/search-ai-update) adds what's missing and fixes what's wrong, or start with a [free Search + AI Health Check](${SEARCH}/search-health-check) to see where you stand.`,
+        `Already have a site? A [Search + AI Update](${SEARCH}/search-ai-update) adds what's missing and fixes what's wrong, or start with a [free Website + Search Health Check](${SEARCH}/search-health-check) to see where you stand.`,
       ],
     },
   ],

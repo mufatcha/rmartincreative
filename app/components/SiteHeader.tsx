@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import QuoteModal from "./QuoteModal";
 import { IconArrowRight } from "./icons";
 import type { SeasonalNavLink } from "../lib/season";
+import { BUSINESS_CTA } from "../lib/cta";
 import { ABOUT } from "../lib/data/about";
 import type { ServiceAudience } from "../lib/services-data";
 import type { ServicesMenuGroup } from "../lib/services-menu";
@@ -24,7 +25,7 @@ const AUDIENCE_TABS = [
 
 // Desktop dropdown columns: businesses with the shared signs, prints &
 // apparel group stacked on the left, personal & family on the right.
-const MENU_COLUMNS: ServiceAudience[][] = [["business", "shared"], ["personal"]];
+const MENU_COLUMNS: ServiceAudience[][] = [["business"], ["personal", "shared"]];
 
 export default function SiteHeader({
   seasonalNav,
@@ -126,6 +127,16 @@ export default function SiteHeader({
                           <p className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
                             {audience.label}
                           </p>
+                          {audience.id === "business" && (
+                            <Link
+                              href={BUSINESS_CTA.href}
+                              onClick={closeAll}
+                              className="btn-shine group relative mt-3 inline-flex items-center gap-2 overflow-hidden rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper shadow-md shadow-ink/20 transition-transform hover:scale-105"
+                            >
+                              {BUSINESS_CTA.label}
+                              <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                          )}
                           <ul className="mt-3 space-y-1">
                             {audience.items.map((item) => {
                               return (
@@ -255,6 +266,16 @@ export default function SiteHeader({
                 {audience.label}
               </p>
               <div className="mt-1 flex flex-col">
+                {audience.id === "business" && (
+                  <Link
+                    href={BUSINESS_CTA.href}
+                    onClick={closeAll}
+                    className="my-2 inline-flex items-center justify-center gap-2 self-start rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper shadow-md shadow-ink/20"
+                  >
+                    {BUSINESS_CTA.label}
+                    <IconArrowRight className="h-4 w-4" />
+                  </Link>
+                )}
                 {audience.items.map((item) => (
                   <Link
                     key={item.href}

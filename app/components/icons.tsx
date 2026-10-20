@@ -443,3 +443,18 @@ export function IconBook({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+export function IconShieldCheck({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 3 5 6v5.5c0 4.3 2.9 7.9 7 9.5 4.1-1.6 7-5.2 7-9.5V6l-7-3Z"
+      />
+      <path stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" d="m9 12 2.2 2.2L15.5 10" />
+    </svg>
+  );
+}
