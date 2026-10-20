@@ -57,8 +57,11 @@ export async function POST(request: Request) {
   const contact = (body.contact ?? {}) as Record<string, unknown>;
   const name = str(contact.name, 200);
   const email = str(contact.email, 200);
-  if (!service || !name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return Response.json({ error: "Please include your name and a valid email." }, { status: 400 });
+  const phone = str(contact.phone, 50);
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  // An email, or a phone number with area code (the health check form accepts either).
+  if (!service || !name || (!validEmail && phone.replace(/\D/g, "").length < 10)) {
+    return Response.json({ error: "Please include your name and a valid email or phone number." }, { status: 400 });
   }
 
   const ip = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0] ?? null;
@@ -87,12 +90,11 @@ export async function POST(request: Request) {
     ? await Promise.all(files.map(async (f) => ({ ...f, url: await presignGet(r2, f.key) })))
     : files.map((f) => ({ ...f, url: "" }));
 
-  const phone = str(contact.phone, 50);
   const notes = str(contact.notes);
 
   const rows: [string, string][] = [
     ["Name", name],
-    ["Email", email],
+    ...(validEmail ? [["Email", email] as [string, string]] : []),
     ...(phone ? [["Phone", phone] as [string, string]] : []),
     ...answerRows.map((r) => [r.label, r.text] as [string, string]),
     ...(notes ? [["Anything else", notes] as [string, string]] : []),
@@ -124,7 +126,9 @@ export async function POST(request: Request) {
     )}) for 90 days.</p>`
         : `<p style="font-size:14px;color:#5a5270">No files attached.</p>`
     }
-    <p style="font-size:12px;color:#5a5270">Reply to this email to respond to ${escapeHtml(name)} directly.</p>`;
+    <p style="font-size:12px;color:#5a5270">${
+      validEmail ? `Reply to this email to respond to ${escapeHtml(name)} directly.` : `${escapeHtml(name)} left a phone number, not an email.`
+    }</p>`;
 
   const text = [
     `New quote request: ${service.label}`,
@@ -142,7 +146,7 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       from: process.env.QUOTE_FROM_EMAIL || QUOTE_FROM,
       to: [process.env.QUOTE_TO_EMAIL || QUOTE_INBOX_EMAIL],
-      reply_to: email,
+      ...(validEmail ? { reply_to: email } : {}),
       subject: `Quote request: ${service.label} — ${name}`,
       html,
       text,

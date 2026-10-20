@@ -42,6 +42,17 @@ export default function SampleReport({ sample }: { sample: ServiceSample }) {
         <p className="text-xs font-semibold uppercase tracking-widest text-violet-600">{sample.eyebrow}</p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight">{sample.title}</h2>
         <p className="mt-3 max-w-3xl text-ink-soft">{sample.description}</p>
+        {sample.pdf && (
+          <a
+            href={sample.pdf.href}
+            download={sample.pdf.fileName}
+            className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-700"
+          >
+            Download the sample report
+            <span className="font-normal text-ink-soft">({sample.pdf.details})</span>
+            <IconArrowRight className="h-4 w-4 rotate-90 transition-transform group-hover:translate-y-0.5" />
+          </a>
+        )}
       </Reveal>
 
       <ol className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">

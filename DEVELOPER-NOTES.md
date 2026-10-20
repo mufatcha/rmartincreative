@@ -55,6 +55,25 @@ Service page text can carry links using `[text](/path)` in FAQ answers, feature 
 - **New social profile:** add it to `SOCIAL_PROFILES` in `app/lib/business.ts`. It flows into the schema.org `sameAs` field and the footer. A new network also needs an icon in `app/components/icons.tsx` and an entry in `SOCIAL_STYLES` in `app/components/SiteFooter.tsx`.
 - **Facebook link:** if the page gets a username, swap the `profile.php?id=…` link for `facebook.com/<username>`.
 
+## Website health check tools
+
+Free tools for running a Free Website + Search Health Check (or checking this site after a deploy).
+
+| Area | Tool |
+|---|---|
+| Speed & Core Web Vitals | [PageSpeed Insights](https://pagespeed.web.dev), [WebPageTest](https://www.webpagetest.org), [GTmetrix](https://gtmetrix.com) |
+| Google indexing & errors | [Google Search Console](https://search.google.com/search-console), [Bing Webmaster Tools](https://www.bing.com/webmasters) |
+| Structured data | [Rich Results Test](https://search.google.com/test/rich-results), [Schema Markup Validator](https://validator.schema.org) |
+| Security certificate & headers | [SSL Labs](https://www.ssllabs.com/ssltest/), [Security Headers](https://securityheaders.com) |
+| Malware & blacklists | [Sucuri SiteCheck](https://sitecheck.sucuri.net) |
+| Broken links | [W3C Link Checker](https://validator.w3.org/checklink) |
+| Accessibility | [WAVE](https://wave.webaim.org) |
+| Email & DNS (SPF, DKIM, DMARC) | [MxToolbox](https://mxtoolbox.com/SuperTool.aspx), [DNS Checker](https://dnschecker.org) |
+| Share previews | [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) |
+| Site history | [Wayback Machine](https://web.archive.org) |
+
+Also test by hand: submit the contact form, tap the phone number on a phone, and ask ChatGPT and Google's AI Mode about the business.
+
 ## Rules
 
 - The business is **R. Martin Creative**. Never put it in the same sentence, title, description, or alt text as **Ryan Martin**. Example code uses made-up names, like "Example Co."

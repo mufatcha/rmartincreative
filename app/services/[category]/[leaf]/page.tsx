@@ -3,6 +3,7 @@ import { pageMetadata } from "../../../lib/seo";
 import { notFound } from "next/navigation";
 import ChristmasTownLinks from "../../../components/ChristmasTownLinks";
 import CtaSection from "../../../components/CtaSection";
+import HealthCheckPage from "../../../components/HealthCheckPage";
 import ServiceLeafPage from "../../../components/ServiceLeafPage";
 import { SERVICE_CATEGORIES, getServiceLeaf } from "../../../lib/services-data";
 
@@ -26,6 +27,7 @@ export async function generateMetadata({
       title: match.leaf.seoTitle ?? match.leaf.title,
       description: match.leaf.metaDescription,
       path: `/services/${categorySlug}/${leafSlug}`,
+      image: match.leaf.shareImage,
     }),
   };
 }
@@ -38,6 +40,9 @@ export default async function LeafPage({
   const { category: categorySlug, leaf: leafSlug } = await params;
   const match = getServiceLeaf(categorySlug, leafSlug);
   if (!match) notFound();
+
+  // The free health check has its own layout and request form, so it skips the quote CTA.
+  if (leafSlug === "search-health-check") return <HealthCheckPage category={match.category} leaf={match.leaf} />;
 
   return (
     <>
