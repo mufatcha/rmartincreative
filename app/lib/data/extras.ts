@@ -4,6 +4,10 @@
 // add the entry here and the hub, sitemap, and llms.txt pick it up.
 // After adding or changing a featured image, run `bun run social-images` to make
 // its link-share image (public/social-media-posts/<slug>.jpg).
+//
+// Content from the Nextdoor group (Website Wednesday how-tos, before-and-after fixes,
+// answers to members' questions) is published here first, with `series` set, then
+// shared on Nextdoor as a short summary that links back. See DEVELOPER-NOTES.md.
 
 import type { Metadata } from "next";
 import { BUSINESS_NAME } from "../business";
@@ -17,6 +21,35 @@ export const EXTRA_CATEGORIES = [
 ] as const;
 
 export type ExtraCategoryId = (typeof EXTRA_CATEGORIES)[number]["id"];
+
+/** Recurring series from the free Nextdoor group. A post can belong to one. */
+export const EXTRA_SERIES = [
+  {
+    id: "website-wednesday",
+    label: "Website Wednesday",
+    badge: "bg-violet-100 text-violet-700",
+    description: "A new how-to every week, with simple steps you can take on your own website.",
+  },
+  {
+    id: "before-after",
+    label: "Before & After",
+    badge: "bg-emerald-100 text-emerald-700",
+    description: "Real local websites made faster, clearer, and easier to find, shared with the owner's permission.",
+  },
+  {
+    id: "group-qa",
+    label: "Ask Anything",
+    badge: "bg-amber-100 text-amber-800",
+    description: "Answers to real questions from group members, no question too basic.",
+  },
+] as const;
+
+export type ExtraSeriesId = (typeof EXTRA_SERIES)[number]["id"];
+export type ExtraSeries = (typeof EXTRA_SERIES)[number];
+
+export function getExtraSeries(id: ExtraSeriesId): ExtraSeries {
+  return EXTRA_SERIES.find((s) => s.id === id)!;
+}
 export type ExtraCategory = (typeof EXTRA_CATEGORIES)[number];
 
 export function getExtraCategory(id: ExtraCategoryId): ExtraCategory {
@@ -27,6 +60,8 @@ export type Extra = {
   slug: string;
   kind: ExtraKind;
   category: ExtraCategoryId;
+  /** Set for posts from the Nextdoor group: shows a series badge and a link to the group. */
+  series?: ExtraSeriesId;
   /** Page title and card heading. Keep it under ~45 characters so the brand fits in the <title>. */
   title: string;
   /** Meta description and card blurb: 160 characters or fewer. */
@@ -50,6 +85,27 @@ export const EXTRAS_HUB = {
 };
 
 const EXTRAS_LIST: Extra[] = [
+  {
+    slug: "search-visibility-sprint",
+    kind: "note",
+    category: "web",
+    series: "website-wednesday",
+    title: "10 Simple Tasks to Get Found on Google and AI",
+    description:
+      "A free half-day plan: 10 timed tasks to set up Google Search Console and your Business Profile and make your pages easy for Google and AI to read.",
+    published: "2026-10-21",
+    image: {
+      src: "/webp-assets/search-visibility-sprint.webp",
+      alt: "Website Wednesday: 10 simple tasks to get found on Google and AI. A free search visibility sprint you can finish in one afternoon: about three and a half hours, all free tools, and a printable PDF checklist",
+      width: 1200,
+      height: 896,
+    },
+    download: {
+      href: "/downloads/Search-Visibility-Sprint.pdf",
+      fileName: "Search-Visibility-Sprint.pdf",
+      details: "PDF · 5 pages · printable checklist",
+    },
+  },
   {
     slug: "future-proof-website-data-beyond-wordpress",
     kind: "note",

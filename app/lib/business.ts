@@ -31,12 +31,24 @@ export const X_HANDLE = "@rmartincreative";
 /** Official social profiles. Each one is listed in the schema.org `sameAs` field
  *  (LocalBusinessJsonLd), which tells search engines and AI tools these accounts
  *  all belong to this business, and linked in the footer. Add new profiles here. */
-export const SOCIAL_PROFILES: { name: string; label: string; url: string }[] = [
+export const SOCIAL_PROFILES: {
+  name: string;
+  label: string;
+  url: string;
+  /** false for links that aren't the business's own profile (like a group it runs),
+   *  so they're left out of the schema.org sameAs list. */
+  sameAs?: boolean;
+}[] = [
   { name: "X", label: `${X_HANDLE} on X`, url: "https://x.com/rmartincreative" },
   { name: "Facebook", label: `${BUSINESS_NAME} on Facebook`, url: "https://www.facebook.com/profile.php?id=61595559686046" },
   // Google Business Profile, by its permanent Maps ID (cid), not a search link.
   { name: "Google", label: `${BUSINESS_NAME} on Google Maps`, url: "https://maps.google.com/?cid=3394983410703261460" },
+  { name: "Nextdoor", label: `${BUSINESS_NAME} on Nextdoor`, url: "https://nextdoor.com/page/r-martin-creative-richmond-il" },
 ];
+
+/** The free "Website Help for Local Business Owners" group on Nextdoor, linked in the
+ *  footer as text. It's a community group, not the business profile, so it isn't in sameAs. */
+export const NEXTDOOR_GROUP = { label: "Free website help group on Nextdoor", url: "https://nextdoor.com/g/0wgka8voj/" };
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??

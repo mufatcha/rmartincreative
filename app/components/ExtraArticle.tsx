@@ -3,13 +3,14 @@ import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BeforeAfterSlider from "./BeforeAfterSlider";
 import QuoteModal from "./QuoteModal";
 import Reveal from "./Reveal";
 import ServiceFaqs from "./ServiceFaqs";
 import { IconArrowRight } from "./icons";
-import { SITE_URL } from "../lib/business";
+import { NEXTDOOR_GROUP, SITE_URL } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
-import { EXTRAS_HUB, extraShareMetadata, getExtra, getExtraCategory } from "../lib/data/extras";
+import { EXTRAS_HUB, extraShareMetadata, getExtra, getExtraCategory, getExtraSeries } from "../lib/data/extras";
 import { renderInlineLinks } from "../lib/inline-links";
 import { pageTitle } from "../lib/seo";
 import type { ServiceFaq } from "../lib/services-data";
@@ -26,12 +27,31 @@ export type ArticleBlock =
   /** A code sample (shown as-is, not run through `rich`), with optional text before and after. */
   | { type: "code"; heading: string; paragraphs: string[]; code: string; note?: string }
   /** A comparison table: the first column labels each row. */
-  | { type: "table"; heading: string; paragraphs: string[]; columns: string[]; rows: string[][]; note?: string };
+  | { type: "table"; heading: string; paragraphs: string[]; columns: string[]; rows: string[][]; note?: string }
+  /** A before-and-after slider, for real fixes (share them only with the owner's permission). */
+  | {
+      type: "beforeAfter";
+      heading: string;
+      paragraphs: string[];
+      beforeSrc: string;
+      afterSrc: string;
+      beforeAlt: string;
+      afterAlt: string;
+      caption?: string;
+    };
 
 export type ArticleContent = {
   intro: string[];
   blocks: ArticleBlock[];
-  cta: { heading: string; body: string; serviceId: string; button: string; link: { href: string; label: string } };
+  cta: {
+    heading: string;
+    body: string;
+    serviceId: string;
+    button: string;
+    /** Makes the button a link (e.g. to a page's own form) instead of opening the quote form. */
+    buttonHref?: string;
+    link: { href: string; label: string };
+  };
   faqs: ServiceFaq[];
 };
 
@@ -186,11 +206,30 @@ function Block({ block }: { block: ArticleBlock }) {
           {block.note && <p className={`mt-6 text-sm ${p}`}>{rich(block.note)}</p>}
         </>
       );
+    case "beforeAfter":
+      return (
+        <>
+          {block.paragraphs.map((para) => (
+            <p key={para} className={`mt-4 text-lg ${p}`}>
+              {rich(para)}
+            </p>
+          ))}
+          <div className="mt-6 overflow-hidden rounded-2xl shadow-xl ring-1 ring-ink/5">
+            <BeforeAfterSlider
+              beforeSrc={block.beforeSrc}
+              afterSrc={block.afterSrc}
+              beforeAlt={block.beforeAlt}
+              afterAlt={block.afterAlt}
+            />
+          </div>
+          {block.caption && <p className={`mt-3 text-center text-sm ${p}`}>{rich(block.caption)}</p>}
+        </>
+      );
   }
 }
 
 export default function ExtraArticle({ slug, content }: { slug: string; content: ArticleContent }) {
-  const { title, description, published, category, image } = getArticle(slug);
+  const { title, description, published, category, image, series, download } = getArticle(slug);
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -217,7 +256,7 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
         />
         <div className="relative mx-auto max-w-3xl px-6">
           <Link href="/extras" className="text-xs font-semibold uppercase tracking-widest text-sky-600 hover:text-sky-700">
-            {EXTRAS_HUB.title} · {getExtraCategory(category).label}
+            {EXTRAS_HUB.title} · {series ? getExtraSeries(series).label : getExtraCategory(category).label}
           </Link>
           <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl">{title}</h1>
           {content.intro.map((para, i) => (
@@ -225,6 +264,17 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
               {rich(para)}
             </p>
           ))}
+          {download && (
+            <a
+              href={download.href}
+              download={download.fileName}
+              className="btn-shine group relative mt-8 inline-flex items-center gap-3 overflow-hidden rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper shadow-lg shadow-ink/20 transition-transform hover:scale-105"
+            >
+              Download the free PDF
+              <span className="font-normal text-paper/70">{download.details}</span>
+              <IconArrowRight className="h-4 w-4 rotate-90 transition-transform group-hover:translate-y-0.5" />
+            </a>
+          )}
           {image && (
             <div className="mt-10 overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-ink/5">
               <Image
@@ -254,17 +304,41 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
       {/* Call to action + FAQs */}
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-6">
+          {series && (
+            <p className="mb-8 rounded-2xl bg-white p-5 text-sm leading-relaxed text-ink-soft shadow-sm ring-1 ring-ink/5">
+              This started in our free Nextdoor group,{" "}
+              <span className="font-semibold text-ink">Website Help for Local Business Owners</span>.{" "}
+              <a
+                href={NEXTDOOR_GROUP.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[#1B8851] hover:underline"
+              >
+                Join to ask your own questions
+              </a>
+              .
+            </p>
+          )}
           <Reveal>
             <div className="rounded-3xl bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-600 p-8 text-white shadow-xl">
               <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{content.cta.heading}</h2>
               <p className="mt-3 leading-relaxed text-white/90">{content.cta.body}</p>
               <div className="mt-6 flex flex-wrap items-center gap-4">
-                <QuoteModal
-                  initialServiceId={content.cta.serviceId}
-                  triggerClassName="rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg transition-transform hover:scale-105"
-                >
-                  {content.cta.button}
-                </QuoteModal>
+                {content.cta.buttonHref ? (
+                  <Link
+                    href={content.cta.buttonHref}
+                    className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg transition-transform hover:scale-105"
+                  >
+                    {content.cta.button}
+                  </Link>
+                ) : (
+                  <QuoteModal
+                    initialServiceId={content.cta.serviceId}
+                    triggerClassName="rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg transition-transform hover:scale-105"
+                  >
+                    {content.cta.button}
+                  </QuoteModal>
+                )}
                 <Link href={content.cta.link.href} className="group inline-flex items-center gap-2 text-sm font-semibold text-white">
                   {content.cta.link.label}
                   <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

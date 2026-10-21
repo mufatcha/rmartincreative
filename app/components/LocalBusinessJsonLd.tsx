@@ -44,7 +44,7 @@ function buildSchema() {
     paymentAccepted: PAYMENT_ACCEPTED,
     currenciesAccepted: "USD, BTC, DOGE, SOL, SUI",
     url: SITE_URL,
-    sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
+    sameAs: SOCIAL_PROFILES.filter((profile) => profile.sameAs !== false).map((profile) => profile.url),
     telephone: BUSINESS_PHONE_SCHEMA,
     priceRange: priceRange(),
     email: BUSINESS_EMAIL,
