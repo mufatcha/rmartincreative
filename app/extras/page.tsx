@@ -4,7 +4,16 @@ import Link from "next/link";
 import CtaSection from "../components/CtaSection";
 import Reveal from "../components/Reveal";
 import { IconArrowRight } from "../components/icons";
-import { EXTRAS, EXTRAS_HUB, EXTRA_CATEGORIES, type Extra, type ExtraCategory } from "../lib/data/extras";
+import { NEXTDOOR_GROUP } from "../lib/business";
+import {
+  EXTRAS,
+  EXTRAS_HUB,
+  EXTRA_CATEGORIES,
+  EXTRA_SERIES,
+  getExtraSeries,
+  type Extra,
+  type ExtraCategory,
+} from "../lib/data/extras";
 import { pageMetadata } from "../lib/seo";
 
 export const metadata: Metadata = {
@@ -48,6 +57,13 @@ function ExtraCard({ extra, category, index }: { extra: Extra; category: ExtraCa
             <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${category.badge}`}>
               {category.label}
             </span>
+            {extra.series && (
+              <span
+                className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${getExtraSeries(extra.series).badge}`}
+              >
+                {getExtraSeries(extra.series).label}
+              </span>
+            )}
             {extra.download && (
               <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-800">
                 Free download
@@ -72,6 +88,8 @@ export default function ExtrasPage() {
     category,
     extras: EXTRAS.filter((e) => e.category === category.id),
   })).filter((g) => g.extras.length > 0);
+  // The Nextdoor band shows once the first group post is published.
+  const hasGroupPosts = EXTRAS.some((e) => e.series);
 
   return (
     <>
@@ -99,6 +117,36 @@ export default function ExtrasPage() {
                 </a>
               ))}
             </nav>
+          )}
+          {hasGroupPosts && (
+            <div className="mt-10 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-ink/5 sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#1B8851]">From the Nextdoor group</p>
+              <p className="mt-2 max-w-3xl text-ink-soft">
+                Posts from our free group, <span className="font-semibold text-ink">Website Help for Local Business Owners</span>,
+                shared here so everyone can read them.
+              </p>
+              <ul className="mt-5 grid gap-4 sm:grid-cols-3">
+                {EXTRA_SERIES.map((series) => (
+                  <li key={series.id}>
+                    <span
+                      className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${series.badge}`}
+                    >
+                      {series.label}
+                    </span>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">{series.description}</p>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={NEXTDOOR_GROUP.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#1B8851] hover:underline"
+              >
+                Join the free group on Nextdoor
+                <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </div>
           )}
         </div>
       </section>

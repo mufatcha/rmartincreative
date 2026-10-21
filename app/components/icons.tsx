@@ -458,3 +458,12 @@ export function IconShieldCheck({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+/** The Nextdoor house logo, in one color. */
+export function IconNextdoor({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M12 3.2 2.5 10.6l1.3 1.6L5.5 11v9.3h5v-5.6a1.5 1.5 0 0 1 3 0v5.6h5V11l1.7 1.2 1.3-1.6L12 3.2Z" />
+    </svg>
+  );
+}

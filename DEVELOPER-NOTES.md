@@ -25,6 +25,23 @@ Run `bun run` with nothing after it to list every script.
 6. Link to the new post from related service pages and articles.
 7. After it's live, paste the link into [Facebook's Sharing Debugger](https://developers.facebook.com/tools/debug/) to refresh the preview.
 
+## Nextdoor group content
+
+Posts for the free Nextdoor group, [Website Help for Local Business Owners](https://nextdoor.com/g/0wgka8voj/), go on the website first, then a short version goes on Nextdoor with a link back. Nextdoor can't embed group posts, and this way the content is public and searchable.
+
+1. **Add it as a Notes & Freebies post** (see above), with `category: "web"` and a `series`:
+   - `website-wednesday`: the weekly how-to
+   - `before-after`: a real fix, using the `beforeAfter` block (a slider)
+   - `group-qa`: answers to members' questions, written as the post's `faqs`
+2. Add a 4:3 featured image, then run `bun run social-images`.
+3. Push it and wait for it to go live.
+4. **Post on Nextdoor:** 2–3 sentences summing it up, then "Full how-to with screenshots:" and the link.
+
+Series posts automatically get a series badge, a "From the Nextdoor group" band on the hub, and a "Join the group" link at the end.
+
+- **Before & after:** get the business owner's OK before publishing their site.
+- **Q&As:** leave out names and businesses unless the member agrees.
+
 ## Images
 
 - New images in `public/webp-assets/` get re-encoded before pushing: WebP quality 80, no wider than 1600px. Skip it if the file is already smaller.

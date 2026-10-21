@@ -154,6 +154,8 @@ const CONTENT: ArticleContent = {
     body: "Send me your website address. I'll check your structured data along with the rest of your search basics, and reply in plain English with what's working and what to fix first.",
     serviceId: "search-ai",
     button: "Get a free health check",
+    // Straight to the request form on the health check page.
+    buttonHref: `${SEARCH}/search-health-check#claim`,
     link: { href: SEARCH, label: "Search + AI Discovery" },
   },
   faqs: FAQS,

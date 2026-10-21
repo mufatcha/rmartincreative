@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL, SOCIAL_PROFILES } from "../lib/business";
-import { IconArrowRight, IconFacebook, IconGoogle, IconX } from "./icons";
+import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL, NEXTDOOR_GROUP, SOCIAL_PROFILES } from "../lib/business";
+import { IconArrowRight, IconFacebook, IconGoogle, IconNextdoor, IconX } from "./icons";
 import { BUSINESS_CTA } from "../lib/cta";
 
 /** Icon and brand hover color for each profile in SOCIAL_PROFILES, by name. */
@@ -8,6 +8,7 @@ const SOCIAL_STYLES: Record<string, { icon: typeof IconX; hover: string }> = {
   X: { icon: IconX, hover: "hover:bg-black hover:text-white hover:ring-black" },
   Facebook: { icon: IconFacebook, hover: "hover:bg-[#0866FF] hover:text-white hover:ring-[#0866FF]" },
   Google: { icon: IconGoogle, hover: "hover:bg-[#4285F4] hover:text-white hover:ring-[#4285F4]" },
+  Nextdoor: { icon: IconNextdoor, hover: "hover:bg-[#1B8851] hover:text-white hover:ring-[#1B8851]" },
 };
 import { ABOUT } from "../lib/data/about";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
@@ -67,6 +68,15 @@ export default function SiteFooter() {
               );
             })}
           </div>
+          <a
+            href={NEXTDOOR_GROUP.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft hover:text-[#1B8851]"
+          >
+            {NEXTDOOR_GROUP.label}
+            <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          </a>
         </div>
 
         {SERVICE_AUDIENCES.map((audience) => (
