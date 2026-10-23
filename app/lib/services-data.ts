@@ -69,6 +69,8 @@ export type ServiceLeaf = {
   seoTitle?: string;
   metaDescription: string;
   tagline: string;
+  /** Text for this service's card on its category page, when it should differ from `tagline`. */
+  cardSummary?: string;
   description: string;
   details: string;
   features: string[];
@@ -122,14 +124,14 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       "Custom website design and development in Richmond, IL and Northern Illinois: Next.js, WordPress, headless CMS, and Shopify stores, ready for search and AI.",
     tagline: "Custom sites, built and maintained end-to-end.",
     description:
-      "Whether you need a brand-new custom site, an online store, or an existing site that needs attention, I design and build every site myself. Every build is clean, fast, mobile-friendly, and ready for search engines and AI from launch, with real metadata and structured data (schema markup) baked in instead of bolted on afterward. I build custom sites and web apps on Next.js, mobile apps for iPhone and Android with React Native, editable sites on WordPress and headless CMS platforms like Strapi and Prismic, and online stores on Shopify, BigCommerce, and Wix. More than 20 years of hand-coding websites, combined with AI-assisted development, gets new sites built faster than ever without cutting corners.",
+      "Whether you need a brand-new custom site, an online store, or an existing site that needs attention, I design and build every site myself. Every build is clean, fast, mobile-friendly, and ready for search engines and AI from launch, with real metadata and structured data (schema markup) baked in instead of bolted on afterward. As a freelance Next.js developer in the Chicago area, I build high-performance custom web applications, mobile apps for iPhone and Android with React Native, editable sites on WordPress and headless CMS platforms like Strapi and Prismic, and online stores on Shopify, BigCommerce, and Wix. More than 20 years of hand-coding websites, combined with AI-assisted development, gets new sites built faster than ever without cutting corners.",
     details:
-      "Based in Richmond, IL, I work directly with small businesses, organizations, and startups across Northern Illinois and Southeast Wisconsin, from McHenry and Gurnee to Lake Geneva and Kenosha. Local clients get face-to-face planning when it helps, and everyone gets clear communication with no agency middle managers. Not sure whether you need a full overhaul or just an update? Most of the time it's obvious once we talk through what's not working.",
+      "Based in Richmond, IL, I'm a freelance web designer for B2B companies across Northern Illinois and a reliable local web developer for small businesses in Southeast Wisconsin. I work directly with business owners, organizations, and startups across the region, from McHenry and Gurnee to Lake Geneva and Kenosha. Local clients get face-to-face planning when it helps, and everyone gets clear communication with no agency middle managers. Not sure whether you need a full overhaul or just an update? Most of the time it's obvious once we talk through what's not working.",
     features: [],
     stack: [
       {
         title: "Custom sites & web apps",
-        items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "React", "TypeScript", "JavaScript", "Python", "SQL", "Tailwind CSS"],
+        items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "React", "Nuxt.js", "Vue", "TypeScript", "JavaScript", "Python", "SQL", "Tailwind CSS"],
       },
       { title: "Mobile apps", items: ["React Native", "Expo", "iOS", "Android"] },
       {
@@ -224,6 +226,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         metaDescription:
           "Website overhauls in Richmond, IL and Northern Illinois: a full custom redesign and rebuild, mobile-first and fast, with 301 redirects to protect rankings.",
         tagline: "A full redesign and rebuild, from first sketch to launch.",
+        cardSummary:
+          "As a freelance web designer, I deliver custom website redesigns for local service businesses: a complete rebuild from first sketch to launch.",
         description:
           "For established businesses whose current site no longer reflects who they are or what they sell. I start from your goals and your content, design a layout custom to your brand — not a recycled template — and build it into a fast, mobile-first site built to win calls and leads, ready for Google and AI search from launch.",
         details:
@@ -484,6 +488,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         metaDescription:
           "Modern website hosting for small businesses on Cloudflare — fast global hosting, built-in security, version-controlled backups on GitHub, and automatic updates, often with no monthly host bill.",
         tagline: "Lower hosting costs, safer backups, and faster load times.",
+        cardSummary:
+          "An on-call WordPress maintenance service for Northern Illinois businesses, with lower hosting costs, safer backups, and faster load times.",
         description:
           "Most small business sites are still paying monthly for hosting that a modern setup handles for free. I host sites on Cloudflare's global network, keep every version of the code safely backed up on GitHub, and publish updates automatically — no traditional web host bill required.",
         details:
@@ -618,7 +624,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "A free website and search health check: speed, mobile layout, security, forms, hosting, and how you show up on Google and in AI answers, in plain English.",
         tagline: "Find out what's wrong with your site before your customers do.",
         description:
-          "No cost, no obligation. I'll look over your website the way a customer, a developer, and a search engine would — speed, mobile layout, security, broken links and forms, hosting, backups, and how you show up on Google and in AI answers like ChatGPT — and send back a full, plain-English report on what's working, what's at risk, and what to fix first.",
+          "No cost, no obligation. In this manual website audit and technical SEO checkup, I'll look over your website the way a customer, a developer, and a search engine would — speed, mobile layout, security, broken links and forms, hosting, backups, and how you show up on Google and in AI answers like ChatGPT — and send back a full, plain-English report on what's working, what's at risk, and what to fix first.",
         details:
           "Most website problems are invisible to the owner: a contact form that quietly stopped sending, an expired security certificate, plugins two years out of date, or hosting that costs three times what it should. The health check finds those before they cost you customers, and checks whether Google and AI assistants describe your business correctly, and tells you honestly whether your site needs a few updates or a full overhaul.",
         features: [
@@ -629,6 +635,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Hosting, domain, and email setup, including what you pay",
           "Backups: whether they exist and can be restored",
           "Page titles, headings, and metadata",
+          "Schema markup (JSON-LD) and structured data",
           "Google Business Profile review",
           "AI spot check: what ChatGPT and Google's AI Overviews say about you",
           "A full written report with every suggested fix explained",
@@ -726,8 +733,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             src: "/webp-assets/website-report-example/page-09.webp",
             thumb: "/webp-assets/website-report-example/page-09-thumb.webp",
-            title: "How Google and AI decide who to trust",
-            alt: "Example website review, page 9: how google and ai decide who to trust",
+            title: "How Google and AI decide who to trust (AI discovery foundations)",
+            alt: "Example website review, page 9: how Google and AI decide who to trust, the foundations of AI discovery",
           },
           {
             src: "/webp-assets/website-report-example/page-10.webp",
@@ -750,8 +757,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             src: "/webp-assets/website-report-example/page-13.webp",
             thumb: "/webp-assets/website-report-example/page-13-thumb.webp",
-            title: "Making Google's data match the page",
-            alt: "Example website review, page 13: making google's data match the page",
+            title: "Fixing indexation and structured data to match the page",
+            alt: "Example website review, page 13: fixing indexation and structured data to match the page",
           },
           {
             src: "/webp-assets/website-report-example/page-14.webp",
