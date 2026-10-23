@@ -36,12 +36,12 @@ const HIDDEN_ISSUES = [
   {
     icon: IconCloud,
     title: "Overpaying for hosting",
-    body: "$30 to $100 or more a month for slow, outdated hosting, when many small business sites can run for a fraction of that.",
+    body: "Paying $30 to $100 or more a month for slow, outdated hosting, when a custom website speed optimization service can move your site to fast, modern cloud hosting for a fraction of that cost.",
   },
   {
     icon: IconSparkle,
     title: "Missing from AI answers",
-    body: "What ChatGPT, Claude, and Google's AI Overviews tell people about your business, if they mention you at all.",
+    body: "What ChatGPT, Claude, and Google's AI Overviews tell people about your business, if they mention you at all, and whether your site has the structured data that AI search engine optimization and discovery depend on.",
   },
   {
     icon: IconShieldCheck,
@@ -54,27 +54,35 @@ const COVERAGE = [
   {
     icon: IconRocket,
     title: "Performance & mobile",
-    body: "Load speed, Core Web Vitals, and how every key page looks and works on phones and tablets.",
+    body: "Load speed, Core Web Vitals optimization opportunities, and how every key page looks and works on phones and tablets.",
   },
   {
     icon: IconMail,
     title: "Lead flow & forms",
-    body: "Contact forms, quote and booking links, and tap-to-call numbers, actually tested.",
+    body: "Contact forms, quote and booking links, and tap-to-call numbers, actually tested by hand.",
   },
   {
     icon: IconShieldCheck,
     title: "Security & health",
-    body: "Security certificate, software and plugin updates, spam exposure, and whether backups exist and work.",
+    body: "Security certificates, software and plugin updates, spam exposure, and whether backups exist and work.",
   },
   {
     icon: IconSearch,
     title: "Search & AI visibility",
-    body: "Page titles and descriptions, your Google Business Profile, and what AI assistants say about you.",
+    body: (
+      <>
+        Page titles, meta descriptions, your Google Business Profile, and your{" "}
+        <Link href="/extras/schema-markup-json-ld-seo-ai" className="font-medium text-violet-600 hover:underline">
+          schema markup (JSON-LD) implementation
+        </Link>
+        , so search engines and AI models understand your services accurately.
+      </>
+    ),
   },
   {
     icon: IconCloud,
     title: "Hosting & costs",
-    body: "Your domain, email, and hosting setup, and what you're paying that you don't need to.",
+    body: "Your domain, email, and hosting setup, including hidden fees and anything you're paying for that you don't need.",
   },
 ];
 
@@ -110,8 +118,8 @@ export default function HealthCheckPage({ category, leaf }: { category: ServiceC
               <p className="mt-4 text-lg font-medium text-ink">No cost, and no sales pressure.</p>
               <p className="mt-4 text-lg text-ink-soft">
                 Get an expert review of your website through the eyes of a customer, a developer, and a search engine.
-                I&rsquo;ll check your site&rsquo;s speed, security, lead forms, and AI visibility by hand, then send you a
-                clear, plain-English action plan.
+                I&rsquo;ll perform a manual website audit and technical SEO checkup, testing your site&rsquo;s speed,
+                security, lead forms, and AI visibility by hand, then send you a clear, plain-English action plan.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                 {claim}
@@ -124,7 +132,7 @@ export default function HealthCheckPage({ category, leaf }: { category: ServiceC
                   <span aria-hidden className="h-2 w-2 rounded-full bg-emerald-500" />
                   Based in {SERVICE_HOME_CITY}, IL
                 </span>
-                Serving Northern Illinois &amp; Southeast Wisconsin, checked by a real person, not an automated scanner.
+                Serving Northern Illinois &amp; Southeast Wisconsin. Checked by a real person, not an automated scanner.
               </p>
             </div>
           </Reveal>
@@ -178,8 +186,9 @@ export default function HealthCheckPage({ category, leaf }: { category: ServiceC
             <p className="text-xs font-semibold uppercase tracking-widest text-violet-600">What I uncover</p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Five areas, checked by hand</h2>
             <p className="mt-3 max-w-3xl text-ink-soft">
-              This isn&rsquo;t an automated scan with your logo on it. I look at your site the way your customers, Google,
-              and AI assistants do, and test the things that actually bring in business.
+              This isn&rsquo;t an automated scan with your logo slapped on it. As a local web developer, I examine your
+              site the way your customers, Google, and AI assistants do, testing the exact bottlenecks that affect local
+              lead generation.
             </p>
           </div>
         </Reveal>
@@ -201,8 +210,9 @@ export default function HealthCheckPage({ category, leaf }: { category: ServiceC
             <div className="flex h-full flex-col justify-center rounded-2xl bg-ink p-6 text-paper shadow-sm">
               <h3 className="font-semibold">You get the full report</h3>
               <p className="mt-2 text-sm leading-relaxed text-paper/75">
-                Every suggested edit, change, and explanation, in priority order, with an honest call on whether you need
-                a few updates or a full overhaul.
+                Every suggested edit, change, and explanation, listed in priority order, with an honest assessment of
+                whether you need a few local website updates and fixes, or whether a complete site rebuild makes more
+                sense.
               </p>
             </div>
           </Reveal>

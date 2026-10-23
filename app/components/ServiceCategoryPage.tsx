@@ -72,7 +72,7 @@ export default function ServiceCategoryPage({ category, children }: { category: 
                       <LeafIcon className="h-6 w-6" />
                     </span>
                     <h2 className="mt-5 text-lg font-semibold">{leaf.title}</h2>
-                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">{leaf.tagline}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">{leaf.cardSummary ?? leaf.tagline}</p>
                     <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-violet-600">
                       Learn more
                       <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
