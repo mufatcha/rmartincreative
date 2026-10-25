@@ -56,6 +56,37 @@ export function trackQuoteSubmitted(serviceId: string) {
   w.clarity?.("event", "quote_submitted");
 }
 
+/** The quote form's steps, in order, as reported to analytics. */
+export const QUOTE_STEP_NAMES = ["service", "questions", "files", "contact"] as const;
+
+/** The quote form was opened (GA4 "quote_open"). Clarity's "quote_opened" tag lets you
+ *  filter recordings to visitors who opened it, then compare with "quote_submitted". */
+export function trackQuoteOpened(serviceId: string | undefined) {
+  const w = window as AnalyticsWindow;
+  w.gtag?.("event", "quote_open", { service: serviceId ?? "not_chosen", page_path: location.pathname });
+  w.clarity?.("event", "quote_opened");
+}
+
+/** A step of the quote form was shown (GA4 "quote_step", step 1–4). */
+export function trackQuoteStep(step: number, serviceId: string | null) {
+  const w = window as AnalyticsWindow;
+  w.gtag?.("event", "quote_step", { step: step + 1, step_name: QUOTE_STEP_NAMES[step], service: serviceId ?? "not_chosen" });
+}
+
+/** The quote form was closed without sending (GA4 "quote_abandon"), with the step it stopped on. */
+export function trackQuoteAbandoned(step: number, serviceId: string | null) {
+  const w = window as AnalyticsWindow;
+  w.gtag?.("event", "quote_abandon", { step: step + 1, step_name: QUOTE_STEP_NAMES[step], service: serviceId ?? "not_chosen" });
+  w.clarity?.("event", "quote_abandoned");
+}
+
+/** A phone or email link was clicked anywhere on the site (GA4 "phone_click" / "email_click"). */
+export function trackContactClick(kind: "phone" | "email", href: string) {
+  const w = window as AnalyticsWindow;
+  w.gtag?.("event", `${kind}_click`, { link_url: href, page_path: location.pathname });
+  w.clarity?.("event", `${kind}_click`);
+}
+
 /** Records a free download from Notes & Freebies (GA4 "file_download") and a Clarity event. */
 export function trackFreebieDownload(slug: string, fileName: string) {
   const w = window as AnalyticsWindow;

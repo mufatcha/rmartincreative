@@ -52,6 +52,7 @@ const CONTENT: ArticleContent = {
       paragraphs: [
         "In WordPress, even a simple change can mean finding the right menu, the right block, and the right plugin setting, and there's a real learning curve before anyone feels confident. In a headless CMS, your team fills in simple fields set up around your actual content: a headline, a photo, a price, a description. There's no page builder where one wrong drag can wreck a layout, and the design stays consistent no matter who's editing.",
         "Click **Publish**, and the website updates on its own, usually within a few minutes. Drafts can be previewed before they go live.",
+        "Want to try it? The [Juniper & Rye demo editor](/demos/juniper-rye) is a sample site for a made-up bakery. Change the menu, hours, or brand color and watch the site update as you type.",
       ],
     },
     {

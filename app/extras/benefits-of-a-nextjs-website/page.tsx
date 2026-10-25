@@ -20,7 +20,7 @@ const BENEFITS = [
   },
   {
     title: "Easier for Google and AI to find",
-    body: "Every page arrives as complete, readable text, with its own title, description, and structured data (labels that tell search engines what your business is, where it is, and what it offers). Google and AI assistants like ChatGPT can read it all right away. See [Search + AI Discovery](/services/search-ai-discovery) for how that pays off.",
+    body: "Every page arrives as complete, readable text, with its own title, description, and [structured data](/extras/schema-markup-json-ld-seo-ai) (labels that tell search engines what your business is, where it is, and what it offers). Google and AI assistants like ChatGPT can read it all right away. See [Search + AI Discovery](/services/search-ai-discovery) for how that pays off.",
   },
   {
     title: "Fewer security headaches",
@@ -32,7 +32,7 @@ const BENEFITS = [
   },
   {
     title: "Room to grow",
-    body: "Start with a few pages. Later, add online booking, a store, a customer portal, or a full web app on the same foundation, without starting over.",
+    body: "Start with a few pages. Later, add online booking, a store, a customer portal, or a full web app on the same foundation, without starting over. See what that can look like on the [Vantor demo site](/demos/vantor-ai), with streaming AI chat, live data, and instant search.",
   },
 ];
 

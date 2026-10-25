@@ -3,6 +3,7 @@ import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import heroImg from "@/public/webp-assets/ryan-martin-desktop.webp";
 import QuoteModal from "./QuoteModal";
+import { BUSINESS_CTA } from "../lib/cta";
 import { getSeasonalBadge, type SeasonIcon } from "../lib/season";
 import {
   IconArrowRight,
@@ -27,21 +28,6 @@ const SEASON_ICONS: Record<SeasonIcon, typeof IconSnowflake> = {
 
 type FloatStyle = CSSProperties & { "--rot"?: string };
 
-// `wide` tags only show from tablet up; mobile keeps the original five.
-const TAGS: { label: string; href: string; wide?: boolean }[] = [
-  { label: "Websites", href: "/services/website-design-development" },
-  { label: "Search + AI Discovery", href: "/services/search-ai-discovery" },
-  { label: "Business Cards", href: "/services/business-printing/business-cards" },
-  { label: "Brochures", href: "/services/business-printing/brochures-collateral" },
-  { label: "Pitch Decks", href: "/services/business-printing/business-documents" },
-  { label: "Online Stores", href: "/services/website-design-development/e-commerce-websites", wide: true },
-  { label: "WordPress & CMS", href: "/services/website-design-development/wordpress-headless-cms", wide: true },
-  { label: "Yard Signs", href: "/services/signs-posters/yard-signs", wide: true },
-  { label: "Posters", href: "/services/signs-posters/posters", wide: true },
-  { label: "T-Shirts & Apparel", href: "/services/apparel", wide: true },
-  { label: "Corporate Holiday Cards", href: "/services/greeting-cards/christmas-cards", wide: true },
-]
-
 const HERO_ALT =
   "Ryan Martin's desk: a laptop showing a website wireframe and analytics dashboard, colorful business cards including one for Ryan Martin, an open portfolio and design services brochure, a camera, a sketched design notebook, and an RM-branded coffee mug";
 
@@ -65,7 +51,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden pt-48 pb-24 sm:pt-56 sm:pb-32"
+      className="relative overflow-x-clip pt-48 pb-24 sm:pt-56 sm:pb-32"
     >
       <div
         aria-hidden
@@ -82,10 +68,14 @@ export default function Hero() {
 
       <div className="relative mx-auto grid max-w-6xl gap-16 px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink-soft shadow-sm backdrop-blur">
+          <Link
+            href={badge.href}
+            className="group inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-ink-soft shadow-sm backdrop-blur transition-colors hover:bg-white hover:text-ink"
+          >
             <BadgeIcon className="h-3.5 w-3.5 text-rose-500" />
             {badge.text}
-          </span>
+            <IconArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+          </Link>
 
           <h1 className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
             Your{" "}
@@ -98,37 +88,23 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
-            Small businesses need a website, search visibility, print, and brand consistency
-            &mdash; without the cost of a full-time marketing department. I’m Ryan Martin, 
-            an experienced single-point partner based in Richmond, IL, delivering end-to-end 
-            design, web, and search strategy for local businesses across Northern Illinois 
-            and Southeast Wisconsin.
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg">
+            I&rsquo;m Ryan, and I build your website, get you found on Google and in AI answers,
+            and design your print, all in one place. Based in Richmond, IL, serving Northern
+            Illinois and Southeast Wisconsin.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <QuoteModal triggerClassName="btn-shine relative overflow-hidden rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper shadow-lg shadow-ink/20 transition-transform hover:scale-105">
               Get a Quote
             </QuoteModal>
-            <a
-              href="#services"
+            <Link
+              href={BUSINESS_CTA.href}
               className="group inline-flex items-center gap-2 rounded-full border border-ink/15 px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:bg-white"
             >
-              See Services
+              Free Website Health Check
               <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-          </div>
-
-          <div className="mt-10 flex flex-wrap gap-2">
-            {TAGS.map((tag) => (
-              <Link
-                key={tag.href}
-                href={tag.href}
-                className={`${tag.wide ? "hidden sm:inline-block" : "inline-block"} rounded-full bg-white/70 px-3.5 py-1.5 text-xs font-medium text-ink-soft ring-1 ring-ink/10 transition-colors hover:bg-white hover:text-ink hover:ring-ink/20`}
-              >
-                {tag.label}
-              </Link>
-            ))}
+            </Link>
           </div>
         </div>
 

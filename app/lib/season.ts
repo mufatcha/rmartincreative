@@ -6,11 +6,28 @@
 export type SeasonIcon = "globe" | "shirt" | "presentation" | "card" | "snowflake" | "sign" | "passport";
 
 export type SeasonalBadge = { text: string; icon: SeasonIcon };
+/** The badge plus where it links: the same page as that month's nav link. */
+export type SeasonalBadgeLink = SeasonalBadge & { href: string };
 export type SeasonalNavLink = { label: string; href: string };
 
 type SeasonalContent = { badge: SeasonalBadge; nav: SeasonalNavLink };
 
 // Index 0 = January … 11 = December (December is split below).
+/**
+ * The corporate holiday card order deadline, shown in the hero badge from September
+ * until it passes. Update both fields each year (see DEVELOPER-NOTES.md).
+ */
+export const HOLIDAY_CARD_DEADLINE = {
+  label: "Nov 27",
+  /** When the badge switches to last call: 12:00 am the day after, Central time. */
+  endsAt: "2026-11-28T00:00:00-06:00",
+};
+
+const HOLIDAY_CARDS: SeasonalContent = {
+  badge: { text: `Corporate holiday cards: order by ${HOLIDAY_CARD_DEADLINE.label}`, icon: "snowflake" },
+  nav: { label: "Holiday Cards", href: "/services/greeting-cards/christmas-cards" },
+};
+
 const MONTHLY: SeasonalContent[] = [
   {
     badge: { text: "Start the Year with a New Website", icon: "globe" },
@@ -44,21 +61,12 @@ const MONTHLY: SeasonalContent[] = [
     badge: { text: "Custom Spirit Wear", icon: "shirt" },
     nav: { label: "Spirit Wear", href: "/services/apparel" },
   },
+  HOLIDAY_CARDS, // September
+  HOLIDAY_CARDS, // October
+  HOLIDAY_CARDS, // November (until the deadline; then December's last call)
   {
-    badge: { text: "Now Booking Christmas Cards", icon: "snowflake" },
-    nav: { label: "Christmas Cards", href: "/services/greeting-cards/christmas-cards" },
-  },
-  {
-    badge: { text: "Now Booking Christmas Cards", icon: "snowflake" },
-    nav: { label: "Christmas Cards", href: "/services/greeting-cards/christmas-cards" },
-  },
-  {
-    badge: { text: "Now Booking Christmas Cards", icon: "snowflake" },
-    nav: { label: "Christmas Cards", href: "/services/greeting-cards/christmas-cards" },
-  },
-  {
-    // Dec 1–20
-    badge: { text: "Last Call for Christmas Cards", icon: "snowflake" },
+    // Dec 1–20 (and the end of November, once the order deadline passes)
+    badge: { text: "Last Call for Holiday Cards", icon: "snowflake" },
     nav: { label: "Christmas Cards", href: "/services/greeting-cards/christmas-cards" },
   },
 ];
@@ -82,11 +90,13 @@ function resolveSeasonalContent(now: Date): SeasonalContent {
   const day = Number(parts.find((p) => p.type === "day")?.value);
 
   if (month === 11 && day >= 21) return DECEMBER_LATE;
+  if (month === 10 && now >= new Date(HOLIDAY_CARD_DEADLINE.endsAt)) return MONTHLY[11];
   return MONTHLY[month];
 }
 
-export function getSeasonalBadge(now: Date = new Date()): SeasonalBadge {
-  return resolveSeasonalContent(now).badge;
+export function getSeasonalBadge(now: Date = new Date()): SeasonalBadgeLink {
+  const { badge, nav } = resolveSeasonalContent(now);
+  return { ...badge, href: nav.href };
 }
 
 export function getSeasonalNavLink(now: Date = new Date()): SeasonalNavLink {

@@ -48,7 +48,7 @@ export default function ServiceLeafPage({
               <h1 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">{leaf.title}</h1>
               <p className="mt-3 text-lg font-medium text-violet-600">{leaf.tagline}</p>
               <p className="mt-4 text-lg text-ink-soft">{leaf.description}</p>
-              <p className="mt-4 text-base leading-relaxed text-ink-soft">{leaf.details}</p>
+              <p className="mt-4 text-base leading-relaxed text-ink-soft">{renderInlineLinks(leaf.details)}</p>
               <ServiceCta
                 extrasHref={
                   getCardExtras(`${category.slug}/${leaf.slug}`).length > 0 ? `#${CARD_EXTRAS_ANCHOR}` : undefined

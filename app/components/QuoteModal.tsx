@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { trackQuoteSubmitted } from "./Analytics";
+import { trackQuoteAbandoned, trackQuoteOpened, trackQuoteStep, trackQuoteSubmitted } from "./Analytics";
 import FileDropzone from "./FileDropzone";
 import Turnstile, { turnstileEnabled } from "./Turnstile";
 import { IconArrowRight, IconClose } from "./icons";
@@ -52,6 +52,7 @@ export default function QuoteModal({
   const stepCount = 4;
 
   function close() {
+    if (!submitted) trackQuoteAbandoned(step, serviceId);
     setOpen(false);
     triggerRef.current?.focus();
     setStep(0);
@@ -65,6 +66,13 @@ export default function QuoteModal({
     setHoneypot("");
     uploads.reset();
   }
+
+  // Report each step as it's shown, so analytics can tell where people stop.
+  useEffect(() => {
+    if (open && !submitted) trackQuoteStep(step, serviceId);
+    // Only when the step changes (or the form opens), not as answers change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, step]);
 
   // Lets the Escape handler below always call the latest close().
   const closeFnRef = useRef(close);
@@ -135,6 +143,7 @@ export default function QuoteModal({
             setServiceId(initialServiceId);
             setStep(1);
           }
+          trackQuoteOpened(initialServiceId);
           setOpen(true);
         }}
       >

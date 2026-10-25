@@ -126,7 +126,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     description:
       "Whether you need a brand-new custom site, an online store, or an existing site that needs attention, I design and build every site myself. Every build is clean, fast, mobile-friendly, and ready for search engines and AI from launch, with real metadata and structured data (schema markup) baked in instead of bolted on afterward. As a freelance Next.js developer in the Chicago area, I build high-performance custom web applications, mobile apps for iPhone and Android with React Native, editable sites on WordPress and headless CMS platforms like Strapi and Prismic, and online stores on Shopify, BigCommerce, and Wix. More than 20 years of hand-coding websites, combined with AI-assisted development, gets new sites built faster than ever without cutting corners.",
     details:
-      "Based in Richmond, IL, I'm a freelance web designer for B2B companies across Northern Illinois and a reliable local web developer for small businesses in Southeast Wisconsin. I work directly with business owners, organizations, and startups across the region, from McHenry and Gurnee to Lake Geneva and Kenosha. Local clients get face-to-face planning when it helps, and everyone gets clear communication with no agency middle managers. Not sure whether you need a full overhaul or just an update? Most of the time it's obvious once we talk through what's not working.",
+      "Based in Richmond, IL, I'm a freelance web designer for B2B companies across Northern Illinois and a reliable local web developer for small businesses in Southeast Wisconsin. I work directly with business owners, organizations, and startups across the region, from McHenry and Gurnee to Lake Geneva and Kenosha. Local clients get face-to-face planning when it helps, and everyone gets clear communication with no agency middle managers. Not sure whether you need a full overhaul or just an update? Most of the time it's obvious once we talk through what's not working. Want to see what's possible first? Click through two demo sites I built for made-up companies: [Vantor](/demos/vantor-ai), an AI startup site with streaming chat and instant search, and [Juniper & Rye](/demos/juniper-rye), a bakery whose owner updates the menu and hours in a headless CMS.",
     features: [],
     stack: [
       {
@@ -206,6 +206,11 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Yes. As an add-on, I can set up a private preview site: a second copy of your site that runs alongside the live one. It's locked behind a login and hidden from search engines and AI crawlers, so you can click through new pages and changes, share them with your team, and approve everything before it goes public. Once you sign off, the same changes are published to your live site. It's sometimes called a staging site, and it's quoted per project.",
       },
       {
+        question: "Can I see examples of what you build?",
+        answer:
+          "Yes. Two demo sites for made-up companies show what's possible: [Vantor](/demos/vantor-ai), an AI startup site with streaming chat, live data, and instant search built on Next.js and React, and [Juniper & Rye](/demos/juniper-rye), a bakery whose owner edits the menu, hours, and specials in a headless CMS and watches the site update live. Switch on “How it’s built” at the bottom of either one for a plain-English tour.",
+      },
+      {
         question: "Which platforms do you work with?",
         answer:
           "Custom-coded sites (usually built with [Next.js](/extras/benefits-of-a-nextjs-website) and React), WordPress, [headless CMS](/extras/headless-cms-vs-wordpress) platforms like Strapi and Prismic, and e-commerce on Shopify, BigCommerce, and Wix. I can also update most sites built on other platforms. The right choice depends on what the site needs to do and who will be updating it — I'll recommend one after we talk.",
@@ -231,7 +236,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         description:
           "For established businesses whose current site no longer reflects who they are or what they sell. I start from your goals and your content, design a layout custom to your brand — not a recycled template — and build it into a fast, mobile-first site built to win calls and leads, ready for Google and AI search from launch.",
         details:
-          "Most redesigns start with the same problem: the current site doesn't reflect the business anymore, or it was never built with a real strategy in mind. I start by figuring out what the site actually needs to do — win more calls, sell online, make a strong first impression — then design and build around that, instead of starting from a template and hoping it fits. Because AI-assisted development shortens the build itself, more of the timeline goes where it matters: getting the design, content, and details right. Based in Richmond, IL, I work directly with business owners across Northern Illinois and Southeast Wisconsin, with clear communication and no agency account managers in between.",
+          "Most redesigns start with the same problem: the current site doesn't reflect the business anymore, or it was never built with a real strategy in mind. I start by figuring out what the site actually needs to do — win more calls, sell online, make a strong first impression — then design and build around that, instead of starting from a template and hoping it fits. Because AI-assisted development shortens the build itself, more of the timeline goes where it matters: getting the design, content, and details right. For a feel of what a rebuild can add, try two demo sites for made-up companies: [Vantor](/demos/vantor-ai) shows fast, app-like features built with Next.js, and [Juniper & Rye](/demos/juniper-rye) shows a site the owner can edit themselves. Based in Richmond, IL, I work directly with business owners across Northern Illinois and Southeast Wisconsin, with clear communication and no agency account managers in between.",
         features: [
           "Custom design, not a drag-and-drop template",
           "Mobile-first layout, tested on phones, tablets, and desktops",
@@ -297,6 +302,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         metaDescription:
           "E-commerce website design in Richmond, IL and Northern Illinois: custom Shopify, BigCommerce, and Wix stores with payments and shipping set up, ready to sell.",
         tagline: "A storefront that looks like your brand and is ready to sell.",
+        cardSummary:
+          "A storefront on Shopify, BigCommerce, or Wix that looks like your brand, with payments, shipping, and orders ready on day one.",
         description:
           "Whether you're opening your first online store or outgrowing the one you have, I design and build storefronts on Shopify, BigCommerce, and Wix — customized to your brand instead of looking like every other theme, and set up to take payments, calculate shipping, and process orders from day one.",
         details:
@@ -362,10 +369,12 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         metaDescription:
           "Custom WordPress sites and headless CMS builds on Strapi and Prismic in Richmond, IL and Northern Illinois: easy team editing and fast Next.js front ends.",
         tagline: "Content you can edit yourself, on a site built to last.",
+        cardSummary:
+          "Update pages, posts, and photos yourself on a clean WordPress site or a headless CMS, with no plugin clutter and no code required.",
         description:
           "When your team needs to publish blog posts, update service pages, or add new team members on its own, I build on a content management system set up around how you work. That can mean a custom WordPress site with an editor you'll recognize, or a headless CMS like Strapi or Prismic paired with a fast, modern front end for sites and web apps that need more flexibility.",
         details:
-          "WordPress is still a great choice for content-heavy sites — blogs, news, resources, and service pages your team updates often — as long as it's built cleanly, with a custom theme and no pile of plugins slowing it down. For projects that outgrow a traditional site, a headless CMS keeps the easy editing experience but separates it from the front end, so the same content can power a website, a web app, or both, with the speed and flexibility of custom code. Based in Richmond, IL, I work directly with business owners, marketing teams, and organizations across Northern Illinois and Southeast Wisconsin, with no agency account managers in between.",
+          "WordPress is still a great choice for content-heavy sites — blogs, news, resources, and service pages your team updates often — as long as it's built cleanly, with a custom theme and no pile of plugins slowing it down. For projects that outgrow a traditional site, a headless CMS keeps the easy editing experience but separates it from the front end, so the same content can power a website, a web app, or both, with the speed and flexibility of custom code. Try it in the [Juniper & Rye demo](/demos/juniper-rye), a made-up bakery whose owner edits the menu, hours, and specials and watches the site update live, or see what a custom front end can do on the [Vantor demo site](/demos/vantor-ai). Based in Richmond, IL, I work directly with business owners, marketing teams, and organizations across Northern Illinois and Southeast Wisconsin, with no agency account managers in between.",
         features: [
           "Custom WordPress themes, not bloated page builders like Elementor or Divi",
           "Editing screens and custom fields set up around your actual content",
@@ -375,6 +384,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "301 redirects when moving from an old WordPress or legacy site, so rankings carry over",
           "A walkthrough for your team on editing and publishing before launch",
           "Not sure which fits? Read [Headless CMS vs. WordPress, Explained](/extras/headless-cms-vs-wordpress)",
+          "Try it yourself in a [sample headless CMS editor](/demos/juniper-rye), built for a made-up bakery",
         ],
         faqs: [
           {
@@ -426,6 +436,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         metaDescription:
           "Ongoing website updates and maintenance — content changes, new pages, security updates, and performance tune-ups for an existing site.",
         tagline: "Keep an existing site current without a full rebuild.",
+        cardSummary:
+          "Fresh photos, new pages, faster load times, and fixes for what's broken, so your current site keeps working without a full rebuild.",
         description:
           "Not every site needs to start over. If yours mostly works but is starting to show its age — outdated photos, a missing page, a sluggish load time — I can update it in place instead of rebuilding it from scratch.",
         details:
@@ -489,7 +501,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Modern website hosting for small businesses on Cloudflare — fast global hosting, built-in security, version-controlled backups on GitHub, and automatic updates, often with no monthly host bill.",
         tagline: "Lower hosting costs, safer backups, and faster load times.",
         cardSummary:
-          "An on-call WordPress maintenance service for Northern Illinois businesses, with lower hosting costs, safer backups, and faster load times.",
+          "Fast, secure hosting on Cloudflare with every change backed up on GitHub, often with no monthly host bill.",
         description:
           "Most small business sites are still paying monthly for hosting that a modern setup handles for free. I host sites on Cloudflare's global network, keep every version of the code safely backed up on GitHub, and publish updates automatically — no traditional web host bill required.",
         details:
@@ -836,7 +848,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Do I need the free health check first?",
             answer:
-              "No — if you already know what needs fixing, or you send over an existing audit, I can go straight into the update.",
+              "Every update starts with my own [free health check](/services/search-ai-discovery/search-health-check), even if you already have an audit or a list of fixes. Send those over too: they're a helpful head start. A fresh, hands-on review just makes sure nothing gets missed, and that the update covers everything holding your site back, not only what someone happened to flag.",
           },
           {
             question: "Does this include content writing?",

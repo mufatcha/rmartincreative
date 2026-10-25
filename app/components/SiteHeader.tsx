@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { isDemoPath } from "./HideOnDemos";
 import QuoteModal from "./QuoteModal";
 import { IconArrowRight } from "./icons";
 import type { SeasonalNavLink } from "../lib/season";
@@ -70,6 +71,8 @@ export default function SiteHeader({
     setServicesOpen(false);
     setMenuOpen(false);
   };
+
+  if (isDemoPath(pathname)) return null;
 
   return (
     <header

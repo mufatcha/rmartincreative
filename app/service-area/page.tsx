@@ -3,7 +3,7 @@ import { pageMetadata } from "../lib/seo";
 import CtaSection from "../components/CtaSection";
 import QuoteModal from "../components/QuoteModal";
 import Reveal from "../components/Reveal";
-import { SERVICE_HOME_CITY } from "../lib/business";
+import { SERVICE_AREA_BOUNDS, SERVICE_HOME_CITY, STATE_NAMES, serviceAreaByCounty } from "../lib/business";
 import { TOWNS, type Town } from "../lib/data/towns";
 
 export const metadata: Metadata = {
@@ -49,6 +49,55 @@ function buildGroups(): Group[] {
   });
   return groups.filter((g) => g.towns.length > 0);
 }
+
+/** "McHenry, Lake, Kane, and Cook counties in Illinois" for one state. */
+function countyList(state: string): string {
+  const names = serviceAreaByCounty().find((r) => r.state === state)?.counties.map((c) => c.county) ?? [];
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")}${names.length > 2 ? "," : ""} and ${names.at(-1)}` : names[0];
+  return `${list} counties in ${STATE_NAMES[state]}`;
+}
+
+const FAQS = [
+  {
+    question: "How far does your service area reach?",
+    answer: `My service area runs north to ${SERVICE_AREA_BOUNDS.north}, south to ${SERVICE_AREA_BOUNDS.south}, west to ${SERVICE_AREA_BOUNDS.west}, and east to ${SERVICE_AREA_BOUNDS.east}, with ${SERVICE_HOME_CITY}, IL as home base.`,
+  },
+  {
+    question: "What towns do you cover?",
+    // Key hubs only: the full town list is on this page.
+    answer: `I cover ${countyList("IL")}, up through ${countyList("WI")}, including Richmond, McHenry, Crystal Lake, Gurnee, Lake Geneva, Kenosha, and the communities in between.`,
+  },
+  {
+    question: "Do you serve Lake Geneva, Wisconsin?",
+    answer:
+      "Yes. Lake Geneva is the northern edge of my service area. I regularly work with clients just across the Illinois–Wisconsin border for websites, business printing, cards, and photo restoration.",
+  },
+  {
+    question: "How far will you travel for a print job?",
+    answer:
+      "Within the service area, I can arrange in-person meetings, drop-offs, and pickups. Outside that range, everything, from design proofs to final files, works just as well over email and mail.",
+  },
+  {
+    question: "How far in advance should I book holiday cards?",
+    answer:
+      "As early as possible in the fall. Holiday cards are my busiest season, and clients across the service area who book early get first pick of finishes and guaranteed delivery before the holidays.",
+  },
+  {
+    question: "Do I need to mail in photos for digitizing, or can we meet locally?",
+    answer:
+      "Both work. If you're within the service area, we can arrange a local drop-off and pickup. If you're farther out, prints, slides, and negatives can be mailed in and returned with your digital files.",
+  },
+];
+
+const FAQ_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: { "@type": "Answer", text: faq.answer },
+  })),
+};
 
 const STEPS = [
   {
@@ -129,6 +178,23 @@ export default function ServiceAreaPage() {
               Arrange a pickup or quote
             </QuoteModal>
             <p className="text-sm text-ink-soft">Don&rsquo;t see your town? Ask — I may still be nearby.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }} />
+        <div className="mx-auto max-w-6xl px-6">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Service area questions</h2>
+          <div className="mt-8 grid gap-8 sm:grid-cols-2">
+            {FAQS.map((faq, i) => (
+              <Reveal key={faq.question} delay={(i % 2) * 80}>
+                <div>
+                  <h3 className="text-base font-semibold">{faq.question}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-soft">{faq.answer}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

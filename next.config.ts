@@ -7,7 +7,8 @@ const nextConfig: NextConfig = {
       // gets a Markdown version of the page from app/agent-markdown. Browsers and
       // search engines don't send that header, so they get the normal page.
       // (Two simple patterns, not one regex: the Cloudflare adapter can't fill a
-      // single regex parameter that spans several path segments.)
+      // single regex parameter that spans several path segments.) The demo sites are
+      // fictitious companies, so agents never get a Markdown copy of them.
       beforeFiles: [
         {
           source: "/",
@@ -15,7 +16,7 @@ const nextConfig: NextConfig = {
           destination: "/agent-markdown",
         },
         {
-          source: "/:first((?!_next$|api$|agent-markdown$)[^/]+)/:rest*",
+          source: "/:first((?!_next$|api$|agent-markdown$|demos$)[^/]+)/:rest*",
           has: [{ type: "header", key: "accept", value: ".*text/markdown.*" }],
           destination: "/agent-markdown/:first/:rest*",
         },
