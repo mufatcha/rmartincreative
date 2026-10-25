@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
-import ComparisonSection from "./components/ComparisonSection";
-import ServicesSection from "./components/ServicesSection";
-import PartnerPlanSection from "./components/PartnerPlanSection";
-import BusinessPrintingSection from "./components/BusinessPrintingSection";
-import NeighborPostcardSection from "./components/NeighborPostcardSection";
+import MainOffersSection from "./components/MainOffersSection";
 import WebDesignSection from "./components/WebDesignSection";
 import SearchAiSection from "./components/SearchAiSection";
+import PartnerPlanSection from "./components/PartnerPlanSection";
+import ComparisonSection from "./components/ComparisonSection";
 import ProcessSection from "./components/ProcessSection";
-import ServiceAreaSection from "./components/ServiceAreaSection";
+import MoreServicesSection from "./components/MoreServicesSection";
 import TrustedBySection from "./components/TrustedBySection";
 import CtaSection from "./components/CtaSection";
 
@@ -20,20 +17,19 @@ export const metadata: Metadata = {
 // Rebuild the page hourly so the seasonal hero badge (app/lib/season.ts) stays current.
 export const revalidate = 3600;
 
+// Leads with three offers (websites, search + AI, the partner plan); everything else
+// is linked from MoreServicesSection. Towns and service-area FAQs live on /service-area.
 export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee />
-      <ComparisonSection />
-      <ServicesSection />
-      <PartnerPlanSection />
-      <BusinessPrintingSection />
+      <MainOffersSection />
       <WebDesignSection />
       <SearchAiSection />
-      <NeighborPostcardSection />
+      <PartnerPlanSection />
+      <ComparisonSection />
       <ProcessSection />
-      <ServiceAreaSection />
+      <MoreServicesSection />
       <TrustedBySection />
       <CtaSection />
     </>

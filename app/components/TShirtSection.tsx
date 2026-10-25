@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Reveal from "./Reveal";
 import { FEEDTHEFLAMES_URL } from "../lib/business";
 import { IconArrowRight, IconExternalLink, IconFlame } from "./icons";
+import QuoteModal from "./QuoteModal";
 
 type FloatStyle = CSSProperties & { "--rot"?: string };
 
@@ -69,13 +70,10 @@ export default function TShirtSection() {
                 <IconExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 <span className="sr-only">(opens in a new tab)</span>
               </a>
-              <a
-                href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-              >
+              <QuoteModal initialServiceId="apparel" triggerClassName="group inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
                 Get a custom quote
                 <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
+              </QuoteModal>
             </div>
           </div>
         </Reveal>

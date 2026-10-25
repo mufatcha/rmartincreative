@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
 import { IconArrowRight, IconCard } from "./icons";
+import QuoteModal from "./QuoteModal";
 
 const OCCASIONS = [
   "Birthdays",
@@ -51,13 +52,10 @@ export default function GreetingCardsSection() {
                 </li>
               ))}
             </ul>
-            <a
-              href="#contact"
-              className="btn-shine relative mt-9 inline-flex items-center gap-2 overflow-hidden rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper shadow-lg shadow-ink/20 transition-transform hover:scale-105"
-            >
+            <QuoteModal initialServiceId="cards" triggerClassName="btn-shine relative mt-9 inline-flex items-center gap-2 overflow-hidden rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper shadow-lg shadow-ink/20 transition-transform hover:scale-105">
               Design my card
               <IconArrowRight className="h-4 w-4" />
-            </a>
+            </QuoteModal>
           </div>
         </Reveal>
 

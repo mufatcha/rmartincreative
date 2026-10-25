@@ -41,6 +41,7 @@ export function pageMetadata({
   path,
   absolute = false,
   image = SITE_SHARE_IMAGE,
+  noindex = false,
 }: {
   title: string;
   description: string;
@@ -48,12 +49,16 @@ export function pageMetadata({
   absolute?: boolean;
   /** A 1200×630 share image for this page; defaults to the site-wide one. */
   image?: ShareImage;
+  /** Keeps the page out of search results (it can still be linked and followed),
+   *  for unlisted pages like the demo sites. Leave it out of the sitemap too. */
+  noindex?: boolean;
 }): Metadata {
   const text = absolute ? title : pageTitleText(title);
   return {
     title: { absolute: text },
     description,
     alternates: { canonical: path },
+    ...(noindex && { robots: { index: false, follow: true } }),
     openGraph: { title: text, description, url: path, siteName: BUSINESS_NAME, type: "website", images: [image] },
     twitter: { card: "summary_large_image", title: text, description, images: [image] },
   };

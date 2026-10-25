@@ -172,5 +172,4 @@ export const STATS: { value: number; suffix?: string; label: string }[] = [
   { value: 20, suffix: "+", label: "Years of website design & programming" },
   { value: 100, suffix: "+", label: "Web projects delivered" },
   { value: 1000, suffix: "+", label: "Print designs & presentations" },
-  { value: 7, label: "Service categories, one point of contact" },
 ];

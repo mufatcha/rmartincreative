@@ -106,15 +106,6 @@ html:has([data-audience-tabs]) section[id] {
   animation: card-wander 8.6s ease-in-out infinite;
 }
 
-/* ---------- Marquee ---------- */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.animate-marquee {
-  animation: marquee 26s linear infinite;
-}
-
 /* ---------- Gradient text shimmer ---------- */
 @keyframes hue-shift {
   0%, 100% { background-position: 0% 50%; }
@@ -176,7 +167,6 @@ html:has([data-audience-tabs]) section[id] {
   .animate-card-drift,
   .animate-card-sway,
   .animate-card-wander,
-  .animate-marquee,
   .animate-hue,
   .snowflake,
   .animate-sparkle,

@@ -39,7 +39,7 @@ export default function ServiceCategoryPage({ category, children }: { category: 
               </h1>
               <p className="mt-3 text-lg font-medium text-violet-600">{category.tagline}</p>
               <p className="mt-4 text-lg text-ink-soft">{category.description}</p>
-              <p className="mt-4 text-base leading-relaxed text-ink-soft">{category.details}</p>
+              <p className="mt-4 text-base leading-relaxed text-ink-soft">{renderInlineLinks(category.details)}</p>
               <ServiceCta />
             </div>
           </Reveal>

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Analytics from "./components/Analytics";
+import ContactClickTracker from "./components/ContactClickTracker";
+import HideOnDemos from "./components/HideOnDemos";
+import MobileContactBar from "./components/MobileContactBar";
 import LocalBusinessJsonLd from "./components/LocalBusinessJsonLd";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
@@ -63,9 +66,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <SiteHeader seasonalNav={seasonalNav} servicesMenu={getServicesMenu()} />
         <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <HideOnDemos>
+          <SiteFooter />
+          <MobileContactBar />
+        </HideOnDemos>
         <LocalBusinessJsonLd />
         <Analytics />
+        <ContactClickTracker />
       </body>
     </html>
   );

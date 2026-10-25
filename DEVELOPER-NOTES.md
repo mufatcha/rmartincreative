@@ -63,14 +63,29 @@ Series posts automatically get a series badge, a "From the Nextdoor group" band 
 
 **New pages:** set metadata with `pageMetadata({ title, description, path })` from `app/lib/seo.ts`. It adds the canonical address plus the page's own Facebook/X share tags. Without it, a page shares as the home page.
 
-Service page text can carry links using `[text](/path)` in FAQ answers, feature bullets, and the "Platforms & tools" items, but not in descriptions or taglines.
+Service page text can carry links using `[text](/path)` in `details` (the second intro paragraph), FAQ answers, feature bullets, and the "Platforms & tools" items, but not in descriptions or taglines.
 
 ## Yearly and occasional updates
 
 - **Christmas card special:** update `lastDay` and `endsAt` in `CHRISTMAS_SPECIAL` (`app/lib/data/pricing.ts`) each year. It disappears on its own after `endsAt`.
+- **Corporate holiday card deadline:** update `HOLIDAY_CARD_DEADLINE` (`label` and `endsAt`) in `app/lib/season.ts` each year. The hero badge says "order by" that date from September, then switches to last call.
 - **Seasonal messages:** review `app/lib/season.ts` once a year so each month's badge and nav link still fit.
 - **New social profile:** add it to `SOCIAL_PROFILES` in `app/lib/business.ts`. It flows into the schema.org `sameAs` field and the footer. A new network also needs an icon in `app/components/icons.tsx` and an entry in `SOCIAL_STYLES` in `app/components/SiteFooter.tsx`.
 - **Facebook link:** if the page gets a username, swap the `profile.php?id=…` link for `facebook.com/<username>`.
+
+## Analytics events
+
+Sent to Google Analytics 4 (and Clarity, where noted) from `app/components/Analytics.tsx`. Mark the GA ones as key events in GA4 (Admin → Events) to count them as conversions.
+
+| Event | When | Details |
+|---|---|---|
+| `quote_open` | The quote form opens | `service` (or `not_chosen`), `page_path`; Clarity tag `quote_opened` |
+| `quote_step` | Each quote form step is shown | `step` 1–4, `step_name` (service, questions, files, contact) |
+| `quote_abandon` | The form is closed without sending | the step it stopped on; Clarity tag `quote_abandoned` |
+| `generate_lead` | A quote request is sent | `service`; Clarity tag `quote_submitted` |
+| `phone_click` / `email_click` | Any tel: or mailto: link is clicked | `link_url`, `page_path` |
+
+In Clarity, filter recordings by the `quote_abandoned` tag to watch where people give up.
 
 ## Website health check tools
 
@@ -91,6 +106,19 @@ Free tools for running a Free Website + Search Health Check (or checking this si
 
 Also test by hand: submit the contact form, tap the phone number on a phone, and ask ChatGPT and Google's AI Mode about the business.
 
+## Demo sites
+
+Two sales demos for made-up companies live in `app/demos/`. They hide the site header and footer (`app/components/HideOnDemos.tsx`) and show a slim demo bar instead.
+
+| Demo | URL | Shows |
+|---|---|---|
+| Vantor (AI startup) | `/demos/vantor-ai` | Next.js and React features: streaming chat (`app/api/demo-chat`), streamed server data, a Server Action form, instant search, ⌘K palette |
+| Juniper & Rye (bakery) | `/demos/juniper-rye` | A pretend headless CMS editor with a live preview, draft/publish, version history, and roles |
+
+- Both are `noindex` (`pageMetadata({ noindex: true })`) and left out of the sitemap and the Markdown-for-agents rewrite, but linked from the Website Design & Development page (intro and FAQ), the Website Overhaul and WordPress & Headless CMS pages, and the Next.js and headless CMS articles.
+- **Sales links:** add `?notes=1` to open a demo with the "How it's built" notes showing.
+- **Juniper & Rye** saves edits in the visitor's browser. **Reset demo** in its top bar starts over between calls. Its photos are Freepik free-license stock in `public/webp-assets/demos/juniper-rye/`.
+
 ## Rules
 
 - The business is **R. Martin Creative**. Never put it in the same sentence, title, description, or alt text as **Ryan Martin**. Example code uses made-up names, like "Example Co."
@@ -98,4 +126,4 @@ Also test by hand: submit the contact form, tap the phone number on a phone, and
 
 ## Open to-dos
 
-- [ ] **Schema article links:** link `/extras/schema-markup-json-ld-seo-ai` from the Search + AI Update "Schema markup added where it's missing" bullet, the Free Search + AI Health Check and Search + AI Discovery FAQs, and the Next.js benefits article.
+- [ ] **Schema article links:** link `/extras/schema-markup-json-ld-seo-ai` from the Search + AI Update "Schema markup added where it's missing" bullet and the Search + AI Discovery FAQs. (Done: the health check page and the Next.js benefits article.)

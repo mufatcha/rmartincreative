@@ -5,6 +5,7 @@ import ChristmasSpecial from "./ChristmasSpecial";
 import Reveal from "./Reveal";
 import { christmasSpecialActive } from "../lib/data/pricing";
 import { IconArrowRight, IconSnowflake } from "./icons";
+import QuoteModal from "./QuoteModal";
 
 type FlakeStyle = CSSProperties & { "--drift"?: string };
 
@@ -83,13 +84,10 @@ export default function HolidaySpotlight() {
               ))}
             </ul>
             {christmasSpecialActive() && <ChristmasSpecial tone="dark" className="mt-8 max-w-xl" />}
-            <a
-              href="#contact"
-              className="btn-shine relative mt-9 inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-rose-500 to-emerald-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-rose-900/40 transition-transform hover:scale-105"
-            >
+            <QuoteModal initialServiceId="cards" triggerClassName="btn-shine relative mt-9 inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-rose-500 to-emerald-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-rose-900/40 transition-transform hover:scale-105">
               Reserve my card design
               <IconArrowRight className="h-4 w-4" />
-            </a>
+            </QuoteModal>
             <Link
               href="/christmas-cards"
               className="ml-5 mt-9 inline-block text-sm font-semibold text-amber-300 hover:text-amber-200"
