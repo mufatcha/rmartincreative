@@ -31,6 +31,12 @@ export const EXTRA_SERIES = [
     description: "A new how-to every week, with simple steps you can take on your own website.",
   },
   {
+    id: "quick-guide",
+    label: "Quick Guide",
+    badge: "bg-fuchsia-100 text-fuchsia-700",
+    description: "Bonus guides for group members, each focused on one fix you can make in under an hour.",
+  },
+  {
     id: "before-after",
     label: "Before & After",
     badge: "bg-emerald-100 text-emerald-700",
@@ -85,6 +91,27 @@ export const EXTRAS_HUB = {
 };
 
 const EXTRAS_LIST: Extra[] = [
+  {
+    slug: "faster-photos-faster-website",
+    kind: "note",
+    category: "web",
+    series: "quick-guide",
+    title: "Faster Photos, Faster Website",
+    description:
+      "A free quick guide to WebP, AVIF, and SVG: how big your website photos should be, and the free tools that shrink them in a few clicks.",
+    published: "2026-10-29",
+    image: {
+      src: "/webp-assets/faster-photos-faster-website.webp",
+      alt: "Quick guide: Faster photos, faster website. A free guide to WebP, AVIF, SVG and the free tools that shrink them: about 35 minutes in one sitting, all free tools, and a printable PDF checklist",
+      width: 1200,
+      height: 896,
+    },
+    download: {
+      href: "/downloads/Faster-Photos-Faster-Website.pdf",
+      fileName: "Faster-Photos-Faster-Website.pdf",
+      details: "PDF · 8 pages · printable checklist",
+    },
+  },
   {
     slug: "modern-design-without-the-gimmicks",
     kind: "note",

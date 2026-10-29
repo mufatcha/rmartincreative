@@ -42,6 +42,17 @@ html:has([data-audience-tabs]) section[id] {
   scroll-margin-top: 8.5rem;
 }
 
+/* ---------- Notes & Freebies hub ---------- */
+/* /extras#nextdoor shows only the Nextdoor group posts, so that link can be
+   shared. The Nextdoor section stays hidden otherwise, so posts aren't listed
+   twice. CSS-only (:target), so it works before the page's JavaScript loads. */
+#nextdoor[data-extras-group]:not(:target) {
+  display: none;
+}
+body:has(#nextdoor:target) [data-extras-group]:not(#nextdoor) {
+  display: none;
+}
+
 /* ---------- Reveal on scroll ---------- */
 .reveal {
   opacity: 0;

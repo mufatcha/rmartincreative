@@ -21,7 +21,7 @@ const HOUR_1 = [
   },
   {
     title: "Run a mobile and speed audit (30 min)",
-    body: "Run your homepage and main service page through [PageSpeed Insights](https://pagespeed.web.dev), then make two quick fixes: compress oversized header images with a free tool like [TinyPNG](https://tinypng.com) before re-uploading them, and make your phone number and email tappable links, so phone visitors can reach you in one tap.",
+    body: "Run your homepage and main service page through [PageSpeed Insights](https://pagespeed.web.dev), then make two quick fixes: compress oversized header images with a free tool like [TinyPNG](https://tinypng.com) before re-uploading them, and make your phone number and email tappable links, so phone visitors can reach you in one tap. For how big your photos should be, see [Faster Photos, Faster Website](/extras/faster-photos-faster-website).",
   },
 ];
 
