@@ -10,6 +10,7 @@ import {
   EXTRAS_HUB,
   EXTRA_CATEGORIES,
   EXTRA_SERIES,
+  getExtraCategory,
   getExtraSeries,
   type Extra,
   type ExtraCategory,
@@ -88,8 +89,10 @@ export default function ExtrasPage() {
     category,
     extras: EXTRAS.filter((e) => e.category === category.id),
   })).filter((g) => g.extras.length > 0);
-  // The Nextdoor band shows once the first group post is published.
-  const hasGroupPosts = EXTRAS.some((e) => e.series);
+  // Posts from the Nextdoor group (any series). /extras#nextdoor shows only these;
+  // the CSS for that filter is in globals.css under "Notes & Freebies hub".
+  const groupPosts = EXTRAS.filter((e) => e.series);
+  const hasGroupPosts = groupPosts.length > 0;
 
   return (
     <>
@@ -105,8 +108,16 @@ export default function ExtrasPage() {
             Free printables and helpful notes, added whenever there&rsquo;s something worth sharing. No sign-up and
             no email required — just download and enjoy.
           </p>
-          {groups.length > 1 && (
+          {(groups.length > 1 || hasGroupPosts) && (
             <nav aria-label="Categories" className="mt-8 flex flex-wrap gap-2">
+              {hasGroupPosts && (
+                <a
+                  href="#nextdoor"
+                  className="rounded-full bg-white px-4 py-2 text-sm font-medium text-[#1B8851] ring-1 ring-[#1B8851]/30 transition-colors hover:bg-[#1B8851]/5"
+                >
+                  Nextdoor <span className="text-[#1B8851]/60">({groupPosts.length})</span>
+                </a>
+              )}
               {groups.map(({ category, extras }) => (
                 <a
                   key={category.id}
@@ -125,7 +136,7 @@ export default function ExtrasPage() {
                 Posts from our free group, <span className="font-semibold text-ink">Website Help for Local Business Owners</span>,
                 shared here so everyone can read them.
               </p>
-              <ul className="mt-5 grid gap-4 sm:grid-cols-3">
+              <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {EXTRA_SERIES.map((series) => (
                   <li key={series.id}>
                     <span
@@ -137,23 +148,51 @@ export default function ExtrasPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={NEXTDOOR_GROUP.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#1B8851] hover:underline"
-              >
-                Join the free group on Nextdoor
-                <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
+              <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+                <a
+                  href="#nextdoor"
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-[#1B8851] hover:underline"
+                >
+                  See all group posts
+                  <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+                <a
+                  href={NEXTDOOR_GROUP.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-[#1B8851] hover:underline"
+                >
+                  Join the free group on Nextdoor
+                  <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              </div>
             </div>
           )}
         </div>
       </section>
 
-      <div className="space-y-16 pb-20 sm:space-y-20 sm:pb-24">
+      <div id="posts" className="scroll-mt-28 space-y-16 pb-20 sm:space-y-20 sm:pb-24">
+        {hasGroupPosts && (
+          <section id="nextdoor" data-extras-group className="scroll-mt-28">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-[#1B8851]">From the Nextdoor group</h2>
+                <a href="#posts" className="text-sm font-semibold text-violet-600 hover:underline">
+                  Show all posts
+                </a>
+              </div>
+              <ul className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {groupPosts.map((extra, i) => (
+                  <li key={extra.slug}>
+                    <ExtraCard extra={extra} category={getExtraCategory(extra.category)} index={i} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
         {groups.map(({ category, extras }) => (
-          <section key={category.id} id={category.id} className="scroll-mt-28">
+          <section key={category.id} id={category.id} data-extras-group className="scroll-mt-28">
             <div className="mx-auto max-w-6xl px-6">
               <h2 className={`text-xs font-semibold uppercase tracking-widest ${category.text}`}>{category.label}</h2>
               <ul className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

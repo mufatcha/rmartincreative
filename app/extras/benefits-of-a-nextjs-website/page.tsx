@@ -16,7 +16,7 @@ const BENEFITS = [
   },
   {
     title: "Photos look sharp without slowing things down",
-    body: "Photos are automatically resized for each screen and converted to modern, lighter file formats. A phone gets a phone-sized photo, not a huge desktop one, and images further down the page wait to load until someone scrolls to them.",
+    body: "Photos are automatically resized for each screen and converted to modern, lighter file formats. A phone gets a phone-sized photo, not a huge desktop one, and images further down the page wait to load until someone scrolls to them. On another platform? Here's [how to shrink your photos yourself](/extras/faster-photos-faster-website).",
   },
   {
     title: "Easier for Google and AI to find",
