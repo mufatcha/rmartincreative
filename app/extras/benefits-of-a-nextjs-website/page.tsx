@@ -39,7 +39,7 @@ const BENEFITS = [
 const WHY_SPEED = [
   "People leave slow websites. Every extra second of loading gives a visitor time to hit the back button and call someone else.",
   "Google has said page speed and the overall page experience are part of how it ranks websites. A fast site has an edge over a slow competitor.",
-  "Most of your visitors are on phones, often on a cellular connection. Speed matters most there.",
+  "Most of your visitors are on phones, often on a cellular connection. Speed matters most there. Try the [parking lot test](/extras/modern-design-without-the-gimmicks) to see how your site holds up.",
 ];
 
 const FAQS: ServiceFaq[] = [
