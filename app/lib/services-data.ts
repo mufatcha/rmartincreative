@@ -188,7 +188,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Which one do I need — an overhaul or an update?",
         answer:
-          "If the design and structure feel outdated or don't support what you need anymore, that's an overhaul. If the site mostly works and just needs changes, that's an update — happy to help you figure out which fits.",
+          "If the design and structure feel outdated or don't support what you need anymore, that's an overhaul. If the site mostly works and just needs changes, that's an update — happy to help you figure out which fits. To check your own site first, try this free [modern design check](/extras/modern-design-without-the-gimmicks).",
       },
       {
         question: "Will my new site be ready for search engines and AI?",

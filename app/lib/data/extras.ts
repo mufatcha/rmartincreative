@@ -86,6 +86,27 @@ export const EXTRAS_HUB = {
 
 const EXTRAS_LIST: Extra[] = [
   {
+    slug: "modern-design-without-the-gimmicks",
+    kind: "note",
+    category: "web",
+    series: "website-wednesday",
+    title: "Keep Your Website Modern, Minus the Gimmicks",
+    description:
+      "A free 90-minute guide: a 3-question test for any design trend, a phone-first review of your own site, and free Microsoft Clarity to see what visitors do.",
+    published: "2026-10-29",
+    image: {
+      src: "/webp-assets/modern-design-without-the-gimmicks.webp",
+      alt: "Website Wednesday: 3 simple questions to test any website design trend. A free guide to modern design without the gimmicks: about 90 minutes in one sitting, all free tools, and a printable PDF checklist",
+      width: 1200,
+      height: 896,
+    },
+    download: {
+      href: "/downloads/Modern-Design-Without-the-Gimmicks.pdf",
+      fileName: "Modern-Design-Without-the-Gimmicks.pdf",
+      details: "PDF · 9 pages · printable checklist",
+    },
+  },
+  {
     slug: "search-visibility-sprint",
     kind: "note",
     category: "web",
