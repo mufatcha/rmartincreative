@@ -42,7 +42,8 @@ export function GET() {
             return pricing ? [{ title: leaf.title, path: `/services/${c.slug}/${leaf.slug}`, pricing }] : [];
           });
       return entries.map(
-        (e) => `- [${e.title}](${url(e.path)}): ${pricingSummary(e.pricing)}${e.pricing.note ? ` ${e.pricing.note}` : ""}`
+        (e) =>
+          `- [${e.title}](${url(e.path)}): ${pricingSummary(e.pricing)}${e.pricing.note ? ` ${e.pricing.note}` : ""}${e.pricing.banner ? ` ${e.pricing.banner}` : ""}`
       );
     })
   ).join("\n");

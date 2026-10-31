@@ -27,7 +27,7 @@ import {
 import { BUSINESS_PHONE_DISPLAY, SERVICE_HOME_CITY } from "./business";
 import { PASSPORT_PREP_SUMMARY } from "./data/passport-prep";
 import { passportCommonFaqs } from "./data/passport-faqs";
-import { MOBILE_APP, PASSPORT_PAPERWORK, WEB_APP, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
+import { CHRISTMAS_SPECIAL, MOBILE_APP, PASSPORT_PAPERWORK, WEB_APP, cardPriceAnswer, priceAnswer, startsAt, usd } from "./data/pricing";
 
 export type IconComponent = ComponentType<{ className?: string }>;
 
@@ -569,7 +569,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       "Traditional search and AI discovery for small businesses — a free health check, a one-time optimization pass, or ongoing monthly management to get found on Google and in AI-powered answers.",
     tagline: "Get found on Google, and in the answers AI gives.",
     description:
-      "A great site doesn't help if no one finds it — whether they're typing into Google or asking ChatGPT for a recommendation. I offer three ways in, depending on where you're starting from: a free look at what's holding your site back, a one-time pass to fix it, or ongoing monthly management to keep improving.",
+      "A great site doesn't help if no one finds it — whether they're typing into Google or asking ChatGPT for a recommendation. I offer three ways in, depending on where you're starting from: a free look at what's holding your site back, a one-time pass to fix it, or ongoing monthly management to keep improving. And because customers find you on maps and directories too, I can manage your listings beyond your website.",
     details:
       "Getting found isn't one thing anymore — people still search Google, but more of them now ask AI assistants for recommendations. Both reward the same fundamentals: technical fixes, clear on-page content, structured data, and local presence, and different businesses need different amounts of each. That's why this is offered in three tiers: start with a free look at where you stand, move to a one-time fix if you need a push, or go month-to-month if you want someone keeping an eye on it long-term.",
     features: [],
@@ -577,17 +577,17 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "How much does it cost?",
         answer:
-          `The health check is free. A one-time Search + AI Update starts at ${startsAt("search-ai-discovery/search-ai-update")} as a flat project fee, and the Monthly Retainer starts at ${startsAt("search-ai-discovery/monthly-retainer")} a month, month-to-month. I'll recommend the right tier based on where your site stands.`,
+          `The health check is free. A one-time Search + AI Update starts at ${startsAt("search-ai-discovery/search-ai-update")} as a flat project fee, and the Monthly Retainer starts at ${startsAt("search-ai-discovery/monthly-retainer")} a month, month-to-month. Local Presence Management starts at ${startsAt("search-ai-discovery/local-presence-management")} as a one-time listing cleanup. I'll recommend the right tier based on where your site stands.`,
       },
       {
         question: "Which service is right for me?",
         answer:
-          "If you're not sure where you stand, start with the free health check. If you already know what needs fixing, jump to the one-time Update. If you want ongoing improvement and reporting, go with the Monthly Retainer.",
+          "If you're not sure where you stand, start with the free health check. If you already know what needs fixing, jump to the one-time Update. If you want ongoing improvement and reporting, go with the Monthly Retainer. If your business shows up with the wrong details on maps and directories, or isn't listed at all, add [Local Presence Management](/services/search-ai-discovery/local-presence-management).",
       },
       {
         question: "What is AI discovery?",
         answer:
-          "More people now ask tools like ChatGPT, Google's AI Overviews, and Perplexity questions like “who designs business cards near me?” instead of scrolling search results. AI discovery is about making your business easy for those tools to find, understand, and recommend — clear content, structured data, and consistent business information across the web.",
+          "More people now ask tools like ChatGPT, Google's AI Overviews, and Perplexity questions like “who designs business cards near me?” instead of scrolling search results. AI discovery is about making your business easy for those tools to find, understand, and recommend — clear content, [structured data](/extras/schema-markup-json-ld-seo-ai), and consistent business information across the web.",
       },
       {
         question: "Is AI discovery different from traditional search?",
@@ -617,7 +617,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Do you handle Google Business Profile and local search?",
         answer:
-          "Yes — Google Business Profile setup and optimization is included in the Search + AI Update and the Monthly Retainer. Accurate local listings matter for AI answers too, since many assistants pull from them.",
+          "Yes — Google Business Profile setup and optimization is included in the Search + AI Update and the Monthly Retainer. Accurate local listings matter for AI answers too, since many assistants pull from them. For everything beyond Google, like Apple Maps, Bing, Yelp, and the directories for your industry, see [Local Presence Management](/services/search-ai-discovery/local-presence-management).",
       },
     ],
     icon: IconSearch,
@@ -873,6 +873,116 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         },
       },
       {
+        slug: "local-presence-management",
+        title: "Local Presence Management",
+        seoTitle: "Local Citation Cleanup & Business Listing Management",
+        metaDescription:
+          "Local presence management in Northern Illinois and Southeast Wisconsin: local citation cleanup, Google Business Profile management, Apple Maps, and Bing.",
+        tagline: "Your business, listed right everywhere customers look.",
+        description:
+          "Customers and AI assistants find your business in a lot of places besides your website: Google Maps, Apple Maps, Bing, Facebook, Yelp, and the directories for your industry. I handle directory listing cleanup for local service businesses: I claim each listing on your behalf, clean it up, and keep them all consistent, so every one shows the same name, address, phone number, hours, and services. The listings are claimed in your business's name, so you own them and all of their data, now and after we're done.",
+        details:
+          "Search engines and AI assistants cross-check your business across the web before they trust it enough to recommend it. A wrong phone number on an old directory, a duplicate map pin, or a listing nobody ever claimed all chip away at that trust, and they send customers to the wrong place. It starts with a [free Website + Search Health Check](/services/search-ai-discovery/search-health-check), which doubles as a business listing consistency audit for your small business: where you're listed, what's wrong, and what's missing. From there I work through your listings in order of impact: the big map and AI platforms first, then the directories for your industry, the general directories, and local sources like your chamber of commerce. Based in Richmond, IL, I provide Google Business Profile management in Northern Illinois and local presence management in Southeast Wisconsin, for businesses from McHenry and Crystal Lake to Kenosha and Lake Geneva.",
+        features: [
+          "Starts with a [free Website + Search Health Check](/services/search-ai-discovery/search-health-check)",
+          "Google Business Profile, Apple Business Connect (Apple Maps), and Bing Places claimed and filled in",
+          "Facebook and Instagram business pages matched to your listings",
+          "Industry directories chosen for your type of business",
+          "Name, address, and phone number made consistent across general directories",
+          "Duplicate and outdated listings merged or removed",
+          "Business data sent to the main data providers that feed smaller directories",
+          "Local chamber of commerce and city directory listings",
+          "Optional ongoing plans: Local Presence Guard (monthly or quarterly) to protect your listings, or Local Search Dominance (monthly) to keep growing them",
+        ],
+        faqs: [
+          {
+            question: "How does it get started?",
+            answer:
+              "With the [free Website + Search Health Check](/services/search-ai-discovery/search-health-check). Along with your website, I look up how your business shows up on maps, directories, and AI assistants, and the report lists what's wrong and what's missing. From there, I'll recommend the package that fits, with no obligation.",
+          },
+          {
+            question: "How much does Local Presence Management cost?",
+            answer:
+              `${priceAnswer("search-ai-discovery/local-presence-management")} The cleanup packages are one-time fees, and the ongoing plans are optional, with 10% off on a yearly contract: Local Presence Guard is billed monthly or quarterly, and Local Search Dominance monthly. Industry & AI Dominance is the most popular choice, since industry directories carry the most weight for most businesses. The free health check comes first, so you'll know which package fits before you pay anything.`,
+          },
+          {
+            question: "Which listings do you manage?",
+            answer:
+              "It's done in order of impact. First, the platforms behind maps and AI answers: Google Business Profile (Google Maps, Search, and AI Overviews), Apple Business Connect (Apple Maps and Siri), Bing Places (Bing and Microsoft Copilot), and your Facebook and Instagram pages. Next, the directories for your industry, then general directories like Yelp, the Better Business Bureau, Nextdoor, and YellowPages, and finally local sources like your chamber of commerce and city business directory.",
+          },
+          {
+            question: "Which industry directories will I need?",
+            answer:
+              "It depends on your business. Home services and trades usually need Angi, Thumbtack, Houzz, or Porch. Professional and B2B services do well on LinkedIn, Clutch, and UpCity. Restaurants need Yelp, Tripadvisor, and OpenTable or Resy; healthcare, Healthgrades, Zocdoc, and WebMD; and law firms, Avvo, Justia, and FindLaw. An industry directory often carries more weight than several general ones, so I focus on the few that fit you.",
+          },
+          {
+            question: "Why does it matter if my address or phone number differs between sites?",
+            answer:
+              "Search engines and AI assistants compare your name, address, and phone number (often called NAP) across the web to confirm your business is real and where it says it is. When the details don't match, they're less confident about showing you, and customers can end up calling an old number or driving to an old address.",
+          },
+          {
+            question: "How do I fix an inconsistent business address on search engines?",
+            answer:
+              "Start with the listings you control: Google Business Profile, Apple Business Connect, Bing Places, and your Facebook page. Then track down the older directory listings that copied the wrong address, correct or claim them one by one, and send the right details to the data providers that feed smaller sites. That's the core of this service, so if you'd rather not chase every listing yourself, I'll do it for you.",
+          },
+          {
+            question: "How do I get found on Apple Maps and Siri in local search?",
+            answer:
+              "Claim your business in Apple Business Connect, Apple's free tool for business owners. It controls what Apple Maps, Siri, and Spotlight search show on iPhones: your hours, phone number, photos, and category. Many businesses never claim it, so Apple fills in the gaps from other sources, and those details are often out of date. Claiming and filling it in is part of every Local Presence Management plan.",
+          },
+          {
+            question: "Do directory listings affect AI search?",
+            answer:
+              "Yes. AI assistants like ChatGPT, Microsoft Copilot, and Google's AI Overviews draw on the same listings and directories people use, then check them against each other. AI search optimization for local business directories means making sure those sources are complete, consistent, and point back to your website, so an assistant can recommend you with confidence.",
+          },
+          {
+            question: "What are data aggregators?",
+            answer:
+              "Many smaller directories don't take submissions directly. They copy their business information from a few large data providers, like Data Axle, Neustar Localeze, and Foursquare. Sending your correct details to those providers fixes listings on many sites downstream, though it can take a few months to spread everywhere. Some aggregators charge their own fees for submissions. Those aren't included in the add-on price, so I'll send you the exact costs to approve before anything is submitted.",
+          },
+          {
+            question: "Will I still own my listings?",
+            answer:
+              "Yes. Your listings stay in your name and under your accounts. Where a platform allows it, like Google Business Profile, I'm added as a manager, so you never have to hand over a password and you can remove my access anytime.",
+          },
+          {
+            question: "How is this different from the Search + AI Update?",
+            answer:
+              "The [Search + AI Update](/services/search-ai-discovery/search-ai-update) fixes your website and sets up your Google Business Profile. Local Presence Management covers everything else about your business outside your website, across all the maps, directories, and platforms where people look you up. They work well together, and both start with the free health check.",
+          },
+          {
+            question: "What happens after the cleanup?",
+            answer:
+              "Listings don't stay fixed on their own. Anyone can suggest edits to a Google listing, directories pull in old data, and new duplicates pop up. Two optional plans keep your cleanup from slipping. Local Presence Guard checks your Google, Apple Maps, and Bing listings and the data aggregators for wrong hours, unauthorized edits, and new duplicate listings, requests removal of duplicates, emails you about any new reviews at each check, looks for bad-actor edits (like a competitor marking you “permanently closed” or changing your phone number), and sends a one-page listing health summary. Local Search Dominance is everything in Guard, plus updates and offers posted to your Google Business Profile, your new project and team photos uploaded with clear, local descriptions, a personal response to every new Google and Yelp review as it comes in, quarterly updates to your services, description, and attributes based on what people in Northern Illinois and Southeast Wisconsin are searching for, and a report on where you show up in local map results and AI answers for your top services. Local Search Dominance is monthly. Local Presence Guard comes monthly, or quarterly for less: on the quarterly option, the same checks, cleanup, review alerts, and summary happen once every three months instead of every month.",
+          },
+          {
+            question: "Which plan is right for me?",
+            answer:
+              "Local Presence Guard suits established businesses that mainly want their listings protected and accurate, without ongoing content work. Local Search Dominance is for service businesses in competitive markets, like contractors, landscapers, HVAC companies, and professional services, that want to climb into Google's top three map results and show up in AI answers. Local Presence Guard also comes quarterly, which suits businesses whose listings rarely change; monthly makes sense if you get reviews often. There's no long-term contract either way, and you can switch plans. If you know you'll stay, a yearly contract on either plan saves 10%.",
+          },
+          {
+            question: "How is Local Search Dominance different from the Monthly Retainer?",
+            answer:
+              "Local Search Dominance focuses on your listings: your Google Business Profile, reviews, photos, and directories. The [Monthly Retainer](/services/search-ai-discovery/monthly-retainer) focuses on your website: ongoing on-page work, content, and AI visibility checks. Some businesses need one, some both, and the health check will show which.",
+          },
+          {
+            question: "Do you only work with local businesses?",
+            answer:
+              `I'm a local citation cleanup service based in ${SERVICE_HOME_CITY}, IL, so if you're searching for one near you in Northern Illinois or Southeast Wisconsin, we can meet in person. The work itself is all done online, though, so I can manage listings for businesses anywhere in the U.S.`,
+          },
+          {
+            question: "How long does it take?",
+            answer:
+              "The main map and AI platforms can usually be fixed within a couple of weeks, though some, like Google and Apple, need a verification step that can take a few days. Changes sent through data aggregators can take a few months to show up on every smaller site.",
+          },
+        ],
+        icon: IconSignpost,
+        image: {
+          src: "/webp-assets/local-presence-management.webp",
+          alt: "The same business name, city, and phone number shown on a Google Business Profile, a Bing Places listing, a Facebook page, and Apple Maps on a phone, each marked as synced and linked by dotted lines",
+        },
+      },
+      {
         slug: "monthly-retainer",
         title: "Monthly Retainer",
         seoTitle: "Monthly SEO & AI Search Services, Month-to-Month",
@@ -885,7 +995,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
         features: [
           "Ongoing on-page optimization",
           "Monthly written report in plain English",
-          "Local listing and citation upkeep",
+          "Local listing and citation upkeep (for a full cleanup first, see [Local Presence Management](/services/search-ai-discovery/local-presence-management))",
           "Monthly check-ins on how AI assistants describe your business",
           "Review-generation strategy",
           "Content updates tied to what's actually ranking",
@@ -1106,7 +1216,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Can I order cards outside the holiday season?",
         answer:
-          "Yes — greeting cards for any occasion are available year-round; only Christmas card season has a hard seasonal deadline.",
+          `Yes — greeting cards for any occasion are available year-round, and so are Christmas cards. For guaranteed printing and shipping before Christmas, order by ${CHRISTMAS_SPECIAL.lastDay}.`,
       },
       {
         question: "Can I see a proof before printing?",
@@ -1147,7 +1257,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Matte or glossy finishes, gold foil stamping & embossing",
           "Heavyweight, recycled, or kraft cardstock",
           "Early booking gets first pick of finishes",
-          "Guaranteed delivery before the holidays when booked in time",
+          `Guaranteed printing and shipping before Christmas when you order by ${CHRISTMAS_SPECIAL.lastDay}`,
           "Rush printing for last-minute orders",
           "Addressing & mailing to your full list, postage handled",
           "Hand-pressed wax seals, single or two-tone, or Christmas-themed",
@@ -1162,7 +1272,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "How early should I book my Christmas cards?",
             answer:
-              "As early in the fall as possible. Clients who book early get first pick of finishes and guaranteed delivery before the holidays.",
+              `You can order any time, but order by ${CHRISTMAS_SPECIAL.lastDay} for guaranteed printing and shipping before Christmas. After that, ask me for a quote and current print times. Clients who book early also get first pick of finishes.`,
           },
           {
             question: "What finishes and paper are available?",
@@ -1207,7 +1317,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Can you do rush Christmas cards for a last-minute order?",
             answer:
-              "Yes — rush printing is available. Tell me your deadline and I'll let you know what's possible and quote the rush. Booking early is still the best way to get your first choice of finishes.",
+              `Yes — rush printing is available. Orders after ${CHRISTMAS_SPECIAL.lastDay} aren't guaranteed to arrive before Christmas, so tell me your deadline and I'll check current print times and quote the rush. Booking early is still the best way to get your first choice of finishes.`,
           },
           {
             question: "What if I need to reprint or add addresses later?",

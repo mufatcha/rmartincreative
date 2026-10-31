@@ -955,7 +955,7 @@ export const CHRISTMAS_TOWNS: Record<string, ChristmasTownContent> = {
       },
       {
         question: "How early should Chicago clients order?",
-        answer: "Aim for October or early November to leave time for proofs, printing, and delivery before the holiday rush.",
+        answer: "Order by November 27 for guaranteed printing and shipping before Christmas. After that, ask me for a quote and current print times.",
       },
     ],
     events: [

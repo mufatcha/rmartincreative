@@ -14,8 +14,8 @@ type SeasonalContent = { badge: SeasonalBadge; nav: SeasonalNavLink };
 
 // Index 0 = January … 11 = December (December is split below).
 /**
- * The corporate holiday card order deadline, shown in the hero badge from September
- * until it passes. Update both fields each year (see DEVELOPER-NOTES.md).
+ * The last day for guaranteed Christmas card printing and shipping, shown in the hero
+ * badge from September until it passes. Cards can still be ordered after it. Update both fields each year (see DEVELOPER-NOTES.md).
  */
 export const HOLIDAY_CARD_DEADLINE = {
   label: "Nov 27",
@@ -24,7 +24,7 @@ export const HOLIDAY_CARD_DEADLINE = {
 };
 
 const HOLIDAY_CARDS: SeasonalContent = {
-  badge: { text: `Corporate holiday cards: order by ${HOLIDAY_CARD_DEADLINE.label}`, icon: "snowflake" },
+  badge: { text: `Christmas cards: guaranteed if ordered by ${HOLIDAY_CARD_DEADLINE.label}`, icon: "snowflake" },
   nav: { label: "Holiday Cards", href: "/services/greeting-cards/christmas-cards" },
 };
 
@@ -63,9 +63,9 @@ const MONTHLY: SeasonalContent[] = [
   },
   HOLIDAY_CARDS, // September
   HOLIDAY_CARDS, // October
-  HOLIDAY_CARDS, // November (until the deadline; then December's last call)
+  HOLIDAY_CARDS, // November (until the guarantee ends; then December's last call)
   {
-    // Dec 1–20 (and the end of November, once the order deadline passes)
+    // Dec 1–20 (and the end of November, once the guarantee ends)
     badge: { text: "Last Call for Holiday Cards", icon: "snowflake" },
     nav: { label: "Christmas Cards", href: "/services/greeting-cards/christmas-cards" },
   },

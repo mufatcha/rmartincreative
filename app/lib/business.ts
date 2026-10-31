@@ -19,7 +19,7 @@ export const QUOTE_FROM = `${BUSINESS_NAME} Quotes <quotes@rmartincreative.com>`
 
 export const PRODUCTION_URL = "https://rmartincreative.com";
 
-/** Opening hours, matching the Google Business Profile (24-hour times, every day). */
+/** Opening hours, matching the Google Business Profile (24-hour times, Monday to Saturday; closed Sunday). */
 export const BUSINESS_HOURS = { opens: "09:00", closes: "19:00" };
 
 /** The FeedTheFlames apparel brand's Etsy shop. */
