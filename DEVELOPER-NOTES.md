@@ -68,7 +68,7 @@ Service page text can carry links using `[text](/path)` in `details` (the second
 ## Yearly and occasional updates
 
 - **Christmas card special:** update `lastDay` and `endsAt` in `CHRISTMAS_SPECIAL` (`app/lib/data/pricing.ts`) each year. It disappears on its own after `endsAt`.
-- **Corporate holiday card deadline:** update `HOLIDAY_CARD_DEADLINE` (`label` and `endsAt`) in `app/lib/season.ts` each year. The hero badge says "order by" that date from September, then switches to last call.
+- **Christmas card guarantee date:** update `HOLIDAY_CARD_DEADLINE` (`label` and `endsAt`) in `app/lib/season.ts` and `CHRISTMAS_SPECIAL` in `app/lib/data/pricing.ts` each year, plus the "How early should Chicago clients order?" answer in `app/lib/data/christmas-towns.ts`. The hero badge shows the date from September, then switches to last call. Cards can still be ordered after it, just without the guarantee.
 - **Seasonal messages:** review `app/lib/season.ts` once a year so each month's badge and nav link still fit.
 - **New social profile:** add it to `SOCIAL_PROFILES` in `app/lib/business.ts`. It flows into the schema.org `sameAs` field and the footer. A new network also needs an icon in `app/components/icons.tsx` and an entry in `SOCIAL_STYLES` in `app/components/SiteFooter.tsx`.
 - **Facebook link:** if the page gets a username, swap the `profile.php?id=…` link for `facebook.com/<username>`.

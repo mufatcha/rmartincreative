@@ -36,11 +36,11 @@ function buildSchema() {
     brand: { "@type": "Brand", name: "FeedTheFlames", url: FEEDTHEFLAMES_URL },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
       opens: BUSINESS_HOURS.opens,
       closes: BUSINESS_HOURS.closes,
     },
-    slogan: "Your marketing team, without the payroll.",
+    slogan: "Smarter websites. Measured results. Real growth.",
     paymentAccepted: PAYMENT_ACCEPTED,
     currenciesAccepted: "USD, BTC, DOGE, SOL, SUI",
     url: SITE_URL,

@@ -25,7 +25,7 @@ const geistSans = Geist({
 const TITLE =
   "R. Martin Creative | Design, Web & Print in Richmond, IL";
 const DESCRIPTION =
-  "Your marketing team without the payroll: websites, search and AI visibility, business printing, signs, and apparel for small businesses across Northern Illinois and Southeast Wisconsin, plus custom Christmas cards and photo restoration. Based in Richmond, IL.";
+  "Smarter websites, measured results, real growth: custom websites, search and AI visibility, business printing, signs, and apparel for small businesses across Northern Illinois and Southeast Wisconsin, plus custom Christmas cards and photo restoration. Based in Richmond, IL.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

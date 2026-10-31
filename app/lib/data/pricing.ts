@@ -34,7 +34,24 @@ export type PriceLine = {
   add?: boolean;
   /** Upper end of a price range: shows as "$price–$maxPrice". */
   maxPrice?: number;
+  /** The label starts with a package name, so summaries keep its first capital. */
+  named?: boolean;
+  /** A recurring price: shows as "$X/month" or "$X/quarter". */
+  per?: "month" | "quarter";
+  /** A second billing option on the same line: shows as "$X/month or $Y/quarter". */
+  or?: { price: number; per: "month" | "quarter" };
+  /** Starts a new group in the pricing box, under this heading. */
+  section?: string;
+  /** A downloadable PDF of exactly what this line includes. */
+  pdf?: { href: string; fileName: string; pages: number };
 };
+
+/** A line's "what's included" PDF, from public/downloads/local-presence-management. */
+const lpmPdf = (fileName: string, pages: number): PriceLine["pdf"] => ({
+  href: `/downloads/local-presence-management/${fileName}`,
+  fileName,
+  pages,
+});
 
 /** Passport photo visit (1 person) and the extra per infant (more time and care). */
 export const PASSPORT_VISIT = 135;
@@ -57,6 +74,8 @@ export type ServicePricing = {
   /** Lowest price to lead with in summaries. Defaults to the lowest line. */
   startsAt?: number;
   note?: string;
+  /** A highlighted strip under the price lines, like a discount. */
+  banner?: string;
   /** Related services linked under the pricing box ("Also consider"), to point clients toward what pairs well. */
   links?: { label: string; href: string; note?: string }[];
 };
@@ -82,10 +101,10 @@ export const CARD_EXAMPLES = [
  *  until `endsAt`, then disappears on its own — no need to remove it by hand.
  *  To run it again next year, update the dates. */
 export const CHRISTMAS_SPECIAL = {
-  /** Last day, as written on the site. */
-  lastDay: "November 6",
-  /** When it disappears: 12:00 am on Nov 7, Central time (CST is UTC−6). */
-  endsAt: "2026-11-07T00:00:00-06:00",
+  /** Last day, as written on the site. Guaranteed printing and shipping before Christmas ends the same day. */
+  lastDay: "November 27",
+  /** When it disappears: 12:00 am on Nov 28, Central time (CST is UTC−6). */
+  endsAt: "2026-11-28T00:00:00-06:00",
   /** Off cards with two or more designed sides. */
   twoOrMoreSidesOff: 20,
   /** Off cards with one designed side. */
@@ -142,6 +161,48 @@ export const PRICING: Record<string, ServicePricing> = {
   "search-ai-discovery/search-ai-update": {
     lines: [{ label: "One-time Search + AI Update", price: 300, from: true }],
     note: "A flat project fee, set by your site's size and how much needs fixing. You'll get the exact price after a quick review of your site.",
+  },
+  "search-ai-discovery/local-presence-management": {
+    lines: [
+      { label: "Core Search & Maps (Google, Apple Maps, Bing, Facebook, and Instagram)", price: 149, named: true, pdf: lpmPdf("01-Core-Search-and-Maps.pdf", 4) },
+      { label: "Complete Citation Cleanup (Core, plus 20+ general directories)", price: 349, named: true, pdf: lpmPdf("02-Complete-Citation-Cleanup.pdf", 5) },
+      { label: "Industry & AI Dominance, most popular (Citation Cleanup, plus industry directories)", price: 599, named: true, pdf: lpmPdf("03-Industry-and-AI-Dominance.pdf", 6) },
+      { label: "Local Authority & Aggregators add-on", price: 199, add: true, named: true, pdf: lpmPdf("04-Local-Authority-and-Aggregators-Add-on.pdf", 3) },
+      { label: "Everything, bundled (Industry & AI Dominance with the add-on)", price: 749, pdf: lpmPdf("05-Everything-Bundled.pdf", 7) },
+      {
+        label: "Local Presence Guard: monitoring and alerts",
+        price: 39,
+        per: "month",
+        or: { price: 49, per: "quarter" },
+        named: true,
+        section: "Recurring plans",
+        pdf: lpmPdf("06-Local-Presence-Guard.pdf", 4),
+      },
+      {
+        label: "Local Search Dominance: active management",
+        price: 149,
+        per: "month",
+        named: true,
+        pdf: lpmPdf("07-Local-Search-Dominance.pdf", 5),
+      },
+    ],
+    // The one-time cleanup leads; the recurring plans come after it.
+    startsAt: 149,
+    banner: "Save 10% with a yearly contract on recurring plans.",
+    // **Package names** are bolded in the pricing box.
+    note: "The cleanup packages are one-time project fees. **Core Search & Maps** sets up and fully optimizes your Google Business Profile, Apple Business Connect, and Bing Places listings, and matches your Facebook and Instagram business pages to them. **Complete Citation Cleanup** adds name, address, and phone consistency across 20+ general directories. **Industry & AI Dominance** adds the directories for your industry, like Angi, Houzz, or Clutch. The **Local Authority & Aggregators** add-on submits your details to the data aggregators (Data Axle, Neustar Localeze, and Foursquare) and lists you with your chamber of commerce and city directories. Some aggregators and directories charge their own fees, which aren't included; I'll send you the exact costs to approve before anything is submitted. Every package starts with the **Free Website + Search Health Check**. After the cleanup, two optional plans keep it that way: **Local Presence Guard** checks your listings for wrong edits and duplicates, and lets you know about new reviews at each check, and **Local Search Dominance** adds posts, photos, rank tracking, and responses to new reviews as they come in. Local Presence Guard comes monthly, or quarterly with the same work done every 3 months, and Local Search Dominance is monthly. Neither requires a long-term contract.",
+    links: [
+      {
+        label: "Free Website + Search Health Check",
+        href: "/services/search-ai-discovery/search-health-check",
+        note: "where every listing cleanup starts",
+      },
+      {
+        label: "Search + AI Update",
+        href: "/services/search-ai-discovery/search-ai-update",
+        note: "fix your website itself, so it matches the listings pointing to it",
+      },
+    ],
   },
   "search-ai-discovery/monthly-retainer": {
     lines: [{ label: "Monthly Retainer, per month", price: 200, from: true }],
@@ -332,12 +393,17 @@ export function usd(amount: number): string {
   return `$${amount.toLocaleString("en-US")}`;
 }
 
+function orPrice(line: PriceLine): string {
+  return line.or ? ` or ${usd(line.or.price)}/${line.or.per}` : "";
+}
+
 export function formatPrice(line: PriceLine): string {
   if (line.price === null) return "Quoted";
   if (line.price === 0) return "Free";
   if (line.maxPrice !== undefined) return `${usd(line.price)}–${usd(line.maxPrice)}`;
   if (line.add) return `+${usd(line.price)}`;
-  return line.from ? `From ${usd(line.price)}` : usd(line.price);
+  const amount = `${usd(line.price)}${line.per ? `/${line.per}` : ""}${orPrice(line)}`;
+  return line.from ? `From ${amount}` : amount;
 }
 
 export function getPricing(categorySlug: string, leafSlug?: string): ServicePricing | undefined {
@@ -354,15 +420,15 @@ export function startingPrice(pricing: ServicePricing): number | undefined {
 /** One-sentence plain-language summary, for FAQ answers and llms.txt. */
 export function pricingSummary(pricing: ServicePricing): string {
   // Lowercase only the first letter, so names like "iPhone" keep their capitals.
-  const lower = (label: string) => label.charAt(0).toLowerCase() + label.slice(1);
+  const lower = (l: PriceLine) => (l.named ? l.label : l.label.charAt(0).toLowerCase() + l.label.slice(1));
   const parts = pricing.lines.map((l) =>
     l.price === null
-      ? `${lower(l.label)}: quoted per project`
+      ? `${lower(l)}: quoted per project`
       : l.price === 0
-        ? `${lower(l.label)}: free`
+        ? `${lower(l)}: free`
         : l.maxPrice !== undefined
-          ? `${lower(l.label)}: ${usd(l.price)}–${usd(l.maxPrice)}`
-          : `${lower(l.label)}: ${l.add ? "+" : l.from ? "from " : ""}${usd(l.price)}`
+          ? `${lower(l)}: ${usd(l.price)}–${usd(l.maxPrice)}`
+          : `${lower(l)}: ${l.add ? "+" : l.from ? "from " : ""}${usd(l.price)}${l.per ? `/${l.per}` : ""}${orPrice(l)}`
   );
   const sentence = parts.join("; ");
   return `${sentence.charAt(0).toUpperCase()}${sentence.slice(1)}${pricing.plusPrinting ? ", plus printing" : ""}.`;
@@ -374,9 +440,14 @@ export function pricingSummary(pricing: ServicePricing): string {
 export function schemaOffers(pricing: ServicePricing): Record<string, unknown>[] {
   return pricing.lines.flatMap((l) => {
     if (l.price === null) return [];
+    const billed = (per?: "month" | "quarter") => (per ? ` (billed ${per === "month" ? "monthly" : "quarterly"})` : "");
+    // The second billing option gets its own offer.
+    const alt = l.or
+      ? [{ "@type": "Offer", name: `${l.label}${billed(l.or.per)}`, priceCurrency: "USD", price: l.or.price }]
+      : [];
     const offer: Record<string, unknown> = {
       "@type": "Offer",
-      name: l.add ? `Add-on: ${l.label}` : l.label,
+      name: `${l.add ? `Add-on: ${l.label}` : l.label}${billed(l.per)}`,
       priceCurrency: "USD",
       ...(pricing.plusPrinting ? { description: PRINTING_NOTE } : {}),
     };
@@ -390,7 +461,7 @@ export function schemaOffers(pricing: ServicePricing): Record<string, unknown>[]
     } else {
       offer.price = l.price;
     }
-    return [offer];
+    return [offer, ...alt];
   });
 }
 

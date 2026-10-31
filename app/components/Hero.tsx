@@ -78,20 +78,21 @@ export default function Hero() {
           </Link>
 
           <h1 className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-            Your{" "}
+            Smarter Websites.{" "}
             <span className="animate-hue bg-gradient-to-r from-violet-600 via-fuchsia-500 to-amber-500 bg-clip-text text-transparent">
-              marketing team
-            </span>
-            , without the{" "}
+              Measured Results.
+            </span>{" "}
             <span className="animate-hue bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 bg-clip-text text-transparent">
-              payroll.
+              Real Growth.
             </span>
           </h1>
 
           <p className="mt-6 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg">
-            I&rsquo;m Ryan, and I build your website, get you found on Google and in AI answers,
-            and design your print, all in one place. Based in Richmond, IL, serving Northern
-            Illinois and Southeast Wisconsin.
+            I&rsquo;m Ryan, and I turn local search and performance data into custom websites, top
+            Google and AI search rankings, and print materials that convert. I research what your
+            competitors are missing, build on proven search data, and continuously refine your
+            presence so you stay ahead. Serving Northern Illinois and Southeast Wisconsin from
+            Richmond, IL.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">

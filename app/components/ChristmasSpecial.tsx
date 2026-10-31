@@ -77,7 +77,7 @@ export default function ChristmasSpecial({
       )}
 
       <p className={`mt-3 text-xs ${dark ? "text-white/60" : "text-ink-soft"}`}>
-        Design prices; printing is extra. Ends {lastDay}.
+        Design prices; printing is extra. Ends {lastDay}, along with guaranteed printing and shipping before Christmas.
       </p>
     </div>
   );
