@@ -267,6 +267,20 @@ export function IconCode({ className = "" }: { className?: string }) {
   );
 }
 
+export function IconChart({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <path
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4 4v16h16M8.5 16v-4M13 16V8M17.5 16v-6"
+      />
+    </svg>
+  );
+}
+
 export function IconRocket({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className}>

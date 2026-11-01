@@ -26,8 +26,7 @@ export default function MainOffersSection() {
           Start my website
         </QuoteModal>
       ),
-      more: { href: "#web-design", label: "How I build sites" },
-      page: { href: "/services/website-design-development", label: "All website services" },
+      link: { href: "/services/website-design-development", label: "All website services" },
     },
     {
       icon: IconSearch,
@@ -41,8 +40,7 @@ export default function MainOffersSection() {
           Get a free health check
         </Link>
       ),
-      more: { href: "#search-ai", label: "What's included" },
-      page: { href: "/services/search-ai-discovery", label: "All search + AI services" },
+      link: { href: "/services/search-ai-discovery", label: "All search + AI services" },
     },
     {
       icon: IconSparkle,
@@ -56,8 +54,7 @@ export default function MainOffersSection() {
           Talk about a plan
         </a>
       ),
-      more: { href: "#partner-plan", label: "See the plan" },
-      page: undefined,
+      link: { href: "#partner-plan", label: "See the plan" },
     },
   ];
 
@@ -84,28 +81,18 @@ export default function MainOffersSection() {
                     <Icon className="h-5 w-5" />
                   </span>
                   <h3 className="mt-5 text-xl font-bold tracking-tight">
-                    {offer.page ? (
-                      <Link href={offer.page.href} className="hover:text-violet-700">
-                        {offer.title}
-                      </Link>
-                    ) : (
-                      offer.title
-                    )}
+                    <Link href={offer.link.href} className="hover:text-violet-700">
+                      {offer.title}
+                    </Link>
                   </h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{offer.body}</p>
                   <p className="mt-5 text-sm font-semibold">{offer.price}</p>
                   <div className="mt-5">{offer.cta}</div>
-                  <div className="mt-4 flex min-h-[3.25rem] flex-col items-start gap-2 text-sm font-semibold">
-                    <a href={offer.more.href} className="group inline-flex items-center gap-1 text-ink-soft hover:text-ink">
-                      {offer.more.label}
+                  <div className="mt-4 text-sm font-semibold">
+                    <a href={offer.link.href} className="group inline-flex items-center gap-1 text-violet-600 hover:text-violet-700">
+                      {offer.link.label}
                       <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                     </a>
-                    {offer.page && (
-                      <Link href={offer.page.href} className="group inline-flex items-center gap-1 text-violet-600 hover:text-violet-700">
-                        {offer.page.label}
-                        <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </Link>
-                    )}
                   </div>
                 </div>
               </Reveal>

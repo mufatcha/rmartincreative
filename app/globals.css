@@ -64,6 +64,28 @@ body:has(#nextdoor:target) [data-extras-group]:not(#nextdoor) {
   transform: translateY(0);
 }
 
+/* ---------- Home approach diagram: layers stack up from the data foundation when revealed ---------- */
+.stack-layer {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s ease-out var(--layer-delay, 0s),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--layer-delay, 0s);
+}
+.is-visible .stack-layer {
+  opacity: 1;
+  transform: none;
+}
+
+/* Status lights blinking on the diagram's server racks */
+@keyframes rack-light {
+  0%, 60%, 100% { opacity: 1; }
+  75% { opacity: 0.25; }
+}
+.rack-light {
+  animation: rack-light 2.6s steps(1) infinite;
+}
+
 /* ---------- Hero blobs ---------- */
 @keyframes drift-a {
   0%, 100% { transform: translate(0, 0) scale(1); }
@@ -181,10 +203,12 @@ body:has(#nextdoor:target) [data-extras-group]:not(#nextdoor) {
   .animate-hue,
   .snowflake,
   .animate-sparkle,
+  .rack-light,
   .btn-shine::after {
     animation: none !important;
   }
-  .reveal {
+  .reveal,
+  .stack-layer {
     opacity: 1;
     transform: none;
     transition: none;
