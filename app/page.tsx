@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import Hero from "./components/Hero";
 import MainOffersSection from "./components/MainOffersSection";
-import WebDesignSection from "./components/WebDesignSection";
-import SearchAiSection from "./components/SearchAiSection";
+import ApproachSection from "./components/ApproachSection";
 import PartnerPlanSection from "./components/PartnerPlanSection";
-import ComparisonSection from "./components/ComparisonSection";
-import ProcessSection from "./components/ProcessSection";
 import MoreServicesSection from "./components/MoreServicesSection";
 import TrustedBySection from "./components/TrustedBySection";
 import CtaSection from "./components/CtaSection";
@@ -24,11 +21,8 @@ export default function Home() {
     <>
       <Hero />
       <MainOffersSection />
-      <WebDesignSection />
-      <SearchAiSection />
+      <ApproachSection />
       <PartnerPlanSection />
-      <ComparisonSection />
-      <ProcessSection />
       <MoreServicesSection />
       <TrustedBySection />
       <CtaSection />

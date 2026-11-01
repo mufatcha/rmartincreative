@@ -18,7 +18,6 @@ const COMPANY_LINKS = [
   // The About page appears here automatically once it's published.
   ...(ABOUT.published ? [{ href: "/about", label: "About" }] : []),
   { href: "/services", label: "All services" },
-  { href: "/#process", label: "How it works" },
   { href: "/service-area", label: "Service area" },
   { href: "/extras", label: "Notes & Freebies" },
   { href: "/payment", label: "Ways to pay" },
