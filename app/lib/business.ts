@@ -63,12 +63,21 @@ export const SOCIAL_PROFILES: {
   { name: "Bing", label: `${BUSINESS_NAME} on Bing Places`, url: "https://www.bing.com/forbusiness/singleEntity?bizid=629c0fcc-c0e9-4b23-a343-996c907213f9" },
 ];
 
-/** The free "Website Help for Local Business Owners" group on Nextdoor, linked in the
- *  footer as text. It's a community group, not the business profile, so it isn't in sameAs. */
 /** Opens the "write a review" box on the Google Business Profile. */
 export const GOOGLE_REVIEW_URL = "https://g.page/r/CRTfT7VsZx0vEBI/review";
 
-export const NEXTDOOR_GROUP ={ label: "Free website help group on Nextdoor", url: "https://nextdoor.com/g/0wgka8voj/" };
+/** The free website help groups, linked in the footer and on Notes & Freebies. They're
+ *  community groups, not the business profiles, so they aren't in sameAs. The site
+ *  doesn't show the groups' names, only where they are. */
+export const COMMUNITY_GROUPS = [
+  { id: "nextdoor", name: "Nextdoor", url: "https://nextdoor.com/g/0wgka8voj/" },
+  { id: "facebook", name: "Facebook", url: "https://www.facebook.com/groups/1788373592399077" },
+] as const;
+
+export type CommunityGroupId = (typeof COMMUNITY_GROUPS)[number]["id"];
+
+/** "[Nextdoor](…) or [Facebook](…)", for content strings that use inline links. */
+export const COMMUNITY_GROUP_LINKS = COMMUNITY_GROUPS.map((g) => `[${g.name}](${g.url})`).join(" or ");
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??

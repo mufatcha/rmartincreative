@@ -120,15 +120,9 @@ export async function POST(request: Request) {
             `<li>${f.url ? `<a href="${escapeHtml(f.url)}">${escapeHtml(f.name)}</a>` : escapeHtml(f.name)} (${formatBytes(f.size)})</li>`
         )
         .join("")}
-    </ul>
-    <p style="font-size:12px;color:#5a5270">Download links work for 7 days. Files stay in your R2 bucket (${escapeHtml(
-      fileLinks[0].key.split("/").slice(0, 3).join("/")
-    )}) for 90 days.</p>`
+    </ul>`
         : `<p style="font-size:14px;color:#5a5270">No files attached.</p>`
-    }
-    <p style="font-size:12px;color:#5a5270">${
-      validEmail ? `Reply to this email to respond to ${escapeHtml(name)} directly.` : `${escapeHtml(name)} left a phone number, not an email.`
-    }</p>`;
+    }`;
 
   const text = [
     `New quote request: ${service.label}`,

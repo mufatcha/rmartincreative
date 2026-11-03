@@ -5,12 +5,12 @@
 // After adding or changing a featured image, run `bun run social-images` to make
 // its link-share image (public/social-media-posts/<slug>.jpg).
 //
-// Content from the Nextdoor group (Website Wednesday how-tos, before-and-after fixes,
-// answers to members' questions) is published here first, with `series` set, then
-// shared on Nextdoor as a short summary that links back. See DEVELOPER-NOTES.md.
+// Content from the Nextdoor and Facebook groups (Website Wednesday how-tos, quick
+// guides, answers to members' questions) is published here first, with `series` set,
+// then shared in the groups as a short summary that links back. See DEVELOPER-NOTES.md.
 
 import type { Metadata } from "next";
-import { BUSINESS_NAME } from "../business";
+import { BUSINESS_NAME, type CommunityGroupId } from "../business";
 
 export type ExtraKind = "freebie" | "note";
 
@@ -22,33 +22,46 @@ export const EXTRA_CATEGORIES = [
 
 export type ExtraCategoryId = (typeof EXTRA_CATEGORIES)[number]["id"];
 
-/** Recurring series from the free Nextdoor group. A post can belong to one. */
+/** Recurring series from the free community groups. A post can belong to one.
+ *  `groups` lists which groups run the series; the hub's "From our social groups"
+ *  block lists only series with at least one group. */
 export const EXTRA_SERIES = [
   {
     id: "website-wednesday",
     label: "Website Wednesday",
     badge: "bg-violet-100 text-violet-700",
     description: "A new how-to every week, with simple steps you can take on your own website.",
+    groups: ["nextdoor", "facebook"],
   },
   {
     id: "quick-guide",
     label: "Quick Guide",
     badge: "bg-fuchsia-100 text-fuchsia-700",
     description: "Bonus guides for group members, each focused on one fix you can make in under an hour.",
-  },
-  {
-    id: "before-after",
-    label: "Before & After",
-    badge: "bg-emerald-100 text-emerald-700",
-    description: "Real local websites made faster, clearer, and easier to find, shared with the owner's permission.",
+    groups: ["nextdoor", "facebook"],
   },
   {
     id: "group-qa",
     label: "Ask Anything",
     badge: "bg-amber-100 text-amber-800",
     description: "Answers to real questions from group members, no question too basic.",
+    groups: ["nextdoor", "facebook"],
   },
-] as const;
+  {
+    id: "feedback-friday",
+    label: "Feedback Friday",
+    badge: "bg-sky-100 text-sky-700",
+    description: "Members share their website and get friendly, practical feedback.",
+    groups: ["facebook"],
+  },
+  {
+    id: "before-after",
+    label: "Before & After",
+    badge: "bg-emerald-100 text-emerald-700",
+    description: "Real local websites made faster, clearer, and easier to find, shared with the owner's permission.",
+    groups: [],
+  },
+] as const satisfies readonly { id: string; label: string; badge: string; description: string; groups: readonly CommunityGroupId[] }[];
 
 export type ExtraSeriesId = (typeof EXTRA_SERIES)[number]["id"];
 export type ExtraSeries = (typeof EXTRA_SERIES)[number];
@@ -66,8 +79,10 @@ export type Extra = {
   slug: string;
   kind: ExtraKind;
   category: ExtraCategoryId;
-  /** Set for posts from the Nextdoor group: shows a series badge and a link to the group. */
+  /** Set for posts from the community groups: shows a series badge and links to the groups. */
   series?: ExtraSeriesId;
+  /** Lists the post under Community on the hub without a series (no series badge). */
+  community?: boolean;
   /** Page title and card heading. Keep it under ~45 characters so the brand fits in the <title>. */
   title: string;
   /** Meta description and card blurb: 160 characters or fewer. */
@@ -96,6 +111,7 @@ const EXTRAS_LIST: Extra[] = [
     slug: "free-website-for-a-local-business",
     kind: "note",
     category: "web",
+    community: true,
     title: "A Free Website for a Local Business",
     description:
       "I'm building a free custom website, plus Google and AI search setup, for a small business anywhere in the US. Here's what's included, and how to apply.",

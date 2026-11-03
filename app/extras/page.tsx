@@ -4,7 +4,7 @@ import Link from "next/link";
 import CtaSection from "../components/CtaSection";
 import Reveal from "../components/Reveal";
 import { IconArrowRight } from "../components/icons";
-import { NEXTDOOR_GROUP } from "../lib/business";
+import { COMMUNITY_GROUPS } from "../lib/business";
 import {
   EXTRAS,
   EXTRAS_HUB,
@@ -25,22 +25,44 @@ export const metadata: Metadata = {
   }),
 };
 
-function ExtraCard({ extra, category, index }: { extra: Extra; category: ExtraCategory; index: number }) {
-  return (
-    <Reveal delay={index * 80} className="h-full">
+function ExtraCard({
+  extra,
+  category,
+  index,
+  featured = false,
+}: {
+  extra: Extra;
+  category: ExtraCategory;
+  index: number;
+  /** The newest post, full width at the top of the hub: image beside the text on larger screens. */
+  featured?: boolean;
+}) {
+  const card = (
       <Link
         href={`/extras/${extra.slug}`}
-        className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-ink/5 transition-shadow hover:shadow-lg"
+        className={`group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-ink/5 transition-shadow hover:shadow-lg ${featured ? "md:flex-row" : ""}`}
       >
         {extra.image ? (
-          <div className="relative aspect-[4/3] overflow-hidden bg-paper-tint">
-            <Image
-              src={extra.image.src}
-              alt={extra.image.alt}
-              fill
-              sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
-              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            />
+          <div className={`relative aspect-[4/3] overflow-hidden bg-paper-tint ${featured ? "md:w-1/2 md:shrink-0" : ""}`}>
+            {featured ? (
+              <Image
+                src={extra.image.src}
+                alt={extra.image.alt}
+                width={extra.image.width}
+                height={extra.image.height}
+                sizes="(min-width: 768px) 560px, 100vw"
+                preload
+                className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <Image
+                src={extra.image.src}
+                alt={extra.image.alt}
+                fill
+                sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
           </div>
         ) : (
           // Text-only notes: the title, set large on a gradient, stands in for a photo.
@@ -53,7 +75,7 @@ function ExtraCard({ extra, category, index }: { extra: Extra; category: ExtraCa
             </p>
           </div>
         )}
-        <div className="flex flex-1 flex-col p-6">
+        <div className={`flex flex-1 flex-col p-6 ${featured ? "md:justify-center md:p-10" : ""}`}>
           <div className="flex flex-wrap gap-2">
             <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${category.badge}`}>
               {category.label}
@@ -71,14 +93,22 @@ function ExtraCard({ extra, category, index }: { extra: Extra; category: ExtraCa
               </span>
             )}
           </div>
-          <h3 className="mt-3 text-lg font-semibold leading-snug">{extra.title}</h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">{extra.description}</p>
-          <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-violet-600">
+          <h3 className={`mt-3 font-semibold leading-snug ${featured ? "text-2xl sm:text-3xl" : "text-lg"}`}>{extra.title}</h3>
+          <p className={`mt-2 leading-relaxed text-ink-soft ${featured ? "md:text-lg" : "flex-1 text-sm"}`}>
+            {extra.description}
+          </p>
+          <span className={`inline-flex items-center gap-2 text-sm font-semibold text-violet-600 ${featured ? "mt-6" : "mt-4"}`}>
             {extra.download ? "Get it free" : "Read more"}
             <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </span>
         </div>
       </Link>
+  );
+  // The featured card is at the top of the page, so it shows right away instead of fading in.
+  if (featured) return card;
+  return (
+    <Reveal delay={index * 80} className="h-full">
+      {card}
     </Reveal>
   );
 }
@@ -89,10 +119,16 @@ export default function ExtrasPage() {
     category,
     extras: EXTRAS.filter((e) => e.category === category.id),
   })).filter((g) => g.extras.length > 0);
-  // Posts from the Nextdoor group (any series). /extras#nextdoor shows only these;
+  // Posts from the community groups (any series). /extras#community shows only these;
   // the CSS for that filter is in globals.css under "Notes & Freebies hub".
-  const groupPosts = EXTRAS.filter((e) => e.series);
+  const groupPosts = EXTRAS.filter((e) => e.series || e.community);
+  // The newest post sits full width at the top. Its spots in the grid stay hidden
+  // until a tag link filters or jumps to a section (CSS in globals.css), so it's
+  // never listed twice.
+  const newest = EXTRAS[0];
+  const gridItemProps = (extra: Extra) => (extra.slug === newest?.slug ? { "data-newest-copy": "" } : {});
   const hasGroupPosts = groupPosts.length > 0;
+  const groupSeries = EXTRA_SERIES.filter((series) => series.groups.length > 0);
 
   return (
     <>
@@ -112,10 +148,10 @@ export default function ExtrasPage() {
             <nav aria-label="Categories" className="mt-8 flex flex-wrap gap-2">
               {hasGroupPosts && (
                 <a
-                  href="#nextdoor"
-                  className="rounded-full bg-white px-4 py-2 text-sm font-medium text-[#1B8851] ring-1 ring-[#1B8851]/30 transition-colors hover:bg-[#1B8851]/5"
+                  href="#community"
+                  className="rounded-full bg-white px-4 py-2 text-sm font-medium text-violet-700 ring-1 ring-violet-300 transition-colors hover:bg-violet-50"
                 >
-                  Nextdoor <span className="text-[#1B8851]/60">({groupPosts.length})</span>
+                  Community <span className="text-violet-700/60">({groupPosts.length})</span>
                 </a>
               )}
               {groups.map(({ category, extras }) => (
@@ -129,42 +165,48 @@ export default function ExtrasPage() {
               ))}
             </nav>
           )}
+          {newest && (
+            <div data-extras-newest className="mt-10">
+              <ExtraCard extra={newest} category={getExtraCategory(newest.category)} index={0} featured />
+            </div>
+          )}
           {hasGroupPosts && (
             <div className="mt-10 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-ink/5 sm:p-8">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#1B8851]">From the Nextdoor group</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-violet-600">From our social groups</p>
               <p className="mt-2 max-w-3xl text-ink-soft">
-                Posts from our free group, <span className="font-semibold text-ink">Website Help for Local Business Owners</span>,
-                shared here so everyone can read them.
+                Posts from our free website help groups on Nextdoor and Facebook, shared here so everyone can read them.
               </p>
               <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {EXTRA_SERIES.map((series) => (
-                  <li key={series.id}>
-                    <span
-                      className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${series.badge}`}
-                    >
-                      {series.label}
-                    </span>
-                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">{series.description}</p>
-                  </li>
-                ))}
+                {groupSeries.map((series) => {
+                  const only = series.groups.length === 1 ? COMMUNITY_GROUPS.find((g) => g.id === series.groups[0]) : undefined;
+                  return (
+                    <li key={series.id}>
+                      <span
+                        className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${series.badge}`}
+                      >
+                        {series.label}
+                      </span>
+                      <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                        {series.description}
+                        {only && <span className="font-medium text-ink"> In the {only.name} group.</span>}
+                      </p>
+                    </li>
+                  );
+                })}
               </ul>
               <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-                <a
-                  href="#nextdoor"
-                  className="group inline-flex items-center gap-2 text-sm font-semibold text-[#1B8851] hover:underline"
-                >
-                  See all group posts
-                  <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-                <a
-                  href={NEXTDOOR_GROUP.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 text-sm font-semibold text-[#1B8851] hover:underline"
-                >
-                  Join the free group on Nextdoor
-                  <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
+                {COMMUNITY_GROUPS.map((group) => (
+                  <a
+                    key={group.id}
+                    href={group.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-sm font-semibold text-violet-600 hover:underline"
+                  >
+                    Join the free group on {group.name}
+                    <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                ))}
               </div>
             </div>
           )}
@@ -173,17 +215,19 @@ export default function ExtrasPage() {
 
       <div id="posts" className="scroll-mt-28 space-y-16 pb-20 sm:space-y-20 sm:pb-24">
         {hasGroupPosts && (
-          <section id="nextdoor" data-extras-group className="scroll-mt-28">
+          <section id="community" data-extras-group className="scroll-mt-28">
+            {/* Older links shared in the Nextdoor group point to /extras#nextdoor. */}
+            <span id="nextdoor" aria-hidden className="block scroll-mt-28" />
             <div className="mx-auto max-w-6xl px-6">
               <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-[#1B8851]">From the Nextdoor group</h2>
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-violet-600">From our social groups</h2>
                 <a href="#posts" className="text-sm font-semibold text-violet-600 hover:underline">
                   Show all posts
                 </a>
               </div>
               <ul className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {groupPosts.map((extra, i) => (
-                  <li key={extra.slug}>
+                  <li key={extra.slug} {...gridItemProps(extra)}>
                     <ExtraCard extra={extra} category={getExtraCategory(extra.category)} index={i} />
                   </li>
                 ))}
@@ -197,7 +241,7 @@ export default function ExtrasPage() {
               <h2 className={`text-xs font-semibold uppercase tracking-widest ${category.text}`}>{category.label}</h2>
               <ul className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {extras.map((extra, i) => (
-                  <li key={extra.slug}>
+                  <li key={extra.slug} {...gridItemProps(extra)}>
                     <ExtraCard extra={extra} category={category} index={i} />
                   </li>
                 ))}

@@ -43,13 +43,25 @@ html:has([data-audience-tabs]) section[id] {
 }
 
 /* ---------- Notes & Freebies hub ---------- */
-/* /extras#nextdoor shows only the Nextdoor group posts, so that link can be
-   shared. The Nextdoor section stays hidden otherwise, so posts aren't listed
-   twice. CSS-only (:target), so it works before the page's JavaScript loads. */
-#nextdoor[data-extras-group]:not(:target) {
+/* /extras#community shows only the posts from the social groups, so that link can
+   be shared. The section stays hidden otherwise, so posts aren't listed twice.
+   #nextdoor (an anchor inside the section) still works for older shared links.
+   CSS-only (:target), so it works before the page's JavaScript loads. */
+#community[data-extras-group]:not(:target):not(:has(#nextdoor:target)) {
   display: none;
 }
-body:has(#nextdoor:target) [data-extras-group]:not(#nextdoor) {
+body:has(#community:target, #nextdoor:target) [data-extras-group]:not(#community) {
+  display: none;
+}
+/* The newest post shows full width at the top, and its grid spots stay hidden.
+   Once a tag link targets a section, it goes back into the grid instead. */
+[data-newest-copy] {
+  display: none;
+}
+body:has([data-extras-group]:target, #nextdoor:target) [data-newest-copy] {
+  display: list-item;
+}
+body:has([data-extras-group]:target, #nextdoor:target) [data-extras-newest] {
   display: none;
 }
 

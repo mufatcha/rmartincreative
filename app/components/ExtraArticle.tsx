@@ -9,7 +9,7 @@ import Reveal from "./Reveal";
 import ServiceFaqs from "./ServiceFaqs";
 import ShareLinks from "./ShareLinks";
 import { IconArrowRight } from "./icons";
-import { NEXTDOOR_GROUP, SITE_URL } from "../lib/business";
+import { COMMUNITY_GROUPS, SITE_URL } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
 import { EXTRAS_HUB, extraShareMetadata, getExtra, getExtraCategory, getExtraSeries } from "../lib/data/extras";
 import { renderInlineLinks } from "../lib/inline-links";
@@ -329,17 +329,21 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
         <div className="mx-auto max-w-3xl px-6">
           {series && (
             <p className="mb-8 rounded-2xl bg-white p-5 text-sm leading-relaxed text-ink-soft shadow-sm ring-1 ring-ink/5">
-              This started in our free Nextdoor group,{" "}
-              <span className="font-semibold text-ink">Website Help for Local Business Owners</span>.{" "}
-              <a
-                href={NEXTDOOR_GROUP.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-[#1B8851] hover:underline"
-              >
-                Join to ask your own questions
-              </a>
-              .
+              This started in our free website help groups. Join us on{" "}
+              {COMMUNITY_GROUPS.map((group, i) => (
+                <Fragment key={group.id}>
+                  {i > 0 && " or "}
+                  <a
+                    href={group.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-violet-600 hover:underline"
+                  >
+                    {group.name}
+                  </a>
+                </Fragment>
+              ))}{" "}
+              to ask your own questions.
             </p>
           )}
           <Reveal>
