@@ -1,6 +1,6 @@
 import Reveal from "./Reveal";
 import { IconArrowRight } from "./icons";
-import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL } from "../lib/business";
+import { BUSINESS_EMAIL, BUSINESS_HOURS_DISPLAY, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL, GOOGLE_REVIEW_URL } from "../lib/business";
 import QuoteModal from "./QuoteModal";
 
 export default function CtaSection({
@@ -49,7 +49,18 @@ export default function CtaSection({
               >
                 {BUSINESS_EMAIL}
               </a>{" "}
-              &middot; usually replies within a day
+              &middot; {BUSINESS_HOURS_DISPLAY}
+            </p>
+            <p className="relative mt-3 text-sm text-white/70">
+              Already worked with me?{" "}
+              <a
+                href={GOOGLE_REVIEW_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+              >
+                Leave a review on Google
+              </a>
             </p>
           </div>
         </Reveal>

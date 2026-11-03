@@ -36,7 +36,7 @@ function buildSchema() {
     brand: { "@type": "Brand", name: "FeedTheFlames", url: FEEDTHEFLAMES_URL },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      dayOfWeek: BUSINESS_HOURS.days,
       opens: BUSINESS_HOURS.opens,
       closes: BUSINESS_HOURS.closes,
     },

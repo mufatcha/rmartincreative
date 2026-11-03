@@ -19,8 +19,24 @@ export const QUOTE_FROM = `${BUSINESS_NAME} Quotes <quotes@rmartincreative.com>`
 
 export const PRODUCTION_URL = "https://rmartincreative.com";
 
-/** Opening hours, matching the Google Business Profile (24-hour times, Monday to Saturday; closed Sunday). */
-export const BUSINESS_HOURS = { opens: "09:00", closes: "19:00" };
+/** Opening hours, matching the Google Business Profile (24-hour times, consecutive days; closed Sunday).
+ *  The schema.org openingHoursSpecification and the hours shown on the site both come from here. */
+export const BUSINESS_HOURS = {
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  opens: "09:00",
+  closes: "19:00",
+};
+
+/** "19:00" → "7pm", "09:30" → "9:30am". */
+function hourLabel(time: string) {
+  const [h, m] = time.split(":").map(Number);
+  const suffix = h < 12 ? "am" : "pm";
+  const hour = h % 12 || 12;
+  return m ? `${hour}:${String(m).padStart(2, "0")}${suffix}` : `${hour}${suffix}`;
+}
+
+/** The hours as shown on the site, e.g. "Mon–Sat 9am–7pm". */
+export const BUSINESS_HOURS_DISPLAY = `${BUSINESS_HOURS.days[0].slice(0, 3)}–${BUSINESS_HOURS.days[BUSINESS_HOURS.days.length - 1].slice(0, 3)} ${hourLabel(BUSINESS_HOURS.opens)}–${hourLabel(BUSINESS_HOURS.closes)}`;
 
 /** The FeedTheFlames apparel brand's Etsy shop. */
 export const FEEDTHEFLAMES_URL = "https://feedtheflamegraphics.etsy.com";
@@ -44,11 +60,15 @@ export const SOCIAL_PROFILES: {
   // Google Business Profile, by its permanent Maps ID (cid), not a search link.
   { name: "Google", label: `${BUSINESS_NAME} on Google Maps`, url: "https://maps.google.com/?cid=3394983410703261460" },
   { name: "Nextdoor", label: `${BUSINESS_NAME} on Nextdoor`, url: "https://nextdoor.com/page/r-martin-creative-richmond-il" },
+  { name: "Bing", label: `${BUSINESS_NAME} on Bing Places`, url: "https://www.bing.com/forbusiness/singleEntity?bizid=629c0fcc-c0e9-4b23-a343-996c907213f9" },
 ];
 
 /** The free "Website Help for Local Business Owners" group on Nextdoor, linked in the
  *  footer as text. It's a community group, not the business profile, so it isn't in sameAs. */
-export const NEXTDOOR_GROUP = { label: "Free website help group on Nextdoor", url: "https://nextdoor.com/g/0wgka8voj/" };
+/** Opens the "write a review" box on the Google Business Profile. */
+export const GOOGLE_REVIEW_URL = "https://g.page/r/CRTfT7VsZx0vEBI/review";
+
+export const NEXTDOOR_GROUP ={ label: "Free website help group on Nextdoor", url: "https://nextdoor.com/g/0wgka8voj/" };
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
