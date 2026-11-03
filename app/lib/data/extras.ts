@@ -74,8 +74,9 @@ export type Extra = {
   description: string;
   /** ISO date: used for ordering and the sitemap, not shown prominently. */
   published: string;
-  /** Card and share image. Notes without one get a text-only card on the hub. */
-  image?: { src: string; alt: string; width: number; height: number };
+  /** Card and share image. Notes without one get a text-only card on the hub.
+   *  `shareSrc` is a custom 1200×630 share image, used instead of cropping `src`. */
+  image?: { src: string; alt: string; width: number; height: number; shareSrc?: string };
   download?: {
     href: string;
     /** The name the file is saved as on the visitor's computer. */
@@ -91,6 +92,22 @@ export const EXTRAS_HUB = {
 };
 
 const EXTRAS_LIST: Extra[] = [
+  {
+    slug: "free-website-for-a-local-business",
+    kind: "note",
+    category: "web",
+    title: "A Free Website for a Local Business",
+    description:
+      "I'm building a free custom website, plus Google and AI search setup, for a small business anywhere in the US. Here's what's included, and how to apply.",
+    published: "2026-11-02",
+    image: {
+      src: "/webp-assets/free-website-for-a-local-business.webp",
+      shareSrc: "/webp-assets/free-website-for-a-local-business-share.webp",
+      alt: "A free website for a local business: a custom website, free hosting, a professional email address, and setup on Google, AI answers, Apple Maps, Bing, Facebook, and Instagram. Your only cost is a domain name, about $12 a year",
+      width: 1200,
+      height: 896,
+    },
+  },
   {
     slug: "faster-photos-faster-website",
     kind: "note",

@@ -7,6 +7,7 @@ import BeforeAfterSlider from "./BeforeAfterSlider";
 import QuoteModal from "./QuoteModal";
 import Reveal from "./Reveal";
 import ServiceFaqs from "./ServiceFaqs";
+import ShareLinks from "./ShareLinks";
 import { IconArrowRight } from "./icons";
 import { NEXTDOOR_GROUP, SITE_URL } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
@@ -23,7 +24,8 @@ export type ArticleBlock =
   | { type: "numbered"; heading: string; items: { title: string; body: string }[] }
   | { type: "steps"; heading: string; items: string[]; note?: string }
   | { type: "bullets"; heading: string; items: string[] }
-  | { type: "text"; heading: string; paragraphs: string[] }
+  /** `share` adds the share buttons under the paragraphs (needs `share` on the article). */
+  | { type: "text"; heading: string; paragraphs: string[]; share?: boolean }
   /** A code sample (shown as-is, not run through `rich`), with optional text before and after. */
   | { type: "code"; heading: string; paragraphs: string[]; code: string; note?: string }
   /** A comparison table: the first column labels each row. */
@@ -53,7 +55,12 @@ export type ArticleContent = {
     link: { href: string; label: string };
   };
   faqs: ServiceFaq[];
+  /** For offers meant to be passed along: share buttons under the intro, with an
+   *  apply button and a nudge to share. `text` is the message the buttons prefill. */
+  share?: { text: string; prompt: string; apply: { prompt: string; label: string; serviceId: string } };
 };
+
+type Share = { url: string; text: string };
 
 function getArticle(slug: string) {
   const extra = getExtra(slug);
@@ -95,7 +102,7 @@ function rich(text: string) {
   });
 }
 
-function Block({ block }: { block: ArticleBlock }) {
+function Block({ block, share }: { block: ArticleBlock; share?: Share }) {
   switch (block.type) {
     case "numbered":
       return (
@@ -152,6 +159,7 @@ function Block({ block }: { block: ArticleBlock }) {
               {rich(para)}
             </p>
           ))}
+          {block.share && share && <ShareLinks {...share} className="mt-6" />}
         </>
       );
     case "code":
@@ -230,6 +238,7 @@ function Block({ block }: { block: ArticleBlock }) {
 
 export default function ExtraArticle({ slug, content }: { slug: string; content: ArticleContent }) {
   const { title, description, published, category, image, series, download } = getArticle(slug);
+  const share = content.share && { url: `${SITE_URL}/extras/${slug}`, text: content.share.text };
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -264,6 +273,20 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
               {rich(para)}
             </p>
           ))}
+          {content.share && share && (
+            <div className="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink/5">
+              <p className={p}>{rich(content.share.apply.prompt)}</p>
+              <QuoteModal
+                initialServiceId={content.share.apply.serviceId}
+                triggerClassName="btn-shine relative mt-3 inline-flex items-center gap-2 overflow-hidden rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper shadow-lg shadow-ink/20 transition-transform hover:scale-105"
+              >
+                {content.share.apply.label}
+                <IconArrowRight className="h-4 w-4" />
+              </QuoteModal>
+              <p className={`mt-6 border-t border-ink/10 pt-5 ${p}`}>{rich(content.share.prompt)}</p>
+              <ShareLinks {...share} className="mt-3" />
+            </div>
+          )}
           {download && (
             <a
               href={download.href}
@@ -296,7 +319,7 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
         <section key={block.heading} className={i % 2 === 1 ? "bg-paper-tint py-16 sm:py-20" : "py-16 sm:py-20"}>
           <div className="mx-auto max-w-3xl px-6">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{block.heading}</h2>
-            <Block block={block} />
+            <Block block={block} share={share} />
           </div>
         </section>
       ))}
