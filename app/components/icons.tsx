@@ -474,6 +474,14 @@ export function IconShieldCheck({ className = "" }: { className?: string }) {
 }
 
 /** The Nextdoor house logo, in one color. */
+export function IconBing({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M5 2l4 1.4v12.3l5.6-3.2-2.7-1.3-1.6-3.9L19 10.4v4.2L9 20.4 5 18.2V2Z" />
+    </svg>
+  );
+}
+
 export function IconNextdoor({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className}>

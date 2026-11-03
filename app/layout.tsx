@@ -54,6 +54,10 @@ export const metadata: Metadata = {
   },
 };
 
+/** Impact.com site verification. Impact's tag uses `value`, not the usual `content`,
+ *  which React's <meta> type doesn't allow, so the attributes are spread in. */
+const IMPACT_VERIFICATION = { name: "impact-site-verification", value: "23f38eb3-03f9-4635-aa8e-aff98b061d6e" };
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const seasonalNav = getSeasonalNavLink();
 
@@ -63,6 +67,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={`${geistSans.variable} h-full antialiased`}
     >
+      <head>
+        <meta {...IMPACT_VERIFICATION} />
+      </head>
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <SiteHeader seasonalNav={seasonalNav} servicesMenu={getServicesMenu()} />
         <main className="flex-1">{children}</main>

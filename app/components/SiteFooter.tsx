@@ -1,6 +1,14 @@
 import Link from "next/link";
-import { BUSINESS_EMAIL, BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL, NEXTDOOR_GROUP, SOCIAL_PROFILES } from "../lib/business";
-import { IconArrowRight, IconFacebook, IconGoogle, IconNextdoor, IconX } from "./icons";
+import {
+  BUSINESS_EMAIL,
+  BUSINESS_HOURS_DISPLAY,
+  BUSINESS_PHONE_DISPLAY,
+  BUSINESS_PHONE_TEL,
+  GOOGLE_REVIEW_URL,
+  NEXTDOOR_GROUP,
+  SOCIAL_PROFILES,
+} from "../lib/business";
+import { IconArrowRight, IconBing, IconFacebook, IconGoogle, IconNextdoor, IconX } from "./icons";
 import { BUSINESS_CTA } from "../lib/cta";
 
 /** Icon and brand hover color for each profile in SOCIAL_PROFILES, by name. */
@@ -9,6 +17,7 @@ const SOCIAL_STYLES: Record<string, { icon: typeof IconX; hover: string }> = {
   Facebook: { icon: IconFacebook, hover: "hover:bg-[#0866FF] hover:text-white hover:ring-[#0866FF]" },
   Google: { icon: IconGoogle, hover: "hover:bg-[#4285F4] hover:text-white hover:ring-[#4285F4]" },
   Nextdoor: { icon: IconNextdoor, hover: "hover:bg-[#1B8851] hover:text-white hover:ring-[#1B8851]" },
+  Bing: { icon: IconBing, hover: "hover:bg-[#258FFA] hover:text-white hover:ring-[#258FFA]" },
 };
 import { ABOUT } from "../lib/data/about";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
@@ -46,9 +55,21 @@ export default function SiteFooter() {
             <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-ink">
               {BUSINESS_EMAIL}
             </a>
+            <p>{BUSINESS_HOURS_DISPLAY}</p>
             <p>Serving Northern Illinois &amp; Southeast Wisconsin</p>
           </div>
-          <div className="mt-4 flex items-center gap-3">
+          <a
+            href={GOOGLE_REVIEW_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-4 flex w-fit items-center gap-1.5 text-sm font-bold text-fuchsia-600"
+          >
+            <span className="animate-hue bg-gradient-to-r from-violet-600 via-fuchsia-500 to-amber-500 bg-clip-text text-transparent">
+              Leave a review on Google
+            </span>
+            <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          </a>
+          <div className="mt-3 flex items-center gap-3">
             {SOCIAL_PROFILES.map((profile) => {
               const style = SOCIAL_STYLES[profile.name];
               const Icon = style?.icon;
