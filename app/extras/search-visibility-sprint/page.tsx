@@ -1,4 +1,5 @@
 import ExtraArticle, { extraArticleMetadata, type ArticleContent } from "../../components/ExtraArticle";
+import { COMMUNITY_GROUP_LINKS } from "../../lib/business";
 import type { ServiceFaq } from "../../lib/services-data";
 
 const SLUG = "search-visibility-sprint";
@@ -86,7 +87,7 @@ const FAQS: ServiceFaq[] = [
   },
   {
     question: "What if I get stuck?",
-    answer: `Ask in our free Nextdoor group, or request a [free website + search health check](${SEARCH}/search-health-check), and I'll look over your site and send you a full written report.`,
+    answer: `Ask in our free website help group on ${COMMUNITY_GROUP_LINKS}, or request a [free website + search health check](${SEARCH}/search-health-check), and I'll look over your site and send you a full written report.`,
   },
 ];
 

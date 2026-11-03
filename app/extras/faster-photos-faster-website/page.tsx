@@ -1,4 +1,5 @@
 import ExtraArticle, { extraArticleMetadata, type ArticleContent } from "../../components/ExtraArticle";
+import { COMMUNITY_GROUP_LINKS } from "../../lib/business";
 import type { ServiceFaq } from "../../lib/services-data";
 
 const SLUG = "faster-photos-faster-website";
@@ -88,7 +89,7 @@ const FAQS: ServiceFaq[] = [
   },
   {
     question: "What if I get stuck?",
-    answer: `Ask in our free Nextdoor group. If you'd rather hand it off, the [Next.js sites I build](/extras/benefits-of-a-nextjs-website) resize and convert photos automatically, so you can upload straight from your phone.`,
+    answer: `Ask in our free website help group on ${COMMUNITY_GROUP_LINKS}. If you'd rather hand it off, the [Next.js sites I build](/extras/benefits-of-a-nextjs-website) resize and convert photos automatically, so you can upload straight from your phone.`,
   },
 ];
 

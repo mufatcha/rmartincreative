@@ -5,7 +5,7 @@ import {
   BUSINESS_PHONE_DISPLAY,
   BUSINESS_PHONE_TEL,
   GOOGLE_REVIEW_URL,
-  NEXTDOOR_GROUP,
+  COMMUNITY_GROUPS,
   SOCIAL_PROFILES,
 } from "../lib/business";
 import { IconArrowRight, IconBing, IconFacebook, IconGoogle, IconNextdoor, IconX } from "./icons";
@@ -18,6 +18,12 @@ const SOCIAL_STYLES: Record<string, { icon: typeof IconX; hover: string }> = {
   Google: { icon: IconGoogle, hover: "hover:bg-[#4285F4] hover:text-white hover:ring-[#4285F4]" },
   Nextdoor: { icon: IconNextdoor, hover: "hover:bg-[#1B8851] hover:text-white hover:ring-[#1B8851]" },
   Bing: { icon: IconBing, hover: "hover:bg-[#258FFA] hover:text-white hover:ring-[#258FFA]" },
+};
+
+/** Brand hover color for each link in COMMUNITY_GROUPS, by id. */
+const GROUP_HOVER: Record<string, string> = {
+  nextdoor: "hover:text-[#1B8851]",
+  facebook: "hover:text-[#0866FF]",
 };
 import { ABOUT } from "../lib/data/about";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
@@ -88,15 +94,26 @@ export default function SiteFooter() {
               );
             })}
           </div>
-          <a
-            href={NEXTDOOR_GROUP.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft hover:text-[#1B8851]"
-          >
-            {NEXTDOOR_GROUP.label}
-            <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          <div className="mt-5 max-w-xs">
+            <p className="text-xs font-semibold uppercase tracking-widest text-ink">
+              Free Website Help Groups
+            </p>
+            <div className="mt-2 flex gap-6">
+              {COMMUNITY_GROUPS.map((group) => (
+                <a
+                  key={group.id}
+                  href={group.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Free website help group on ${group.name}`}
+                  className={`group inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft ${GROUP_HOVER[group.id] ?? "hover:text-ink"}`}
+                >
+                  {group.name}
+                  <IconArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
         {SERVICE_AUDIENCES.map((audience) => (

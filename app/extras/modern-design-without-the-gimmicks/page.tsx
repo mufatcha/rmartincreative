@@ -1,4 +1,5 @@
 import ExtraArticle, { extraArticleMetadata, type ArticleContent } from "../../components/ExtraArticle";
+import { COMMUNITY_GROUP_LINKS } from "../../lib/business";
 import type { ServiceFaq } from "../../lib/services-data";
 
 const SLUG = "modern-design-without-the-gimmicks";
@@ -112,7 +113,7 @@ const FAQS: ServiceFaq[] = [
   },
   {
     question: "What if I get stuck?",
-    answer: `Ask in our free Nextdoor group, or [request a quote](${WEB}/website-overhaul) if you'd rather have the fixes done for you.`,
+    answer: `Ask in our free website help group on ${COMMUNITY_GROUP_LINKS}, or [request a quote](${WEB}/website-overhaul) if you'd rather have the fixes done for you.`,
   },
 ];
 
