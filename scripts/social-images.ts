@@ -7,6 +7,7 @@
 // link previews. The post's share tags point there (extraShareMetadata), so run this
 // after adding or changing a featured image, then commit the new file.
 //
+// A post with a custom share image (image.shareSrc, already 1200×630) uses that instead.
 // Landscape images are cropped to fit, keeping the middle (where the title art
 // sits). Tall images, like the Santa tags sheet, are shown whole over a blurred
 // copy of themselves. Every image gets a small "rmartincreative.com" tag.
@@ -47,7 +48,7 @@ const posts = EXTRAS.filter((e) => e.image);
 mkdirSync(join(PUBLIC, "social-media-posts"), { recursive: true });
 
 for (const post of posts) {
-  const src = join(PUBLIC, post.image!.src);
+  const src = join(PUBLIC, post.image!.shareSrc ?? post.image!.src);
   const out = join(PUBLIC, socialImagePath(post.slug));
   // Flatten the first pass so the tag goes on top of the finished crop.
   const base = await (await render(src)).png().toBuffer();
