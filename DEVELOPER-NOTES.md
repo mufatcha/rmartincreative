@@ -27,7 +27,7 @@ Run `bun run` with nothing after it to list every script.
 
 ## Community group content
 
-Posts for the free website help groups on [Nextdoor](https://nextdoor.com/g/0wgka8voj/) and [Facebook](https://www.facebook.com/groups/1788373592399077) go on the website first, then a short version goes in the groups with a link back. The groups can't embed posts, and this way the content is public and searchable. The site doesn't show the groups' names. Group links live in `COMMUNITY_GROUPS` (app/lib/business.ts).
+Posts for the free website help groups on [Nextdoor](https://nextdoor.com/g/0wgka8voj/) and [Facebook](https://www.facebook.com/groups/websitehelpstrategysharing/) go on the website first, then a short version goes in the groups with a link back. The groups can't embed posts, and this way the content is public and searchable. The site doesn't show the groups' names. Group links live in `COMMUNITY_GROUPS` (app/lib/business.ts).
 
 1. **Add it as a Notes & Freebies post** (see above), with `category: "web"` and a `series`:
    - `website-wednesday`: the weekly how-to (both groups)

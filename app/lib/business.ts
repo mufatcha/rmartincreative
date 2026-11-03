@@ -71,7 +71,7 @@ export const GOOGLE_REVIEW_URL = "https://g.page/r/CRTfT7VsZx0vEBI/review";
  *  doesn't show the groups' names, only where they are. */
 export const COMMUNITY_GROUPS = [
   { id: "nextdoor", name: "Nextdoor", url: "https://nextdoor.com/g/0wgka8voj/" },
-  { id: "facebook", name: "Facebook", url: "https://www.facebook.com/groups/1788373592399077" },
+  { id: "facebook", name: "Facebook", url: "https://www.facebook.com/groups/websitehelpstrategysharing/" },
 ] as const;
 
 export type CommunityGroupId = (typeof COMMUNITY_GROUPS)[number]["id"];
