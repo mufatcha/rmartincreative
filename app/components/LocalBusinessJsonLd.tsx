@@ -16,6 +16,13 @@ import {
 import { ABOUT } from "../lib/data/about";
 import { PAYMENT_ACCEPTED } from "../lib/data/payments";
 import { priceRange } from "../lib/data/pricing";
+import { stripInlineLinks } from "../lib/inline-links";
+import { SERVICE_CATEGORIES } from "../lib/services-data";
+
+/** Every platform and tool listed on the service pages, once each. */
+const KNOWS_ABOUT = [
+  ...new Set(SERVICE_CATEGORIES.flatMap((category) => category.stack ?? []).flatMap((group) => group.items.map(stripInlineLinks))),
+];
 
 function buildSchema() {
   return {
@@ -40,6 +47,7 @@ function buildSchema() {
       opens: BUSINESS_HOURS.opens,
       closes: BUSINESS_HOURS.closes,
     },
+    knowsAbout: KNOWS_ABOUT,
     slogan: "Smarter websites. Measured results. Real growth.",
     paymentAccepted: PAYMENT_ACCEPTED,
     currenciesAccepted: "USD, BTC, DOGE, SOL, SUI",

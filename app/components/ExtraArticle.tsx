@@ -62,6 +62,21 @@ export type ArticleContent = {
 
 type Share = { url: string; text: string };
 
+/**
+ * The anchor id for a section heading or numbered item, so other pages can link
+ * straight to a topic: "Claim and verify Google Search Console (20 min)" becomes
+ * #claim-and-verify-google-search-console. Time estimates are left out so the
+ * link survives a changed estimate.
+ */
+export function articleAnchor(text: string) {
+  return text
+    .replace(/\s*\([^)]*\b(min|hrs?|hours?)\b[^)]*\)\s*$/i, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function getArticle(slug: string) {
   const extra = getExtra(slug);
   if (!extra) notFound();
@@ -108,7 +123,7 @@ function Block({ block, share }: { block: ArticleBlock; share?: Share }) {
       return (
         <ol className="mt-8 space-y-5">
           {block.items.map((item, i) => (
-            <li key={item.title}>
+            <li key={item.title} id={articleAnchor(item.title)} className="scroll-mt-28">
               <Reveal delay={i * 60}>
                 <div className="flex gap-5 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink/5">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-100 text-sm font-bold text-sky-700">
@@ -316,7 +331,11 @@ export default function ExtraArticle({ slug, content }: { slug: string; content:
 
       {/* Body: blocks alternate between plain and tinted bands */}
       {content.blocks.map((block, i) => (
-        <section key={block.heading} className={i % 2 === 1 ? "bg-paper-tint py-16 sm:py-20" : "py-16 sm:py-20"}>
+        <section
+          key={block.heading}
+          id={articleAnchor(block.heading)}
+          className={`scroll-mt-16 ${i % 2 === 1 ? "bg-paper-tint py-16 sm:py-20" : "py-16 sm:py-20"}`}
+        >
           <div className="mx-auto max-w-3xl px-6">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{block.heading}</h2>
             <Block block={block} share={share} />

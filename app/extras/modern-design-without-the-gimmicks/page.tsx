@@ -29,7 +29,7 @@ const PART_2 = [
   },
   {
     title: "Fast loading (5 min)",
-    body: "Run your homepage through [Google PageSpeed Insights](https://pagespeed.web.dev). If large images are flagged, shrink them with a free tool like [TinyPNG](https://tinypng.com) and re-upload them. For size targets and more free tools, see [Faster Photos, Faster Website](/extras/faster-photos-faster-website).",
+    body: "Run your homepage through [Google PageSpeed Insights](https://pagespeed.web.dev). If large images are flagged, shrink them with a free tool like [TinyPNG](https://tinypng.com) and re-upload them. For size targets and more free tools, see [Faster Photos, Faster Website](/extras/faster-photos-faster-website#your-size-targets).",
   },
   {
     title: "Plain, specific headlines (5 min)",

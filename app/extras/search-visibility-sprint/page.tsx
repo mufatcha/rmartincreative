@@ -22,7 +22,7 @@ const HOUR_1 = [
   },
   {
     title: "Run a mobile and speed audit (30 min)",
-    body: "Run your homepage and main service page through [PageSpeed Insights](https://pagespeed.web.dev), then make two quick fixes: compress oversized header images with a free tool like [TinyPNG](https://tinypng.com) before re-uploading them, and make your phone number and email tappable links, so phone visitors can reach you in one tap. For how big your photos should be, see [Faster Photos, Faster Website](/extras/faster-photos-faster-website).",
+    body: "Run your homepage and main service page through [PageSpeed Insights](https://pagespeed.web.dev), then make two quick fixes: compress oversized header images with a free tool like [TinyPNG](https://tinypng.com) before re-uploading them, and make your phone number and email tappable links, so phone visitors can reach you in one tap. For how big your photos should be, see [Faster Photos, Faster Website](/extras/faster-photos-faster-website#your-size-targets).",
   },
 ];
 
@@ -117,7 +117,7 @@ const CONTENT: ArticleContent = {
       heading: "Bonus: A long-tail FAQ for AI search (30 min)",
       paragraphs: [
         "Near the bottom of your main service page, add three questions a ready-to-buy customer would ask, each answered directly in the first sentence. For example: “How long does it take to launch a new website?” or “Do you serve businesses in Southeast Wisconsin?”",
-        "Full-sentence questions match the way people ask AI assistants, which makes your page an easy source for them to quote. Going further, [schema markup](/extras/schema-markup-json-ld-seo-ai) labels those questions so machines can't miss them.",
+        "Full-sentence questions match the way people ask AI assistants, which makes your page an easy source for them to quote. Going further, [schema markup](/extras/schema-markup-json-ld-seo-ai#faqpage-article-and-event) labels those questions so machines can't miss them.",
       ],
     },
     { type: "bullets", heading: "Your progress checklist", items: CHECKLIST },

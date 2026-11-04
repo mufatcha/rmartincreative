@@ -20,7 +20,7 @@ const BENEFITS = [
   },
   {
     title: "Easier for Google and AI to find",
-    body: "Every page arrives as complete, readable text, with its own title, description, and [structured data](/extras/schema-markup-json-ld-seo-ai) (labels that tell search engines what your business is, where it is, and what it offers). Google and AI assistants like ChatGPT can read it all right away. See [Search + AI Discovery](/services/search-ai-discovery) for how that pays off.",
+    body: "Every page arrives as complete, readable text, with its own title, description, and [structured data](/extras/schema-markup-json-ld-seo-ai#what-schema-markup-actually-is) (labels that tell search engines what your business is, where it is, and what it offers). Google and AI assistants like ChatGPT can read it all right away. See [Search + AI Discovery](/services/search-ai-discovery) for how that pays off.",
   },
   {
     title: "Fewer security headaches",
@@ -28,7 +28,7 @@ const BENEFITS = [
   },
   {
     title: "Low (or no) hosting bills",
-    body: "Because the pages are built ahead of time, they're cheap to serve. I host sites on Cloudflare's global network, where most small business sites fit in the free plan. Read [how Cloudflare and GitHub work together](/extras/nextjs-cloudflare-github-hosting), or see [hosting & management](/services/website-design-development/website-hosting).",
+    body: "Because the pages are built ahead of time, they're cheap to serve. I host sites on Cloudflare's global network, where most small business sites fit in the free plan. Read [how Cloudflare and GitHub work together](/extras/nextjs-cloudflare-github-hosting#the-three-pieces), or see [hosting & management](/services/website-design-development/website-hosting).",
   },
   {
     title: "Room to grow",
@@ -39,7 +39,7 @@ const BENEFITS = [
 const WHY_SPEED = [
   "People leave slow websites. Every extra second of loading gives a visitor time to hit the back button and call someone else.",
   "Google has said page speed and the overall page experience are part of how it ranks websites. A fast site has an edge over a slow competitor.",
-  "Most of your visitors are on phones, often on a cellular connection. Speed matters most there. Try the [parking lot test](/extras/modern-design-without-the-gimmicks) to see how your site holds up.",
+  "Most of your visitors are on phones, often on a cellular connection. Speed matters most there. Try the [parking lot test](/extras/modern-design-without-the-gimmicks#run-the-parking-lot-test) to see how your site holds up.",
 ];
 
 const FAQS: ServiceFaq[] = [

@@ -89,7 +89,7 @@ const FAQS: ServiceFaq[] = [
   },
   {
     question: "What if I get stuck?",
-    answer: `Ask in our free website help group on ${COMMUNITY_GROUP_LINKS}. If you'd rather hand it off, the [Next.js sites I build](/extras/benefits-of-a-nextjs-website) resize and convert photos automatically, so you can upload straight from your phone.`,
+    answer: `Ask in our free website help group on ${COMMUNITY_GROUP_LINKS}. If you'd rather hand it off, the [Next.js sites I build](/extras/benefits-of-a-nextjs-website#photos-look-sharp-without-slowing-things-down) resize and convert photos automatically, so you can upload straight from your phone.`,
   },
 ];
 
