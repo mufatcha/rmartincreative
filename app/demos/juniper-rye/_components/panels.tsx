@@ -31,14 +31,13 @@ function ImagePicker({ content, value, onChange, locked = false }: { content: Co
           type="button"
           role="radio"
           aria-checked={m.id === value}
-          aria-label={m.alt}
           disabled={locked}
           onClick={() => onChange(m.id)}
           className={`relative aspect-[4/3] overflow-hidden rounded-lg ring-2 transition disabled:cursor-not-allowed ${
             m.id === value ? "ring-violet-600" : "ring-transparent hover:ring-ink/20"
           }`}
         >
-          <Image src={m.thumb} alt="" fill sizes="120px" className="object-cover" unoptimized={m.uploaded} />
+          <Image src={m.thumb} alt={m.alt} fill sizes="120px" className="object-cover" unoptimized={m.uploaded} />
         </button>
       ))}
     </div>
@@ -306,7 +305,7 @@ export function MediaPanel({ content, edit, role }: PanelProps) {
           {content.media.map((m) => (
             <li key={m.id} className="flex gap-3">
               <span className="relative h-16 w-20 shrink-0 overflow-hidden rounded-lg bg-paper-tint">
-                <Image src={m.thumb} alt="" fill sizes="80px" className="object-cover" unoptimized={m.uploaded} />
+                <Image src={m.thumb} alt={m.alt} fill sizes="80px" className="object-cover" unoptimized={m.uploaded} />
               </span>
               <label className="block flex-1">
                 <span className="text-[11px] font-semibold text-ink-soft">
