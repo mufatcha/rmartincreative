@@ -42,7 +42,7 @@ const ADVANTAGES = [
   },
   {
     title: "Faster pages",
-    body: "With the display layer separate, pages can be built ahead of time and served from a content delivery network (CDN) close to each visitor. That cuts the time to first byte and lifts Core Web Vitals scores. See [Next.js hosting on Cloudflare & GitHub](/extras/nextjs-cloudflare-github-hosting) for how that works in practice.",
+    body: "With the display layer separate, pages can be built ahead of time and served from a content delivery network (CDN) close to each visitor. That cuts the time to first byte and lifts Core Web Vitals scores. See [Next.js hosting on Cloudflare & GitHub](/extras/nextjs-cloudflare-github-hosting#why-host-next-js-on-cloudflare-instead-of-traditional-servers) for how that works in practice.",
   },
 ];
 

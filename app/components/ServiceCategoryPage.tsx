@@ -101,7 +101,10 @@ export default function ServiceCategoryPage({ category, children }: { category: 
               <h2 className="text-xs font-semibold uppercase tracking-widest text-violet-600">Platforms &amp; tools</h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {category.stack.map((group) => (
-                  <div key={group.title} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink/5">
+                  <div
+                    key={group.title}
+                    className={`rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink/5 ${group.wide ? "sm:col-span-2" : ""}`}
+                  >
                     <h3 className="text-sm font-semibold">{group.title}</h3>
                     <ul className="mt-3 flex flex-wrap gap-2">
                       {group.items.map((item) => (

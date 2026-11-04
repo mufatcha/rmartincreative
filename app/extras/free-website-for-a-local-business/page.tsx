@@ -29,11 +29,11 @@ const INCLUDED = [
   },
   {
     title: "Free hosting on Cloudflare",
-    body: "Your site runs on Cloudflare's global network at no monthly cost. Here's [how free Next.js hosting on Cloudflare works](/extras/nextjs-cloudflare-github-hosting).",
+    body: "Your site runs on Cloudflare's global network at no monthly cost. Here's [how free Next.js hosting on Cloudflare works](/extras/nextjs-cloudflare-github-hosting#hosting-next-js-for-free-cloudflare-pages-or-workers).",
   },
   {
     title: "One professional email address",
-    body: "A `you@yourbusiness.com` address, forwarded to your Gmail or similar inbox, so you keep using the inbox you already know. Here's [how the forwarding works](/extras/free-domain-email-gmail-cloudflare-resend).",
+    body: "A `you@yourbusiness.com` address, forwarded to your Gmail or similar inbox, so you keep using the inbox you already know. Here's [how the forwarding works](/extras/free-domain-email-gmail-cloudflare-resend#how-cloudflare-email-routing-resend-and-gmail-work-together).",
   },
   {
     title: "My full Search + AI Discovery service",
@@ -47,7 +47,7 @@ const INCLUDED = [
 
 const COSTS = [
   "**A domain name**, about $12 a year. I recommend [Namecheap](https://www.namecheap.com).",
-  "**Optional: a content editor.** If you want a blog, or plan to update your site more than twice a month, I'll set you up with an easy content editor (Next.js + Strapi). That needs paid hosting at about $7 a month. Here's [what a headless CMS is](/extras/headless-cms-vs-wordpress).",
+  "**Optional: a content editor.** If you want a blog, or plan to update your site more than twice a month, I'll set you up with an easy content editor (Next.js + Strapi). That needs paid hosting at about $7 a month. Here's [what a headless CMS is](/extras/headless-cms-vs-wordpress#what-is-a-headless-cms-and-how-does-it-work).",
   "**Optional: more email addresses**, at your cost.",
 ];
 

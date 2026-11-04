@@ -72,7 +72,7 @@ const COVERAGE = [
     body: (
       <>
         Page titles, meta descriptions, your Google Business Profile, and your{" "}
-        <Link href="/extras/schema-markup-json-ld-seo-ai" className="font-medium text-violet-600 hover:underline">
+        <Link href="/extras/schema-markup-json-ld-seo-ai#what-schema-markup-actually-is" className="font-medium text-violet-600 hover:underline">
           schema markup (JSON-LD) implementation
         </Link>
         , so search engines and AI models understand your services accurately.

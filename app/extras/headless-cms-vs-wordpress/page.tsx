@@ -42,7 +42,7 @@ const CONTENT: ArticleContent = {
         "**No plugin bloat.** Getting a WordPress site to look and work the way you want usually means adding plugin after plugin: one for forms, one for speed, one for search, one for security, one for the layout. Each adds code that slows the site down, needs its own updates, and can clash with the others after a future update. With a headless CMS, the site is customized directly in its own code, so there are no plugins to pile up and no version conflicts waiting down the road.",
         "**Total design freedom.** The website isn't limited by what a theme or page builder allows. It can look and work exactly the way you want.",
         "**Write once, use everywhere.** The same content can power your website, a mobile app, a customer portal, or an in-store screen, all from one editor.",
-        "**Lower hosting costs.** The finished website can run on Cloudflare's global network, often for free, instead of on a server running WordPress around the clock. See [how that works](/extras/nextjs-cloudflare-github-hosting).",
+        "**Lower hosting costs.** The finished website can run on Cloudflare's global network, often for free, instead of on a server running WordPress around the clock. See [how that works](/extras/nextjs-cloudflare-github-hosting#hosting-next-js-for-free-cloudflare-pages-or-workers).",
         "**Built for search and AI.** Fast pages, clean structure, and structured data are part of the build from day one, not added later with plugins.",
       ],
     },

@@ -22,7 +22,7 @@ Run `bun run` with nothing after it to list every script.
 3. Keep the title under ~45 characters so "| R. Martin Creative" fits in the page title (60 max), and the description at 160 characters or fewer.
 4. Add the featured image to `public/webp-assets/` (see Images below) and set `image` on the entry.
 5. **Run `bun run social-images`** and commit the new JPG in `public/social-media-posts/`. Without it, the post shares with no preview image.
-6. Link to the new post from related service pages and articles.
+6. Link to the new post from related service pages and articles. Point each link at the topic it's about: every section heading and numbered item has an anchor made from its text, lowercased and hyphenated, without the time estimate (`articleAnchor` in ExtraArticle.tsx). "Claim and verify Google Search Console (20 min)" is `/extras/search-visibility-sprint#claim-and-verify-google-search-console`. Renaming a heading changes its anchor, so search for links to it first.
 7. After it's live, paste the link into [Facebook's Sharing Debugger](https://developers.facebook.com/tools/debug/) to refresh the preview.
 
 ## Community group content

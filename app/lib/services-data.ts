@@ -109,7 +109,7 @@ export type ServiceCategory = {
   seoTitle?: string;
   /** Named platforms and tools, shown as a "Platforms & tools" block so search engines
    *  and AI assistants connect the service with them. Items may use "[text](/path)". */
-  stack?: { title: string; items: string[] }[];
+  stack?: { title: string; items: string[]; /** Two columns wide from sm up, for long lists. */ wide?: boolean }[];
   /** Set once a real photo exists — omit to show the branded placeholder. */
   image?: ServiceImage;
 };
@@ -131,19 +131,20 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     stack: [
       {
         title: "Custom sites & web apps",
-        items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "React", "Nuxt.js", "Vue", "TypeScript", "JavaScript", "Python", "SQL", "Tailwind CSS"],
+        items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "Astro", "React", "Nuxt.js", "Vue", "TypeScript", "JavaScript", "Python", "PHP", "Tailwind CSS"],
       },
+      { title: "Databases", items: ["SQL", "PostgreSQL", "MySQL", "Supabase", "Firebase"] },
       { title: "Mobile apps", items: ["React Native", "Expo", "iOS", "Android"] },
       {
         title: "Content management",
-        items: ["WordPress", "[Strapi](/extras/headless-cms-vs-wordpress)", "[Prismic](/extras/headless-cms-vs-wordpress)"],
+        items: ["WordPress", "[Strapi](/extras/headless-cms-vs-wordpress#what-is-a-headless-cms-and-how-does-it-work)", "[Prismic](/extras/headless-cms-vs-wordpress#what-is-a-headless-cms-and-how-does-it-work)"],
       },
       { title: "Online stores", items: ["Shopify", "BigCommerce", "Wix"] },
       {
         title: "Hosting & backups",
         items: [
-          "[Cloudflare](/extras/nextjs-cloudflare-github-hosting)",
-          "[GitHub](/extras/nextjs-cloudflare-github-hosting)",
+          "[Cloudflare](/extras/nextjs-cloudflare-github-hosting#cloudflare-the-delivery-network)",
+          "[GitHub](/extras/nextjs-cloudflare-github-hosting#github-the-safe)",
           "Vercel",
           "GoDaddy",
           "Bluehost",
@@ -153,12 +154,33 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "DreamHost",
         ],
       },
+      {
+        title: "Integrations & listings",
+        wide: true,
+        items: [
+          "Social logins",
+          "Google Analytics",
+          "[Google Search Console](/extras/search-visibility-sprint#claim-and-verify-google-search-console)",
+          "Bing Webmaster Tools",
+          "[Microsoft Clarity](/extras/modern-design-without-the-gimmicks#wrap-up-see-what-visitors-actually-do-with-microsoft-clarity)",
+          "[Business schema](/extras/schema-markup-json-ld-seo-ai#localbusiness-or-a-more-specific-type)",
+          "[Google Business Profile](/extras/search-visibility-sprint#claim-and-fully-fill-in-your-google-business-profile)",
+          "Apple Business Connect",
+          "Google Maps",
+          "Apple Maps",
+          "Bing Places",
+          "Yelp",
+          "Facebook",
+          "Instagram",
+          "Stripe",
+        ],
+      },
     ],
     faqs: [
       {
         question: "How much does a website cost?",
         answer:
-          `A starter website — a single page or up to 5 pages — is ${startsAt("website-design-development")}, including a contact form, hosting, [email forwarding](/extras/free-domain-email-gmail-cloudflare-resend), and your domain for the first year. Bigger sites, online stores, overhauls, and update plans are quoted after a short conversation about what you need.`,
+          `A starter website — a single page or up to 5 pages — is ${startsAt("website-design-development")}, including a contact form, hosting, [email forwarding](/extras/free-domain-email-gmail-cloudflare-resend#how-cloudflare-email-routing-resend-and-gmail-work-together), and your domain for the first year. Bigger sites, online stores, overhauls, and update plans are quoted after a short conversation about what you need.`,
       },
       {
         question: "How much does a custom web app cost?",
@@ -193,12 +215,12 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Will my new site be ready for search engines and AI?",
         answer:
-          "Yes, right out of the box. Every site launches with clean page structure, unique titles and meta descriptions, structured data ([schema markup](/extras/schema-markup-json-ld-seo-ai)), an XML sitemap, fast load times, and a mobile-friendly layout — the same foundations Google and AI assistants rely on to understand and recommend a business. If you want to go further, the Search + AI Discovery services build on that foundation.",
+          "Yes, right out of the box. Every site launches with clean page structure, unique titles and meta descriptions, structured data ([schema markup](/extras/schema-markup-json-ld-seo-ai#what-schema-markup-actually-is)), an XML sitemap, fast load times, and a mobile-friendly layout — the same foundations Google and AI assistants rely on to understand and recommend a business. If you want to go further, the Search + AI Discovery services build on that foundation.",
       },
       {
         question: "Do you handle hosting and domains too?",
         answer:
-          "Yes, I can help set up or transfer hosting and domain registration as part of either service. Most sites I build are hosted on Cloudflare, often for free, and backed up on GitHub. Here's [how that setup works](/extras/nextjs-cloudflare-github-hosting).",
+          "Yes, I can help set up or transfer hosting and domain registration as part of either service. Most sites I build are hosted on Cloudflare, often for free, and backed up on GitHub. Here's [how that setup works](/extras/nextjs-cloudflare-github-hosting#the-three-pieces).",
       },
       {
         question: "Can I review changes before they go live?",
@@ -213,7 +235,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "Which platforms do you work with?",
         answer:
-          "Custom-coded sites (usually built with [Next.js](/extras/benefits-of-a-nextjs-website) and React), WordPress, [headless CMS](/extras/headless-cms-vs-wordpress) platforms like Strapi and Prismic, and e-commerce on Shopify, BigCommerce, and Wix. I can also update most sites built on other platforms. The right choice depends on what the site needs to do and who will be updating it — I'll recommend one after we talk.",
+          "Custom-coded sites (usually built with [Next.js](/extras/benefits-of-a-nextjs-website) and React), WordPress, [headless CMS](/extras/headless-cms-vs-wordpress#what-is-a-headless-cms-and-how-does-it-work) platforms like Strapi and Prismic, and e-commerce on Shopify, BigCommerce, and Wix. I can also update most sites built on other platforms. The right choice depends on what the site needs to do and who will be updating it — I'll recommend one after we talk.",
       },
     ],
     icon: IconGlobe,
@@ -241,7 +263,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Custom design, not a drag-and-drop template",
           "Mobile-first layout, tested on phones, tablets, and desktops",
           "Fresh copy structure and page layout, not just a reskin",
-          "Search- and AI-ready at launch: page titles, meta descriptions, [schema markup](/extras/schema-markup-json-ld-seo-ai), and an XML sitemap",
+          "Search- and AI-ready at launch: page titles, meta descriptions, [schema markup](/extras/schema-markup-json-ld-seo-ai#what-schema-markup-actually-is), and an XML sitemap",
           "Every old page address mapped with 301 redirects, so existing links and rankings carry over",
           "Built on the platform that fits — custom code with [Next.js](/extras/benefits-of-a-nextjs-website), WordPress, or an online store",
           "AI-assisted build for a faster launch, guided by hands-on web experience",
@@ -313,7 +335,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Custom theme design that matches your brand, not an off-the-shelf theme left as-is",
           "Products, collections, variants like size and color, and inventory set up",
           "Payments (like Shopify Payments, PayPal, or Stripe), shipping rates, and tax settings configured",
-          "Product [schema markup](/extras/schema-markup-json-ld-seo-ai), so prices and availability show up cleanly in Google and AI answers",
+          "Product [schema markup](/extras/schema-markup-json-ld-seo-ai#product-for-online-stores), so prices and availability show up cleanly in Google and AI answers",
           "Mobile-first shopping and checkout",
           "Migration from an existing store, with 301 redirects so rankings carry over",
           "A walkthrough on adding products, updating prices, and fulfilling orders",
@@ -380,7 +402,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           "Editing screens and custom fields set up around your actual content",
           "Headless CMS builds on Strapi or Prismic, with fast, modern [Next.js](/extras/benefits-of-a-nextjs-website) front ends",
           "Web apps, like member portals or resource libraries, powered by the same content as your site",
-          "Search- and AI-ready at launch: page titles, meta descriptions, [schema markup](/extras/schema-markup-json-ld-seo-ai), and an XML sitemap",
+          "Search- and AI-ready at launch: page titles, meta descriptions, [schema markup](/extras/schema-markup-json-ld-seo-ai#what-schema-markup-actually-is), and an XML sitemap",
           "301 redirects when moving from an old WordPress or legacy site, so rankings carry over",
           "A walkthrough for your team on editing and publishing before launch",
           "Not sure which fits? Read [Headless CMS vs. WordPress, Explained](/extras/headless-cms-vs-wordpress)",
@@ -395,7 +417,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "Should I choose WordPress or a headless CMS?",
             answer:
-              "WordPress is a great fit for most content-driven business sites and is familiar to a lot of teams. A headless CMS makes more sense when you need top performance, a custom web app, or the same content shown in more than one place. I'll recommend the right fit after learning how you'll use the site. I compare the two side by side in [Headless CMS vs. WordPress, Explained](/extras/headless-cms-vs-wordpress).",
+              "WordPress is a great fit for most content-driven business sites and is familiar to a lot of teams. A headless CMS makes more sense when you need top performance, a custom web app, or the same content shown in more than one place. I'll recommend the right fit after learning how you'll use the site. I compare the two side by side in [Headless CMS vs. WordPress, Explained](/extras/headless-cms-vs-wordpress#how-a-headless-cms-compares-with-traditional-wordpress).",
           },
           {
             question: "Which headless CMS do you use?",
@@ -528,7 +550,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
           {
             question: "What is GitHub, and why does my site need it?",
             answer:
-              "GitHub stores a complete history of every version of your site's code. If an update ever breaks something, I can roll back to the exact version that worked instead of rebuilding from scratch. See [how Next.js, GitHub, and Cloudflare work together](/extras/nextjs-cloudflare-github-hosting).",
+              "GitHub stores a complete history of every version of your site's code. If an update ever breaks something, I can roll back to the exact version that worked instead of rebuilding from scratch. See [how Next.js, GitHub, and Cloudflare work together](/extras/nextjs-cloudflare-github-hosting#github-the-safe).",
           },
           {
             question: "What does Cloudflare actually do for my site?",
@@ -587,7 +609,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
       {
         question: "What is AI discovery?",
         answer:
-          "More people now ask tools like ChatGPT, Google's AI Overviews, and Perplexity questions like “who designs business cards near me?” instead of scrolling search results. AI discovery is about making your business easy for those tools to find, understand, and recommend — clear content, [structured data](/extras/schema-markup-json-ld-seo-ai), and consistent business information across the web.",
+          "More people now ask tools like ChatGPT, Google's AI Overviews, and Perplexity questions like “who designs business cards near me?” instead of scrolling search results. AI discovery is about making your business easy for those tools to find, understand, and recommend — clear content, [structured data](/extras/schema-markup-json-ld-seo-ai#how-it-shapes-ai-answers), and consistent business information across the web.",
       },
       {
         question: "Is AI discovery different from traditional search?",
