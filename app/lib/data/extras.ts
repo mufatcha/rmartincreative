@@ -83,6 +83,8 @@ export type Extra = {
   series?: ExtraSeriesId;
   /** Lists the post under Community on the hub without a series (no series badge). */
   community?: boolean;
+  /** Shows the post full width at the top of the hub in place of the newest one. */
+  pinned?: boolean;
   /** Page title and card heading. Keep it under ~45 characters so the brand fits in the <title>. */
   title: string;
   /** Meta description and card blurb: 160 characters or fewer. */
@@ -108,10 +110,27 @@ export const EXTRAS_HUB = {
 
 const EXTRAS_LIST: Extra[] = [
   {
+    slug: "astro-website-framework-pros-and-cons",
+    kind: "note",
+    category: "web",
+    series: "quick-guide",
+    title: "Why Astro Is Exploding: Pros and Cons",
+    description:
+      "What the Astro website framework is, why its use grew about eightfold in a year, the honest pros and cons, and whether it fits your small business website.",
+    published: "2026-11-04",
+    image: {
+      src: "/webp-assets/astro-website-framework-pros-and-cons.webp",
+      alt: "Quick guide: Why Astro is exploding. The Astro website framework's pros and cons in plain English: downloads up about 8x in a year, the best-liked framework among developers, and free and open source. Pros: fast on phones, low hosting cost, easy for Google and AI. Cons: no built-in editor, not for heavy web apps",
+      width: 1200,
+      height: 896,
+    },
+  },
+  {
     slug: "free-website-for-a-local-business",
     kind: "note",
     category: "web",
     community: true,
+    pinned: true,
     title: "A Free Website for a Local Business",
     description:
       "I'm building a free custom website, plus Google and AI search setup, for a small business anywhere in the US. Here's what's included, and how to apply.",
