@@ -67,7 +67,7 @@ export default function SampleReport({ sample }: { sample: ServiceSample }) {
               <span className="block overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-ink/10 transition group-hover:-translate-y-0.5 group-hover:shadow-lg group-hover:ring-violet-300">
                 <Image
                   src={p.thumb}
-                  alt=""
+                  alt={`Page ${i + 1}: ${p.title}`}
                   width={520}
                   height={673}
                   unoptimized
