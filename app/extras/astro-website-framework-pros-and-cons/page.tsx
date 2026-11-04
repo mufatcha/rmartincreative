@@ -114,7 +114,7 @@ const FAQS: ServiceFaq[] = [
 const CONTENT: ArticleContent = {
   intro: [
     "If you've talked with a web designer lately, you may have heard about Astro. It's a free tool developers use to build websites, and it's one of the fastest-growing in the industry: downloads grew about eightfold in a year, and Cloudflare bought the team behind it in January 2026.",
-    "This quick guide explains what Astro is in plain English, why its popularity is exploding, the honest pros and cons, and how to tell whether it's the right way to build your business website.",
+    "This quick guide explains what Astro is in plain English, why its popularity is exploding, the honest pros and cons, and how to tell whether it's the right way to build your business website. Download the printable PDF, or read on below.",
   ],
   blocks: [
     {

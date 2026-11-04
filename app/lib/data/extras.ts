@@ -124,6 +124,11 @@ const EXTRAS_LIST: Extra[] = [
       width: 1200,
       height: 896,
     },
+    download: {
+      href: "/downloads/Why-Astro-Is-Exploding.pdf",
+      fileName: "Why-Astro-Is-Exploding.pdf",
+      details: "PDF · 7 pages · printable guide",
+    },
   },
   {
     slug: "free-website-for-a-local-business",
