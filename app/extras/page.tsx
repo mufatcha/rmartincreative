@@ -122,10 +122,10 @@ export default function ExtrasPage() {
   // Posts from the community groups (any series). /extras#community shows only these;
   // the CSS for that filter is in globals.css under "Notes & Freebies hub".
   const groupPosts = EXTRAS.filter((e) => e.series || e.community);
-  // The newest post sits full width at the top. Its spots in the grid stay hidden
+  // The pinned post (or else the newest) sits full width at the top. Its spots in the grid stay hidden
   // until a tag link filters or jumps to a section (CSS in globals.css), so it's
   // never listed twice.
-  const newest = EXTRAS[0];
+  const newest = EXTRAS.find((e) => e.pinned) ?? EXTRAS[0];
   const gridItemProps = (extra: Extra) => (extra.slug === newest?.slug ? { "data-newest-copy": "" } : {});
   const hasGroupPosts = groupPosts.length > 0;
   const groupSeries = EXTRA_SERIES.filter((series) => series.groups.length > 0);

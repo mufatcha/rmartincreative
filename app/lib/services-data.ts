@@ -131,7 +131,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     stack: [
       {
         title: "Custom sites & web apps",
-        items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "Astro", "React", "Nuxt.js", "Vue", "TypeScript", "JavaScript", "Python", "PHP", "Tailwind CSS"],
+        items: ["[Next.js](/extras/benefits-of-a-nextjs-website)", "[Astro](/extras/astro-website-framework-pros-and-cons)", "React", "Nuxt.js", "Vue", "TypeScript", "JavaScript", "Python", "PHP", "Tailwind CSS"],
       },
       { title: "Databases", items: ["SQL", "PostgreSQL", "MySQL", "Supabase", "Firebase"] },
       { title: "Mobile apps", items: ["React Native", "Expo", "iOS", "Android"] },
