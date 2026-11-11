@@ -71,16 +71,36 @@ function toMarkdown(html: string, pageUrl: URL): string {
 }
 
 export async function GET(request: Request, { params }: { params: Promise<{ path?: string[] }> }) {
-  const { path = [] } = await params;
+  const { path: raw = [] } = await params;
   const incoming = new URL(request.url);
+  // Came by a .md address rather than an Accept header? Depending on the runtime the
+  // route sees either the original address (…/page.md) or the rewrite's __md=1.
+  const isMdAddress = incoming.pathname.endsWith(".md") || incoming.searchParams.get("__md") === "1";
+  incoming.searchParams.delete("__md");
+
+  // /services/index.md and /about.html.md are the same pages as /services.md and
+  // /about.md: drop a trailing "index" segment and a ".html" ending.
+  const path = [...raw];
+  if (path.length > 0) path[path.length - 1] = path[path.length - 1].replace(/\.html$/, "");
+  if (path.at(-1) === "index") path.pop();
+
   const pageUrl = new URL(`/${path.map(encodeURIComponent).join("/")}${incoming.search}`, incoming.origin);
 
   const page = await fetchOwnPage(pageUrl);
   const type = page.headers.get("content-type") ?? "";
-  // Not a page (llms.txt, sitemap, images, a redirect or error): pass it through unchanged.
-  if (!page.ok || !type.includes("text/html")) return page;
+  // Not a page (llms.txt, sitemap, images, a redirect or error): pass it through
+  // unchanged when asked by Accept header; a .md address for it doesn't exist.
+  if (!page.ok || !type.includes("text/html")) {
+    return isMdAddress ? new Response("Not found\n", { status: 404, headers: { "content-type": "text/plain" } }) : page;
+  }
 
-  const markdown = toMarkdown(await page.text(), pageUrl);
+  const html = await page.text();
+  // Unlisted pages (noindex: demos, private tools) get no Markdown copy.
+  if (/<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i.test(html)) {
+    return new Response("Not found\n", { status: 404, headers: { "content-type": "text/plain" } });
+  }
+
+  const markdown = toMarkdown(html, pageUrl);
   return new Response(markdown, {
     headers: {
       "content-type": "text/markdown; charset=utf-8",

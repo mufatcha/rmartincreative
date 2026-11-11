@@ -9,7 +9,7 @@ import ServiceFaqs from "../../components/ServiceFaqs";
 import { IconArrowRight } from "../../components/icons";
 import { SITE_URL } from "../../lib/business";
 import { EXTRAS_HUB, extraShareMetadata, getExtra, getExtraCategory } from "../../lib/data/extras";
-import { pageTitle } from "../../lib/seo";
+import { pageAlternates, pageTitle } from "../../lib/seo";
 import type { ServiceFaq } from "../../lib/services-data";
 
 const SLUG = "free-santa-gift-tags";
@@ -27,7 +27,7 @@ export function generateMetadata(): Metadata {
   return {
     title: pageTitle(e.title),
     description: e.description,
-    alternates: { canonical: `/extras/${SLUG}` },
+    alternates: pageAlternates(`/extras/${SLUG}`),
     ...extraShareMetadata(e),
   };
 }

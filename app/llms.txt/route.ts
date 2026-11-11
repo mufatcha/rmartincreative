@@ -11,17 +11,26 @@ import { CARD_EXTRAS_NOTE, cardExtrasList } from "../lib/data/card-extras";
 import { getPricing, pricingSummary } from "../lib/data/pricing";
 import { TOWN_GROUPS, getChristmasTownPages } from "../lib/data/christmas-towns";
 import { EXTRAS } from "../lib/data/extras";
+import { getPassportOffice } from "../lib/data/passport-offices";
 import { getPassportTownPages } from "../lib/data/passport-towns";
 import { TOWNS } from "../lib/data/towns";
 import { SERVICE_AUDIENCES, getCategoriesFor } from "../lib/services-data";
+import { markdownPath } from "../lib/seo";
 
 // /llms.txt — a plain-language summary of the business for AI assistants
 // (see llmstxt.org). Built from the same data as the site, so it stays current.
 export const dynamic = "force-static";
 
+const CHRISTMAS_DELIVERY = {
+  hand: "Christmas cards with hand delivery or local pickup",
+  ship: "Christmas cards shipped to your door",
+  both: "Christmas cards hand delivered or shipped",
+} as const;
+
 export function GET() {
   const site = PRODUCTION_URL;
-  const url = (path: string) => `${site}${path}`;
+  // Links point at each page's Markdown copy (llms.txt v2): /services → /services.md.
+  const url = (path: string) => `${site}${markdownPath(path)}`;
 
   const services = SERVICE_AUDIENCES.map((audience) => {
     const lines = getCategoriesFor(audience.id).flatMap((c) => [
@@ -32,18 +41,20 @@ export function GET() {
   }).join("\n\n");
 
   // Every priced service, in menu order. Prices come from app/lib/data/pricing.ts.
+  // Plain names, not links: the Services section already links each page, and
+  // llms.txt validators flag the same URL listed twice.
   const prices = SERVICE_AUDIENCES.flatMap((audience) =>
     getCategoriesFor(audience.id).flatMap((c) => {
       const own = getPricing(c.slug);
       const entries = own
-        ? [{ title: c.title, path: `/services/${c.slug}`, pricing: own }]
+        ? [{ title: c.title, pricing: own }]
         : c.children.flatMap((leaf) => {
             const pricing = getPricing(c.slug, leaf.slug);
-            return pricing ? [{ title: leaf.title, path: `/services/${c.slug}/${leaf.slug}`, pricing }] : [];
+            return pricing ? [{ title: leaf.title, pricing }] : [];
           });
       return entries.map(
         (e) =>
-          `- [${e.title}](${url(e.path)}): ${pricingSummary(e.pricing)}${e.pricing.note ? ` ${e.pricing.note}` : ""}${e.pricing.banner ? ` ${e.pricing.banner}` : ""}`
+          `- ${e.title}: ${pricingSummary(e.pricing)}${e.pricing.note ? ` ${e.pricing.note}` : ""}${e.pricing.banner ? ` ${e.pricing.banner}` : ""}`
       );
     })
   ).join("\n");
@@ -53,14 +64,30 @@ export function GET() {
   const christmas = TOWN_GROUPS.map((g) => {
     const pages = getChristmasTownPages().filter((p) => p.content.group === g.id);
     if (pages.length === 0) return "";
-    return pages.map((p) => `- [${p.name}, ${p.town.state}](${url(`/christmas-cards/${p.slug}`)})`).join("\n");
+    return pages
+      .map((p) => {
+        const ideas = p.content.designIdeas.slice(0, 2).map((d) => d.title).join(" and ");
+        return `- [${p.name}, ${p.town.state}](${url(`/christmas-cards/${p.slug}`)}): ${
+          CHRISTMAS_DELIVERY[p.content.delivery.method]
+        }; local design ideas such as ${ideas}`;
+      })
+      .join("\n");
   })
     .filter(Boolean)
+    .join("\n");
+
+  const passport = getPassportTownPages()
+    .map((p) => {
+      const offices = p.content.offices.map((id) => getPassportOffice(id).name).join(", ");
+      return `- [${p.name}, ${p.town.state}](${url(`/passport-photos/${p.slug}`)}): passport photos at home or on site; nearby acceptance facilities: ${offices}`;
+    })
     .join("\n");
 
   const body = `# ${BUSINESS_NAME}
 
 > ${BUSINESS_NAME} is a one-person design, web, and print studio based in ${SERVICE_HOME_CITY}, Illinois. It works as an outsourced marketing team for small businesses — websites, search and AI visibility, business printing, signs, and apparel — and also makes custom Christmas and greeting cards and does photo scanning, restoration, and color correction for families. It serves Northern Illinois (McHenry, Lake, Cook, and Kane counties, including Chicago) and Southeast Wisconsin.
+
+Links below go to a Markdown copy of each page; drop the .md ending (or /index.md for the home page) for the regular web page.
 
 ## Key facts
 - Owner: Ryan Martin, designer and developer with 20+ years of website design and programming.
@@ -77,12 +104,12 @@ ${prices}
 
 ## Main pages
 - [Home](${url("/")}): overview and the Marketing Partner Plan (one flat monthly rate)
-- [All services](${url("/services")})
+- [All services](${url("/services")}): every service for businesses and families, with links to each service page
 - [New business launch guide](${url("/new-business")}): week-by-week branding, website, print, and marketing timeline, with a downloadable PDF checklist
 - [Cards & Photos](${url("/cards-and-photos")}): Christmas and greeting cards, wedding invitations, photo restoration
 - [Christmas cards near you](${url("/christmas-cards")}): local pages by town
 - [Service area](${url("/service-area")}): every town served, for pickup, drop-off, and delivery${
-    ABOUT.published ? `\n- [About Ryan Martin](${url("/about")})` : ""
+    ABOUT.published ? `\n- [About Ryan Martin](${url("/about")}): ${ABOUT.role}; background, story, and how projects work` : ""
   }
 
 ## Services
@@ -97,9 +124,7 @@ ${christmas}
 
 ## Local passport photo pages
 At-home and on-site passport photos, with the nearest government passport acceptance facilities listed on each page.
-${getPassportTownPages()
-  .map((p) => `- [${p.name}, ${p.town.state}](${url(`/passport-photos/${p.slug}`)})`)
-  .join("\n")}
+${passport}
 
 ## Service area
 ${towns.join("; ")}; plus Chicago neighborhoods.

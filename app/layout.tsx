@@ -69,6 +69,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <meta {...IMPACT_VERIFICATION} />
+        {/* llms.txt v2: the site summary that describes every page. */}
+        <link rel="describedby" href="/llms.txt" type="text/plain" />
       </head>
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <SiteHeader seasonalNav={seasonalNav} servicesMenu={getServicesMenu()} />
