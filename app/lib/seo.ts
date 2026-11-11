@@ -30,6 +30,22 @@ export const SITE_SHARE_IMAGE: ShareImage = {
   alt: "R. Martin Creative — Marketing, Web & Print in Northern Illinois and Southeast Wisconsin",
 };
 
+/** The Markdown copy of a page, served by app/agent-markdown through the `.md`
+ *  rewrites in next.config.ts: `/services` → `/services.md`, `/` → `/index.md`. */
+export function markdownPath(path: string): string {
+  const clean = path.replace(/\/+$/, "");
+  return clean === "" ? "/index.md" : `${clean}.md`;
+}
+
+/** A page's canonical address plus a `<link rel="alternate" type="text/markdown">`
+ *  to its Markdown copy (llms.txt v2). Unlisted (noindex) pages get no Markdown link. */
+export function pageAlternates(path: string, noindex = false): NonNullable<Metadata["alternates"]> {
+  return {
+    canonical: path,
+    ...(!noindex && { types: { "text/markdown": markdownPath(path) } }),
+  };
+}
+
 /**
  * A page's title, description, and canonical address, plus matching Open Graph
  * and X tags. Without its own share tags, a page inherits the layout's, and
@@ -57,7 +73,7 @@ export function pageMetadata({
   return {
     title: { absolute: text },
     description,
-    alternates: { canonical: path },
+    alternates: pageAlternates(path, noindex),
     ...(noindex && { robots: { index: false, follow: true } }),
     openGraph: { title: text, description, url: path, siteName: BUSINESS_NAME, type: "website", images: [image] },
     twitter: { card: "summary_large_image", title: text, description, images: [image] },

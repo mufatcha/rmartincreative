@@ -13,7 +13,7 @@ import { COMMUNITY_GROUPS, SITE_URL } from "../lib/business";
 import { ABOUT } from "../lib/data/about";
 import { EXTRAS_HUB, extraShareMetadata, getExtra, getExtraCategory, getExtraSeries } from "../lib/data/extras";
 import { renderInlineLinks } from "../lib/inline-links";
-import { pageTitle } from "../lib/seo";
+import { pageAlternates, pageTitle } from "../lib/seo";
 import type { ServiceFaq } from "../lib/services-data";
 
 // The shared layout for written Notes & Freebies articles. Each article page is
@@ -88,7 +88,7 @@ export function extraArticleMetadata(slug: string): Metadata {
   return {
     title: pageTitle(extra.title),
     description: extra.description,
-    alternates: { canonical: `/extras/${slug}` },
+    alternates: pageAlternates(`/extras/${slug}`),
     ...extraShareMetadata(extra),
   };
 }

@@ -110,6 +110,27 @@ export const EXTRAS_HUB = {
 
 const EXTRAS_LIST: Extra[] = [
   {
+    slug: "llmstxt-small-business-ai-guide",
+    kind: "note",
+    category: "web",
+    series: "website-wednesday",
+    title: "Why Your Business Needs an llms.txt",
+    description:
+      "What llms.txt is, why AI tools check it, and how to keep your business facts matching across Google, social media, and directories.",
+    published: "2026-11-11",
+    image: {
+      src: "/webp-assets/llmstxt-small-business-ai-guide.webp",
+      alt: "Website Wednesday: Why your business needs an llms.txt. A free guide to llms.txt and AI data consistency: about 45 minutes in one sitting, all free tools, with a copy-and-paste template and printable PDF checklist",
+      width: 1200,
+      height: 896,
+    },
+    download: {
+      href: "/downloads/LLMs-txt-Small-Business-Guide.pdf",
+      fileName: "LLMs-txt-Small-Business-Guide.pdf",
+      details: "PDF · printable guide & checklist",
+    },
+  },
+  {
     slug: "astro-website-framework-pros-and-cons",
     kind: "note",
     category: "web",

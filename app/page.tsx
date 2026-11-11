@@ -6,9 +6,10 @@ import PartnerPlanSection from "./components/PartnerPlanSection";
 import MoreServicesSection from "./components/MoreServicesSection";
 import TrustedBySection from "./components/TrustedBySection";
 import CtaSection from "./components/CtaSection";
+import { pageAlternates } from "./lib/seo";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+  alternates: pageAlternates("/"),
 };
 
 // Rebuild the page hourly so the seasonal hero badge (app/lib/season.ts) stays current.
