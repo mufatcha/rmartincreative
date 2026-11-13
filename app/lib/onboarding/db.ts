@@ -13,6 +13,7 @@ import type {
   Item,
   ItemKind,
   Message,
+  Note,
   PlanItem,
   PlanStage,
   PortalFile,
@@ -143,7 +144,7 @@ function toFile(slug: string, row: FileRow): PortalFile {
 
 export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Promise<PortalState> {
   const id = client.id;
-  const [sections, items, responses, tasks, files, messages, plan] = await Promise.all([
+  const [sections, items, responses, tasks, files, messages, plan, notes] = await Promise.all([
     db.prepare("SELECT id, title, sort FROM sections WHERE client_id = ? AND archived = 0 ORDER BY sort, id").bind(id).all<Section>(),
     db
       .prepare(
@@ -161,6 +162,12 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
       .prepare("SELECT id, stage, title, detail, sort, created_at, updated_at, removed_at FROM plan_items WHERE client_id = ? ORDER BY sort, id")
       .bind(id)
       .all<{ id: number; stage: string; title: string; detail: string; sort: number; created_at: number; updated_at: number; removed_at: number | null }>(),
+    db
+      .prepare(
+        "SELECT id, title, body, note_date, created_at, updated_at, acknowledged_at FROM notes WHERE client_id = ? AND archived = 0 ORDER BY note_date DESC, id DESC"
+      )
+      .bind(id)
+      .all<{ id: number; title: string; body: string; note_date: string; created_at: number; updated_at: number; acknowledged_at: number | null }>(),
   ]);
 
   const readAt = (viewer === "client" ? client.client_read_at : client.admin_read_at) ?? 0;
@@ -193,6 +200,17 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
       })
     ),
     planSeenAt: client.plan_seen_at,
+    notes: notes.results.map(
+      (n): Note => ({
+        id: n.id,
+        title: n.title,
+        body: n.body,
+        date: n.note_date,
+        createdAt: n.created_at,
+        updatedAt: n.updated_at,
+        acknowledgedAt: n.acknowledged_at,
+      })
+    ),
   };
 }
 
@@ -697,6 +715,72 @@ export async function movePlanItem(db: D1, client: ClientRow, id: number, dir: n
   return { ok: true };
 }
 
+// ── Notes ──────────────────────────────────────────────────────────────────
+
+const cleanDate = (v: unknown) => {
+  const s = typeof v === "string" ? v.trim() : "";
+  return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : new Date().toISOString().slice(0, 10);
+};
+
+export async function addNote(db: D1, client: ClientRow, input: { title?: unknown; body?: unknown; date?: unknown }) {
+  const title = str(input.title, 200);
+  const body = str(input.body, 50000);
+  if (!title) return { error: "Add a title." };
+  if (!body) return { error: "Write the note." };
+  const t = now();
+  const res = await db
+    .prepare("INSERT INTO notes (client_id, title, body, note_date, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)")
+    .bind(client.id, title, body, cleanDate(input.date), t, t)
+    .run();
+  await recordEvent(db, client.id, { actor: "admin", type: "note", refId: res.meta.last_row_id, summary: `New note: ${title}` });
+  return { ok: true, id: res.meta.last_row_id };
+}
+
+export async function updateNote(
+  db: D1,
+  client: ClientRow,
+  id: number,
+  input: { title?: unknown; body?: unknown; date?: unknown; archived?: unknown }
+) {
+  const row = await db
+    .prepare("SELECT title, body, note_date, acknowledged_at FROM notes WHERE id = ? AND client_id = ? AND archived = 0")
+    .bind(id, client.id)
+    .first<{ title: string; body: string; note_date: string; acknowledged_at: number | null }>();
+  if (!row) return { error: "Not found." };
+  if (input.archived) {
+    await db.prepare("UPDATE notes SET archived = 1 WHERE id = ?").bind(id).run();
+    return { ok: true };
+  }
+  const title = input.title !== undefined ? str(input.title, 200) : row.title;
+  const body = input.body !== undefined ? str(input.body, 50000) : row.body;
+  if (!title || !body) return { error: "A note needs a title and some text." };
+  const date = input.date !== undefined ? cleanDate(input.date) : row.note_date;
+  const changed = title !== row.title || body !== row.body;
+  // Only a change to the words asks the client to read it again (the date alone doesn't).
+  await db
+    .prepare("UPDATE notes SET title = ?, body = ?, note_date = ?, updated_at = CASE WHEN ? THEN ? ELSE updated_at END WHERE id = ?")
+    .bind(title, body, date, changed ? 1 : 0, now(), id)
+    .run();
+  if (changed) {
+    await recordEvent(db, client.id, {
+      actor: "admin",
+      type: "note",
+      refId: id,
+      // Unread so far: it's still the same "new note" to them.
+      summary: row.acknowledged_at ? `Updated note: ${title}` : `New note: ${title}`,
+    });
+  }
+  return { ok: true };
+}
+
+export async function acknowledgeNote(db: D1, client: ClientRow, id: number) {
+  const row = await db.prepare("SELECT title FROM notes WHERE id = ? AND client_id = ? AND archived = 0").bind(id, client.id).first<{ title: string }>();
+  if (!row) return { error: "That note was removed." };
+  await db.prepare("UPDATE notes SET acknowledged_at = ? WHERE id = ?").bind(now(), id).run();
+  await recordEvent(db, client.id, { actor: "client", type: "note_ack", refId: id, summary: `Read the note “${row.title}”` });
+  return { ok: true };
+}
+
 // ── Notification queries (app/lib/onboarding/notify.ts) ────────────────────
 
 export type PendingEvent = { id: number; type: string; ref_id: number | null; summary: string; created_at: number };
@@ -725,7 +809,7 @@ export async function pendingEvents(db: D1, clientId: number, actor: Viewer, typ
 }
 
 /** Ryan's changes the client only hears about when he presses "Share updates". */
-export const SHARE_TYPES = ["request", "plan"];
+export const SHARE_TYPES = ["request", "plan", "note"];
 
 /** One line per item (the latest change), for the Share button and its email. */
 export function latestPerItem(events: PendingEvent[]) {

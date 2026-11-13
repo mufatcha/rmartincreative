@@ -56,7 +56,7 @@ function PlanForm({
         value={detail}
         onChange={(e) => setDetail(e.target.value)}
         rows={2}
-        placeholder="Details (optional)"
+        placeholder="Details (optional). Paste a link, or write [link text](https://…)"
         aria-label="Details"
         className={`${input} field-sizing-content min-h-16`}
       />

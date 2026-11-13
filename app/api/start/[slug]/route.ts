@@ -2,6 +2,7 @@
 // whole page state (polled every few seconds), POST saves one change. The slug
 // itself is the key, so there's no sign-in.
 import {
+  acknowledgeNote,
   addFile,
   addMessage,
   bumpChanged,
@@ -92,6 +93,9 @@ export async function POST(request: Request, ctx: Ctx) {
     }
     case "email":
       result = await setClientEmail(db, client, body.email);
+      break;
+    case "ackNote":
+      result = await acknowledgeNote(db, client, Number(body.id));
       break;
     case "planSeen":
       await markPlanSeen(db, client);

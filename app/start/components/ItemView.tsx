@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import type { SaveStatus } from "./usePortal";
+import LinkText from "./LinkText";
 
 /** The circle beside each item: a check once it's done. For tasks it's the checkbox. */
 export function DoneMark({
@@ -84,7 +85,9 @@ export function ItemShell({
               {title}
               {badge}
             </label>
-            {help && <p className="mt-1 whitespace-pre-wrap text-sm text-ink-soft">{help}</p>}
+            {help && <p className="mt-1 whitespace-pre-wrap text-sm text-ink-soft">
+              <LinkText text={help} />
+            </p>}
           </div>
           {tools}
         </div>
