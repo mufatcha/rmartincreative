@@ -69,12 +69,16 @@ export default function PlanView({
   plan,
   seen,
   tools,
+  replace,
   empty = "Nothing on the plan yet.",
 }: {
   plan: PlanItem[];
   /** The client's previous look at the plan, for New / Updated / Removed labels. */
   seen: number | null;
+  /** The admin's controls, shown on their own row under the item's text. */
   tools?: (item: PlanItem) => ReactNode;
+  /** Shown instead of the item (the admin's edit form). */
+  replace?: (item: PlanItem) => ReactNode | null;
   empty?: string;
 }) {
   const shown = visiblePlan(plan, seen);
@@ -96,6 +100,8 @@ export default function PlanView({
             </div>
             <ul className="mt-3 space-y-2">
               {items.map((item) => {
+                const replacement = replace?.(item);
+                if (replacement) return <li key={item.id}>{replacement}</li>;
                 const label = planLabel(item, seen);
                 const removed = item.removedAt !== null;
                 return (
@@ -111,15 +117,15 @@ export default function PlanView({
                             : "border-ink/10 bg-white"
                     }`}
                   >
-                    <div className="flex items-start gap-2">
-                      <div className="min-w-0 flex-1">
+                    <div>
+                      <div className="min-w-0">
                         <p className={`font-semibold leading-snug ${removed ? "text-ink-soft line-through decoration-rose-300" : stage === "done" ? "text-ink-soft" : "text-ink"}`}>
                           {item.title}
                           {label && <LabelChip label={label} />}
                         </p>
                         {item.detail && <p className={`mt-1 whitespace-pre-wrap text-sm text-ink-soft ${removed ? "line-through decoration-rose-200" : ""}`}><LinkText text={item.detail} /></p>}
                       </div>
-                      {tools?.(item)}
+                      {tools && <div className="mt-2.5 border-t border-ink/5 pt-2">{tools(item)}</div>}
                     </div>
                   </li>
                 );
