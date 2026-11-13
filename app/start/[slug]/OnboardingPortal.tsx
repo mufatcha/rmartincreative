@@ -5,6 +5,7 @@ import { itemDone, progress } from "../../lib/onboarding/progress";
 import type { Item, PortalState } from "../../lib/onboarding/types";
 import ChatPanel from "../components/ChatPanel";
 import ContactEmail from "./ContactEmail";
+import ReviewsSection from "./ReviewsSection";
 import { ItemShell, ProgressBar, SaveIndicator } from "../components/ItemView";
 import QuestionField from "../components/QuestionField";
 import UploadArea from "../components/UploadArea";
@@ -222,6 +223,8 @@ export default function OnboardingPortal({ initial, preview = false }: { initial
               await refresh();
             }}
           />
+
+          <ReviewsSection state={state} adminName={ADMIN_NAME} readOnly={preview} post={post} refresh={refresh} />
 
           {state.sections.length > 1 && (
             <nav aria-label="Sections" className="-mx-4 mt-5 overflow-x-auto px-4 sm:mx-0 sm:px-0">

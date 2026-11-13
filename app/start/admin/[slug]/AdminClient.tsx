@@ -12,6 +12,7 @@ import { usePortal } from "../../components/usePortal";
 import ItemEditor, { type ItemDraft } from "../ItemEditor";
 import NotesEditor from "../NotesEditor";
 import PlanEditor from "../PlanEditor";
+import ReviewsEditor from "../ReviewsEditor";
 import ShareBox from "../ShareBox";
 import LinkText from "../../components/LinkText";
 
@@ -327,6 +328,8 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
             <PlanEditor plan={state.plan} planSeenAt={state.planSeenAt} clientFirst={first} act={act} ago={ago} />
 
             <NotesEditor notes={state.notes} messages={state.messages} clientFirst={first} act={act} ago={ago} />
+
+            <ReviewsEditor slug={slug} reviews={state.reviews} clientFirst={first} act={act} />
 
             {state.sections.length === 0 && (
               <div className="rounded-3xl border-2 border-dashed border-ink/15 p-8 text-center">

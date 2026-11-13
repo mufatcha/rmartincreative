@@ -17,6 +17,8 @@ import type {
   PlanItem,
   PlanStage,
   PortalFile,
+  Review,
+  ReviewStatus,
   PortalState,
   Section,
   TaskState,
@@ -80,6 +82,8 @@ type FileRow = {
   size: number;
   type: string;
   created_at: number;
+  review_id: number | null;
+  note: string;
 };
 
 const now = () => Date.now();
@@ -144,7 +148,7 @@ function toFile(slug: string, row: FileRow): PortalFile {
 
 export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Promise<PortalState> {
   const id = client.id;
-  const [sections, items, responses, tasks, files, messages, plan, notes] = await Promise.all([
+  const [sections, items, responses, tasks, files, messages, plan, notes, reviews, reviewFiles, comments, decisions] = await Promise.all([
     db.prepare("SELECT id, title, sort FROM sections WHERE client_id = ? AND archived = 0 ORDER BY sort, id").bind(id).all<Section>(),
     db
       .prepare(
@@ -156,7 +160,8 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
       .all<ItemRow>(),
     db.prepare("SELECT item_id, value_json, updated_at FROM responses WHERE client_id = ?").bind(id).all<{ item_id: number; value_json: string; updated_at: number }>(),
     db.prepare("SELECT item_id, done, done_by, updated_at FROM task_status WHERE client_id = ?").bind(id).all<{ item_id: number; done: number; done_by: string; updated_at: number }>(),
-    db.prepare("SELECT * FROM files WHERE client_id = ? AND deleted = 0 ORDER BY created_at").bind(id).all<FileRow>(),
+    // Shared-for-review files are loaded separately (reviewFiles below).
+    db.prepare("SELECT * FROM files WHERE client_id = ? AND deleted = 0 AND review_id IS NULL ORDER BY created_at").bind(id).all<FileRow>(),
     db.prepare("SELECT id, sender, body, created_at FROM messages WHERE client_id = ? ORDER BY created_at, id").bind(id).all<{ id: number; sender: string; body: string; created_at: number }>(),
     db
       .prepare("SELECT id, stage, title, detail, sort, created_at, updated_at, removed_at FROM plan_items WHERE client_id = ? ORDER BY sort, id")
@@ -168,6 +173,19 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
       )
       .bind(id)
       .all<{ id: number; title: string; body: string; note_date: string; created_at: number; updated_at: number; acknowledged_at: number | null }>(),
+    db
+      .prepare("SELECT id, title, note, needs_approval, created_at FROM reviews WHERE client_id = ? AND archived = 0 ORDER BY created_at DESC, id DESC")
+      .bind(id)
+      .all<{ id: number; title: string; note: string; needs_approval: number; created_at: number }>(),
+    db.prepare("SELECT * FROM files WHERE client_id = ? AND deleted = 0 AND review_id IS NOT NULL ORDER BY created_at, id").bind(id).all<FileRow>(),
+    db
+      .prepare("SELECT id, review_id, version_id, author, body, pin_x, pin_y, resolved, created_at FROM review_comments WHERE client_id = ? ORDER BY created_at, id")
+      .bind(id)
+      .all<{ id: number; review_id: number; version_id: number; author: string; body: string; pin_x: number | null; pin_y: number | null; resolved: number; created_at: number }>(),
+    db
+      .prepare("SELECT id, review_id, version_id, decision, name, note, created_at FROM review_decisions WHERE client_id = ? ORDER BY created_at, id")
+      .bind(id)
+      .all<{ id: number; review_id: number; version_id: number; decision: string; name: string; note: string; created_at: number }>(),
   ]);
 
   const readAt = (viewer === "client" ? client.client_read_at : client.admin_read_at) ?? 0;
@@ -211,6 +229,41 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
         acknowledgedAt: n.acknowledged_at,
       })
     ),
+    reviews: reviews.results
+      .map((r): Review => {
+        const versions = reviewFiles.results
+          .filter((f) => f.review_id === r.id)
+          .map((f, i) => ({ id: f.id, number: i + 1, name: f.name, size: f.size, type: f.type, note: f.note, createdAt: f.created_at, url: fileUrl(client.slug, f.id) }));
+        const reviewDecisions = decisions.results
+          .filter((d) => d.review_id === r.id)
+          .map((d) => ({ id: d.id, versionId: d.version_id, decision: d.decision as "approved" | "changes", name: d.name, note: d.note, createdAt: d.created_at }));
+        const latest = versions[versions.length - 1];
+        const lastDecision = latest ? [...reviewDecisions].reverse().find((d) => d.versionId === latest.id) : undefined;
+        const status: ReviewStatus = !r.needs_approval ? "shared" : lastDecision?.decision === "approved" ? "approved" : lastDecision ? "changes" : "waiting";
+        return {
+          id: r.id,
+          title: r.title,
+          note: r.note,
+          needsApproval: r.needs_approval === 1,
+          createdAt: r.created_at,
+          versions,
+          comments: comments.results
+            .filter((c) => c.review_id === r.id)
+            .map((c) => ({
+              id: c.id,
+              versionId: c.version_id,
+              author: c.author as Viewer,
+              body: c.body,
+              pinX: c.pin_x,
+              pinY: c.pin_y,
+              resolved: c.resolved === 1,
+              createdAt: c.created_at,
+            })),
+          decisions: reviewDecisions,
+          status,
+        };
+      })
+      .filter((r) => r.versions.length > 0),
   };
 }
 
@@ -573,6 +626,7 @@ export async function updateItem(db: D1, client: ClientRow, id: number, input: I
   if (!existing) return { error: "Not found." };
   if (input.archived) {
     await db.prepare("UPDATE items SET archived = 1 WHERE id = ?").bind(id).run();
+    await dropUnshared(db, client.id, ["request"], id);
     return { ok: true };
   }
   const item = cleanItem({ kind: existing.kind, fieldType: existing.field_type, ...input });
@@ -749,6 +803,7 @@ export async function updateNote(
   if (!row) return { error: "Not found." };
   if (input.archived) {
     await db.prepare("UPDATE notes SET archived = 1 WHERE id = ?").bind(id).run();
+    await dropUnshared(db, client.id, ["note"], id);
     return { ok: true };
   }
   const title = input.title !== undefined ? str(input.title, 200) : row.title;
@@ -781,6 +836,195 @@ export async function acknowledgeNote(db: D1, client: ClientRow, id: number) {
   return { ok: true };
 }
 
+/** Something Ryan deleted before sharing it: drop it from the "Share updates" list. */
+async function dropUnshared(db: D1, clientId: number, types: string[], refId: number) {
+  await db
+    .prepare(
+      `UPDATE events SET notified_at = ? WHERE client_id = ? AND actor = 'admin' AND ref_id = ? AND notified_at IS NULL AND type IN (${types.map(() => "?").join(", ")})`
+    )
+    .bind(now(), clientId, refId, ...types)
+    .run();
+}
+
+// ── Shared files for review ────────────────────────────────────────────────
+
+type UploadedFile = { key?: unknown; name?: unknown; size?: unknown; type?: unknown };
+
+function cleanUpload(client: ClientRow, f: UploadedFile | undefined) {
+  const key = typeof f?.key === "string" ? f.key : "";
+  if (!key.startsWith(`clients/${client.slug}/`) || key.includes("..")) return null;
+  return {
+    key,
+    name: str(f?.name, 200) || "file",
+    size: Math.max(0, Math.round(Number(f?.size) || 0)),
+    type: str(f?.type, 100),
+  };
+}
+
+async function getReview(db: D1, client: ClientRow, id: number) {
+  return db
+    .prepare("SELECT id, title, needs_approval FROM reviews WHERE id = ? AND client_id = ? AND archived = 0")
+    .bind(id, client.id)
+    .first<{ id: number; title: string; needs_approval: number }>();
+}
+
+/** A version of a shared file must belong to it (and to this client). */
+async function getVersion(db: D1, client: ClientRow, reviewId: number, versionId: number) {
+  return db
+    .prepare("SELECT id FROM files WHERE id = ? AND review_id = ? AND client_id = ? AND deleted = 0")
+    .bind(versionId, reviewId, client.id)
+    .first<{ id: number }>();
+}
+
+async function insertVersion(db: D1, client: ClientRow, reviewId: number, file: NonNullable<ReturnType<typeof cleanUpload>>, note: string) {
+  const res = await db
+    .prepare("INSERT INTO files (client_id, item_id, uploaded_by, r2_key, name, size, type, created_at, review_id, note) VALUES (?, NULL, 'admin', ?, ?, ?, ?, ?, ?, ?)")
+    .bind(client.id, file.key, file.name, file.size, file.type, now(), reviewId, note)
+    .run();
+  return res.meta.last_row_id;
+}
+
+export async function addReview(
+  db: D1,
+  client: ClientRow,
+  input: { title?: unknown; note?: unknown; needsApproval?: unknown; file?: UploadedFile }
+) {
+  const title = str(input.title, 200);
+  if (!title) return { error: "Add a title." };
+  const file = cleanUpload(client, input.file);
+  if (!file) return { error: "Upload a file first." };
+  const needsApproval = Boolean(input.needsApproval);
+  const res = await db
+    .prepare("INSERT INTO reviews (client_id, title, note, needs_approval, created_at) VALUES (?, ?, ?, ?, ?)")
+    .bind(client.id, title, str(input.note, 5000), needsApproval ? 1 : 0, now())
+    .run();
+  const reviewId = res.meta.last_row_id;
+  await insertVersion(db, client, reviewId, file, "");
+  await recordEvent(db, client.id, {
+    actor: "admin",
+    type: "review",
+    refId: reviewId,
+    summary: needsApproval ? `For your approval: ${title}` : `New file: ${title}`,
+  });
+  return { ok: true, id: reviewId };
+}
+
+export async function addReviewVersion(db: D1, client: ClientRow, input: { id?: unknown; note?: unknown; file?: UploadedFile }) {
+  const review = await getReview(db, client, Number(input.id));
+  if (!review) return { error: "That file was removed." };
+  const file = cleanUpload(client, input.file);
+  if (!file) return { error: "Upload a file first." };
+  await insertVersion(db, client, review.id, file, str(input.note, 2000));
+  const count = await db.prepare("SELECT COUNT(*) AS n FROM files WHERE review_id = ? AND deleted = 0").bind(review.id).first<{ n: number }>();
+  await recordEvent(db, client.id, {
+    actor: "admin",
+    type: "review",
+    refId: review.id,
+    summary: `New version (v${count?.n ?? 2}): ${review.title}${review.needs_approval ? ", ready for your approval" : ""}`,
+  });
+  return { ok: true };
+}
+
+export async function updateReview(
+  db: D1,
+  client: ClientRow,
+  id: number,
+  input: { title?: unknown; note?: unknown; needsApproval?: unknown; archived?: unknown }
+) {
+  const review = await getReview(db, client, id);
+  if (!review) return { error: "Not found." };
+  if (input.archived) {
+    await db.prepare("UPDATE reviews SET archived = 1 WHERE id = ?").bind(id).run();
+    await dropUnshared(db, client.id, ["review", "review_reply"], id);
+    return { ok: true };
+  }
+  const row = await db.prepare("SELECT title, note, needs_approval FROM reviews WHERE id = ?").bind(id).first<{ title: string; note: string; needs_approval: number }>();
+  const title = input.title !== undefined ? str(input.title, 200) : row!.title;
+  if (!title) return { error: "Add a title." };
+  await db
+    .prepare("UPDATE reviews SET title = ?, note = ?, needs_approval = ? WHERE id = ?")
+    .bind(
+      title,
+      input.note !== undefined ? str(input.note, 5000) : row!.note,
+      input.needsApproval !== undefined ? (input.needsApproval ? 1 : 0) : row!.needs_approval,
+      id
+    )
+    .run();
+  return { ok: true };
+}
+
+export async function addReviewComment(
+  db: D1,
+  client: ClientRow,
+  by: Viewer,
+  input: { reviewId?: unknown; versionId?: unknown; body?: unknown; pinX?: unknown; pinY?: unknown }
+) {
+  const review = await getReview(db, client, Number(input.reviewId));
+  if (!review) return { error: "That file was removed." };
+  const version = await getVersion(db, client, review.id, Number(input.versionId));
+  if (!version) return { error: "That version was removed." };
+  const body = str(input.body, 5000);
+  if (!body) return { error: "Write a comment." };
+  const pin = (v: unknown) => {
+    const n = Number(v);
+    return v === null || v === undefined || v === "" || !Number.isFinite(n) ? null : Math.min(1, Math.max(0, n));
+  };
+  const pinX = pin(input.pinX);
+  const pinY = pinX === null ? null : pin(input.pinY);
+  const res = await db
+    .prepare("INSERT INTO review_comments (review_id, version_id, client_id, author, body, pin_x, pin_y, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+    .bind(review.id, version.id, client.id, by, body, pinX, pinX === null ? null : pinY, now())
+    .run();
+  const short = body.length > 120 ? `${body.slice(0, 120)}…` : body;
+  await recordEvent(db, client.id, {
+    actor: by,
+    type: by === "client" ? "review_comment" : "review_reply",
+    refId: review.id,
+    summary: `${by === "client" ? "Commented on" : "Replied on"} “${review.title}”: ${short}`,
+    // A client's comment is emailed to Ryan right away (by the route).
+    notified: by === "client",
+  });
+  return { ok: true, id: res.meta.last_row_id, title: review.title, body };
+}
+
+export async function resolveReviewComment(db: D1, client: ClientRow, id: number, resolved: boolean) {
+  await db.prepare("UPDATE review_comments SET resolved = ? WHERE id = ? AND client_id = ?").bind(resolved ? 1 : 0, id, client.id).run();
+  return { ok: true };
+}
+
+export async function decideReview(
+  db: D1,
+  client: ClientRow,
+  input: { reviewId?: unknown; versionId?: unknown; decision?: unknown; name?: unknown; note?: unknown }
+) {
+  const review = await getReview(db, client, Number(input.reviewId));
+  if (!review) return { error: "That file was removed." };
+  if (!review.needs_approval) return { error: "This file doesn't need approval." };
+  const latest = await db
+    .prepare("SELECT id FROM files WHERE review_id = ? AND deleted = 0 ORDER BY created_at DESC, id DESC LIMIT 1")
+    .bind(review.id)
+    .first<{ id: number }>();
+  if (!latest || latest.id !== Number(input.versionId)) return { error: "There's a newer version. Reload the page to see it." };
+  const decision = input.decision === "approved" ? "approved" : input.decision === "changes" ? "changes" : null;
+  if (!decision) return { error: "Invalid request." };
+  const name = str(input.name, 120);
+  const note = str(input.note, 5000);
+  if (decision === "approved" && name.length < 2) return { error: "Type your name to approve." };
+  if (decision === "changes" && !note) return { error: "Tell me what you'd like changed." };
+  await db
+    .prepare("INSERT INTO review_decisions (review_id, version_id, client_id, decision, name, note, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
+    .bind(review.id, latest.id, client.id, decision, name, note, now())
+    .run();
+  await recordEvent(db, client.id, {
+    actor: "client",
+    type: "review_decision",
+    refId: review.id,
+    summary: decision === "approved" ? `Approved “${review.title}” (signed: ${name})` : `Asked for changes to “${review.title}”`,
+    notified: true,
+  });
+  return { ok: true, decision: decision as "approved" | "changes", name, note, title: review.title };
+}
+
 // ── Notification queries (app/lib/onboarding/notify.ts) ────────────────────
 
 export type PendingEvent = { id: number; type: string; ref_id: number | null; summary: string; created_at: number };
@@ -809,7 +1053,7 @@ export async function pendingEvents(db: D1, clientId: number, actor: Viewer, typ
 }
 
 /** Ryan's changes the client only hears about when he presses "Share updates". */
-export const SHARE_TYPES = ["request", "plan", "note"];
+export const SHARE_TYPES = ["request", "plan", "note", "review", "review_reply"];
 
 /** One line per item (the latest change), for the Share button and its email. */
 export function latestPerItem(events: PendingEvent[]) {

@@ -59,6 +59,32 @@ export async function notifyAdminOfMessage(client: ClientRow, text: string) {
   });
 }
 
+/** A client's comment or decision on a shared file reaches Ryan right away. */
+export async function notifyAdminOfReview(
+  client: ClientRow,
+  r: { title: string; kind: "comment" | "approved" | "changes"; body: string; name?: string }
+) {
+  const link = adminUrl(client.slug);
+  const subject =
+    r.kind === "approved"
+      ? `${client.name} approved “${r.title}”`
+      : r.kind === "changes"
+        ? `${client.name} asked for changes to “${r.title}”`
+        : `${client.name} commented on “${r.title}”`;
+  const lead =
+    r.kind === "approved"
+      ? `<p><strong>${escapeHtml(client.name)}</strong> approved <strong>${escapeHtml(r.title)}</strong>, signed “${escapeHtml(r.name ?? "")}”.</p>`
+      : `<p><strong>${escapeHtml(client.name)}</strong> ${r.kind === "changes" ? "asked for changes to" : "commented on"} <strong>${escapeHtml(r.title)}</strong>:</p>`;
+  return sendEmail({
+    from: FROM(),
+    to: [ADMIN_TO()],
+    replyTo: client.email || undefined,
+    subject,
+    html: shell(`${lead}${r.body ? quote(r.body) : ""}${button(link, "Open their page")}`),
+    text: `${subject}${r.kind === "approved" ? ` (signed: ${r.name})` : ""}\n\n${r.body}\n\n${link}`,
+  });
+}
+
 async function sendAdminDigest(db: D1, client: ClientRow) {
   const events = (await pendingEvents(db, client.id, "client")).results;
   if (!events.length) return;

@@ -4,6 +4,8 @@
 import {
   acknowledgeNote,
   addFile,
+  addReviewComment,
+  decideReview,
   addMessage,
   bumpChanged,
   deleteFile,
@@ -18,7 +20,7 @@ import {
   touchSeen,
 } from "../../../lib/onboarding/db";
 import { isAdmin } from "../../../lib/onboarding/admin-auth";
-import { notifyAdminOfMessage } from "../../../lib/onboarding/notify";
+import { notifyAdminOfMessage, notifyAdminOfReview } from "../../../lib/onboarding/notify";
 
 export const dynamic = "force-dynamic";
 
@@ -94,6 +96,20 @@ export async function POST(request: Request, ctx: Ctx) {
     case "email":
       result = await setClientEmail(db, client, body.email);
       break;
+    case "reviewComment": {
+      const res = await addReviewComment(db, client, "client", body);
+      if ("title" in res && res.title) await notifyAdminOfReview(client, { title: res.title, kind: "comment", body: res.body });
+      result = res;
+      break;
+    }
+    case "reviewDecision": {
+      const res = await decideReview(db, client, body);
+      if ("decision" in res && res.decision) {
+        await notifyAdminOfReview(client, { title: res.title, kind: res.decision, body: res.note, name: res.name });
+      }
+      result = res;
+      break;
+    }
     case "ackNote":
       result = await acknowledgeNote(db, client, Number(body.id));
       break;
