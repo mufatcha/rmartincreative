@@ -10,11 +10,51 @@ export function noteDate(date: string) {
   return new Date(y, m - 1, d).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" });
 }
 
-/** A note's text: line breaks kept, links clickable. */
+type Block = { quote: boolean; lines: string[] };
+
+/** Splits a note into plain runs and quotes (consecutive lines starting with ">"). */
+function blocks(text: string): Block[] {
+  const out: Block[] = [];
+  for (const line of text.replace(/\r\n/g, "\n").split("\n")) {
+    const quote = /^\s*>/.test(line);
+    const content = quote ? line.replace(/^\s*> ?/, "") : line;
+    const prev = out[out.length - 1];
+    if (prev && prev.quote === quote) prev.lines.push(content);
+    else out.push({ quote, lines: [content] });
+  }
+  return out;
+}
+
+/**
+ * A note's text: line breaks kept, links clickable, and lines starting with
+ * ">" shown as a quote. A quote's last line starting with "—" or "--" is its
+ * credit ("— Chris, Nov 12").
+ */
 export function NoteBody({ text }: { text: string }) {
   return (
-    <div className="whitespace-pre-wrap break-words text-[15px] leading-relaxed text-ink">
-      <LinkText text={text} />
+    <div className="break-words text-[15px] leading-relaxed text-ink">
+      {blocks(text).map((b, i) => {
+        if (!b.quote) {
+          const run = b.lines.join("\n");
+          // Drop the blank line that usually separates text from a quote (the margin does that job).
+          const trimmed = run.replace(/^\n+|\n+$/g, "");
+          return trimmed ? (
+            <p key={i} className="whitespace-pre-wrap">
+              <LinkText text={trimmed} />
+            </p>
+          ) : null;
+        }
+        const lines = [...b.lines];
+        const credit = lines.length > 1 && /^\s*(—|--)\s*\S/.test(lines[lines.length - 1]) ? lines.pop()!.replace(/^\s*(—|--)\s*/, "") : null;
+        return (
+          <blockquote key={i} className="my-3 rounded-r-xl border-l-4 border-violet-300 bg-violet-50/70 py-2.5 pl-4 pr-3 text-ink/90">
+            <p className="whitespace-pre-wrap italic">
+              <LinkText text={lines.join("\n").trim()} />
+            </p>
+            {credit && <footer className="mt-1.5 text-sm not-italic text-ink-soft">— {credit}</footer>}
+          </blockquote>
+        );
+      })}
     </div>
   );
 }
