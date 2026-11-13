@@ -6,8 +6,9 @@ import { useState } from "react";
 import type { ClientSummary } from "../../lib/onboarding/types";
 import { ProgressBar } from "../components/ItemView";
 import { ago } from "./[slug]/AdminClient";
+import GuideLinks from "./GuideLinks";
 
-export default function AdminHome({ initial }: { initial: ClientSummary[] }) {
+export default function AdminHome({ initial, siteUrl }: { initial: ClientSummary[]; siteUrl: string }) {
   const router = useRouter();
   // Loaded with the page; no polling (creating a client opens its own page).
   const clients = initial;
@@ -114,6 +115,8 @@ export default function AdminHome({ initial }: { initial: ClientSummary[] }) {
             {showArchived ? "Hide archived" : "Show archived"}
           </button>
         )}
+
+        <GuideLinks siteUrl={siteUrl} />
       </div>
     </section>
   );
