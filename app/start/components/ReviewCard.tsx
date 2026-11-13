@@ -2,6 +2,7 @@
 
 import { useState, type MouseEvent, type ReactNode } from "react";
 import type { Review, ReviewComment, Viewer } from "../../lib/onboarding/types";
+import { linkSite } from "../../lib/onboarding/links";
 import { fileExtension, formatBytes } from "../../lib/upload-rules";
 import LinkText from "./LinkText";
 
@@ -77,10 +78,11 @@ export default function ReviewCard({
   const [signName, setSignName] = useState("");
   const [changeNote, setChangeNote] = useState("");
 
-  const ext = fileExtension(version.name);
-  const isImage = IMAGE.includes(ext) || (version.type.startsWith("image/") && !["heic", "heif", "tif", "tiff", "psd"].includes(ext));
-  const isPdf = ext === "pdf" || version.type === "application/pdf";
-  const isVideo = VIDEO.includes(ext) || version.type.startsWith("video/");
+  const ext = version.link ? "" : fileExtension(version.name);
+  const isLink = version.link !== null;
+  const isImage = !isLink && IMAGE.includes(ext) || (version.type.startsWith("image/") && !["heic", "heif", "tif", "tiff", "psd"].includes(ext));
+  const isPdf = !isLink && ext === "pdf" || version.type === "application/pdf";
+  const isVideo = !isLink && VIDEO.includes(ext) || version.type.startsWith("video/");
 
   const comments = review.comments.filter((c) => c.versionId === version.id);
   const pinned = comments.filter((c) => c.pinX !== null && c.pinY !== null);
@@ -174,7 +176,27 @@ export default function ReviewCard({
 
       {/* Preview */}
       <div className="mt-4 bg-paper-tint/40 px-3 py-3 sm:px-5">
-        {isImage ? (
+        {isLink && version.embed ? (
+          <iframe
+            src={version.embed}
+            title={review.title}
+            allow="fullscreen; clipboard-write; encrypted-media; picture-in-picture"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+            className="h-[75vh] w-full rounded-lg border border-ink/10 bg-white"
+          />
+        ) : isLink ? (
+          <a
+            href={version.link!}
+            target="_blank"
+            rel="noopener"
+            className="flex items-center gap-3 rounded-lg bg-white px-4 py-4 hover:bg-violet-50"
+          >
+            <span className="rounded-md bg-violet-100 px-2 py-1 text-xs font-bold uppercase text-violet-700">Link</span>
+            <span className="min-w-0 flex-1 truncate text-sm font-medium">{version.name}</span>
+            <span className="text-sm font-semibold text-violet-700">Open &rarr;</span>
+          </a>
+        ) : isImage ? (
           <div className="relative mx-auto w-fit max-w-full">
             <div onClick={placePin} className={`relative ${pinMode ? "cursor-crosshair" : ""}`}>
               {/* eslint-disable-next-line @next/next/no-img-element -- private R2 files, not optimizable */}
@@ -216,6 +238,16 @@ export default function ReviewCard({
             <span className="min-w-0 flex-1 truncate text-sm font-medium">{version.name}</span>
           </div>
         )}
+        {isLink ? (
+          <p className="mt-2 flex flex-wrap items-center gap-x-3 text-xs text-ink-soft">
+            <span>
+              {version.name} · {when(version.createdAt)}
+            </span>
+            <a href={version.link!} target="_blank" rel="noopener" className="font-semibold text-violet-700 hover:text-violet-800">
+              Open in {linkSite(version.link!)}
+            </a>
+          </p>
+        ) : (
         <p className="mt-2 flex flex-wrap items-center gap-x-3 text-xs text-ink-soft">
           <span>
             {version.name} · {formatBytes(version.size)} · {when(version.createdAt)}
@@ -227,6 +259,7 @@ export default function ReviewCard({
             Open full size
           </a>
         </p>
+        )}
       </div>
 
       <div className="px-5 pb-5 pt-4 sm:px-7">
