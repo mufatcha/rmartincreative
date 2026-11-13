@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isAdmin } from "../../lib/onboarding/admin-auth";
-import { getClientBySlug, getDb, loadState, touchSeen } from "../../lib/onboarding/db";
+import { getClientBySlug, getDb, loadState } from "../../lib/onboarding/db";
 import { pageMetadata } from "../../lib/seo";
 import OnboardingPortal from "./OnboardingPortal";
 
@@ -27,6 +27,9 @@ export default async function StartPage({ params }: PageProps<"/start/[slug]">) 
   if (!client || client.archived) notFound();
   // Signed in as admin: a read-only preview that doesn't count as the client's visit.
   const preview = await isAdmin();
-  const [state] = await Promise.all([loadState(db, client, "client"), preview ? null : touchSeen(db, client)]);
+  // The visit itself is recorded by the page's script once it's on screen
+  // (OnboardingPortal), not here: link-preview bots (Nextdoor, iMessage, Slack…)
+  // load this HTML too, but don't run scripts.
+  const state = await loadState(db, client, "client");
   return <OnboardingPortal initial={state} preview={preview} />;
 }
