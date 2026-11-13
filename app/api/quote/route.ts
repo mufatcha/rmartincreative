@@ -1,4 +1,5 @@
 import { QUOTE_FROM, QUOTE_INBOX_EMAIL } from "../../lib/business";
+import { emailConfigured, escapeHtml, sendEmail } from "../../lib/email";
 import { getQuoteService } from "../../lib/quote-services";
 import { getR2, presignGet } from "../../lib/r2";
 import { MAX_FILES, formatBytes } from "../../lib/upload-rules";
@@ -13,9 +14,6 @@ type QuoteBody = {
   turnstileToken?: unknown;
   website?: unknown; // honeypot — real visitors never see or fill this
 };
-
-const escapeHtml = (value: string) =>
-  value.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 const str = (value: unknown, max = 5000) => (typeof value === "string" ? value.trim().slice(0, max) : "");
 
@@ -38,8 +36,7 @@ async function verifyTurnstile(token: string, ip: string | null): Promise<boolea
 }
 
 export async function POST(request: Request) {
-  const resendKey = process.env.RESEND_API_KEY;
-  if (!resendKey) {
+  if (!emailConfigured()) {
     return Response.json({ error: "Online requests aren't set up yet." }, { status: 503 });
   }
 
@@ -134,21 +131,16 @@ export async function POST(request: Request) {
       : "No files attached.",
   ].join("\n");
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: process.env.QUOTE_FROM_EMAIL || QUOTE_FROM,
-      to: [process.env.QUOTE_TO_EMAIL || QUOTE_INBOX_EMAIL],
-      ...(validEmail ? { reply_to: email } : {}),
-      subject: `Quote request: ${service.label} — ${name}`,
-      html,
-      text,
-    }),
+  const sent = await sendEmail({
+    from: process.env.QUOTE_FROM_EMAIL || QUOTE_FROM,
+    to: [process.env.QUOTE_TO_EMAIL || QUOTE_INBOX_EMAIL],
+    replyTo: validEmail ? email : undefined,
+    subject: `Quote request: ${service.label} — ${name}`,
+    html,
+    text,
   });
 
-  if (!res.ok) {
-    console.error("Resend error", res.status, await res.text());
+  if (!sent) {
     return Response.json({ error: "Your request couldn't be sent. Please try again or call." }, { status: 502 });
   }
 

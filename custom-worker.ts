@@ -12,6 +12,7 @@
 import { default as handler } from "./.open-next/worker.js";
 
 type Handler = { fetch(request: Request, env: unknown, ctx: unknown): Promise<Response> };
+type Ctx = { waitUntil(promise: Promise<unknown>): void };
 
 const worker = {
   async fetch(request: Request, env: unknown, ctx: unknown): Promise<Response> {
@@ -25,6 +26,24 @@ const worker = {
     const headers = new Headers(response.headers);
     headers.set("vary", vary ? `${vary}, Accept` : "Accept");
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+  },
+
+  // Cron trigger (wrangler.jsonc "triggers"): sends the batched client onboarding
+  // emails. The work lives in a Next route (app/api/start/admin/cron), called
+  // straight through the handler, so it has the same env and database as pages.
+  async scheduled(_controller: unknown, env: { ADMIN_KEY?: string }, ctx: Ctx): Promise<void> {
+    if (!env.ADMIN_KEY) return;
+    const request = new Request("https://rmartincreative.com/api/start/admin/cron", {
+      method: "POST",
+      headers: { "x-admin-key": env.ADMIN_KEY },
+    });
+    ctx.waitUntil(
+      (handler as Handler)
+        .fetch(request, env, ctx)
+        .then(async (res) => {
+          if (!res.ok) console.error("Onboarding cron failed", res.status, await res.text());
+        })
+    );
   },
 };
 

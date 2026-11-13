@@ -1,10 +1,8 @@
 "use client";
 
 import { useRef, useState, type DragEvent } from "react";
-import { ALLOWED_EXTENSIONS, MAX_FILES, formatBytes } from "../lib/upload-rules";
+import { QUOTE_RULES, formatBytes, type UploadRules } from "../lib/upload-rules";
 import type { UploadItem } from "./useFileUploads";
-
-const ACCEPT = ALLOWED_EXTENSIONS.map((ext) => `.${ext}`).join(",");
 
 export default function FileDropzone({
   items,
@@ -12,15 +10,21 @@ export default function FileDropzone({
   onAdd,
   onRemove,
   onRetry,
+  rules = QUOTE_RULES,
+  pickLabel = "Choose photos or files",
 }: {
   items: UploadItem[];
   hint: string;
+  rules?: UploadRules;
+  /** The tap-to-pick button text on phones. */
+  pickLabel?: string;
   onAdd: (files: File[]) => void;
   onRemove: (id: string) => void;
   onRetry: (id: string) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
+  const accept = rules.extensions.map((ext) => `.${ext}`).join(",");
 
   function onDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
@@ -30,7 +34,7 @@ export default function FileDropzone({
 
   return (
     <div>
-      <p className="text-sm text-ink-soft">{hint}</p>
+      {hint && <p className="text-sm text-ink-soft">{hint}</p>}
 
       <div
         onDragOver={(e) => {
@@ -39,7 +43,7 @@ export default function FileDropzone({
         }}
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
-        className={`mt-4 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-8 text-center transition-colors ${
+        className={`${hint ? "mt-4" : ""} flex flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-8 text-center transition-colors ${
           dragging ? "border-violet-500 bg-violet-50" : "border-ink/15 bg-paper-tint/40"
         }`}
       >
@@ -60,18 +64,18 @@ export default function FileDropzone({
             onClick={() => inputRef.current?.click()}
             className="font-semibold text-violet-600 underline decoration-violet-300 underline-offset-2 hover:text-violet-700"
           >
-            <span className="sm:hidden">Choose photos or files</span>
+            <span className="sm:hidden">{pickLabel}</span>
             <span className="hidden sm:inline">browse</span>
           </button>
         </p>
         <p className="mt-1 text-xs text-ink-soft">
-          Photos, PDFs, design files, or ZIPs &middot; up to {MAX_FILES} files, 100 MB each
+          {rules.kinds} &middot; up to {rules.maxFiles} files, {formatBytes(rules.maxFileBytes)} each
         </p>
         <input
           ref={inputRef}
           type="file"
           multiple
-          accept={ACCEPT}
+          accept={accept}
           className="sr-only"
           onChange={(e) => {
             if (e.target.files?.length) onAdd(Array.from(e.target.files));

@@ -75,7 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <SiteHeader seasonalNav={seasonalNav} servicesMenu={getServicesMenu()} />
         <main className="flex-1">{children}</main>
-        <HideOnDemos>
+        <HideOnDemos alsoPortal>
           <SiteFooter />
           <MobileContactBar />
         </HideOnDemos>

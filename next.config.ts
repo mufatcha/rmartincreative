@@ -3,8 +3,9 @@ import type { NextConfig } from "next";
 // Paths that get a Markdown version: everything except Next's own files, the API,
 // the Markdown route itself, and the demo sites (fictitious companies, so agents
 // never get a Markdown copy of them). The lookahead checks the whole first
-// segment, so /demos-something would still match but /demos/x would not.
-const FIRST = "(?!(?:_next|api|agent-markdown|demos)(?:/|$))[^/]+";
+// segment, so /demos-something would still match but /demos/x would not. Client
+// onboarding pages (/start) are private, so they get no Markdown copy either.
+const FIRST = "(?!(?:_next|api|agent-markdown|demos|start)(?:/|$))[^/]+";
 // A last segment ending in .md (the name without it is captured).
 const MD = "[^/]+?";
 
@@ -48,6 +49,10 @@ const nextConfig: NextConfig = {
     return [
       { source: "/", headers: [describedBy] },
       { source: `/:first(${FIRST})/:rest*`, headers: [describedBy] },
+      // Private client onboarding pages and their API: never indexed, even if a
+      // link leaks (the pages also have a robots noindex meta tag).
+      { source: "/start/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
+      { source: "/api/start/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
     ];
   },
 };

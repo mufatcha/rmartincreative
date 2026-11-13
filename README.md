@@ -54,6 +54,20 @@ Copy `.env.example` to `.env.local` and fill it in:
 
 Quote emails include download links that work for 7 days. After that, files stay in the R2 bucket under `quotes/<date>/` until the 90-day lifecycle rule removes them.
 
+## Client onboarding pages
+
+Private pages at `/start/<slug>` (for example `/start/chrismelby-7x42k`). The link is the key, so there's no sign-in. Clients answer questions, tick off a checklist, upload photos and videos (straight to R2 under `clients/<slug>/`), and chat. Everything saves as they go. You manage clients at `/start/admin`.
+
+- **Database:** Cloudflare D1 `onboarding` (binding `ONBOARDING_DB` in `wrangler.jsonc`), with tables in `migrations/`. Apply new migrations with `bunx wrangler d1 migrations apply onboarding --local` and `--remote`. Under `bun dev` the app uses the local copy in `.wrangler/state`.
+- **Admin sign-in:** the `ADMIN_KEY` secret. Sign in on the page, or bookmark `/api/start/admin/login?key=<ADMIN_KEY>`.
+- **Emails (Resend):**
+  - A message from a client reaches you right away.
+  - Answers, uploads, and ticked tasks arrive as one digest after the client has been idle for 10 minutes.
+  - The client gets one email about your new messages and requests a few minutes after you stop adding them. It's skipped if they've had the page open since. Client emails start only once you've sent the invite or they've opened the page, so you can set a page up quietly.
+  - The batched emails run from the Worker's cron (every 5 minutes, `custom-worker.ts` → `/api/start/admin/cron`). To send pending emails now, open `/api/start/admin/cron` while signed in.
+- **No email yet?** Leave it blank. The page asks the client for one.
+- The pages are noindex, with an `X-Robots-Tag` header, and aren't in the sitemap.
+
 ## Deploying to Cloudflare
 
 The site runs on Cloudflare Workers through the [OpenNext adapter](https://opennext.js.org/cloudflare). The config lives in `wrangler.jsonc` and `open-next.config.ts`. Every push to `main` deploys to production, and every other branch gets a preview URL.

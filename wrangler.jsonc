@@ -8,7 +8,8 @@
   // (by default, each deploy deletes any not listed in this file).
   "keep_vars": true,
   // Non-secret settings live here so every deploy has them. Keys and passwords
-  // (R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, RESEND_API_KEY, TURNSTILE_SECRET_KEY)
+  // (R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, RESEND_API_KEY, TURNSTILE_SECRET_KEY,
+  // ADMIN_KEY)
   // are added in the dashboard as type "Secret" — never in this file.
   "vars": {
     "R2_ACCOUNT_ID": "bdffe4c7ddc5a63d99464caacdf67688",
@@ -49,6 +50,21 @@
       "new_sqlite_classes": ["DOQueueHandler"]
     }
   ],
+  "d1_databases": [
+    {
+      // Client onboarding pages (app/start): answers, checklists, chat.
+      // Created in the dashboard; database_id is on its page there.
+      // Tables: migrations/*.sql (bunx wrangler d1 migrations apply onboarding --remote).
+      "binding": "ONBOARDING_DB",
+      "database_name": "onboarding",
+      "database_id": "20017d3f-c7f8-4c91-b750-9983303b87e6",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "triggers": {
+    // Every 5 minutes: onboarding notification emails (custom-worker.ts scheduled()).
+    "crons": ["*/5 * * * *"]
+  },
   "images": {
     // next/image optimization through Cloudflare Images.
     "binding": "IMAGES"
