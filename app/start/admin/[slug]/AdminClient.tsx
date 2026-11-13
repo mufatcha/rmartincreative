@@ -11,6 +11,7 @@ import UploadArea from "../../components/UploadArea";
 import { usePortal } from "../../components/usePortal";
 import ItemEditor, { type ItemDraft } from "../ItemEditor";
 import PlanEditor from "../PlanEditor";
+import ShareBox from "../ShareBox";
 
 export function ago(t: number | null): string {
   if (!t) return "never";
@@ -224,7 +225,7 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
                 {copied ? "Copied" : "Copy link"}
               </button>
               <a href={`/start/${slug}`} target="_blank" rel="noopener" className="rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold hover:border-violet-400">
-                Open as client
+                Preview client page
               </a>
             </div>
 
@@ -285,6 +286,14 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
                 <p className="text-sm text-ink-soft">No email yet: share the link yourself. The page asks the client for their email, and their notifications start once they open it.</p>
               )}
               {notice && <p className="mt-2 text-sm text-emerald-700">{notice}</p>}
+              <div className="mt-4">
+                <ShareBox
+                  first={first}
+                  hasEmail={Boolean(state.admin.email)}
+                  unshared={state.admin.unshared}
+                  share={(note) => act({ action: "share", note })}
+                />
+              </div>
             </div>
 
             <div className="mt-5">
@@ -443,6 +452,16 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
           </div>
         </div>
 
+        {state.admin.unshared.length > 0 && (
+          <a
+            href="#share-updates"
+            className="fixed bottom-4 left-4 z-40 inline-flex items-center gap-2 rounded-full bg-violet-700 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-700/30 hover:bg-violet-800"
+          >
+            <span className="rounded-full bg-white px-1.5 text-xs font-bold text-violet-700">{state.admin.unshared.length}</span>
+            Not shared with {first} yet
+          </a>
+        )}
+
         <aside className="mt-8 lg:mt-0">
           <div className="flex h-[70dvh] flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-sm lg:sticky lg:top-28 lg:h-[calc(100dvh-9rem)]">
             <div className="flex border-b border-ink/10" role="tablist">
@@ -469,7 +488,7 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
                 active
                 onSend={onSend}
                 onRead={onRead}
-                emptyText={`No messages yet. ${first} gets an email a few minutes after you send one, unless they're on the page already.`}
+                emptyText={`No messages yet. ${first} gets an email a few minutes after you send one, unless they're on the page and have seen it.`}
                 className="flex-1"
               />
             ) : (

@@ -123,14 +123,14 @@ export default function ItemEditor({
       {error && <p className="text-sm text-rose-600">{error}</p>}
       <div className="flex items-center gap-2">
         <button type="submit" disabled={saving} className="rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50">
-          {saving ? "Saving…" : item ? "Save changes" : kind === "note" ? "Add note" : "Add & notify client"}
+          {saving ? "Saving…" : item ? "Save changes" : "Add"}
         </button>
         <button type="button" onClick={onCancel} className="px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink">
           Cancel
         </button>
       </div>
       {!item && kind !== "note" && (
-        <p className="text-xs text-ink-soft">The client gets one email about new items a few minutes after you stop adding them (after they&rsquo;ve been invited or opened the page).</p>
+        <p className="text-xs text-ink-soft">The client isn&rsquo;t emailed about this until you press &ldquo;Share updates&rdquo;.</p>
       )}
     </form>
   );

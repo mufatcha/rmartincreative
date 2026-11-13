@@ -3,7 +3,7 @@
 // the Worker; under `next dev`, getCloudflareContext({ async: true }) starts a local
 // D1 through wrangler (stored in .wrangler/state).
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { progress } from "./progress";
+import { hasAnswer } from "./progress";
 import type {
   ActivityEvent,
   AdminPortalState,
@@ -54,6 +54,7 @@ export type ClientRow = {
   client_read_at: number | null;
   admin_read_at: number | null;
   plan_seen_at: number | null;
+  changed_at: number;
   archived: number;
 };
 
@@ -166,6 +167,7 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
   const msgs: Message[] = messages.results.map((m) => ({ id: m.id, sender: m.sender as Viewer, body: m.body, createdAt: m.created_at }));
 
   return {
+    version: client.changed_at,
     client: { slug: client.slug, name: client.name, intro: client.intro, email: client.email },
     sections: sections.results,
     items: items.results.map(toItem),
@@ -195,12 +197,13 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
 }
 
 export async function loadAdminState(db: D1, client: ClientRow): Promise<AdminPortalState> {
-  const [state, events] = await Promise.all([
+  const [state, events, unshared] = await Promise.all([
     loadState(db, client, "admin"),
     db
       .prepare("SELECT id, actor, type, summary, created_at FROM events WHERE client_id = ? ORDER BY created_at DESC, id DESC LIMIT 60")
       .bind(client.id)
       .all<{ id: number; actor: string; type: string; summary: string; created_at: number }>(),
+    pendingEvents(db, client.id, "admin", SHARE_TYPES),
   ]);
   return {
     ...state,
@@ -209,6 +212,7 @@ export async function loadAdminState(db: D1, client: ClientRow): Promise<AdminPo
       archived: client.archived === 1,
       createdAt: client.created_at,
       invitedAt: client.invited_at,
+      unshared: latestPerItem(unshared.results).map((e) => e.summary),
       lastSeenAt: client.last_seen_at,
       events: events.results.map(
         (e): ActivityEvent => ({ id: e.id, actor: e.actor as Viewer, type: e.type, summary: e.summary, createdAt: e.created_at })
@@ -217,29 +221,58 @@ export async function loadAdminState(db: D1, client: ClientRow): Promise<AdminPo
   };
 }
 
+/** Every client with progress and unread counts. A fixed seven queries however
+ *  many clients there are (the free plan allows 50 per request). */
 export async function listClients(db: D1): Promise<ClientSummary[]> {
-  const clients = await db.prepare("SELECT * FROM clients ORDER BY archived, created_at DESC").all<ClientRow>();
-  return Promise.all(
-    clients.results.map(async (c) => {
-      const [state, last] = await Promise.all([
-        loadState(db, c, "admin"),
-        db.prepare("SELECT MAX(created_at) AS t FROM events WHERE client_id = ? AND actor = 'client'").bind(c.id).first<{ t: number | null }>(),
-      ]);
-      const { done, total } = progress(state.items, state);
-      return {
-        slug: c.slug,
-        name: c.name,
-        email: c.email,
-        archived: c.archived === 1,
-        createdAt: c.created_at,
-        lastSeenAt: c.last_seen_at,
-        done,
-        total,
-        unread: state.unread,
-        lastActivity: last?.t ?? null,
-      };
-    })
-  );
+  const [clients, items, responses, tasks, files, unread, last] = await Promise.all([
+    db.prepare("SELECT * FROM clients ORDER BY archived, created_at DESC").all<ClientRow>(),
+    db
+      .prepare(
+        `SELECT i.id, i.client_id, i.kind FROM items i JOIN sections s ON s.id = i.section_id
+         WHERE i.archived = 0 AND s.archived = 0 AND i.kind != 'note'`
+      )
+      .all<{ id: number; client_id: number; kind: string }>(),
+    db.prepare("SELECT item_id, value_json FROM responses").all<{ item_id: number; value_json: string }>(),
+    db.prepare("SELECT item_id FROM task_status WHERE done = 1").all<{ item_id: number }>(),
+    db.prepare("SELECT DISTINCT item_id FROM files WHERE deleted = 0 AND item_id IS NOT NULL").all<{ item_id: number }>(),
+    db
+      .prepare(
+        `SELECT m.client_id, COUNT(*) AS n FROM messages m JOIN clients c ON c.id = m.client_id
+         WHERE m.sender = 'client' AND m.created_at > COALESCE(c.admin_read_at, 0) GROUP BY m.client_id`
+      )
+      .all<{ client_id: number; n: number }>(),
+    db.prepare("SELECT client_id, MAX(created_at) AS t FROM events WHERE actor = 'client' GROUP BY client_id").all<{ client_id: number; t: number }>(),
+  ]);
+
+  const answered = new Set(responses.results.filter((r) => hasAnswer(parseJson<AnswerValue>(r.value_json, ""))).map((r) => r.item_id));
+  const ticked = new Set(tasks.results.map((t) => t.item_id));
+  const uploaded = new Set(files.results.map((f) => f.item_id));
+  const unreadBy = new Map(unread.results.map((u) => [u.client_id, u.n]));
+  const lastBy = new Map(last.results.map((l) => [l.client_id, l.t]));
+
+  return clients.results.map((c) => {
+    const mine = items.results.filter((i) => i.client_id === c.id);
+    const done = mine.filter((i) =>
+      i.kind === "question" ? answered.has(i.id) : i.kind === "task" ? ticked.has(i.id) : i.kind === "upload" ? uploaded.has(i.id) : false
+    ).length;
+    return {
+      slug: c.slug,
+      name: c.name,
+      email: c.email,
+      archived: c.archived === 1,
+      createdAt: c.created_at,
+      lastSeenAt: c.last_seen_at,
+      done,
+      total: mine.length,
+      unread: unreadBy.get(c.id) ?? 0,
+      lastActivity: lastBy.get(c.id) ?? null,
+    };
+  });
+}
+
+/** Marks the client's page as changed so open pages reload it on their next poll. */
+export async function bumpChanged(db: D1, clientId: number) {
+  await db.prepare("UPDATE clients SET changed_at = ? WHERE id = ?").bind(now(), clientId).run();
 }
 
 // ── Events ─────────────────────────────────────────────────────────────────
@@ -276,8 +309,11 @@ async function getItem(db: D1, clientId: number, itemId: number) {
     .first<ItemRow>();
 }
 
+/** At most one write a minute, though the page polls every 10 seconds. */
 export async function touchSeen(db: D1, client: ClientRow) {
-  await db.prepare("UPDATE clients SET last_seen_at = ? WHERE id = ?").bind(now(), client.id).run();
+  const t = now();
+  if (client.last_seen_at && t - client.last_seen_at < 60_000) return;
+  await db.prepare("UPDATE clients SET last_seen_at = ? WHERE id = ?").bind(t, client.id).run();
 }
 
 export async function markRead(db: D1, client: ClientRow, viewer: Viewer) {
@@ -665,21 +701,37 @@ export async function movePlanItem(db: D1, client: ClientRow, id: number, dir: n
 
 export type PendingEvent = { id: number; type: string; ref_id: number | null; summary: string; created_at: number };
 
-export async function clientsWithPending(db: D1, actor: Viewer) {
+/** `types` limits it to those event types (e.g. only chat messages). */
+const typeFilter = (types?: string[]) => (types?.length ? ` AND e.type IN (${types.map(() => "?").join(", ")})` : "");
+
+export async function clientsWithPending(db: D1, actor: Viewer, types?: string[]) {
   return db
     .prepare(
       `SELECT c.*, MAX(e.created_at) AS newest FROM clients c JOIN events e ON e.client_id = c.id
-       WHERE e.actor = ? AND e.notified_at IS NULL GROUP BY c.id`
+       WHERE e.actor = ? AND e.notified_at IS NULL${typeFilter(types)} GROUP BY c.id`
     )
-    .bind(actor)
+    .bind(actor, ...(types ?? []))
     .all<ClientRow & { newest: number }>();
 }
 
-export async function pendingEvents(db: D1, clientId: number, actor: Viewer) {
+export async function pendingEvents(db: D1, clientId: number, actor: Viewer, types?: string[]) {
   return db
-    .prepare("SELECT id, type, ref_id, summary, created_at FROM events WHERE client_id = ? AND actor = ? AND notified_at IS NULL ORDER BY created_at")
-    .bind(clientId, actor)
+    .prepare(
+      `SELECT e.id, e.type, e.ref_id, e.summary, e.created_at FROM events e
+       WHERE e.client_id = ? AND e.actor = ? AND e.notified_at IS NULL${typeFilter(types)} ORDER BY e.created_at`
+    )
+    .bind(clientId, actor, ...(types ?? []))
     .all<PendingEvent>();
+}
+
+/** Ryan's changes the client only hears about when he presses "Share updates". */
+export const SHARE_TYPES = ["request", "plan"];
+
+/** One line per item (the latest change), for the Share button and its email. */
+export function latestPerItem(events: PendingEvent[]) {
+  const byKey = new Map<string, PendingEvent>();
+  for (const e of events) byKey.set(`${e.type}:${e.ref_id ?? e.id}`, e);
+  return [...byKey.values()];
 }
 
 export async function markNotified(db: D1, ids: number[]) {

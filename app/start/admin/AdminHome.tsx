@@ -2,29 +2,20 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { ClientSummary } from "../../lib/onboarding/types";
 import { ProgressBar } from "../components/ItemView";
 import { ago } from "./[slug]/AdminClient";
 
 export default function AdminHome({ initial }: { initial: ClientSummary[] }) {
   const router = useRouter();
-  const [clients, setClients] = useState(initial);
+  // Loaded with the page; no polling (creating a client opens its own page).
+  const clients = initial;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
-
-  // Keep unread counts and progress fresh while the list is open.
-  useEffect(() => {
-    const id = setInterval(async () => {
-      if (document.visibilityState !== "visible") return;
-      const res = await fetch("/api/start/admin", { cache: "no-store" });
-      if (res.ok) setClients(((await res.json()) as { clients: ClientSummary[] }).clients);
-    }, 20_000);
-    return () => clearInterval(id);
-  }, []);
 
   async function create() {
     setCreating(true);

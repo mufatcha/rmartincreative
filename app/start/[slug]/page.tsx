@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { isAdmin } from "../../lib/onboarding/admin-auth";
 import { getClientBySlug, getDb, loadState, touchSeen } from "../../lib/onboarding/db";
 import { pageMetadata } from "../../lib/seo";
 import OnboardingPortal from "./OnboardingPortal";
@@ -24,6 +25,8 @@ export default async function StartPage({ params }: PageProps<"/start/[slug]">) 
   if (!db) throw new Error("Onboarding database unavailable");
   const client = await getClientBySlug(db, slug);
   if (!client || client.archived) notFound();
-  const [state] = await Promise.all([loadState(db, client, "client"), touchSeen(db, client)]);
-  return <OnboardingPortal initial={state} />;
+  // Signed in as admin: a read-only preview that doesn't count as the client's visit.
+  const preview = await isAdmin();
+  const [state] = await Promise.all([loadState(db, client, "client"), preview ? null : touchSeen(db, client)]);
+  return <OnboardingPortal initial={state} preview={preview} />;
 }

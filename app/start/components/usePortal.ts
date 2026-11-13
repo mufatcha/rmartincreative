@@ -26,6 +26,7 @@ export function usePortal<S extends PortalState>(
   const [localResponses, setLocalResponses] = useState<Record<number, { value: AnswerValue; at: number }>>({});
   const [localTasks, setLocalTasks] = useState<Record<number, { done: boolean; at: number }>>({});
   const extraRef = useRef(extra);
+  const versionRef = useRef(initial.version);
   useEffect(() => {
     extraRef.current = extra;
   });
@@ -34,15 +35,18 @@ export function usePortal<S extends PortalState>(
     try {
       const visible = typeof document !== "undefined" && document.visibilityState === "visible";
       const sep = stateUrl.includes("?") ? "&" : "?";
-      const res = await fetch(`${stateUrl}${sep}visible=${visible ? 1 : 0}`, { cache: "no-store" });
+      const res = await fetch(`${stateUrl}${sep}visible=${visible ? 1 : 0}&v=${versionRef.current}`, { cache: "no-store" });
       if (!res.ok) return;
-      const next = (await res.json()) as S;
+      const data = (await res.json()) as S | { unchanged: true };
       const cutoff = Date.now() - LOCAL_WINS_MS;
       const prune = <T extends { at: number }>(map: Record<number, T>) => {
         const kept = Object.entries(map).filter(([, v]) => v.at > cutoff);
         return kept.length === Object.keys(map).length ? map : Object.fromEntries(kept);
       };
-      setServer(next);
+      if (!("unchanged" in data)) {
+        versionRef.current = data.version;
+        setServer(data);
+      }
       setLocalResponses(prune);
       setLocalTasks(prune);
     } catch {
