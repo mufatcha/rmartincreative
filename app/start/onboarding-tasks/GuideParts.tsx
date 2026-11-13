@@ -68,3 +68,61 @@ export function Callout({ tone = "info", children }: { tone?: "info" | "warn"; c
 export const Email = ({ children }: { children: ReactNode }) => (
   <span className="rounded-md bg-violet-100 px-1.5 py-0.5 font-mono text-[14px] font-semibold text-violet-900">{children}</span>
 );
+
+/** The provider's own help article, under a section. */
+export function Help({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <p className="mt-3 text-sm text-ink-soft">
+      Help article: <Ext href={href}>{children}</Ext>
+    </p>
+  );
+}
+
+/** A short lead-in paragraph at the top of a section. */
+export function Intro({ children }: { children: ReactNode }) {
+  return <p className="mb-4 text-[15px] leading-relaxed text-ink-soft">{children}</p>;
+}
+
+/** "Before you start" checklist. */
+export function Checklist({ title = "Before you start, have these handy", items }: { title?: string; items: ReactNode[] }) {
+  return (
+    <div className="mb-5 rounded-2xl bg-paper-tint/50 px-4 py-3.5">
+      <p className="text-sm font-semibold">{title}</p>
+      <ul className="mt-2 grid gap-1.5 text-sm text-ink-soft sm:grid-cols-2">
+        {items.map((item, i) => (
+          <li key={i} className="flex gap-2">
+            <span aria-hidden className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** Shown before any step where the client types their business name: listings
+ *  only reinforce each other when the name matches letter for letter. */
+export function NameMatch() {
+  return (
+    <div className="mb-5 rounded-2xl border-2 border-amber-300 bg-amber-50 px-4 py-4 text-amber-950 sm:px-5">
+      <p className="flex items-center gap-2 font-bold">
+        <svg viewBox="0 0 20 20" aria-hidden className="h-5 w-5 shrink-0 text-amber-600">
+          <path d="M10 3.5 17.5 16.5h-15L10 3.5Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+          <path d="M10 8.5v3.5M10 14.2v.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+        Use your business name <span className="underline decoration-amber-400 decoration-2 underline-offset-2">exactly</span> as it&rsquo;s written
+        on your onboarding page
+      </p>
+      <p className="mt-2 text-sm leading-relaxed">
+        Google, Bing, Apple, and the rest compare your listings letter by letter. To them, <B>&ldquo;Smith Lawn Services&rdquo;</B> and{" "}
+        <B>&ldquo;Smith Lawn Service&rdquo;</B> are two different businesses, which can split up your reviews and make you harder to find.
+      </p>
+      <ul className="mt-2 list-disc space-y-0.5 pl-5 text-sm leading-relaxed">
+        <li>Match the spelling, spacing, capital letters, and punctuation.</li>
+        <li>Keep (or leave out) &ldquo;LLC&rdquo;, &ldquo;Inc.&rdquo;, &ldquo;&amp;&rdquo; and &ldquo;and&rdquo; the same way every time.</li>
+        <li>Don&rsquo;t add extra words like your town or &ldquo;Best Plumber&rdquo;. It breaks the match, and the sites can penalize it.</li>
+        <li>Copy and paste the name from your onboarding page if you can.</li>
+      </ul>
+    </div>
+  );
+}
