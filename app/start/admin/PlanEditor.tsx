@@ -131,17 +131,30 @@ export default function PlanEditor({
             plan={live}
             // Preview with the labels the client will see next time.
             seen={planSeenAt}
+            replace={(item) =>
+              editing === item.id ? (
+                <PlanForm
+                  item={item}
+                  onSave={async (d) => {
+                    const res = await act({ action: "updatePlan", id: item.id, ...d });
+                    if (!res.error) setEditing(null);
+                    return res;
+                  }}
+                  onCancel={() => setEditing(null)}
+                />
+              ) : null
+            }
             tools={(item) =>
               editing === item.id ? null : (
-                <div className="flex shrink-0 items-center">
-                  <label className="sr-only" htmlFor={`stage-${item.id}`}>
+                <div className="flex flex-wrap items-center gap-x-1 gap-y-1.5">
+                  <label className="mr-1 text-xs font-medium text-ink-soft" htmlFor={`stage-${item.id}`}>
                     Stage
                   </label>
                   <select
                     id={`stage-${item.id}`}
                     value={item.stage}
                     onChange={(e) => void act({ action: "updatePlan", id: item.id, stage: e.target.value })}
-                    className="mr-1 rounded-lg border border-ink/10 bg-white px-1.5 py-1 text-xs"
+                    className="mr-auto rounded-lg border border-ink/10 bg-white px-1.5 py-1 text-xs"
                   >
                     {PLAN_STAGES.map((s) => (
                       <option key={s} value={s}>
@@ -179,19 +192,6 @@ export default function PlanEditor({
               )
             }
           />
-          {typeof editing === "number" && live.some((p) => p.id === editing) && (
-            <div className="mt-4">
-              <PlanForm
-                item={live.find((p) => p.id === editing)}
-                onSave={async (d) => {
-                  const res = await act({ action: "updatePlan", id: editing, ...d });
-                  if (!res.error) setEditing(null);
-                  return res;
-                }}
-                onCancel={() => setEditing(null)}
-              />
-            </div>
-          )}
         </div>
       )}
 
