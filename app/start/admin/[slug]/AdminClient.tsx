@@ -10,8 +10,10 @@ import QuestionField from "../../components/QuestionField";
 import UploadArea from "../../components/UploadArea";
 import { usePortal } from "../../components/usePortal";
 import ItemEditor, { type ItemDraft } from "../ItemEditor";
+import NotesEditor from "../NotesEditor";
 import PlanEditor from "../PlanEditor";
 import ShareBox from "../ShareBox";
+import LinkText from "../../components/LinkText";
 
 export function ago(t: number | null): string {
   if (!t) return "never";
@@ -184,7 +186,7 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
       <div key={item.id} className="my-4 flex gap-3 rounded-2xl bg-violet-50 px-5 py-4 text-[15px]">
         <div className="min-w-0 flex-1">
           {item.title && <p className="font-semibold">{item.title}</p>}
-          {item.help && <p className="mt-1 whitespace-pre-wrap text-ink-soft">{item.help}</p>}
+          {item.help && <p className="mt-1 whitespace-pre-wrap text-ink-soft"><LinkText text={item.help} /></p>}
         </div>
         {tools}
       </div>
@@ -323,6 +325,8 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
 
           <div className="mt-5 space-y-5">
             <PlanEditor plan={state.plan} planSeenAt={state.planSeenAt} clientFirst={first} act={act} ago={ago} />
+
+            <NotesEditor notes={state.notes} clientFirst={first} act={act} ago={ago} />
 
             {state.sections.length === 0 && (
               <div className="rounded-3xl border-2 border-dashed border-ink/15 p-8 text-center">

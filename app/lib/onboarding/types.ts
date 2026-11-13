@@ -25,7 +25,7 @@ export const KIND_LABELS: Record<ItemKind, string> = {
   question: "Question",
   task: "Checklist task",
   upload: "File request",
-  note: "Note",
+  note: "Info text",
 };
 
 /** A question's answer: text, or the picked options for "Pick any". */
@@ -71,6 +71,21 @@ export const PLAN_STAGE_LABELS: Record<PlanStage, { title: string; blurb: string
   done: { title: "Finished", blurb: "Completed work." },
 };
 
+/** A note from Ryan: longer than a chat message, acknowledged by the client. */
+export type Note = {
+  id: number;
+  title: string;
+  body: string;
+  /** YYYY-MM-DD, shown on the note. */
+  date: string;
+  createdAt: number;
+  updatedAt: number;
+  acknowledgedAt: number | null;
+};
+
+/** Unread: never acknowledged, or changed since. */
+export const noteNeedsAck = (n: Note) => n.acknowledgedAt === null || n.updatedAt > n.acknowledgedAt;
+
 export type PlanItem = {
   id: number;
   stage: PlanStage;
@@ -100,6 +115,8 @@ export type PortalState = {
   plan: PlanItem[];
   /** When the client last opened the plan (null: never). */
   planSeenAt: number | null;
+  /** Newest date first. */
+  notes: Note[];
 };
 
 export type ActivityEvent = {

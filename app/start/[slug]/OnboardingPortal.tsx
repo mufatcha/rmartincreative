@@ -8,10 +8,12 @@ import ContactEmail from "./ContactEmail";
 import { ItemShell, ProgressBar, SaveIndicator } from "../components/ItemView";
 import QuestionField from "../components/QuestionField";
 import UploadArea from "../components/UploadArea";
+import NotesAccordion from "../components/NotesAccordion";
 import PlanDrawer from "../components/PlanDrawer";
 import { countPlanChanges } from "../components/PlanView";
 import { useMediaQuery } from "../components/useMediaQuery";
 import { usePortal } from "../components/usePortal";
+import LinkText from "../components/LinkText";
 
 const ADMIN_NAME = "Ryan";
 
@@ -107,7 +109,7 @@ export default function OnboardingPortal({ initial, preview = false }: { initial
     return (
       <div key={item.id} className="my-4 rounded-2xl bg-violet-50 px-5 py-4 text-[15px] text-ink">
         {item.title && <p className="font-semibold">{item.title}</p>}
-        {item.help && <p className="mt-1 whitespace-pre-wrap text-ink-soft">{item.help}</p>}
+        {item.help && <p className="mt-1 whitespace-pre-wrap text-ink-soft"><LinkText text={item.help} /></p>}
       </div>
     );
   };
@@ -196,6 +198,16 @@ export default function OnboardingPortal({ initial, preview = false }: { initial
           </header>
 
           {!state.client.email && !preview && <ContactEmail email="" onSave={saveEmail} />}
+
+          <NotesAccordion
+            notes={state.notes}
+            from={ADMIN_NAME}
+            readOnly={preview}
+            onAcknowledge={async (id) => {
+              await post({ action: "ackNote", id });
+              await refresh();
+            }}
+          />
 
           {state.sections.length > 1 && (
             <nav aria-label="Sections" className="-mx-4 mt-5 overflow-x-auto px-4 sm:mx-0 sm:px-0">

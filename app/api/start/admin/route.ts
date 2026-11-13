@@ -4,6 +4,8 @@
 import { isAdmin } from "../../../lib/onboarding/admin-auth";
 import {
   addItem,
+  addNote,
+  updateNote,
   addPlanItem,
   movePlanItem,
   updatePlanItem,
@@ -121,6 +123,12 @@ export async function POST(request: Request) {
       break;
     case "updatePlan":
       result = await updatePlanItem(db, client, id, body);
+      break;
+    case "addNote":
+      result = await addNote(db, client, body);
+      break;
+    case "updateNote":
+      result = await updateNote(db, client, id, body);
       break;
     case "movePlan":
       result = await movePlanItem(db, client, id, Number(body.dir));

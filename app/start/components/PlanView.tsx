@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { PLAN_STAGES, PLAN_STAGE_LABELS, type PlanItem, type PlanStage } from "../../lib/onboarding/types";
+import LinkText from "./LinkText";
 
 export type PlanLabel = "new" | "updated" | "removed" | null;
 
@@ -116,7 +117,7 @@ export default function PlanView({
                           {item.title}
                           {label && <LabelChip label={label} />}
                         </p>
-                        {item.detail && <p className={`mt-1 whitespace-pre-wrap text-sm text-ink-soft ${removed ? "line-through decoration-rose-200" : ""}`}>{item.detail}</p>}
+                        {item.detail && <p className={`mt-1 whitespace-pre-wrap text-sm text-ink-soft ${removed ? "line-through decoration-rose-200" : ""}`}><LinkText text={item.detail} /></p>}
                       </div>
                       {tools?.(item)}
                     </div>

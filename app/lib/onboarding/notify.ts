@@ -76,7 +76,7 @@ async function sendAdminDigest(db: D1, client: ClientRow) {
     } else if (e.type === "file" && e.ref_id !== null) {
       const f = files.get(e.ref_id);
       if (f) uploads.push({ name: f.name, size: f.size, url: `${SITE_URL}${f.url}?download=1`, request: f.itemId ? (items.get(f.itemId)?.title ?? "") : "General files" });
-    } else if (e.type === "task" || e.type === "contact") {
+    } else if (e.type === "task" || e.type === "contact" || e.type === "note_ack") {
       tasks.push(e.summary);
     }
   }
@@ -164,7 +164,8 @@ export async function shareUpdates(db: D1, client: ClientRow, note: string) {
   if (!events.length && !extra) return { error: "There's nothing new to share yet." };
 
   const latest = latestPerItem(events);
-  const requests = latest.filter((e) => e.type === "request");
+  // New questions, tasks, file requests, and notes.
+  const requests = latest.filter((e) => e.type === "request" || e.type === "note");
   const planChanges = latest.filter((e) => e.type === "plan");
   const link = clientUrl(client.slug);
   const first = client.name.split(/\s+/)[0];
