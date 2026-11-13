@@ -10,12 +10,16 @@ import {
   addMessage,
   addSection,
   addTemplate,
+  bumpChanged,
   createClient,
   getClientBySlug,
   getDb,
   listClients,
   loadAdminState,
   markInvited,
+  markNotified,
+  pendingEvents,
+  SHARE_TYPES,
   markRead,
   move,
   saveAnswer,
@@ -25,7 +29,7 @@ import {
   updateItem,
   updateSection,
 } from "../../../lib/onboarding/db";
-import { sendInvite } from "../../../lib/onboarding/notify";
+import { sendInvite, shareUpdates } from "../../../lib/onboarding/notify";
 import { STARTER_TEMPLATE } from "../../../lib/onboarding/template";
 
 export const dynamic = "force-dynamic";
@@ -41,6 +45,9 @@ export async function GET(request: Request) {
   if (!slug) return Response.json({ clients: await listClients(db) }, { headers: noStore });
   const client = await getClientBySlug(db, slug);
   if (!client) return Response.json({ error: "Not found." }, { status: 404 });
+  if (new URL(request.url).searchParams.get("v") === String(client.changed_at)) {
+    return Response.json({ unchanged: true }, { headers: noStore });
+  }
   return Response.json(await loadAdminState(db, client), { headers: noStore });
 }
 
@@ -75,9 +82,18 @@ export async function POST(request: Request) {
         result = { error: "Add the client's email first." };
         break;
       }
-      result = (await sendInvite(client, String(body.note ?? "")))
-        ? (await markInvited(db, client), { ok: true })
-        : { error: "The email couldn't be sent. Check RESEND_API_KEY." };
+      if (await sendInvite(client, String(body.note ?? ""))) {
+        await markInvited(db, client);
+        // The invite introduces the whole page, so nothing set up so far needs sharing again.
+        const pending = (await pendingEvents(db, client.id, "admin", SHARE_TYPES)).results;
+        await markNotified(db, pending.map((e) => e.id));
+        result = { ok: true };
+      } else {
+        result = { error: "The email couldn't be sent. Check RESEND_API_KEY." };
+      }
+      break;
+    case "share":
+      result = await shareUpdates(db, client, String(body.note ?? ""));
       break;
     case "template":
       result = await addTemplate(db, client, STARTER_TEMPLATE);
@@ -130,5 +146,6 @@ export async function POST(request: Request) {
       return Response.json({ error: "Unknown action." }, { status: 400 });
   }
   if (result.error) return Response.json(result, { status: 400 });
+  await bumpChanged(db, client.id);
   return Response.json(result, { headers: noStore });
 }

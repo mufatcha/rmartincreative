@@ -15,7 +15,7 @@ import { usePortal } from "../components/usePortal";
 
 const ADMIN_NAME = "Ryan";
 
-export default function OnboardingPortal({ initial }: { initial: PortalState }) {
+export default function OnboardingPortal({ initial, preview = false }: { initial: PortalState; preview?: boolean }) {
   const slug = initial.client.slug;
   const api = `/api/start/${slug}`;
   const { state, refresh, post, saveAnswer, setTask, status, lastError } = usePortal(initial, { stateUrl: api, postUrl: api });
@@ -70,7 +70,7 @@ export default function OnboardingPortal({ initial }: { initial: PortalState }) 
     if (item.kind === "question") {
       return (
         <ItemShell key={item.id} done={done} title={item.title} titleId={titleId} help={item.help}>
-          <QuestionField item={item} value={state.responses[item.id]?.value} onSave={(v, o) => void saveAnswer(item.id, v, o)} />
+          <QuestionField item={item} value={state.responses[item.id]?.value} onSave={(v, o) => void saveAnswer(item.id, v, o)} disabled={preview} />
         </ItemShell>
       );
     }
@@ -80,7 +80,7 @@ export default function OnboardingPortal({ initial }: { initial: PortalState }) 
         <ItemShell
           key={item.id}
           done={done}
-          onToggle={() => void setTask(item.id, !done)}
+          onToggle={preview ? undefined : () => void setTask(item.id, !done)}
           title={item.title}
           titleId={titleId}
           help={item.help}
@@ -95,8 +95,8 @@ export default function OnboardingPortal({ initial }: { initial: PortalState }) 
             slug={slug}
             itemId={item.id}
             files={state.files.filter((f) => f.itemId === item.id)}
-            canUpload
-            canRemove={(f) => f.uploadedBy === "client"}
+            canUpload={!preview}
+            canRemove={(f) => !preview && f.uploadedBy === "client"}
             register={post}
             removeFile={(fileId) => post({ action: "deleteFile", fileId })}
             onChange={refresh}
@@ -123,11 +123,26 @@ export default function OnboardingPortal({ initial }: { initial: PortalState }) 
       onRead={onRead}
       emptyText={`Questions about anything here? Send ${ADMIN_NAME} a message. You'll get an email when there's a reply.`}
       className="h-full"
+      readOnly={preview}
     />
   );
 
   return (
     <div data-clarity-mask className="pb-28 pt-28 sm:pt-32">
+      {preview && (
+        <div className="mx-auto mb-4 max-w-6xl px-4 sm:px-6">
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <strong>Admin preview.</strong>
+            <span className="flex-1">
+              This visit doesn&rsquo;t count as {first}&rsquo;s: their New labels and unread messages stay as they are. Editing is off here. To see the
+              page exactly as they do, open it in a private window.
+            </span>
+            <a href={`/start/admin/${slug}`} className="font-semibold underline underline-offset-2">
+              Back to admin
+            </a>
+          </p>
+        </div>
+      )}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-8">
         <div className="min-w-0">
           <header className="rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-700 px-6 py-7 text-white shadow-lg sm:px-8 sm:py-9">
@@ -177,10 +192,10 @@ export default function OnboardingPortal({ initial }: { initial: PortalState }) 
                 <ProgressBar done={overall.done} total={overall.total} tone="light" />
               </div>
             )}
-            {state.client.email && <ContactEmail email={state.client.email} onSave={saveEmail} />}
+            {state.client.email && !preview && <ContactEmail email={state.client.email} onSave={saveEmail} />}
           </header>
 
-          {!state.client.email && <ContactEmail email="" onSave={saveEmail} />}
+          {!state.client.email && !preview && <ContactEmail email="" onSave={saveEmail} />}
 
           {state.sections.length > 1 && (
             <nav aria-label="Sections" className="-mx-4 mt-5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
@@ -240,8 +255,8 @@ export default function OnboardingPortal({ initial }: { initial: PortalState }) 
                   slug={slug}
                   itemId={null}
                   files={state.files.filter((f) => f.itemId === null)}
-                  canUpload
-                  canRemove={(f) => f.uploadedBy === "client"}
+                  canUpload={!preview}
+                  canRemove={(f) => !preview && f.uploadedBy === "client"}
                   register={post}
                   removeFile={(fileId) => post({ action: "deleteFile", fileId })}
                   onChange={refresh}
@@ -264,7 +279,7 @@ export default function OnboardingPortal({ initial }: { initial: PortalState }) 
       </div>
 
       <div className={`fixed left-4 z-30 lg:bottom-4 ${hasPlan ? "bottom-20" : "bottom-4"}`}>
-        <SaveIndicator status={status} error={lastError} />
+        {!preview && <SaveIndicator status={status} error={lastError} />}
       </div>
 
       {/* The plan: a tab on the left edge (desktop) or a button (phones) flies it in from the left. */}

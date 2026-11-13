@@ -83,6 +83,9 @@ export type PlanItem = {
 };
 
 export type PortalState = {
+  /** Bumped on every change (clients.changed_at). Polls send it back and get
+   *  `{ unchanged: true }` when nothing changed, which costs one row read. */
+  version: number;
   /** email: where reply notifications go. Ryan sets it, or the client adds it on the page. */
   client: { slug: string; name: string; intro: string; email: string };
   sections: Section[];
@@ -113,6 +116,8 @@ export type AdminPortalState = PortalState & {
     archived: boolean;
     createdAt: number;
     invitedAt: number | null;
+    /** Changes not emailed yet: they go out when Ryan presses "Share updates". */
+    unshared: string[];
     lastSeenAt: number | null;
     events: ActivityEvent[];
   };

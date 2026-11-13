@@ -4,12 +4,24 @@
 //    calls every 5 minutes (custom-worker.ts → /api/start/admin/cron):
 //      · Ryan gets one digest of answers, uploads, and ticked tasks once the
 //        client has been idle for ADMIN_IDLE_MS.
-//      · The client gets one email about new messages and requests from Ryan,
-//        unless they've had the page open since (they've seen it already).
+//      · The client gets one email about Ryan's new chat messages, unless
+//        they've had the page open since (they've read them already).
+//  - Everything else (new questions, tasks, file requests, plan changes) is
+//    only emailed when Ryan presses "Share updates" (shareUpdates).
 import { BUSINESS_EMAIL, BUSINESS_NAME, SITE_URL } from "../business";
 import { escapeHtml, sendEmail } from "../email";
 import { formatBytes } from "../upload-rules";
-import { clientsWithPending, loadState, markNotified, pendingEvents, type ClientRow, type D1 } from "./db";
+import {
+  SHARE_TYPES,
+  clientsWithPending,
+  latestPerItem,
+  loadState,
+  markNotified,
+  pendingEvents,
+  type ClientRow,
+  type D1,
+  type PendingEvent,
+} from "./db";
 import { answerText } from "./progress";
 
 const ADMIN_IDLE_MS = 10 * 60 * 1000;
@@ -109,65 +121,85 @@ async function sendAdminDigest(db: D1, client: ClientRow) {
 
 // ── To the client ──────────────────────────────────────────────────────────
 
-async function sendClientUpdate(db: D1, client: ClientRow & { newest: number }) {
-  const events = (await pendingEvents(db, client.id, "admin")).results;
+/** Ryan's chat messages: one email a few minutes after his last one, skipped
+ *  if the client has had the page open since (they've read them already). */
+async function sendChatNotice(db: D1, client: ClientRow & { newest: number }) {
+  const events = (await pendingEvents(db, client.id, "admin", ["message"])).results;
   if (!events.length) return;
   const ids = events.map((e) => e.id);
-
-  // Not invited yet (Ryan is still setting the page up), no email address, or
-  // they've had the page open since: nothing to send.
-  const notInvited = !client.invited_at && !client.last_seen_at;
   const alreadySeen = (client.last_seen_at ?? 0) >= client.newest;
-  if (notInvited || alreadySeen || !client.email) return markNotified(db, ids);
-
-  const messages = events.filter((e) => e.type === "message");
-  const requests = events.filter((e) => e.type === "request");
-  // Only the latest change per plan item (added, then finished = "Finished: ...").
-  const planChanges = [...new Map(events.filter((e) => e.type === "plan").map((e) => [e.ref_id, e])).values()];
-  if (!messages.length && !requests.length && !planChanges.length) return markNotified(db, ids);
+  if (alreadySeen || !client.email) return markNotified(db, ids);
 
   const state = await loadState(db, client, "client");
-  const messageText = messages
+  const messageText = events
     .map((e) => state.messages.find((m) => m.id === e.ref_id)?.body)
     .filter((b): b is string => Boolean(b));
+  if (!messageText.length) return markNotified(db, ids);
   const link = clientUrl(client.slug);
   const first = client.name.split(/\s+/)[0];
 
-  const subject = messageText.length && requests.length
-    ? `New message and ${requests.length === 1 ? "a new request" : `${requests.length} new requests`} on your onboarding page`
-    : messageText.length
-      ? "You have a new message on your onboarding page"
-      : requests.length === 1
-        ? `New request: ${requests[0].summary.replace(/^[^:]+:\s*/, "")}`
-        : requests.length
-          ? `${requests.length} new requests on your onboarding page`
-          : "Your project plan was updated";
+  const sent = await sendEmail({
+    from: FROM(),
+    to: [client.email],
+    replyTo: ADMIN_TO(),
+    subject: messageText.length === 1 ? "You have a new message on your onboarding page" : "You have new messages on your onboarding page",
+    html: shell(
+      `<p>Hi ${escapeHtml(first)},</p><p>You have ${messageText.length === 1 ? "a new message" : "new messages"}:</p>${messageText.map(quote).join("")}` +
+        button(link, "Reply on your page")
+    ),
+    text: [`Hi ${first},`, "", "New message:", ...messageText.map((m) => `> ${m.replace(/\n/g, "\n> ")}`), "", `Reply on your page: ${link}`].join("\n"),
+  });
+  if (sent) await markNotified(db, ids);
+}
+
+/**
+ * The "Share updates" button: one email listing the new questions, tasks, file
+ * requests, and plan changes since the last share, with an optional note.
+ * Nothing else about these changes is ever emailed automatically.
+ */
+export async function shareUpdates(db: D1, client: ClientRow, note: string) {
+  if (!client.email) return { error: "Add the client's email first (or wait for them to add it on their page)." };
+  const events = (await pendingEvents(db, client.id, "admin", SHARE_TYPES)).results;
+  const extra = note.trim();
+  if (!events.length && !extra) return { error: "There's nothing new to share yet." };
+
+  const latest = latestPerItem(events);
+  const requests = latest.filter((e) => e.type === "request");
+  const planChanges = latest.filter((e) => e.type === "plan");
+  const link = clientUrl(client.slug);
+  const first = client.name.split(/\s+/)[0];
+  const list = (items: PendingEvent[]) => `<ul>${items.map((r) => `<li>${escapeHtml(r.summary)}</li>`).join("")}</ul>`;
+
+  const subject =
+    requests.length && !planChanges.length
+      ? requests.length === 1
+        ? `New on your onboarding page: ${requests[0].summary.replace(/^[^:]+:\s*/, "")}`
+        : `${requests.length} new things on your onboarding page`
+      : planChanges.length && !requests.length
+        ? "Your project plan has been updated"
+        : "Updates on your onboarding page";
 
   const html = shell(
     `<p>Hi ${escapeHtml(first)},</p>` +
-      (messageText.length ? `<p>You have ${messageText.length === 1 ? "a new message" : "new messages"}:</p>${messageText.map(quote).join("")}` : "") +
-      (requests.length
-        ? `<p>${requests.length === 1 ? "There's something new" : "There are a few new things"} for you on your onboarding page:</p><ul>${requests
-            .map((r) => `<li>${escapeHtml(r.summary)}</li>`)
-            .join("")}</ul>`
-        : "") +
-      (planChanges.length
-        ? `<p>Project plan updates:</p><ul>${planChanges.map((r) => `<li>${escapeHtml(r.summary)}</li>`).join("")}</ul>`
-        : "") +
+      (extra ? `<p style="white-space:pre-wrap">${escapeHtml(extra)}</p>` : "") +
+      (requests.length ? `<p>New on your onboarding page:</p>${list(requests)}` : "") +
+      (planChanges.length ? `<p>Project plan updates:</p>${list(planChanges)}` : "") +
       button(link, "Open your page") +
       `<p style="font-size:13px;color:#5a5270">Everything saves as you go. You can reply right on the page.</p>`
   );
   const text = [
     `Hi ${first},`,
     "",
-    ...(messageText.length ? ["New message:", ...messageText.map((m) => `> ${m.replace(/\n/g, "\n> ")}`), ""] : []),
+    ...(extra ? [extra, ""] : []),
     ...(requests.length ? ["New on your onboarding page:", ...requests.map((r) => `- ${r.summary}`), ""] : []),
     ...(planChanges.length ? ["Project plan updates:", ...planChanges.map((r) => `- ${r.summary}`), ""] : []),
     `Open your page: ${link}`,
   ].join("\n");
 
   const sent = await sendEmail({ from: FROM(), to: [client.email], replyTo: ADMIN_TO(), subject, html, text });
-  if (sent) await markNotified(db, ids);
+  if (!sent) return { error: "The email couldn't be sent. Try again in a minute." };
+  await markNotified(db, events.map((e) => e.id));
+  return { ok: true, shared: latest.length };
 }
 
 /** Emails the client their link (the "Send invite" button on the admin page). */
@@ -197,9 +229,11 @@ export async function runNotifications(db: D1) {
     await sendAdminDigest(db, c);
     admin++;
   }
-  for (const c of (await clientsWithPending(db, "admin")).results) {
+  // Only chat messages are emailed automatically; everything else waits for
+  // the "Share updates" button.
+  for (const c of (await clientsWithPending(db, "admin", ["message"])).results) {
     if (now - c.newest < CLIENT_SETTLE_MS) continue;
-    await sendClientUpdate(db, c);
+    await sendChatNotice(db, c);
     client++;
   }
   return { admin, client };

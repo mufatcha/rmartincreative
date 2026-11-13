@@ -23,6 +23,7 @@ export default function ChatPanel({
   onRead,
   emptyText,
   className = "",
+  readOnly = false,
 }: {
   messages: Message[];
   viewer: Viewer;
@@ -34,6 +35,8 @@ export default function ChatPanel({
   onRead: () => void;
   emptyText: string;
   className?: string;
+  /** Hide the message box (admin preview of the client's page). */
+  readOnly?: boolean;
 }) {
   const [draft, setDraft] = useState("");
   const [sending, setSending] = useState(false);
@@ -91,6 +94,9 @@ export default function ChatPanel({
           );
         })}
       </div>
+      {readOnly ? (
+        <p className="border-t border-ink/10 p-3 text-center text-xs text-ink-soft">Preview: reply from your admin page.</p>
+      ) : (
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -129,6 +135,7 @@ export default function ChatPanel({
           </button>
         </div>
       </form>
+      )}
     </div>
   );
 }

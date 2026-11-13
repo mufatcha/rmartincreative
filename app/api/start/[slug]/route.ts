@@ -4,6 +4,7 @@
 import {
   addFile,
   addMessage,
+  bumpChanged,
   deleteFile,
   getClientBySlug,
   getDb,
@@ -15,6 +16,7 @@ import {
   setTask,
   touchSeen,
 } from "../../../lib/onboarding/db";
+import { isAdmin } from "../../../lib/onboarding/admin-auth";
 import { notifyAdminOfMessage } from "../../../lib/onboarding/notify";
 
 export const dynamic = "force-dynamic";
@@ -36,7 +38,11 @@ export async function GET(request: Request, ctx: Ctx) {
   if (error) return error;
   // Only a visible tab counts as "seen", so emails still go out when the page is
   // open in a background tab.
-  if (new URL(request.url).searchParams.get("visible") === "1") await touchSeen(db, client);
+  // Ryan previewing the page (signed in as admin) doesn't count as a visit.
+  const params = new URL(request.url).searchParams;
+  if (params.get("visible") === "1" && !(await isAdmin(request))) await touchSeen(db, client);
+  // Nothing changed since the page last loaded: skip reloading everything.
+  if (params.get("v") === String(client.changed_at)) return Response.json({ unchanged: true }, { headers: noStore });
   return Response.json(await loadState(db, client, "client"), { headers: noStore });
 }
 
@@ -49,6 +55,13 @@ export async function POST(request: Request, ctx: Ctx) {
     body = (await request.json()) as Record<string, unknown>;
   } catch {
     return Response.json({ error: "Invalid request." }, { status: 400 });
+  }
+
+  // Admin preview: opening the plan or chat mustn't clear the client's New
+  // labels or unread messages, and edits belong on the admin page.
+  if (await isAdmin(request)) {
+    if (body.action === "planSeen" || body.action === "read") return Response.json({ ok: true }, { headers: noStore });
+    return Response.json({ error: "You're previewing as admin. Make changes on your admin page." }, { status: 403 });
   }
 
   let result: { ok?: boolean; error?: string; [k: string]: unknown };
@@ -93,5 +106,6 @@ export async function POST(request: Request, ctx: Ctx) {
   }
 
   if (result.error) return Response.json(result, { status: 400 });
+  await bumpChanged(db, client.id);
   return Response.json(result, { headers: noStore });
 }
