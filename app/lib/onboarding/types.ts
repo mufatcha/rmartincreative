@@ -61,6 +61,61 @@ export type PortalFile = {
 
 export type Message = { id: number; sender: Viewer; body: string; createdAt: number };
 
+/** One uploaded version of a shared file. */
+export type ReviewVersion = {
+  /** The file's id (also its address: /api/start/<slug>/files/<id>). */
+  id: number;
+  /** 1, 2, 3… in upload order. */
+  number: number;
+  name: string;
+  size: number;
+  type: string;
+  /** What changed in this version. */
+  note: string;
+  createdAt: number;
+  url: string;
+};
+
+export type ReviewComment = {
+  id: number;
+  versionId: number;
+  author: Viewer;
+  body: string;
+  /** Where on the image it's pinned, 0–1 from the left and top (null: not pinned). */
+  pinX: number | null;
+  pinY: number | null;
+  resolved: boolean;
+  createdAt: number;
+};
+
+export type ReviewDecision = {
+  id: number;
+  versionId: number;
+  decision: "approved" | "changes";
+  /** The name the client typed to approve. */
+  name: string;
+  note: string;
+  createdAt: number;
+};
+
+/** waiting: needs the client's approval of the latest version · approved ·
+ *  changes: client asked for changes · shared: no approval needed. */
+export type ReviewStatus = "waiting" | "approved" | "changes" | "shared";
+
+/** A file Ryan shares on the page, optionally for approval. */
+export type Review = {
+  id: number;
+  title: string;
+  note: string;
+  needsApproval: boolean;
+  createdAt: number;
+  /** Oldest first; the last one is current. */
+  versions: ReviewVersion[];
+  comments: ReviewComment[];
+  decisions: ReviewDecision[];
+  status: ReviewStatus;
+};
+
 export const PLAN_STAGES = ["now", "next", "feature", "done"] as const;
 export type PlanStage = (typeof PLAN_STAGES)[number];
 
@@ -117,6 +172,8 @@ export type PortalState = {
   planSeenAt: number | null;
   /** Newest date first. */
   notes: Note[];
+  /** Files shared for viewing or approval, newest first. */
+  reviews: Review[];
 };
 
 export type ActivityEvent = {

@@ -4,6 +4,11 @@
 import { isAdmin } from "../../../lib/onboarding/admin-auth";
 import {
   addItem,
+  addReview,
+  addReviewComment,
+  addReviewVersion,
+  resolveReviewComment,
+  updateReview,
   addNote,
   updateNote,
   addPlanItem,
@@ -123,6 +128,21 @@ export async function POST(request: Request) {
       break;
     case "updatePlan":
       result = await updatePlanItem(db, client, id, body);
+      break;
+    case "addReview":
+      result = await addReview(db, client, body as Parameters<typeof addReview>[2]);
+      break;
+    case "addReviewVersion":
+      result = await addReviewVersion(db, client, body as Parameters<typeof addReviewVersion>[2]);
+      break;
+    case "updateReview":
+      result = await updateReview(db, client, id, body);
+      break;
+    case "reviewComment":
+      result = await addReviewComment(db, client, "admin", body);
+      break;
+    case "resolveComment":
+      result = await resolveReviewComment(db, client, id, Boolean(body.resolved));
       break;
     case "addNote":
       result = await addNote(db, client, body);
