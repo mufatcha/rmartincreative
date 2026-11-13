@@ -47,6 +47,42 @@ export const GUIDES: Guide[] = [
       { id: "mailchimp", title: "Mailchimp", group: "Email marketing" },
     ],
   },
+  {
+    slug: "google-bing-listings",
+    title: "Setting up your Google & Bing listings",
+    description:
+      "Create your Google Business Profile, copy it to Bing Places, and keep Bing up to date automatically when you make changes on Google.",
+    minutes: 20,
+    sections: [
+      { id: "google-business-profile", title: "Create your Google Business Profile" },
+      { id: "bing-places", title: "Add it to Bing Places" },
+      { id: "keep-bing-in-sync", title: "Keep Bing in sync" },
+    ],
+  },
+  {
+    slug: "yelp",
+    title: "Setting up your Yelp page",
+    description: "Claim your business on Yelp (or add it if it isn't there yet). It's free.",
+    minutes: 10,
+  },
+  {
+    slug: "facebook-page",
+    title: "Setting up your Facebook Page",
+    description: "Create a Facebook Page for your business, separate from your personal profile.",
+    minutes: 10,
+  },
+  {
+    slug: "nextdoor",
+    title: "Setting up your Nextdoor business page",
+    description: "Claim or create your free Nextdoor business page so neighbors can find and recommend you.",
+    minutes: 10,
+  },
+  {
+    slug: "apple-maps",
+    title: "Setting up your Apple Maps listing",
+    description: "Claim your place on Apple Maps with Apple Business, so you show up correctly on iPhones, Siri, and Apple Maps.",
+    minutes: 15,
+  },
 ];
 
 export const guidePath = (slug: string) => `/start/onboarding-tasks/${slug}`;
