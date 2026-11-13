@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { itemDone, progress } from "../../lib/onboarding/progress";
 import type { Item, PortalState } from "../../lib/onboarding/types";
 import ChatPanel from "../components/ChatPanel";
@@ -28,6 +28,20 @@ export default function OnboardingPortal({ initial, preview = false }: { initial
   // first open so the New / Removed labels stay put while they read, even
   // though the server now records this visit as their latest look.
   const [planBaseline, setPlanBaseline] = useState<number | null | undefined>(undefined);
+
+  // Record the visit once the page is actually open in a browser (see page.tsx).
+  useEffect(() => {
+    if (preview) return;
+    const ping = () => {
+      if (document.visibilityState !== "visible") return false;
+      void fetch(`${api}?visible=1&v=${initial.version}`, { cache: "no-store" }).catch(() => {});
+      return true;
+    };
+    if (ping()) return;
+    const onVisible = () => ping() && document.removeEventListener("visibilitychange", onVisible);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, [api, initial.version, preview]);
 
   const first = state.client.name.split(/\s+/)[0];
   const overall = progress(state.items, state);
