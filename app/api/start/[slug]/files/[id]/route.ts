@@ -2,6 +2,7 @@
 // Pages and emails use this instead of R2 links, which expire and change every
 // time they're signed (so images would re-download on every poll).
 import { getClientBySlug, getDb, getFile } from "../../../../../lib/onboarding/db";
+import { isLinkType } from "../../../../../lib/onboarding/links";
 import { getR2, presignGet } from "../../../../../lib/r2";
 
 export async function GET(request: Request, ctx: { params: Promise<{ slug: string; id: string }> }) {
@@ -13,6 +14,9 @@ export async function GET(request: Request, ctx: { params: Promise<{ slug: strin
   const client = await getClientBySlug(db, slug);
   const file = client ? await getFile(db, client, Number(id)) : null;
   if (!file) return new Response("Not found.", { status: 404 });
+
+  // A shared link (Figma…): its address is the link itself.
+  if (isLinkType(file.type)) return Response.redirect(file.r2_key, 302);
 
   const download = new URL(request.url).searchParams.get("download") === "1";
   const url = await presignGet(r2, file.r2_key, 60 * 60, download ? file.name : undefined);

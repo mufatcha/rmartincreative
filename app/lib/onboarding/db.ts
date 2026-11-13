@@ -24,6 +24,7 @@ import type {
   TaskState,
   Viewer,
 } from "./types";
+import { cleanLink, embedUrl, isLinkType } from "./links";
 import { FIELD_TYPES, ITEM_KINDS, PLAN_STAGES } from "./types";
 
 // The parts of the D1 API used here (avoids depending on @cloudflare/workers-types).
@@ -233,7 +234,21 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
       .map((r): Review => {
         const versions = reviewFiles.results
           .filter((f) => f.review_id === r.id)
-          .map((f, i) => ({ id: f.id, number: i + 1, name: f.name, size: f.size, type: f.type, note: f.note, createdAt: f.created_at, url: fileUrl(client.slug, f.id) }));
+          .map((f, i) => {
+            const link = isLinkType(f.type) ? f.r2_key : null;
+            return {
+              id: f.id,
+              number: i + 1,
+              name: f.name,
+              size: f.size,
+              type: f.type,
+              note: f.note,
+              createdAt: f.created_at,
+              url: fileUrl(client.slug, f.id),
+              link,
+              embed: link ? embedUrl(link, f.type) : null,
+            };
+          });
         const reviewDecisions = decisions.results
           .filter((d) => d.review_id === r.id)
           .map((d) => ({ id: d.id, versionId: d.version_id, decision: d.decision as "approved" | "changes", name: d.name, note: d.note, createdAt: d.created_at }));
@@ -876,7 +891,18 @@ async function getVersion(db: D1, client: ClientRow, reviewId: number, versionId
     .first<{ id: number }>();
 }
 
-async function insertVersion(db: D1, client: ClientRow, reviewId: number, file: NonNullable<ReturnType<typeof cleanUpload>>, note: string) {
+type CleanFile = { key: string; name: string; size: number; type: string };
+
+/** The new version: an uploaded file, or a pasted link / embed code. */
+function versionFrom(client: ClientRow, input: { file?: UploadedFile; link?: unknown }): CleanFile | { error: string } {
+  if (typeof input.link === "string" && input.link.trim()) {
+    const link = cleanLink(input.link);
+    return "error" in link ? link : { key: link.url, name: link.name, size: 0, type: link.type };
+  }
+  return cleanUpload(client, input.file) ?? { error: "Upload a file or paste a link first." };
+}
+
+async function insertVersion(db: D1, client: ClientRow, reviewId: number, file: CleanFile, note: string) {
   const res = await db
     .prepare("INSERT INTO files (client_id, item_id, uploaded_by, r2_key, name, size, type, created_at, review_id, note) VALUES (?, NULL, 'admin', ?, ?, ?, ?, ?, ?, ?)")
     .bind(client.id, file.key, file.name, file.size, file.type, now(), reviewId, note)
@@ -887,12 +913,12 @@ async function insertVersion(db: D1, client: ClientRow, reviewId: number, file: 
 export async function addReview(
   db: D1,
   client: ClientRow,
-  input: { title?: unknown; note?: unknown; needsApproval?: unknown; file?: UploadedFile }
+  input: { title?: unknown; note?: unknown; needsApproval?: unknown; file?: UploadedFile; link?: unknown }
 ) {
   const title = str(input.title, 200);
   if (!title) return { error: "Add a title." };
-  const file = cleanUpload(client, input.file);
-  if (!file) return { error: "Upload a file first." };
+  const file = versionFrom(client, input);
+  if ("error" in file) return file;
   const needsApproval = Boolean(input.needsApproval);
   const res = await db
     .prepare("INSERT INTO reviews (client_id, title, note, needs_approval, created_at) VALUES (?, ?, ?, ?, ?)")
@@ -909,11 +935,11 @@ export async function addReview(
   return { ok: true, id: reviewId };
 }
 
-export async function addReviewVersion(db: D1, client: ClientRow, input: { id?: unknown; note?: unknown; file?: UploadedFile }) {
+export async function addReviewVersion(db: D1, client: ClientRow, input: { id?: unknown; note?: unknown; file?: UploadedFile; link?: unknown }) {
   const review = await getReview(db, client, Number(input.id));
   if (!review) return { error: "That file was removed." };
-  const file = cleanUpload(client, input.file);
-  if (!file) return { error: "Upload a file first." };
+  const file = versionFrom(client, input);
+  if ("error" in file) return file;
   await insertVersion(db, client, review.id, file, str(input.note, 2000));
   const count = await db.prepare("SELECT COUNT(*) AS n FROM files WHERE review_id = ? AND deleted = 0").bind(review.id).first<{ n: number }>();
   await recordEvent(db, client.id, {

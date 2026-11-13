@@ -74,6 +74,9 @@ export type ReviewVersion = {
   note: string;
   createdAt: number;
   url: string;
+  /** For a shared link (Figma…): the link itself, and the iframe address when it can be embedded. */
+  link: string | null;
+  embed: string | null;
 };
 
 export type ReviewComment = {

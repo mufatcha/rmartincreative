@@ -29,8 +29,73 @@ function useOneUpload(slug: string) {
   return { uploads, file, reset };
 }
 
+/** Upload a file, or paste a Figma (or other) link / iframe embed code. */
+function useSource(slug: string) {
+  const one = useOneUpload(slug);
+  const [mode, setMode] = useState<"file" | "link">("file");
+  const [link, setLink] = useState("");
+  const ready = mode === "file" ? Boolean(one.file) : link.trim().length > 0;
+  const payload = mode === "file" ? { file: one.file } : { link };
+  const reset = () => {
+    one.reset();
+    setLink("");
+  };
+  return { ...one, mode, setMode, link, setLink, ready, payload, reset };
+}
+
+function SourcePicker({ src, pickLabel }: { src: ReturnType<typeof useSource>; pickLabel: string }) {
+  const tab = (m: "file" | "link", label: string) => (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={src.mode === m}
+      onClick={() => src.setMode(m)}
+      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${src.mode === m ? "bg-ink text-white" : "bg-white text-ink hover:bg-ink/10"}`}
+    >
+      {label}
+    </button>
+  );
+  return (
+    <div className="space-y-2">
+      <div role="tablist" aria-label="What to share" className="flex gap-1.5">
+        {tab("file", "Upload a file")}
+        {tab("link", "Figma or link")}
+      </div>
+      {src.mode === "file" ? (
+        <FileDropzone
+          items={src.uploads.items}
+          hint=""
+          rules={ONE_FILE}
+          pickLabel={pickLabel}
+          onAdd={(files) => src.uploads.addFiles(files.slice(0, 1))}
+          onRemove={(id) => {
+            src.uploads.remove(id);
+            src.reset();
+          }}
+          onRetry={src.uploads.retry}
+        />
+      ) : (
+        <div>
+          <textarea
+            value={src.link}
+            onChange={(e) => src.setLink(e.target.value)}
+            rows={2}
+            aria-label="Link or embed code"
+            placeholder="https://www.figma.com/design/… or <iframe …> embed code"
+            className={`${input} field-sizing-content min-h-16 font-mono text-xs`}
+          />
+          <p className="mt-1 text-xs text-ink-soft">
+            Figma, YouTube, Vimeo, Loom, and Google Docs/Slides/Sheets/Drive links show inline; other links show as a button. In Figma, set Share to
+            &ldquo;Anyone with the link can view&rdquo; or the client will be asked to log in.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function NewReviewForm({ slug, act, onDone }: { slug: string; act: Act; onDone: () => void }) {
-  const { uploads, file, reset } = useOneUpload(slug);
+  const src = useSource(slug);
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [needsApproval, setNeedsApproval] = useState(false);
@@ -41,30 +106,19 @@ function NewReviewForm({ slug, act, onDone }: { slug: string; act: Act; onDone: 
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        if (!file) return;
+        if (!src.ready) return;
         setSaving(true);
-        const res = await act({ action: "addReview", title, note, needsApproval, file });
+        const res = await act({ action: "addReview", title, note, needsApproval, ...src.payload });
         setSaving(false);
         if (res.error) setError(res.error);
         else {
-          reset();
+          src.reset();
           onDone();
         }
       }}
       className="space-y-3 rounded-2xl border border-violet-200 bg-violet-50/60 p-4"
     >
-      <FileDropzone
-        items={uploads.items}
-        hint=""
-        rules={ONE_FILE}
-        pickLabel="Choose a file to share"
-        onAdd={(files) => uploads.addFiles(files.slice(0, 1))}
-        onRemove={(id) => {
-          uploads.remove(id);
-          reset();
-        }}
-        onRetry={uploads.retry}
-      />
+      <SourcePicker src={src} pickLabel="Choose a file to share" />
       <div>
         <label htmlFor="review-title" className="mb-1 block text-xs font-semibold text-ink-soft">
           Title
@@ -94,15 +148,15 @@ function NewReviewForm({ slug, act, onDone }: { slug: string; act: Act; onDone: 
       {error && <p className="text-sm text-rose-600">{error}</p>}
       <div className="flex items-center gap-2">
         <button
-          disabled={saving || !file || !title.trim()}
+          disabled={saving || !src.ready || !title.trim()}
           className="rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-40"
         >
-          {saving ? "Sharing…" : uploads.uploading ? "Uploading…" : "Share file"}
+          {saving ? "Sharing…" : src.mode === "file" && src.uploads.uploading ? "Uploading…" : "Share"}
         </button>
         <button
           type="button"
           onClick={() => {
-            reset();
+            src.reset();
             onDone();
           }}
           className="px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink"
@@ -117,7 +171,7 @@ function NewReviewForm({ slug, act, onDone }: { slug: string; act: Act; onDone: 
 
 function ReviewTools({ slug, review, act }: { slug: string; review: Review; act: Act }) {
   const [mode, setMode] = useState<"version" | "edit" | null>(null);
-  const { uploads, file, reset } = useOneUpload(slug);
+  const src = useSource(slug);
   const [versionNote, setVersionNote] = useState("");
   const [title, setTitle] = useState(review.title);
   const [note, setNote] = useState(review.note);
@@ -125,7 +179,7 @@ function ReviewTools({ slug, review, act }: { slug: string; review: Review; act:
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const close = () => {
-    reset();
+    src.reset();
     setMode(null);
     setError(null);
   };
@@ -135,9 +189,9 @@ function ReviewTools({ slug, review, act }: { slug: string; review: Review; act:
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          if (!file) return;
+          if (!src.ready) return;
           setSaving(true);
-          const res = await act({ action: "addReviewVersion", id: review.id, note: versionNote, file });
+          const res = await act({ action: "addReviewVersion", id: review.id, note: versionNote, ...src.payload });
           setSaving(false);
           if (res.error) setError(res.error);
           else {
@@ -148,23 +202,12 @@ function ReviewTools({ slug, review, act }: { slug: string; review: Review; act:
         className="space-y-3"
       >
         <p className="text-sm font-semibold">Upload version {review.versions.length + 1}</p>
-        <FileDropzone
-          items={uploads.items}
-          hint=""
-          rules={ONE_FILE}
-          pickLabel="Choose the new version"
-          onAdd={(files) => uploads.addFiles(files.slice(0, 1))}
-          onRemove={(id) => {
-            uploads.remove(id);
-            reset();
-          }}
-          onRetry={uploads.retry}
-        />
+        <SourcePicker src={src} pickLabel="Choose the new version" />
         <input value={versionNote} onChange={(e) => setVersionNote(e.target.value)} placeholder="What changed? (optional)" aria-label="What changed" className={input} />
         {error && <p className="text-sm text-rose-600">{error}</p>}
         <div className="flex gap-2">
-          <button disabled={saving || !file} className="rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-40">
-            {saving ? "Saving…" : uploads.uploading ? "Uploading…" : "Add version"}
+          <button disabled={saving || !src.ready} className="rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-40">
+            {saving ? "Saving…" : src.mode === "file" && src.uploads.uploading ? "Uploading…" : "Add version"}
           </button>
           <button type="button" onClick={close} className="px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink">
             Cancel
@@ -247,7 +290,7 @@ export default function ReviewsEditor({ slug, reviews, clientFirst, act }: { slu
           )}
         </div>
         <p className="mt-1 text-sm text-ink-soft">
-          Share mockups, proofs, and videos. {clientFirst} can comment (and pin comments on images); turn on &ldquo;Needs approval&rdquo; for files
+          Share mockups, proofs, videos, and Figma links. {clientFirst} can comment (and pin comments on images); turn on &ldquo;Needs approval&rdquo; for files
           they should sign off on. Their comments and decisions email you right away.
         </p>
         <div className="mt-4">
