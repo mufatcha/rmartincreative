@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "../../lib/business";
 import { isAdmin } from "../../lib/onboarding/admin-auth";
 import { getDb, listClients } from "../../lib/onboarding/db";
 import AdminHome from "./AdminHome";
@@ -14,5 +15,5 @@ export default async function AdminPage({ searchParams }: PageProps<"/start/admi
   if (!(await isAdmin())) return <SignIn next="/start/admin" error={(await searchParams).error === "1"} />;
   const db = await getDb();
   if (!db) throw new Error("Onboarding database unavailable");
-  return <AdminHome initial={await listClients(db)} />;
+  return <AdminHome initial={await listClients(db)} siteUrl={SITE_URL} />;
 }
