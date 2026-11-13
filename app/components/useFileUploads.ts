@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
-import { MAX_FILES, MAX_TOTAL_BYTES, checkFile } from "../lib/upload-rules";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { QUOTE_RULES, checkFile, formatBytes, type UploadRules } from "../lib/upload-rules";
 
 export type UploadStatus = "uploading" | "done" | "error";
 
@@ -14,13 +14,26 @@ export type UploadItem = {
   error?: string;
 };
 
+export type UploadOptions = {
+  /** Route that hands out presigned PUT URLs. */
+  endpoint?: string;
+  rules?: UploadRules;
+  /** Called once a file has finished uploading to R2. */
+  onUploaded?: (item: UploadItem & { key: string }) => void;
+};
+
 /**
  * Uploads files straight to R2 as soon as they're picked. Lives in the quote
  * form (not the file step) so uploads keep going while the customer moves on.
+ * Client onboarding pages pass their own endpoint and rules.
  */
-export function useFileUploads() {
+export function useFileUploads({ endpoint = "/api/uploads", rules = QUOTE_RULES, onUploaded }: UploadOptions = {}) {
   const [items, setItems] = useState<UploadItem[]>([]);
   const requests = useRef(new Map<string, XMLHttpRequest>());
+  const onUploadedRef = useRef(onUploaded);
+  useEffect(() => {
+    onUploadedRef.current = onUploaded;
+  });
 
   const update = useCallback((id: string, patch: Partial<UploadItem>) => {
     setItems((prev) => prev.map((item) => (item.id === id ? { ...item, ...patch } : item)));
@@ -37,8 +50,10 @@ export function useFileUploads() {
       };
       xhr.onload = () => {
         requests.current.delete(item.id);
-        if (xhr.status >= 200 && xhr.status < 300) update(item.id, { status: "done", progress: 100, key });
-        else update(item.id, { status: "error", error: "Upload failed. Try again." });
+        if (xhr.status >= 200 && xhr.status < 300) {
+          update(item.id, { status: "done", progress: 100, key });
+          onUploadedRef.current?.({ ...item, status: "done", progress: 100, key });
+        } else update(item.id, { status: "error", error: "Upload failed. Try again." });
       };
       xhr.onerror = () => {
         requests.current.delete(item.id);
@@ -53,7 +68,7 @@ export function useFileUploads() {
     async (batch: UploadItem[]) => {
       if (batch.length === 0) return;
       try {
-        const res = await fetch("/api/uploads", {
+        const res = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -68,7 +83,7 @@ export function useFileUploads() {
         batch.forEach((item) => update(item.id, { status: "error", error: message }));
       }
     },
-    [putFile, update]
+    [endpoint, putFile, update]
   );
 
   const addFiles = useCallback(
@@ -78,11 +93,11 @@ export function useFileUploads() {
       const added: UploadItem[] = files.map((file) => {
         const base = { id: crypto.randomUUID(), file, progress: 0 };
         const problem =
-          checkFile({ name: file.name, type: file.type, size: file.size }) ??
-          (count + 1 > MAX_FILES
-            ? `You can add up to ${MAX_FILES} files.`
-            : bytes + file.size > MAX_TOTAL_BYTES
-              ? "That would go over the 500 MB total."
+          checkFile({ name: file.name, type: file.type, size: file.size }, rules) ??
+          (count + 1 > rules.maxFiles
+            ? `You can add up to ${rules.maxFiles} files.`
+            : bytes + file.size > rules.maxTotalBytes
+              ? `That would go over the ${formatBytes(rules.maxTotalBytes)} total.`
               : null);
         if (problem) return { ...base, status: "error" as const, error: problem };
         count += 1;
@@ -92,19 +107,19 @@ export function useFileUploads() {
       setItems((prev) => [...prev, ...added]);
       void start(added.filter((i) => i.status === "uploading"));
     },
-    [items, start]
+    [items, rules, start]
   );
 
   const retry = useCallback(
     (id: string) => {
       const item = items.find((i) => i.id === id);
       // Only retry upload failures, not files that break the rules.
-      if (!item || checkFile({ name: item.file.name, type: item.file.type, size: item.file.size })) return;
+      if (!item || checkFile({ name: item.file.name, type: item.file.type, size: item.file.size }, rules)) return;
       const next = { ...item, status: "uploading" as const, progress: 0, error: undefined };
       update(id, next);
       void start([next]);
     },
-    [items, start, update]
+    [items, rules, start, update]
   );
 
   const remove = useCallback((id: string) => {

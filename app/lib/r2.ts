@@ -32,9 +32,24 @@ export async function presignPut(r2: R2Config, key: string, expiresIn = 15 * 60)
   return signed.url;
 }
 
-/** A download link for the quote email. SigV4 links max out at 7 days. */
-export async function presignGet(r2: R2Config, key: string, expiresIn = 7 * 24 * 60 * 60): Promise<string> {
-  const signed = await r2.client.sign(new Request(`${objectUrl(r2, key)}?X-Amz-Expires=${expiresIn}`, { method: "GET" }), {
+/** A download link for the quote email. SigV4 links max out at 7 days. Pass
+ *  `downloadAs` to have the browser save the file under that name. */
+export async function presignGet(
+  r2: R2Config,
+  key: string,
+  expiresIn = 7 * 24 * 60 * 60,
+  downloadAs?: string
+): Promise<string> {
+  const url = new URL(objectUrl(r2, key));
+  url.searchParams.set("X-Amz-Expires", String(expiresIn));
+  if (downloadAs) {
+    const ascii = downloadAs.replace(/[^ -~]/g, "_").replace(/"/g, "");
+    url.searchParams.set(
+      "response-content-disposition",
+      `attachment; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(downloadAs)}`
+    );
+  }
+  const signed = await r2.client.sign(new Request(url, { method: "GET" }), {
     aws: { signQuery: true },
   });
   return signed.url;
