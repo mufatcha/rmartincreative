@@ -326,7 +326,7 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
           <div className="mt-5 space-y-5">
             <PlanEditor plan={state.plan} planSeenAt={state.planSeenAt} clientFirst={first} act={act} ago={ago} />
 
-            <NotesEditor notes={state.notes} clientFirst={first} act={act} ago={ago} />
+            <NotesEditor notes={state.notes} messages={state.messages} clientFirst={first} act={act} ago={ago} />
 
             {state.sections.length === 0 && (
               <div className="rounded-3xl border-2 border-dashed border-ink/15 p-8 text-center">
