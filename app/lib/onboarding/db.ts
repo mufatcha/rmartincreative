@@ -52,6 +52,8 @@ export type ClientRow = {
   name: string;
   email: string;
   intro: string;
+  test_url: string;
+  live_url: string;
   created_at: number;
   invited_at: number | null;
   last_seen_at: number | null;
@@ -194,7 +196,7 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
 
   return {
     version: client.changed_at,
-    client: { slug: client.slug, name: client.name, intro: client.intro, email: client.email },
+    client: { slug: client.slug, name: client.name, intro: client.intro, email: client.email, testUrl: client.test_url ?? "", liveUrl: client.live_url ?? "" },
     sections: sections.results,
     items: items.results.map(toItem),
     responses: Object.fromEntries(
@@ -545,13 +547,19 @@ export async function createClient(db: D1, name: string, email: string) {
   return { error: "Couldn't make a unique link. Try again." };
 }
 
-export async function updateClient(db: D1, client: ClientRow, patch: { name?: unknown; email?: unknown; intro?: unknown; archived?: unknown }) {
+export async function updateClient(
+  db: D1,
+  client: ClientRow,
+  patch: { name?: unknown; email?: unknown; intro?: unknown; testUrl?: unknown; liveUrl?: unknown; archived?: unknown }
+) {
   await db
-    .prepare("UPDATE clients SET name = ?, email = ?, intro = ?, archived = ? WHERE id = ?")
+    .prepare("UPDATE clients SET name = ?, email = ?, intro = ?, test_url = ?, live_url = ?, archived = ? WHERE id = ?")
     .bind(
       patch.name !== undefined ? str(patch.name, 120) || client.name : client.name,
       patch.email !== undefined ? str(patch.email, 200) : client.email,
       patch.intro !== undefined ? str(patch.intro, 5000) : client.intro,
+      patch.testUrl !== undefined ? str(patch.testUrl, 500) : client.test_url,
+      patch.liveUrl !== undefined ? str(patch.liveUrl, 500) : client.live_url,
       patch.archived !== undefined ? (patch.archived ? 1 : 0) : client.archived,
       client.id
     )

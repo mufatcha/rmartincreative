@@ -10,6 +10,7 @@ import { ItemShell, ProgressBar, SaveIndicator } from "../components/ItemView";
 import QuestionField from "../components/QuestionField";
 import UploadArea from "../components/UploadArea";
 import NotesAccordion from "../components/NotesAccordion";
+import SiteAddresses from "../components/SiteAddresses";
 import PlanDrawer from "../components/PlanDrawer";
 import { countPlanChanges } from "../components/PlanView";
 import { useMediaQuery } from "../components/useMediaQuery";
@@ -223,6 +224,8 @@ export default function OnboardingPortal({ initial, preview = false }: { initial
               await refresh();
             }}
           />
+
+          <SiteAddresses testUrl={state.client.testUrl} liveUrl={state.client.liveUrl} className="mt-5" />
 
           <ReviewsSection state={state} adminName={ADMIN_NAME} readOnly={preview} post={post} refresh={refresh} />
 

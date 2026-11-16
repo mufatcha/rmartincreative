@@ -160,7 +160,8 @@ export type PortalState = {
    *  `{ unchanged: true }` when nothing changed, which costs one row read. */
   version: number;
   /** email: where reply notifications go. Ryan sets it, or the client adds it on the page. */
-  client: { slug: string; name: string; intro: string; email: string };
+  /** testUrl / liveUrl: the test and permanent site addresses (blank: not set, hidden from the client). */
+  client: { slug: string; name: string; intro: string; email: string; testUrl: string; liveUrl: string };
   sections: Section[];
   items: Item[];
   responses: Record<number, { value: AnswerValue; updatedAt: number }>;
