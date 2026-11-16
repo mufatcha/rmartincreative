@@ -14,6 +14,7 @@ import NotesEditor from "../NotesEditor";
 import PlanEditor from "../PlanEditor";
 import ReviewsEditor from "../ReviewsEditor";
 import ShareBox from "../ShareBox";
+import SiteLinks from "../SiteLinks";
 import LinkText from "../../components/LinkText";
 
 export function ago(t: number | null): string {
@@ -328,6 +329,8 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
             <PlanEditor plan={state.plan} planSeenAt={state.planSeenAt} clientFirst={first} act={act} ago={ago} />
 
             <NotesEditor notes={state.notes} messages={state.messages} clientFirst={first} act={act} ago={ago} />
+
+            <SiteLinks testUrl={state.client.testUrl} liveUrl={state.client.liveUrl} clientFirst={first} act={act} />
 
             <ReviewsEditor slug={slug} reviews={state.reviews} clientFirst={first} act={act} />
 
