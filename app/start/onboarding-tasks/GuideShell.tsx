@@ -24,7 +24,8 @@ export default function GuideShell({
         <header className="rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-700 px-6 py-8 text-white shadow-lg sm:px-9 sm:py-10">
           <p className="text-sm font-medium text-violet-200">{eyebrow}</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
-          <div className="mt-3 max-w-2xl text-violet-100">{intro}</div>
+          {/* <B> is dark ink for white cards; on the purple header it's cream, matching access-sharing. */}
+          <div className="mt-3 max-w-2xl text-violet-100 [&_strong]:text-amber-200">{intro}</div>
           <p className="mt-6 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-2xl bg-white/10 px-4 py-3 text-base text-violet-50 sm:text-lg">
             Stuck, or something doesn&rsquo;t match? Call or text{" "}
             <a
