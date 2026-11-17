@@ -83,6 +83,18 @@ export const GUIDES: Guide[] = [
     description: "Claim your place on Apple Maps with Apple Business, so you show up correctly on iPhones, Siri, and Apple Maps.",
     minutes: 15,
   },
+  {
+    slug: "pushover",
+    title: "Setting up Pushover alerts",
+    description: "Install Pushover, then send me your user key and a free app token so your website can send alerts to your phone.",
+    minutes: 10,
+    sections: [
+      { id: "install", title: "Install Pushover" },
+      { id: "user-key", title: "Find your user key" },
+      { id: "app-token", title: "Create your app token" },
+      { id: "send", title: "Send me both codes" },
+    ],
+  },
 ];
 
 export const guidePath = (slug: string) => `/start/onboarding-tasks/${slug}`;
