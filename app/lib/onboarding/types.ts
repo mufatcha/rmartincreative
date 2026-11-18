@@ -62,7 +62,7 @@ export const UPLOAD_CATEGORIES = [
     key: "video",
     title: "Video and clips",
     help: "Short clips of work in progress, before-and-afters, or a quick hello. Any length works.",
-    required: true,
+    required: false,
   },
   {
     key: "misc",
