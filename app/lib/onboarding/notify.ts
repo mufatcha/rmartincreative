@@ -18,11 +18,13 @@ import {
   loadState,
   markNotified,
   pendingEvents,
+  sinceLastVisit,
   type ClientRow,
   type D1,
   type PendingEvent,
 } from "./db";
 import { answerText } from "./progress";
+import { UPLOAD_CATEGORIES } from "./types";
 
 const ADMIN_IDLE_MS = 10 * 60 * 1000;
 /** Waits this long after Ryan's last change so a burst of edits is one email. */
@@ -101,8 +103,8 @@ async function sendAdminDigest(db: D1, client: ClientRow) {
       if (item) answers.push([item.title, answerText(state.responses[item.id]?.value) || "(cleared)"]);
     } else if (e.type === "file" && e.ref_id !== null) {
       const f = files.get(e.ref_id);
-      if (f) uploads.push({ name: f.name, size: f.size, url: `${SITE_URL}${f.url}?download=1`, request: f.itemId ? (items.get(f.itemId)?.title ?? "") : "General files" });
-    } else if (e.type === "task" || e.type === "contact" || e.type === "note_ack") {
+      if (f) uploads.push({ name: f.name, size: f.size, url: `${SITE_URL}${f.url}?download=1`, request: f.itemId ? (items.get(f.itemId)?.title ?? "") : UPLOAD_CATEGORIES.find((c) => c.key === (f.category ?? "misc"))!.title });
+    } else if (e.type === "task" || e.type === "contact" || e.type === "note_ack" || e.type === "feedback") {
       tasks.push(e.summary);
     }
   }
@@ -186,10 +188,15 @@ async function sendChatNotice(db: D1, client: ClientRow & { newest: number }) {
 export async function shareUpdates(db: D1, client: ClientRow, note: string) {
   if (!client.email) return { error: "Add the client's email first (or wait for them to add it on their page)." };
   const events = (await pendingEvents(db, client.id, "admin", SHARE_TYPES)).results;
+  // Changes from before their last visit were already on the page when they looked.
+  const fresh = sinceLastVisit(events, client);
   const extra = note.trim();
-  if (!events.length && !extra) return { error: "There's nothing new to share yet." };
+  if (!fresh.length && !extra) {
+    await markNotified(db, events.map((e) => e.id));
+    return { error: "There's nothing new to share: they've seen everything on their last visit." };
+  }
 
-  const latest = latestPerItem(events);
+  const latest = latestPerItem(fresh);
   // New questions, tasks, file requests, and notes.
   const requests = latest.filter((e) => e.type === "request" || e.type === "note");
   const planChanges = latest.filter((e) => e.type === "plan");

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import FileDropzone from "../../components/FileDropzone";
 import { useFileUploads } from "../../components/useFileUploads";
-import type { PortalFile } from "../../lib/onboarding/types";
+import type { PortalFile, UploadCategory } from "../../lib/onboarding/types";
 import { ONBOARDING_RULES, fileExtension, formatBytes } from "../../lib/upload-rules";
 
 const IMAGE = ["jpg", "jpeg", "png", "gif", "webp", "heic", "heif", "bmp", "svg", "tif", "tiff"];
@@ -76,6 +76,7 @@ function FileThumb({ file, onRemove }: { file: PortalFile; onRemove?: () => void
 export default function UploadArea({
   slug,
   itemId,
+  category,
   files,
   canUpload,
   canRemove,
@@ -85,6 +86,8 @@ export default function UploadArea({
 }: {
   slug: string;
   itemId: number | null;
+  /** With no item: the "Photos, video & logo" slot (UPLOAD_CATEGORIES). */
+  category?: UploadCategory;
   files: PortalFile[];
   canUpload: boolean;
   /** Whether a file can be removed by this viewer. */
@@ -100,6 +103,7 @@ export default function UploadArea({
       const res = await register({
         action: "file",
         itemId,
+        category,
         key: item.key,
         name: item.file.name,
         size: item.file.size,

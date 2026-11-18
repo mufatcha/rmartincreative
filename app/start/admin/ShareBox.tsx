@@ -4,8 +4,9 @@ import { useState } from "react";
 
 /**
  * "Share updates with <client>": the only way new questions, tasks, file
- * requests, and plan changes reach the client by email. Lists what hasn't been
- * shared yet; one press sends it all in one email, with an optional note.
+ * requests, and plan changes reach the client by email. Lists what's changed
+ * since the client's last visit (older changes they've already seen on the
+ * page); one press sends it all in one email, with an optional note.
  */
 export default function ShareBox({
   first,
@@ -28,11 +29,11 @@ export default function ShareBox({
       <div className="flex flex-wrap items-baseline gap-x-2">
         <h3 className="font-bold">Share updates with {first}</h3>
         <span className="text-sm text-ink-soft">
-          {count ? `${count} update${count === 1 ? "" : "s"} not shared yet` : "Everything's been shared"}
+          {count ? `${count} update${count === 1 ? "" : "s"} since ${first}'s last visit` : `Nothing new since ${first}'s last visit`}
         </span>
       </div>
       <p className="mt-1 text-xs text-ink-soft">
-        {first} is only emailed when you send a chat message or press this button. Adding questions or changing the plan doesn&rsquo;t email them on its own.
+        {first} is only emailed when you send a chat message or press this button. Adding questions or changing the plan doesn&rsquo;t email them on its own. Only changes made after their last visit are listed: anything older they&rsquo;ve already seen on their page.
       </p>
 
       {count > 0 && (

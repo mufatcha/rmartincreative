@@ -30,7 +30,7 @@ export default function ReviewsSection({
   };
 
   return (
-    <section aria-labelledby="reviews-title" className="mt-5 space-y-4">
+    <section aria-labelledby="reviews-title" className="space-y-4">
       <div className="flex flex-wrap items-baseline gap-3 px-1">
         <h2 id="reviews-title" className="text-xl font-bold tracking-tight">
           Files from {adminName}

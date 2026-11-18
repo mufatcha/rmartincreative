@@ -47,9 +47,37 @@ export type Item = {
 
 export type TaskState = { done: boolean; doneBy: Viewer; updatedAt: number };
 
+/** The fixed "Photos, video & logo" view: one upload slot per category. */
+export const UPLOAD_CATEGORIES = [
+  {
+    key: "logo",
+    title: "Your logo, icons, and other branding",
+    help: "The best version you have: a vector file (AI, EPS, SVG, PDF) if possible, otherwise a large PNG.",
+    required: true,
+  },
+  { key: "work", title: "Photos of your work", help: "Straight from your phone is fine. More is better; I'll pick the best.", required: true },
+  { key: "team", title: "Photos of you or your team", help: "Optional, but they help people trust a local business.", required: false },
+  {
+    key: "video",
+    title: "Video and clips",
+    help: "Short clips of work in progress, before-and-afters, or a quick hello. Any length works.",
+    required: true,
+  },
+  {
+    key: "misc",
+    title: "Misc. files, documents, spreadsheets, PDFs, etc.",
+    help: "Anything else that helps. Please rename files so it's clear what they are.",
+    required: false,
+  },
+] as const;
+export type UploadCategory = (typeof UPLOAD_CATEGORIES)[number]["key"];
+export const isUploadCategory = (v: unknown): v is UploadCategory => UPLOAD_CATEGORIES.some((c) => c.key === v);
+
 export type PortalFile = {
   id: number;
   itemId: number | null;
+  /** Which "Photos, video & logo" slot it's in (null with no item: an older general upload, shown as misc). */
+  category: UploadCategory | null;
   name: string;
   size: number;
   type: string;
@@ -174,11 +202,17 @@ export type PortalState = {
   plan: PlanItem[];
   /** When the client last opened the plan (null: never). */
   planSeenAt: number | null;
+  /** When the client last opened each view ("files", "section-12"…; "*": their first visit). */
+  viewsSeen: Record<string, number>;
+  /** How many times the client has sent onboarding feedback (the feedback itself is admin-only). */
+  feedbackCount: number;
   /** Newest date first. */
   notes: Note[];
   /** Files shared for viewing or approval, newest first. */
   reviews: Review[];
 };
+
+export type Feedback = { id: number; rating: number | null; body: string; createdAt: number };
 
 export type ActivityEvent = {
   id: number;
@@ -198,6 +232,8 @@ export type AdminPortalState = PortalState & {
     unshared: string[];
     lastSeenAt: number | null;
     events: ActivityEvent[];
+    /** Onboarding feedback from the client, newest first. */
+    feedback: Feedback[];
   };
 };
 
