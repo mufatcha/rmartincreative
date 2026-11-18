@@ -3,6 +3,7 @@
 // itself is the key, so there's no sign-in.
 import {
   acknowledgeNote,
+  addFeedback,
   addFile,
   addReviewComment,
   decideReview,
@@ -13,6 +14,7 @@ import {
   getDb,
   loadState,
   markPlanSeen,
+  markViewSeen,
   markRead,
   saveAnswer,
   setClientEmail,
@@ -63,7 +65,7 @@ export async function POST(request: Request, ctx: Ctx) {
   // Admin preview: opening the plan or chat mustn't clear the client's New
   // labels or unread messages, and edits belong on the admin page.
   if (await isAdmin(request)) {
-    if (body.action === "planSeen" || body.action === "read") return Response.json({ ok: true }, { headers: noStore });
+    if (body.action === "planSeen" || body.action === "viewSeen" || body.action === "read") return Response.json({ ok: true }, { headers: noStore });
     return Response.json({ error: "You're previewing as admin. Make changes on your admin page." }, { status: 403 });
   }
 
@@ -78,6 +80,7 @@ export async function POST(request: Request, ctx: Ctx) {
     case "file":
       result = await addFile(db, client, {
         itemId: body.itemId === null || body.itemId === undefined ? null : Number(body.itemId),
+        category: body.category,
         key: String(body.key ?? ""),
         name: String(body.name ?? ""),
         size: Number(body.size ?? 0),
@@ -110,6 +113,9 @@ export async function POST(request: Request, ctx: Ctx) {
       result = res;
       break;
     }
+    case "feedback":
+      result = await addFeedback(db, client, body);
+      break;
     case "ackNote":
       result = await acknowledgeNote(db, client, Number(body.id));
       break;
@@ -117,6 +123,10 @@ export async function POST(request: Request, ctx: Ctx) {
       await markPlanSeen(db, client);
       result = { ok: true };
       break;
+    case "viewSeen":
+      // Only the client's own green counts change, and the response carries
+      // them: no need to make every open copy of the page reload.
+      return Response.json(await markViewSeen(db, client, body.view), { headers: noStore });
     case "read":
       await markRead(db, client, "client");
       result = { ok: true };

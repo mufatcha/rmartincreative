@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useCallback, useState, type ReactNode } from "react";
 import { answerText, itemDone, progress } from "../../../lib/onboarding/progress";
-import { KIND_LABELS, type AdminPortalState, type Item, type Section } from "../../../lib/onboarding/types";
+import { KIND_LABELS, UPLOAD_CATEGORIES, type AdminPortalState, type Item, type Section } from "../../../lib/onboarding/types";
 import ChatPanel from "../../components/ChatPanel";
 import { ItemShell, ProgressBar, SaveIndicator } from "../../components/ItemView";
 import QuestionField from "../../components/QuestionField";
 import UploadArea from "../../components/UploadArea";
+import { useMediaQuery } from "../../components/useMediaQuery";
 import { usePortal } from "../../components/usePortal";
 import ItemEditor, { type ItemDraft } from "../ItemEditor";
 import NotesEditor from "../NotesEditor";
@@ -65,6 +66,7 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
   });
   const [editing, setEditing] = useState<string | null>(null); // "item-3", "add-5", "section-2", "add-section"
   const [tab, setTab] = useState<"chat" | "activity">("chat");
+  const desktop = useMediaQuery("(min-width: 1024px)");
   const [copied, setCopied] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [inviteNote, setInviteNote] = useState("");
@@ -194,6 +196,57 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
       </div>
     );
   };
+
+  // Messages and activity: a column beside the page on desktop; on phones and
+  // tablets, right below Onboarding feedback (only one copy is ever mounted, so
+  // reading marks messages read once).
+  const sidePanel = (
+    <div className="flex h-[70dvh] flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-sm lg:sticky lg:top-28 lg:h-[calc(100dvh-9rem)]">
+      <div className="flex border-b border-ink/10" role="tablist">
+        {(["chat", "activity"] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            role="tab"
+            aria-selected={tab === t}
+            onClick={() => setTab(t)}
+            className={`flex-1 px-4 py-3 text-sm font-semibold ${tab === t ? "border-b-2 border-violet-600 text-ink" : "text-ink-soft"}`}
+          >
+            {t === "chat" ? "Messages" : "Activity"}
+            {t === "chat" && state.unread > 0 && <span className="ml-1.5 rounded-full bg-violet-600 px-1.5 py-0.5 text-[11px] text-white">{state.unread}</span>}
+          </button>
+        ))}
+      </div>
+      {tab === "chat" ? (
+        <ChatPanel
+          messages={state.messages}
+          viewer="admin"
+          otherName={first}
+          unread={state.unread}
+          active
+          onSend={onSend}
+          onRead={onRead}
+          emptyText={`No messages yet. ${first} gets an email a few minutes after you send one, unless they're on the page and have seen it.`}
+          className="flex-1"
+        />
+      ) : (
+        <ul className="flex-1 space-y-3 overflow-y-auto p-4 text-sm">
+          {state.admin.events.length === 0 && <li className="text-ink-soft">Nothing yet.</li>}
+          {state.admin.events.map((e) => (
+            <li key={e.id} className="flex gap-2">
+              <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${e.actor === "client" ? "bg-violet-500" : "bg-ink/25"}`} />
+              <div className="min-w-0">
+                <p className="break-words">
+                  <strong>{e.actor === "client" ? first : "You"}</strong>: {e.summary}
+                </p>
+                <p className="text-xs text-ink-soft">{ago(e.createdAt)}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 
   return (
     <div className="pb-28 pt-28 sm:pt-32">
@@ -330,9 +383,78 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
 
             <NotesEditor notes={state.notes} messages={state.messages} clientFirst={first} act={act} ago={ago} />
 
+            <section className="rounded-3xl border border-ink/10 bg-white px-5 py-6 shadow-sm sm:px-7">
+              <div className="flex flex-wrap items-baseline gap-x-3">
+                <h2 className="flex-1 text-xl font-bold tracking-tight">Onboarding feedback</h2>
+                {state.admin.feedback.length > 0 && (
+                  <span className="text-sm text-ink-soft">
+                    {state.admin.feedback.length} from {first}
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 text-sm text-ink-soft">
+                From the Feedback link (the star) at the bottom of {first}&rsquo;s menu. Only you see it; their page never shows it back.
+              </p>
+              {state.admin.feedback.length === 0 ? (
+                <p className="mt-4 text-sm text-ink-soft">Nothing yet. {first}&rsquo;s menu shows a red 1 on Feedback until they send some.</p>
+              ) : (
+                <ul className="mt-4 space-y-3">
+                  {state.admin.feedback.map((f) => (
+                    <li key={f.id} className="rounded-2xl bg-paper-tint/50 px-4 py-3">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        {f.rating !== null && (
+                          <span className="text-lg leading-none tracking-wider text-amber-500" aria-label={`${f.rating} out of 5 stars`}>
+                            {"★".repeat(f.rating)}
+                            <span className="text-ink/20">{"★".repeat(5 - f.rating)}</span>
+                          </span>
+                        )}
+                        <span className="text-xs text-ink-soft">{ago(f.createdAt)}</span>
+                      </div>
+                      {f.body && <p className="mt-1.5 whitespace-pre-wrap text-sm">{f.body}</p>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+
+            {!desktop && sidePanel}
+
             <SiteLinks testUrl={state.client.testUrl} liveUrl={state.client.liveUrl} clientFirst={first} act={act} />
 
             <ReviewsEditor slug={slug} reviews={state.reviews} clientFirst={first} act={act} />
+
+            <section className="rounded-3xl border border-ink/10 bg-white px-5 py-6 shadow-sm sm:px-7">
+              <h2 className="text-xl font-bold tracking-tight">Upload photos, video &amp; more</h2>
+              <p className="mt-1 text-sm text-ink-soft">
+                {first}&rsquo;s uploads. This view is on every client&rsquo;s page; the red count on their menu is the required slots still empty.
+              </p>
+              <div className="divide-y divide-ink/10">
+                {UPLOAD_CATEGORIES.map((c) => {
+                  const files = state.files.filter((f) => f.itemId === null && (f.category ?? "misc") === c.key);
+                  return (
+                    <div key={c.key} className="py-4">
+                      <p className="mb-2 text-sm font-semibold">
+                        {c.title}
+                        {!c.required && <span className="ml-1.5 font-normal text-ink-soft">(optional)</span>}
+                        <span className="ml-1.5 font-normal text-ink-soft">· {files.length || "nothing yet"}</span>
+                      </p>
+                      {files.length > 0 && (
+                        <UploadArea
+                          slug={slug}
+                          itemId={null}
+                          files={files}
+                          canUpload={false}
+                          canRemove={() => true}
+                          register={post}
+                          removeFile={(fileId) => post({ action: "deleteFile", fileId })}
+                          onChange={refresh}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
 
             {state.sections.length === 0 && (
               <div className="rounded-3xl border-2 border-dashed border-ink/15 p-8 text-center">
@@ -433,24 +555,6 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
               </div>
             )}
 
-            <section className="rounded-3xl border border-ink/10 bg-white px-5 py-6 shadow-sm sm:px-7">
-              <h2 className="text-xl font-bold tracking-tight">General files</h2>
-              <p className="mt-1 text-sm text-ink-soft">Uploads from &ldquo;Anything else to share?&rdquo;</p>
-              <div className="mt-4">
-                <UploadArea
-                  slug={slug}
-                  itemId={null}
-                  files={state.files.filter((f) => f.itemId === null)}
-                  canUpload={false}
-                  canRemove={() => true}
-                  register={post}
-                  removeFile={(fileId) => post({ action: "deleteFile", fileId })}
-                  onChange={refresh}
-                />
-                {!state.files.some((f) => f.itemId === null) && <p className="text-sm text-ink-soft">Nothing yet.</p>}
-              </div>
-            </section>
-
             <label className="flex items-center gap-2 text-sm text-ink-soft">
               <input
                 type="checkbox"
@@ -472,53 +576,8 @@ export default function AdminClient({ initial, siteUrl }: { initial: AdminPortal
           </a>
         )}
 
-        <aside className="mt-8 lg:mt-0">
-          <div className="flex h-[70dvh] flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-sm lg:sticky lg:top-28 lg:h-[calc(100dvh-9rem)]">
-            <div className="flex border-b border-ink/10" role="tablist">
-              {(["chat", "activity"] as const).map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  role="tab"
-                  aria-selected={tab === t}
-                  onClick={() => setTab(t)}
-                  className={`flex-1 px-4 py-3 text-sm font-semibold ${tab === t ? "border-b-2 border-violet-600 text-ink" : "text-ink-soft"}`}
-                >
-                  {t === "chat" ? "Messages" : "Activity"}
-                  {t === "chat" && state.unread > 0 && <span className="ml-1.5 rounded-full bg-violet-600 px-1.5 py-0.5 text-[11px] text-white">{state.unread}</span>}
-                </button>
-              ))}
-            </div>
-            {tab === "chat" ? (
-              <ChatPanel
-                messages={state.messages}
-                viewer="admin"
-                otherName={first}
-                unread={state.unread}
-                active
-                onSend={onSend}
-                onRead={onRead}
-                emptyText={`No messages yet. ${first} gets an email a few minutes after you send one, unless they're on the page and have seen it.`}
-                className="flex-1"
-              />
-            ) : (
-              <ul className="flex-1 space-y-3 overflow-y-auto p-4 text-sm">
-                {state.admin.events.length === 0 && <li className="text-ink-soft">Nothing yet.</li>}
-                {state.admin.events.map((e) => (
-                  <li key={e.id} className="flex gap-2">
-                    <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${e.actor === "client" ? "bg-violet-500" : "bg-ink/25"}`} />
-                    <div className="min-w-0">
-                      <p className="break-words">
-                        <strong>{e.actor === "client" ? first : "You"}</strong>: {e.summary}
-                      </p>
-                      <p className="text-xs text-ink-soft">{ago(e.createdAt)}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </aside>
+        {/* Desktop: messages and activity in their own column. */}
+        {desktop && <aside>{sidePanel}</aside>}
       </div>
     </div>
   );

@@ -54,8 +54,9 @@ export function usePortal<S extends PortalState>(
     }
   }, [stateUrl]);
 
-  // Poll: every 10s while the tab is visible, every 60s in the background, and
-  // right away when it comes back into view.
+  // Poll: every 30s while the tab is visible, every 5 min in the background, and
+  // right away when it comes back into view. Your own changes show at once;
+  // polling only picks up the other side's (a reply, a new question).
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const schedule = () => {
@@ -64,7 +65,7 @@ export function usePortal<S extends PortalState>(
           await refresh();
           schedule();
         },
-        document.visibilityState === "visible" ? 10_000 : 60_000
+        document.visibilityState === "visible" ? 30_000 : 300_000
       );
     };
     const onVisibility = () => {
@@ -84,7 +85,22 @@ export function usePortal<S extends PortalState>(
   /** Posts one change. Retries network and server errors with backoff; a 400
    *  (the change itself was refused) isn't retried. */
   const post = useCallback(
-    async (body: Record<string, unknown>, { keepalive = false }: { keepalive?: boolean } = {}): Promise<Result> => {
+    async (body: Record<string, unknown>, { keepalive = false, quiet = false }: { keepalive?: boolean; quiet?: boolean } = {}): Promise<Result> => {
+      // quiet: bookkeeping the person didn't do themselves (e.g. "opened this
+      // view"), so the save indicator doesn't flash and failures aren't shown.
+      if (quiet) {
+        try {
+          const res = await fetch(postUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...extraRef.current, ...body }),
+            keepalive,
+          });
+          return (await res.json().catch(() => ({}))) as Result;
+        } catch {
+          return { error: "offline" };
+        }
+      }
       pending.current += 1;
       setStatus("saving");
       let attempt = 0;

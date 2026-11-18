@@ -13,6 +13,7 @@ import type {
   Item,
   ItemKind,
   Message,
+  Feedback,
   Note,
   PlanItem,
   PlanStage,
@@ -25,7 +26,7 @@ import type {
   Viewer,
 } from "./types";
 import { cleanLink, embedUrl, isLinkType } from "./links";
-import { FIELD_TYPES, ITEM_KINDS, PLAN_STAGES } from "./types";
+import { FIELD_TYPES, ITEM_KINDS, PLAN_STAGES, UPLOAD_CATEGORIES, isUploadCategory } from "./types";
 
 // The parts of the D1 API used here (avoids depending on @cloudflare/workers-types).
 type D1Statement = {
@@ -54,6 +55,8 @@ export type ClientRow = {
   intro: string;
   test_url: string;
   live_url: string;
+  /** JSON: when the client last opened each view of their page ("*": first visit). */
+  views_seen: string;
   created_at: number;
   invited_at: number | null;
   last_seen_at: number | null;
@@ -79,6 +82,7 @@ type ItemRow = {
 type FileRow = {
   id: number;
   item_id: number | null;
+  category: string | null;
   uploaded_by: string;
   r2_key: string;
   name: string;
@@ -140,6 +144,7 @@ function toFile(slug: string, row: FileRow): PortalFile {
   return {
     id: row.id,
     itemId: row.item_id,
+    category: isUploadCategory(row.category) ? row.category : null,
     name: row.name,
     size: row.size,
     type: row.type,
@@ -191,6 +196,8 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
       .all<{ id: number; review_id: number; version_id: number; decision: string; name: string; note: string; created_at: number }>(),
   ]);
 
+  const feedbackCount =
+    (await db.prepare("SELECT COUNT(*) AS n FROM feedback WHERE client_id = ?").bind(id).first<{ n: number }>())?.n ?? 0;
   const readAt = (viewer === "client" ? client.client_read_at : client.admin_read_at) ?? 0;
   const msgs: Message[] = messages.results.map((m) => ({ id: m.id, sender: m.sender as Viewer, body: m.body, createdAt: m.created_at }));
 
@@ -221,6 +228,8 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
       })
     ),
     planSeenAt: client.plan_seen_at,
+    viewsSeen: parseJson<Record<string, number>>(client.views_seen ?? "{}", {}),
+    feedbackCount,
     notes: notes.results.map(
       (n): Note => ({
         id: n.id,
@@ -285,13 +294,17 @@ export async function loadState(db: D1, client: ClientRow, viewer: Viewer): Prom
 }
 
 export async function loadAdminState(db: D1, client: ClientRow): Promise<AdminPortalState> {
-  const [state, events, unshared] = await Promise.all([
+  const [state, events, unshared, feedback] = await Promise.all([
     loadState(db, client, "admin"),
     db
       .prepare("SELECT id, actor, type, summary, created_at FROM events WHERE client_id = ? ORDER BY created_at DESC, id DESC LIMIT 60")
       .bind(client.id)
       .all<{ id: number; actor: string; type: string; summary: string; created_at: number }>(),
     pendingEvents(db, client.id, "admin", SHARE_TYPES),
+    db
+      .prepare("SELECT id, rating, body, created_at FROM feedback WHERE client_id = ? ORDER BY created_at DESC, id DESC")
+      .bind(client.id)
+      .all<{ id: number; rating: number | null; body: string; created_at: number }>(),
   ]);
   return {
     ...state,
@@ -300,8 +313,9 @@ export async function loadAdminState(db: D1, client: ClientRow): Promise<AdminPo
       archived: client.archived === 1,
       createdAt: client.created_at,
       invitedAt: client.invited_at,
-      unshared: latestPerItem(unshared.results).map((e) => e.summary),
+      unshared: latestPerItem(sinceLastVisit(unshared.results, client)).map((e) => e.summary),
       lastSeenAt: client.last_seen_at,
+      feedback: feedback.results.map((f): Feedback => ({ id: f.id, rating: f.rating, body: f.body, createdAt: f.created_at })),
       events: events.results.map(
         (e): ActivityEvent => ({ id: e.id, actor: e.actor as Viewer, type: e.type, summary: e.summary, createdAt: e.created_at })
       ),
@@ -401,7 +415,42 @@ async function getItem(db: D1, clientId: number, itemId: number) {
 export async function touchSeen(db: D1, client: ClientRow) {
   const t = now();
   if (client.last_seen_at && t - client.last_seen_at < 60_000) return;
-  await db.prepare("UPDATE clients SET last_seen_at = ? WHERE id = ?").bind(t, client.id).run();
+  // The first visit is the baseline for "new" in views the client hasn't opened yet.
+  await db
+    .prepare(
+      `UPDATE clients SET last_seen_at = ?1,
+         views_seen = CASE WHEN json_extract(views_seen, '$."*"') IS NULL THEN json_set(views_seen, '$."*"', ?1) ELSE views_seen END
+       WHERE id = ?2`
+    )
+    .bind(t, client.id)
+    .run();
+}
+
+/** Onboarding feedback from the client. Ryan gets it in his next digest email. */
+export async function addFeedback(db: D1, client: ClientRow, input: { rating?: unknown; body?: unknown }) {
+  const r = Number(input.rating);
+  const rating = Number.isInteger(r) && r >= 1 && r <= 5 ? r : null;
+  const body = str(input.body, 5000);
+  if (rating === null && !body) return { error: "Pick a star rating or write a few words first." };
+  const res = await db
+    .prepare("INSERT INTO feedback (client_id, rating, body, created_at) VALUES (?, ?, ?, ?)")
+    .bind(client.id, rating, body, now())
+    .run();
+  const stars = rating ? `${"★".repeat(rating)}${"☆".repeat(5 - rating)} ` : "";
+  const quote = body ? `“${body.length > 300 ? `${body.slice(0, 300)}…` : body}”` : "";
+  await recordEvent(db, client.id, { actor: "client", type: "feedback", refId: res.meta.last_row_id, summary: `Onboarding feedback: ${stars}${quote}`.trim() });
+  return { ok: true };
+}
+
+/** The client opened a view of their page (the menu's green counts start over). */
+export async function markViewSeen(db: D1, client: ClientRow, view: unknown) {
+  const key = String(view ?? "");
+  if (!/^(files|uploads|feedback|section-\d{1,9})$/.test(key)) return { error: "Unknown view." };
+  const row = await db
+    .prepare(`UPDATE clients SET views_seen = json_set(views_seen, '$."${key}"', ?) WHERE id = ? RETURNING views_seen`)
+    .bind(now(), client.id)
+    .first<{ views_seen: string }>();
+  return { ok: true, viewsSeen: parseJson<Record<string, number>>(row?.views_seen ?? "{}", {}) };
 }
 
 export async function markRead(db: D1, client: ClientRow, viewer: Viewer) {
@@ -460,19 +509,20 @@ export async function setTask(db: D1, client: ClientRow, itemId: number, done: b
 export async function addFile(
   db: D1,
   client: ClientRow,
-  f: { itemId: number | null; key: string; name: string; size: number; type: string },
+  f: { itemId: number | null; category?: unknown; key: string; name: string; size: number; type: string },
   by: Viewer = "client"
 ) {
   if (!f.key.startsWith(`clients/${client.slug}/`) || f.key.includes("..")) return { error: "Invalid file." };
-  let title = "General files";
+  const category = f.itemId === null && isUploadCategory(f.category) ? f.category : null;
+  let title: string = UPLOAD_CATEGORIES.find((c) => c.key === (category ?? "misc"))!.title;
   if (f.itemId !== null) {
     const item = await getItem(db, client.id, f.itemId);
     if (!item || item.kind !== "upload") return { error: "That request no longer exists." };
     title = item.title;
   }
   const res = await db
-    .prepare("INSERT INTO files (client_id, item_id, uploaded_by, r2_key, name, size, type, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-    .bind(client.id, f.itemId, by, f.key, f.name.slice(0, 200), Math.max(0, Math.round(f.size)), f.type.slice(0, 100), now())
+    .prepare("INSERT INTO files (client_id, item_id, category, uploaded_by, r2_key, name, size, type, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    .bind(client.id, f.itemId, category, by, f.key, f.name.slice(0, 200), Math.max(0, Math.round(f.size)), f.type.slice(0, 100), now())
     .run();
   const id = res.meta.last_row_id;
   await recordEvent(db, client.id, { actor: by, type: "file", refId: id, summary: `Uploaded ${f.name} (${title})` });
@@ -1088,6 +1138,11 @@ export async function pendingEvents(db: D1, clientId: number, actor: Viewer, typ
 
 /** Ryan's changes the client only hears about when he presses "Share updates". */
 export const SHARE_TYPES = ["request", "plan", "note", "review", "review_reply"];
+
+/** Only changes made after the client's last visit: anything older they've already seen on their page. */
+export function sinceLastVisit<T extends { created_at: number }>(events: T[], client: ClientRow) {
+  return client.last_seen_at ? events.filter((e) => e.created_at > client.last_seen_at!) : events;
+}
 
 /** One line per item (the latest change), for the Share button and its email. */
 export function latestPerItem(events: PendingEvent[]) {
