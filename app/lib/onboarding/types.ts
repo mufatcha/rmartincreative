@@ -53,7 +53,8 @@ export const UPLOAD_CATEGORIES = [
     key: "logo",
     title: "Your logo, icons, and other branding",
     help: "The best version you have: a vector file (AI, EPS, SVG, PDF) if possible, otherwise a large PNG.",
-    required: true,
+    // Optional: Ryan designs the logo for some clients.
+    required: false,
   },
   { key: "work", title: "Photos of your work", help: "Straight from your phone is fine. More is better; I'll pick the best.", required: true },
   { key: "team", title: "Photos of you or your team", help: "Optional, but they help people trust a local business.", required: false },
